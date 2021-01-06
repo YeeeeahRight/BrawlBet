@@ -55,26 +55,9 @@
     background-size: cover;
 }
 
-.button-add-match {
-    width: 448px;
-    height: 65px;
-    background: #94E512;
-    margin-top: 17px;
-    margin-left: auto;
-    margin-right: auto;
-    border: 2px solid #303030;
-}
-
-.add-match-text {
-    text-align: center;
-    font-size: 36px;
-    color: #303030;
-    line-height: 1.65;
-}
-
 .match {
     width: 628px;
-    height: 64px;
+    height: 100px;
     margin-left: auto;
     margin-right: auto;
 
@@ -83,7 +66,7 @@
 }
 
 .match-1 {
-    margin-top: 26px;
+    margin-top: 32px;
 }
 
 .match-2 {
@@ -106,34 +89,38 @@
     margin-top: 476px;
 }
 
-.remove-button {
-    width: 66px;
-    height: 64px;
+.cancel-button {
+    width: 72px;
+    height: 72px;
     margin-left: 23px;
     background: #F1F1F1;
     border: 2px solid #94E512;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
-.edit-button {
-    width: 68px;
-    height: 64px;
+.accept-button {
+    width: 72px;
+    height: 72px;
     margin-right: 23px;
     background: #F1F1F1;
     border: 2px solid #94E512;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
-.edit-image {
-    width: 61px;
-    height: 57px;
+.accept-image {
+    width: 65px;
+    height: 65px;
     margin-top: 2px;
-
-    background: url(../images/edit.png) no-repeat center center;
+    background: url(../images/accept.png) no-repeat center center;
     background-size: cover;
+    margin-left: 1px;
 }
 
 .match-description {
     width: 448px;
-    height: 64px;
+    height: 100px;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -144,6 +131,22 @@
     display: flex;
     justify-content: space-between;
     background: #FFFFFF;
+}
+
+.match-commission {
+    height: 36px;
+    font-size: 24px;
+    background: #F1F1F1;
+    display: flex;
+    justify-content: center;
+}
+
+.commission-input {
+    height: 22px;
+    width: 175px;
+    font-size:20px;
+    margin-top:7px;
+    text-align: center;
 }
 
 .f-team-name {
@@ -184,37 +187,19 @@
     margin-right: 15px;
 }
 
-.remove-image {
-    width: 63px;
-    height: 62px;
-    margin-left: 2px;
-    margin-top: 1px;
-
-    background: url(../images/delete.png) no-repeat center center;
+.cancel-image {
+    width: 70px;
+    height: 70px;
+    margin-left: -1px;
+    margin-top: -1px;
+    background: url(../images/cancel.png) no-repeat center center;
     background-size: cover;
 }
 
-
-.add-match-text:active {
-    font-size: 38px;
-}
-
-.button-add-match:active {
-    border: 3.5px solid #303030;
-}
-
-.edit-button:active {
+.accept-button:active {
     border: 2.8px solid #94E512;
 }
 
-.remove-button:active {
+.cancel-button:active {
     border: 2.8px solid #94E512;
-}
-
-button:hover {
-    opacity: 0.8;
-}
-
-button {
-    cursor: pointer;
 }

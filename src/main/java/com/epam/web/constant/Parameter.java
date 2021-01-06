@@ -6,4 +6,5 @@ public class Parameter {
     public static final String LOGIN = "login";
     public static final String PASSWORD = "password";
     public static final String REPEATED_PASSWORD = "repeatedPassword";
+    public static final String COMMISSION = "commission";
 }

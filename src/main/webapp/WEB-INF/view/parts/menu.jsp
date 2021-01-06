@@ -8,18 +8,36 @@
 <div class="menu">
     <sc:access role="ADMIN">
         <a href="${pageContext.request.contextPath}/controller?command=matches">
-            <div class="matches">
+            <div class="first-item">
                 <div class="matches-image"></div>
-                <h1 class="matches-text">
+                <h1 class="item-text">
                     <fmt:message key="menu.matches"/>
                 </h1>
             </div>
         </a>
         <a href="${pageContext.request.contextPath}/controller?command=users">
-            <div class="users">
+            <div class="second-item">
                 <div class="users-image"></div>
-                <h1 class="users-text">
+                <h1 class="item-text">
                     <fmt:message key="menu.users"/>
+                </h1>
+            </div>
+        </a>
+    </sc:access>
+    <sc:access role="BOOKMAKER">
+        <a href="${pageContext.request.contextPath}/controller?command=accept-matches-page">
+            <div class="first-item">
+                <div class="matches-image"></div>
+                <h1 class="item-text">
+                    <fmt:message key="menu.accept.matches"/>
+                </h1>
+            </div>
+        </a>
+        <a href="${pageContext.request.contextPath}/controller?command=history">
+            <div class="second-item">
+                <div class="history-image"></div>
+                <h1 class="item-text">
+                    <fmt:message key="menu.history"/>
                 </h1>
             </div>
         </a>

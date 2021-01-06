@@ -11,5 +11,5 @@ public interface MatchDao {
     void removeById(Long id) throws DaoException;
     void save(Match match) throws DaoException;
     Optional<Match> findById(Long id) throws DaoException;
-    void editMatch(Match newMatch, Long id) throws DaoException;
+    void edit(Match newMatch, Long id) throws DaoException;
 }

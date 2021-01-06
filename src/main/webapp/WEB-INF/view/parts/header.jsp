@@ -32,6 +32,21 @@
                 </h1>
             </div>
         </sc:access>
+        <sc:access role="BOOKMAKER">
+            <div class="bookmaker-mode">
+                <h1 class="bookmaker-mode-text">
+                    <fmt:message key="header.bookmaker.mode"/>
+                </h1>
+            </div>
+            <div class="account-balance-block">
+                <h1 class="account-balance-text">
+                    <fmt:message key="header.account.balance"/>
+                </h1>
+                <h1 class="account-balance">
+                        ${sessionScope.account.getBalance()}
+                </h1>
+            </div>
+        </sc:access>
         <div class="lang-menu">
             <div class="language-text">
                 <fmt:message key="header.language"/>

@@ -12,7 +12,8 @@ import java.util.Date;
 
 public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     private static final String EDIT_QUERY =
-            "UPDATE matches SET date=?, tournament=?, first_team=?, second_team=? WHERE id=?";
+            "UPDATE matches SET date=?, tournament=?, first_team=?, second_team=?, commission=?," +
+                    "first_percent=?, second_percent=?, first_coefficient=?, second_coefficient=? WHERE id=?";
     private static final String ADD_QUERY =
             "INSERT matches (date, tournament, first_team, second_team, first_percent, second_percent) VALUES" +
                     "(?, ?, ?, ?, 0, 0)";
@@ -32,14 +33,22 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     }
 
     @Override
-    public void editMatch(Match match, Long id) throws DaoException {
+    public void edit(Match match, Long id) throws DaoException {
         String tournament = match.getTournament();
         String firstTeam = match.getFirstTeam();
         String secondTeam = match.getSecondTeam();
         Date date = match.getDate();
         String dateStr = formatDate(date);
-        updateSingle(EDIT_QUERY, dateStr, tournament, firstTeam, secondTeam, id);
+        float commission = match.getCommission();
+        int firstPercent = match.getFirstPercent();
+        int secondPercent = match.getFirstPercent();
+        float firstCoefficient = match.getFirstCoefficient();
+        float secondCoefficient = match.getSecondCoefficient();
+
+        updateSingle(EDIT_QUERY, dateStr, tournament, firstTeam, secondTeam, commission,
+                firstPercent, secondPercent, firstCoefficient, secondCoefficient, id);
     }
+
 
     private String formatDate(Date date) {
         DateFormatter dateFormatter = new DateFormatter(date);

@@ -37,7 +37,7 @@ public class AddMatchCommand implements Command {
         Match match = new Match(date, tournament, firstTeam, secondTeam);
         match.setFirstPercent(0);
         match.setSecondPercent(0);
-        matchService.addMatch(match);
+        matchService.saveMatch(match);
 
         return CommandResult.redirect(MATCHES_COMMAND);
     }

@@ -9,4 +9,6 @@ public final class Page {
     public static final String HOME = "WEB-INF/view/pages/home-page.jsp";
     public static final String MATCHES = "WEB-INF/view/pages/matches.jsp";
     public static final String USERS = "WEB-INF/view/pages/users.jsp";
+    public static final String BET = "WEB-INF/view/pages/bet.jsp";
+    public static final String ACCEPT_MATCHES = "WEB-INF/view/pages/accept-matches.jsp";
 }

@@ -4,7 +4,7 @@
     color: White;
     font-size: 36px;
     margin-right: 3.66%;
-    width: 505px;
+    width: 678px;
 }
 
 .admin-mode {
@@ -17,6 +17,20 @@
     text-align: center;
     margin-top: 3px;
     line-height: 1;
+}
+
+.bookmaker-mode {
+    width: 173px;
+    height: 100%;
+    background: White;
+}
+
+.bookmaker-mode-text {
+    font-size: 30px;
+    text-align: center;
+    margin-top: 5px;
+    line-height: 1.05;
+    color: rgba(48, 48, 48, 1.0);
 }
 
 
@@ -104,7 +118,7 @@ header {
     position: absolute;
     top: 80px;
     width: 171px;
-    box-shadow: 0px 1px 10px rgba(0,0,0,0.2);
+    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
 }
 
 .lang-menu ul li {
@@ -116,7 +130,7 @@ header {
 
 .lang-menu ul li a {
     text-align: center;
-    color: rgba(48,48,48,1);
+    color: rgba(48, 48, 48, 1);
     text-decoration: none;
     width: 100%;
     padding-top: 8px;

@@ -24,7 +24,7 @@
     left: 60%;
     margin-left: -340px;
     top: 630px;
-    width:630px;
+    width: 630px;
     text-align: center;
 }
 
@@ -38,12 +38,12 @@
 }
 
 .sign-up-ref {
-    position:absolute;
+    position: absolute;
 
-    width:380px;
-    left:50%;
-    margin-left:-180px;
-    text-align:center;
+    width: 380px;
+    left: 50%;
+    margin-left: -180px;
+    text-align: center;
     padding: 6px;
     background-color: #94E512;
     font-size: 26px;
@@ -98,7 +98,7 @@
 }
 
 .login-form {
-    position:absolute;
+    position: absolute;
     width: 531px;
     height: 321px;
     top: 55px;

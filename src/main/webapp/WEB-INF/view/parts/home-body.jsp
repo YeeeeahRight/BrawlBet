@@ -13,14 +13,12 @@
                     <fmt:message key="bets.bets"/>
                 </h1>
             </div>
-            <img class="shape-draw"
-                 src="https://anima-uploads.s3.amazonaws.com/projects/5fb8769c7ea495239fa1fd21/releases/5fbdbd2ac1b21e32784fb837/img/combined-shape@2x.svg"
-            />
+            <div class="bets-icon"></div>
         </div>
     </div>
     <div class="main-body">
         <c:forEach items="${matches}" var="match" varStatus="counter">
-            <a href="${pageContext.request.contextPath}/controller?command=bet&id=${match.getId()}">
+            <a href="${pageContext.request.contextPath}/controller?command=bet-page&id=${match.getId()}">
                 <div class="match match-${counter.index + 1}" >
                     <div class="match-body">
                         <div class="match-f-team">

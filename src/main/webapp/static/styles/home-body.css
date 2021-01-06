@@ -26,11 +26,15 @@
     top: 6px;
 }
 
-.shape-draw {
+.bets-icon {
+    width: 57px;
+    height: 69px;
+    background: url(../images/bets.png) no-repeat center center;
+    background-size: cover;
+    position: absolute;
     left: 10px;
     top: 12.88%;
     bottom: 10.93%;
-    position: absolute;
 }
 
 .main-content {

@@ -35,7 +35,7 @@ public class MatchService {
         }
     }
 
-    public void addMatch(Match match) throws ServiceException {
+    public void saveMatch(Match match) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             MatchDao matchDao = daoHelper.createMatchDao();
             matchDao.save(match);
@@ -47,7 +47,7 @@ public class MatchService {
     public void editMatch(Match match, Long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             MatchDao matchDao = daoHelper.createMatchDao();
-            matchDao.editMatch(match, id);
+            matchDao.edit(match, id);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }
@@ -61,6 +61,23 @@ public class MatchService {
                 throw new ServiceException("There is no such match with this id anymore.");
             }
             return match.get();
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
+    }
+
+    public void addCommission(Float commission, Long id) throws ServiceException {
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
+            MatchDao matchDao = daoHelper.createMatchDao();
+            Optional<Match> matchOptional = matchDao.findById(id);
+            if (!matchOptional.isPresent()) {
+                throw new ServiceException("There is no such match with this id anymore.");
+            }
+            Match match = matchOptional.get();
+            System.out.println(match);
+            match.setCommission(commission);
+            System.out.println(match);
+            matchDao.edit(match, id);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }
