@@ -1,6 +1,5 @@
 package com.epam.web.connection;
 
-
 import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
@@ -10,7 +9,7 @@ public class ProxyConnection implements Connection {
     private final Connection connection;
     private final ConnectionPool pool;
 
-    public ProxyConnection(Connection connection, ConnectionPool pool) {
+    /*package-private*/ ProxyConnection(Connection connection, ConnectionPool pool) {
         this.connection = connection;
         this.pool = pool;
     }
@@ -23,6 +22,15 @@ public class ProxyConnection implements Connection {
     @Override
     public PreparedStatement prepareStatement(String sql) throws SQLException {
         return connection.prepareStatement(sql);
+    }
+
+    @Override
+    public void close() {
+        pool.returnConnection(this);
+    }
+
+    /*package-private*/void finalCloseConnection() throws SQLException {
+        connection.close();
     }
 
     @Override
@@ -53,11 +61,6 @@ public class ProxyConnection implements Connection {
     @Override
     public void rollback() throws SQLException {
         connection.rollback();
-    }
-
-    @Override
-    public void close() {
-        pool.returnConnection(this);
     }
 
     @Override

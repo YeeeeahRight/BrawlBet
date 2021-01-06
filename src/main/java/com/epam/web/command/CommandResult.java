@@ -1,8 +1,8 @@
 package com.epam.web.command;
 
-public class CommandResult {
-    private static final String ERROR_PAGE = "WEB-INF/view/pages/error-page.jsp";
+import com.epam.web.constant.Page;
 
+public class CommandResult {
     private final String page;
     private final boolean isRedirect;
 
@@ -20,7 +20,7 @@ public class CommandResult {
     }
 
     public static CommandResult error() {
-        return new CommandResult(ERROR_PAGE, false);
+        return new CommandResult(Page.ERROR, false);
     }
 
     public String getPage() {

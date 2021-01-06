@@ -1,6 +1,7 @@
 package com.epam.web.connection;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.concurrent.locks.ReentrantLock;
@@ -8,7 +9,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ConnectionPool {
     //TODO: Change to atomic boolean
     private static volatile ConnectionPool instance = null;
-    private final Queue<ProxyConnection> availableConnection;
+    private final Queue<ProxyConnection> availableConnections;
     private final Queue<ProxyConnection> usingConnections;
     private final ReentrantLock connectionLocker = new ReentrantLock();
     private final ConnectionFactory connectionFactory = new ConnectionFactory();
@@ -16,12 +17,12 @@ public class ConnectionPool {
     private static final int POOL_SIZE = 10;
 
     private ConnectionPool() {
-        availableConnection = new ArrayDeque<>();
+        availableConnections = new ArrayDeque<>();
         usingConnections = new ArrayDeque<>();
         for (int i = 0; i < POOL_SIZE; i++) {
             Connection connection = connectionFactory.create();
             ProxyConnection proxyConnection = new ProxyConnection(connection, this);
-            availableConnection.add(proxyConnection);
+            availableConnections.add(proxyConnection);
         }
     }
 
@@ -45,7 +46,7 @@ public class ConnectionPool {
         connectionLocker.lock();
         try {
             if (usingConnections.contains(proxyConnection)) {
-                availableConnection.offer(proxyConnection);
+                availableConnections.offer(proxyConnection);
             }
         } finally {
             connectionLocker.unlock();
@@ -55,7 +56,7 @@ public class ConnectionPool {
     public ProxyConnection getConnection() {
         connectionLocker.lock();
         try {
-            ProxyConnection proxyConnection = availableConnection.poll();
+            ProxyConnection proxyConnection = availableConnections.poll();
             usingConnections.offer(proxyConnection);
             return proxyConnection;
         } finally {
@@ -63,5 +64,14 @@ public class ConnectionPool {
         }
     }
 
-    //TODO: method closeAll
+    public void closeAll() {
+        usingConnections.forEach(this::returnConnection);
+        for (ProxyConnection proxyConnection : availableConnections) {
+            try {
+                proxyConnection.finalCloseConnection();
+            } catch (SQLException e) {
+               // LOGGER.error(e.getMessage(), e);
+            }
+        }
+    }
 }

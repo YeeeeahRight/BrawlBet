@@ -1,0 +1,45 @@
+.body {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.main-header {
+    background-color: transparent;
+    height: 89px;
+    width: 100%;
+}
+
+.error-text {
+    text-align: center;
+    color: rgba(216, 0, 0, 1.0);
+    font-size: 48px;
+    margin-top: 35px;
+}
+
+.error-message-text {
+    text-align: center;
+    color: rgba(0, 0, 0, 1.0);
+    font-size: 34px;
+    margin-top: 80px;
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+    background-color: rgba(221, 222, 224, 1.0);
+    width: 82.06%;
+}
+
+.main-body {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+    height: 100%;
+    width: 100%;
+    font-size: 20px;
+    color: rgba(48, 48, 48, 1.0);
+}

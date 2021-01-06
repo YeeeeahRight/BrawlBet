@@ -1,6 +1,6 @@
 package com.epam.web.dao.match;
 
-import com.epam.web.entity.Match;
+import com.epam.web.model.entity.Match;
 import com.epam.web.exceptions.DaoException;
 
 import java.util.List;

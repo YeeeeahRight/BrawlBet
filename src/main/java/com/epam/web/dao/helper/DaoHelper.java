@@ -5,8 +5,8 @@ import com.epam.web.connection.ProxyConnection;
 import com.epam.web.dao.match.MatchDao;
 import com.epam.web.dao.match.MatchDaoImpl;
 import com.epam.web.exceptions.DaoException;
-import com.epam.web.dao.user.UserDao;
-import com.epam.web.dao.user.UserDaoImpl;
+import com.epam.web.dao.account.AccountDao;
+import com.epam.web.dao.account.AccountDaoImpl;
 
 import java.sql.SQLException;
 
@@ -17,8 +17,8 @@ public class DaoHelper implements AutoCloseable {
         this.connection = pool.getConnection();
     }
 
-    public UserDao createUserDao() {
-        return new UserDaoImpl(connection);
+    public AccountDao createUserDao() {
+        return new AccountDaoImpl(connection);
     }
 
     public MatchDao createMatchDao() {

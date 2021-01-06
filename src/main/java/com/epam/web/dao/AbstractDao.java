@@ -1,7 +1,7 @@
 package com.epam.web.dao;
 
 import com.epam.web.exceptions.DaoException;
-import com.epam.web.mapper.RowMapper;
+import com.epam.web.dao.mapper.RowMapper;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public abstract class AbstractDao<T> implements Dao<T> {
             }
             return entities;
         } catch (SQLException e) {
-            throw new DaoException(e.getMessage(), e);
+            throw new DaoException(e);
         }
     }
 
@@ -73,9 +73,15 @@ public abstract class AbstractDao<T> implements Dao<T> {
             Statement statement = connection.createStatement();
             statement.executeUpdate(query);
         } catch (SQLException e) {
-            throw new DaoException(e.getMessage(), e);
+            throw new DaoException(e);
         }
     }
 
-
+    protected void updateSingle(String query, Object ...params) throws DaoException {
+        try (PreparedStatement preparedStatement = createStatement(query, params)) {
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
 }

@@ -2,18 +2,19 @@ package com.epam.web.command.impl;
 
 import com.epam.web.command.Command;
 import com.epam.web.command.CommandResult;
+import com.epam.web.constant.Attribute;
+import com.epam.web.constant.CommandName;
+import com.epam.web.constant.Page;
+import com.epam.web.constant.Parameter;
+import com.epam.web.model.entity.Account;
 import com.epam.web.exceptions.ServiceException;
-import com.epam.web.request.RequestContext;
+import com.epam.web.controller.request.RequestContext;
 import com.epam.web.service.LoginService;
 
 public class LoginCommand implements Command {
-    private static final String LOGIN_PARAM = "login";
-    private static final String PASSWORD_PARAM = "password";
-    private static final String ERROR_MESSAGE_ATTRIBUTE = "errorMessage";
-    private static final String INCORRECT_DATA_MESSAGE = "Incorrect data! Please, sign up if you have not already.";
-    private static final String BANNED_USER_MESSAGE = "This account was banned! Please, create a new one.";
-    private static final String ADMIN_COMMAND = "controller?command=admin-page";
-    private static final String LOGIN_PAGE = "WEB-INF/view/pages/login.jsp";
+    private static final String HOME_PAGE_COMMAND = "controller?command=" + CommandName.HOME_PAGE;
+    private static final String INCORRECT_DATA_KEY = "incorrect";
+    private static final String BANNED_USER_KEY = "banned";
 
     private final LoginService service;
 
@@ -23,20 +24,21 @@ public class LoginCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
-        String login = requestContext.getRequestParameter(LOGIN_PARAM);
-        String password = requestContext.getRequestParameter(PASSWORD_PARAM);
+        String login = requestContext.getRequestParameter(Parameter.LOGIN);
+        String password = requestContext.getRequestParameter(Parameter.PASSWORD);
         boolean isUserExist = service.isUserExist(login, password);
         if (isUserExist) {
             boolean isUserBlocked = service.isBlocked(login);
             if (!isUserBlocked) {
-                requestContext.addAttribute(LOGIN_PAGE, login);
-                return CommandResult.redirect(ADMIN_COMMAND);
+                Account account = service.getUserByLogin(login);
+                requestContext.addSession(Attribute.ACCOUNT, account);
+                return CommandResult.redirect(HOME_PAGE_COMMAND);
             }
-            requestContext.addAttribute(ERROR_MESSAGE_ATTRIBUTE, BANNED_USER_MESSAGE);
+            requestContext.addAttribute(Attribute.ERROR_MESSAGE, BANNED_USER_KEY);
         } else {
-            requestContext.addAttribute(ERROR_MESSAGE_ATTRIBUTE, INCORRECT_DATA_MESSAGE);
+            requestContext.addAttribute(Attribute.ERROR_MESSAGE, INCORRECT_DATA_KEY);
         }
 
-        return CommandResult.forward(LOGIN_PAGE);
+        return CommandResult.forward(Page.LOGIN);
     }
 }

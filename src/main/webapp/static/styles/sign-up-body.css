@@ -1,0 +1,129 @@
+.body {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.main-header {
+    background-color: transparent;
+    height: 89px;
+    width: 100%;
+}
+
+.sign-up-text {
+    color: rgba(48, 48, 48, 1.0);
+    font-size: 64px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.error-message {
+    color: Red;
+    font-size: 30px;
+    position: absolute;
+    left: 58%;
+    margin-left: -24%;
+    top: 675px;
+    width: 48%;
+    text-align: center;
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+    background-color: rgba(221, 222, 224, 1.0);
+    width: 82.06%;
+}
+
+.main-body {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+    height: 100%;
+    width: 100%;
+    font-size: 36px;
+    color: rgba(48, 48, 48, 1.0);
+}
+
+.password-text {
+    position: absolute;
+    width: 173px;
+    left: 20px;
+    top: 145px;
+}
+
+.repeated-password-text {
+    position: absolute;
+    width: 173px;
+    left: 20px;
+    top: 215px;
+}
+
+.username-text {
+    position: absolute;
+    width: 187px;
+    left: 20px;
+    top: 38px;
+}
+
+.sign-up-form {
+    position: absolute;
+    width: 531px;
+    height: 429px;
+    top: 226px;
+    left: 58%;
+    margin-left: -265.5px;
+    border: 2px solid rgba(48, 48, 48, 1.0);
+}
+
+input[type=text] {
+    top: 40px;
+    position: absolute;
+    right: 14px;
+    left: 212px;
+    width: 305px;
+    display: inline-block;
+    border: 1px solid #ccc;
+}
+
+.password {
+    top: 100px;
+    position: absolute;
+    right: 14px;
+    left: 212px;
+    width: 305px;
+    margin: 46px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+}
+
+.repeated-password {
+    top: 165px;
+    position: absolute;
+    right: 14px;
+    left: 212px;
+    width: 305px;
+    margin: 92px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+}
+
+button {
+    position: absolute;
+    width: 199px;
+    height: 65px;
+    left: 165px;
+    top: 335px;
+    font-size: 36px;
+    background-color: #94E512;
+    color: White;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.8;
+}

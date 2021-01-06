@@ -1,0 +1,179 @@
+.body {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.main-content {
+    background-color: rgba(221, 222, 224, 1.0);
+    width: 82.06%;
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column
+}
+
+.main-header {
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.main-body {
+    height:100%;
+    width: 100%;
+    font-size: 20px;
+
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.users-logo-text {
+    margin-top: 21px;
+    color: #303030;
+    font-size: 64px;
+}
+
+.user {
+    width: 628px;
+    height: 66px;
+    margin-left: auto;
+    margin-right: auto;
+
+    display: flex;
+    justify-content: center;
+}
+
+
+.user-1 {
+    margin-top: 28px;
+}
+
+.user-2 {
+    margin-top: 28px;
+}
+
+.user-3 {
+    margin-top: 28px;
+}
+
+.user-4 {
+    margin-top: 28px;
+}
+
+.user-5 {
+    margin-top: 28px;
+}
+
+.user-6 {
+    margin-top: 28px;
+}
+
+.unban-button {
+    width: 68px;
+    height: 64px;
+    margin-right: 23px;
+
+    background: #F1F1F1;
+    border: 2px solid #94E512;
+}
+
+.ban-button {
+    width: 68px;
+    height: 64px;
+    margin-left: 23px;
+
+    background: #F1F1F1;
+    border: 2px solid #94E512;
+}
+
+.unban-image {
+    width: 61px;
+    height: 57px;
+    margin-top: 1px;
+    margin-left: 1px;
+    background: url(../images/unban.png) no-repeat center center;
+    background-size: cover;
+}
+
+.ban-image {
+    width: 57px;
+    height: 57px;
+    margin-left: 3px;
+    margin-top: 2px;
+
+    background: url(../images/ban.png) no-repeat center center;
+    background-size: cover;
+}
+
+.user-description {
+    width: 448px;
+    height: 66px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.user-content {
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    background: #FFFFFF;
+}
+
+.status-text {
+    margin-left: 8px;
+    margin-top: 11px;
+    font-size: 17px;
+}
+
+.status-data {
+    margin-left: 5px;
+    margin-top: 13.5px;
+    font-size: 14px;
+}
+
+.role-text {
+    margin-left: 27px;
+    margin-top: 11px;
+    font-size: 17px;
+}
+
+.role-data {
+    margin-left: 5px;
+    margin-top: 13.5px;
+    font-size: 14px;
+}
+
+.balance-text {
+    margin-left: 27px;
+    margin-top: 11px;
+    font-size: 17px;
+}
+
+.balance-data {
+    margin-left: 5px;
+    margin-right: 8px;
+    margin-top: 11.5px;
+    font-size: 17px;
+}
+
+.user-header {
+    height: 24px;
+    font-size: 20px;
+    background: #F1F1F1;
+    display: flex;
+    justify-content: center;
+}
+
+.unban-button:active {
+    border: 2.8px solid #94E512;
+}
+
+.ban-button:active {
+    border: 2.8px solid #94E512;
+}
+

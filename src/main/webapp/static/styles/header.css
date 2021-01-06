@@ -1,0 +1,141 @@
+.header-content {
+    display: flex;
+    justify-content: flex-end;
+    color: White;
+    font-size: 36px;
+    margin-right: 3.66%;
+    width: 505px;
+}
+
+.admin-mode {
+    width: 173px;
+    height: 100%;
+    background: #94E512;
+}
+
+.admin-mode-text {
+    text-align: center;
+    margin-top: 3px;
+    line-height: 1;
+}
+
+
+.account-balance-block {
+    width: 173px;
+    height: 100%;
+    background: #94E512;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.account-balance-text {
+    text-align: center;
+    margin-top: 4px;
+    line-height: 1;
+}
+
+.account-balance {
+    text-align: center;
+}
+
+.lang-menu {
+    border: 2px hidden rgba(0, 0, 0, 1.0);
+    border-left-style: solid;
+    height: 100%;
+    font-family: Roboto;
+    width: 171px;
+    text-align: right;
+}
+
+header {
+    background-color: rgba(48, 48, 48, 1.0);
+    height: 80px;
+    justify-content: space-between;
+    display: flex;
+}
+
+.logo {
+    margin-left: 3.66%;
+    width: 405px;
+}
+
+.brawl-bet-text {
+    font-size: 72px;
+    top: -6px;
+    position: absolute;
+}
+
+.bet-text {
+    color: White;
+}
+
+.brawl-text {
+    color: rgb(148, 229, 18);
+}
+
+.login {
+    height: 100%;
+    width: 171px;
+    overflow: auto;
+    border: 2px solid rgba(0, 0, 0, 1.0);
+    border-bottom-style: hidden;
+    border-top-style: hidden;
+}
+
+.login-text {
+    color: White;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.lang-menu .language-text {
+    text-align: center;
+    font-size: 36px;
+    justify-content: space-between;
+    line-height: 2;
+    cursor: pointer;
+}
+
+.lang-menu ul {
+    display: none;
+    background-color: rgba(241, 241, 241, 1.0);
+    border: 1px solid #f8f8f8;
+    position: absolute;
+    top: 80px;
+    width: 171px;
+    box-shadow: 0px 1px 10px rgba(0,0,0,0.2);
+}
+
+.lang-menu ul li {
+    font-size: 26px;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+.lang-menu ul li a {
+    text-align: center;
+    color: rgba(48,48,48,1);
+    text-decoration: none;
+    width: 100%;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.lang-menu ul li:hover {
+    background-color: White;
+}
+
+.lang-menu ul li a:before {
+    display: inline-block;
+    width: 171px;
+    height: 35px;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.lang-menu:hover ul {
+    display: block;
+}

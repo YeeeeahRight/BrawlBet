@@ -3,7 +3,7 @@ package com.epam.web.service;
 import com.epam.web.dao.helper.DaoHelper;
 import com.epam.web.dao.helper.DaoHelperFactory;
 import com.epam.web.dao.match.MatchDao;
-import com.epam.web.entity.Match;
+import com.epam.web.model.entity.Match;
 import com.epam.web.exceptions.DaoException;
 import com.epam.web.exceptions.ServiceException;
 
@@ -18,7 +18,7 @@ public class MatchService {
     }
 
     public List<Match> getAll() throws ServiceException {
-        try (DaoHelper daoHelper = daoHelperFactory.create()){
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
             MatchDao matchDao = daoHelper.createMatchDao();
             return matchDao.getAll();
         } catch (DaoException e) {

@@ -3,9 +3,11 @@ package com.epam.web.controller;
 import com.epam.web.command.Command;
 import com.epam.web.command.CommandFactory;
 import com.epam.web.command.CommandResult;
-import com.epam.web.request.RequestContext;
-import com.epam.web.request.RequestContextCreator;
-import com.epam.web.request.RequestFiller;
+import com.epam.web.connection.ConnectionPool;
+import com.epam.web.constant.Attribute;
+import com.epam.web.controller.request.RequestContext;
+import com.epam.web.controller.request.RequestContextCreator;
+import com.epam.web.controller.request.RequestFiller;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class Servlet extends HttpServlet {
-    private static final String ERROR_ATTRIBUTE = "errorMessage";
     private static final String COMMAND_NAME = "command";
 
     @Override
@@ -41,6 +42,7 @@ public class Servlet extends HttpServlet {
             requestFiller.fillData(req, requestContext);
             dispatch(commandResult, req, resp);
         } catch (Exception e) {
+            e.printStackTrace();
             processError(req, resp, e.getMessage());
         }
     }
@@ -58,12 +60,18 @@ public class Servlet extends HttpServlet {
 
     private void processError(HttpServletRequest req, HttpServletResponse resp, String errorMessage) {
         CommandResult commandResult = CommandResult.error();
-        req.setAttribute(ERROR_ATTRIBUTE, errorMessage);
+        req.setAttribute(Attribute.ERROR_MESSAGE, errorMessage);
         try {
             dispatch(commandResult, req, resp);
         } catch (Exception e) {
-            //???
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void destroy() {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        connectionPool.closeAll();
+        super.destroy();
     }
 }

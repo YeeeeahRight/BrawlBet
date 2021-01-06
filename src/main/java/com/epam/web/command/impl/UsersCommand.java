@@ -2,19 +2,20 @@ package com.epam.web.command.impl;
 
 import com.epam.web.command.Command;
 import com.epam.web.command.CommandResult;
-import com.epam.web.entity.User;
+import com.epam.web.constant.Attribute;
+import com.epam.web.constant.Page;
+import com.epam.web.model.entity.Account;
 import com.epam.web.exceptions.ServiceException;
-import com.epam.web.request.RequestContext;
+import com.epam.web.controller.request.RequestContext;
 import com.epam.web.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UsersCommand implements Command {
-    private static final String USER_ROLE = "user";
-    private static final String BOOKMAKER_ROLE = "bookmaker";
-    private static final String USERS_PAGE = "WEB-INF/view/pages/users.jsp";
-    private static final String USERS_ATTRIBUTE = "users";
+    private static final String USER_ROLE = "USER";
+    private static final String BOOKMAKER_ROLE = "BOOKMAKER";
+
     private final UserService userService;
 
     public UsersCommand(UserService userService) {
@@ -23,22 +24,22 @@ public class UsersCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
-        List<User> allUsers = userService.getAll();
-        List<User> userList = getUserList(allUsers);
-        requestContext.addAttribute(USERS_ATTRIBUTE, userList);
-        return CommandResult.forward(USERS_PAGE);
+        List<Account> allAccounts = userService.getAll();
+        List<Account> accountList = getUserList(allAccounts);
+        requestContext.addAttribute(Attribute.USERS, accountList);
+        return CommandResult.forward(Page.USERS);
     }
 
-    private List<User> getUserList(List<User> users) {
-        List<User> showedUsers = new ArrayList<>();
-        for (User user : users) {
-            String role = user.getRole();
+    private List<Account> getUserList(List<Account> accounts) {
+        List<Account> showedAccounts = new ArrayList<>();
+        for (Account account : accounts) {
+            String role = account.getRole();
             if (role.equals(USER_ROLE)) {
-                showedUsers.add(user);
+                showedAccounts.add(account);
             } else if (role.equals(BOOKMAKER_ROLE)) {
-                showedUsers.add(0, user);
+                showedAccounts.add(0, account);
             }
         }
-        return showedUsers;
+        return showedAccounts;
     }
 }

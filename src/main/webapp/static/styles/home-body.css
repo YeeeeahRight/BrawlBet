@@ -1,0 +1,148 @@
+.body {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.main-header {
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+}
+
+.logo-content {
+    position: absolute;
+    height: 89px;
+    left: 55.5%;
+    margin-left: -107px;
+    width: 213px;
+}
+
+.bets-text {
+    left: 80px;
+    color: rgba(48, 48, 48, 1.0);
+    font-size: 64px;
+    position: absolute;
+    top: 6px;
+}
+
+.shape-draw {
+    left: 10px;
+    top: 12.88%;
+    bottom: 10.93%;
+    position: absolute;
+}
+
+.main-content {
+    background-color: rgba(221, 222, 224, 1.0);
+    width: 82.06%;
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.main-body {
+    height:100%;
+    width: 100%;
+    font-size: 20px;
+}
+
+.match {
+    color: rgba(48, 48, 48, 1.0);
+    background-color: white;
+    height: 108px;
+    width: 31.9%;
+    position:absolute;
+}
+
+.match:hover {
+    border: 2px solid #303030;
+}
+
+.match-1 {
+    left: 21%;
+    top: 230px;
+}
+
+.match-2 {
+    right: 8.295%;
+    top: 230px;
+}
+
+.match-3 {
+    left: 21%;
+    top: 387px;
+}
+
+.match-4 {
+    right: 8.295%;
+    top: 387px;
+}
+
+.match-5 {
+    left: 21%;
+    top: 544px;
+}
+
+.match-6 {
+    right: 8.295%;
+    top: 544px;
+}
+
+.match-header {
+    background-color: rgba(241, 241, 241, 1);
+    height: 41px;
+}
+
+.match-date {
+    top: 8px;
+    left: 3.456%;
+    position:absolute;
+}
+
+.match-tournament {
+    top: 8px;
+    position:absolute;
+    right: 3.456%;
+}
+
+.match-body {
+    height: 67px;
+    position:absolute;
+    top: 41px;
+    width: 100%;
+}
+
+.match-f-team {
+    left: 3.835%;
+    position:absolute;
+    top: 22px;
+    font-size: 17px;
+}
+
+
+.match-f-percent {
+    left: 36%;
+    position:absolute;
+    top: 20px;
+}
+
+.match-versus-icon {
+    left: 48.394%;
+    position:absolute;
+    top: 20px;
+}
+
+.match-s-percent {
+    right: 37%;
+    position:absolute;
+    top: 20px;
+}
+
+.match-s-team {
+    right: 3.835%;
+    position:absolute;
+    top: 22px;
+    font-size: 17px;
+}
