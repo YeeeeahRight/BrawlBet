@@ -8,8 +8,11 @@ import java.util.Optional;
 
 public interface MatchDao {
     List<Match> getAll() throws DaoException;
-    void removeById(Long id) throws DaoException;
+    List<Match> getUnacceptedMatches() throws DaoException;
+    List<Match> getActiveMatches() throws DaoException;
+    void removeById(long id) throws DaoException;
     void save(Match match) throws DaoException;
-    Optional<Match> findById(Long id) throws DaoException;
-    void edit(Match newMatch, Long id) throws DaoException;
+    Optional<Match> findById(long id) throws DaoException;
+    void edit(Match newMatch, long id) throws DaoException;
+    void addCommission(float commission, long id) throws DaoException;
 }

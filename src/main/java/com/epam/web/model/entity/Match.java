@@ -23,7 +23,7 @@ public class Match {
     private final String tournament;
     private final String firstTeam;
     private final String secondTeam;
-    private Long id;
+    private long id;
 
     private int firstPercent;
     private int secondPercent;
@@ -31,7 +31,7 @@ public class Match {
     private float firstCoefficient;
     private float secondCoefficient;
 
-    public Match(Date date, String tournament, String firstTeam, String secondTeam, Long id) {
+    public Match(Date date, String tournament, String firstTeam, String secondTeam, long id) {
         this.date = date;
         dateFormatter = new DateFormatter(date);
         this.tournament = tournament;
@@ -112,7 +112,7 @@ public class Match {
         return secondTeam;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 }

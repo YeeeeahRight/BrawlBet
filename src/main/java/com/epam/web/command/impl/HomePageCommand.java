@@ -20,8 +20,7 @@ public class HomePageCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
-        List<Match> matches = matchService.getAll();
-        matches.removeIf(match -> match.getCommission() == 0.0f);
+        List<Match> matches = matchService.getActiveMatches();
         requestContext.addAttribute(Attribute.MATCHES, matches);
         return CommandResult.forward(Page.HOME);
     }

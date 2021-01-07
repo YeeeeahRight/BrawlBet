@@ -9,18 +9,18 @@ public class Account {
     public static final String TABLE = "accounts";
     public static final String NAME = "name";
     public static final String BALANCE = "balance";
-    public static final String STATUS = "isBlocked";
+    public static final String STATUS = "is_blocked";
 
     private final String name;
     private final String password;
     private final String role;
 
-    private Long id;
+    private long id;
 
-    private BigDecimal balance;
+    private int balance;
     private boolean isBlocked;
 
-    public Account(String name, String password, String role, Long id, BigDecimal balance, boolean isBlocked) {
+    public Account(String name, String password, String role, long id, int balance, boolean isBlocked) {
         this.name = name;
         this.password = password;
         this.role = role;
@@ -36,7 +36,7 @@ public class Account {
     }
 
 
-    public void setBalance(BigDecimal balance) {
+    public void setBalance(int balance) {
         this.balance = balance;
     }
 
@@ -44,7 +44,7 @@ public class Account {
         isBlocked = blocked;
     }
 
-    public BigDecimal getBalance() {
+    public int getBalance() {
         return balance;
     }
 
@@ -64,7 +64,7 @@ public class Account {
         return role;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 

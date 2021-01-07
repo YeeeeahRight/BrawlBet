@@ -9,6 +9,6 @@ import java.util.Optional;
 public interface AccountDao extends Dao<Account> {
     Optional<Account> findAccountByLoginPassword(String login, String password) throws DaoException;
     Optional<Account> findAccountByLogin(String login) throws DaoException;
-    void block(Long id) throws DaoException;
-    void unblock(Long id) throws DaoException;
+    void block(long id) throws DaoException;
+    void unblock(long id) throws DaoException;
 }

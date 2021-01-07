@@ -1,5 +1,7 @@
 package com.epam.web.service;
 
+import com.epam.web.dao.account.AccountDao;
+import com.epam.web.dao.bet.BetDao;
 import com.epam.web.dao.helper.DaoHelper;
 import com.epam.web.dao.helper.DaoHelperFactory;
 import com.epam.web.dao.match.MatchDao;
@@ -26,7 +28,7 @@ public class MatchService {
         }
     }
 
-    public void removeById(Long id) throws ServiceException {
+    public void removeById(long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             MatchDao matchDao = daoHelper.createMatchDao();
             matchDao.removeById(id);
@@ -44,7 +46,7 @@ public class MatchService {
         }
     }
 
-    public void editMatch(Match match, Long id) throws ServiceException {
+    public void editMatch(Match match, long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             MatchDao matchDao = daoHelper.createMatchDao();
             matchDao.edit(match, id);
@@ -53,7 +55,7 @@ public class MatchService {
         }
     }
 
-    public Match findById(Long id) throws ServiceException {
+    public Match findById(long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             MatchDao matchDao = daoHelper.createMatchDao();
             Optional<Match> match = matchDao.findById(id);
@@ -66,20 +68,33 @@ public class MatchService {
         }
     }
 
-    public void addCommission(Float commission, Long id) throws ServiceException {
+    public void addCommission(float commission, long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             MatchDao matchDao = daoHelper.createMatchDao();
-            Optional<Match> matchOptional = matchDao.findById(id);
-            if (!matchOptional.isPresent()) {
-                throw new ServiceException("There is no such match with this id anymore.");
-            }
-            Match match = matchOptional.get();
-            System.out.println(match);
-            match.setCommission(commission);
-            System.out.println(match);
-            matchDao.edit(match, id);
+            matchDao.addCommission(commission, id);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }
     }
+
+    public List<Match> getActiveMatches() throws ServiceException {
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
+            MatchDao matchDao = daoHelper.createMatchDao();
+            return matchDao.getActiveMatches();
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
+    }
+
+    public List<Match> getUnacceptedMatches() throws ServiceException {
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
+            MatchDao matchDao = daoHelper.createMatchDao();
+            return matchDao.getUnacceptedMatches();
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
+    }
+
+
+
 }

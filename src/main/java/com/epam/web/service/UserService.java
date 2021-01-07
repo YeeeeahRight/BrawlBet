@@ -25,7 +25,7 @@ public class UserService {
         }
     }
 
-    public void unblock(Long id) throws ServiceException {
+    public void unblock(long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDao matchDao = daoHelper.createUserDao();
             matchDao.unblock(id);
@@ -34,7 +34,7 @@ public class UserService {
         }
     }
 
-    public void block(Long id) throws ServiceException {
+    public void block(long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDao matchDao = daoHelper.createUserDao();
             matchDao.block(id);

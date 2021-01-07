@@ -9,8 +9,8 @@ import java.sql.Connection;
 import java.util.Optional;
 
 public class AccountDaoImpl extends AbstractDao<Account> implements AccountDao {
-    private static final String BLOCK_QUERY = "UPDATE accounts SET isBlocked=1 WHERE ID=";
-    private static final String UNBLOCK_QUERY = "UPDATE accounts SET isBlocked=0 WHERE ID=";
+    private static final String BLOCK_QUERY = "UPDATE accounts SET is_blocked=1 WHERE ID=";
+    private static final String UNBLOCK_QUERY = "UPDATE accounts SET is_blocked=0 WHERE ID=";
     private static final String FIND_BY_LOGIN_AND_PASSWORD =
             "SELECT * FROM accounts WHERE name = ? AND password = ?";
     private static final String FIND_BY_LOGIN =
@@ -40,12 +40,12 @@ public class AccountDaoImpl extends AbstractDao<Account> implements AccountDao {
     }
 
     @Override
-    public void block(Long id) throws DaoException {
+    public void block(long id) throws DaoException {
         executeUpdate(BLOCK_QUERY + id);
     }
 
     @Override
-    public void unblock(Long id) throws DaoException {
+    public void unblock(long id) throws DaoException {
         executeUpdate(UNBLOCK_QUERY + id);
     }
 }

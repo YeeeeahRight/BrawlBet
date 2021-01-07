@@ -6,6 +6,7 @@ import com.epam.web.constant.CommandName;
 import com.epam.web.constant.Parameter;
 import com.epam.web.exceptions.ServiceException;
 import com.epam.web.controller.request.RequestContext;
+import com.epam.web.model.entity.Match;
 import com.epam.web.service.MatchService;
 
 public class RemoveMatchCommand implements Command {
@@ -19,8 +20,12 @@ public class RemoveMatchCommand implements Command {
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
         String idStr = requestContext.getRequestParameter(Parameter.ID);
-        Long id = Long.valueOf(idStr);
-        matchService.removeById(id);
+        long id = Long.parseLong(idStr);
+        Match match = matchService.findById(id);
+
+            matchService.removeById(id);
+
+
         return CommandResult.redirect(MATCHES_COMMAND);
     }
 }

@@ -25,12 +25,12 @@ public abstract class AbstractDao<T> implements Dao<T> {
     }
 
     @Override
-    public void removeById(Long id) throws DaoException {
+    public void removeById(long id) throws DaoException {
         executeUpdate("DELETE FROM " + tableName + " WHERE id=" + id);
     }
 
     @Override
-    public Optional<T> findById(Long id) throws DaoException{
+    public Optional<T> findById(long id) throws DaoException{
         T item = executeQuery("SELECT * FROM " + tableName + " WHERE id=" + id).get(0);
         return Optional.of(item);
     }

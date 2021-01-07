@@ -20,7 +20,7 @@ public class BetPageCommand implements Command {
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
         String idStr = requestContext.getRequestParameter(Parameter.ID);
-        Long id = Long.parseLong(idStr);
+        long id = Long.parseLong(idStr);
         Match match = matchService.findById(id);
         requestContext.addAttribute(Attribute.MATCH, match);
 

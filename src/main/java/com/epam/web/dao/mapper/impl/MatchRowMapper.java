@@ -16,7 +16,7 @@ public class MatchRowMapper implements RowMapper<Match> {
         String tournament = resultSet.getString(Match.TOURNAMENT);
         String firstTeam = resultSet.getString(Match.FIRST_TEAM);
         String secondTeam = resultSet.getString(Match.SECOND_TEAM);
-        Long id = Long.valueOf(resultSet.getString(Match.ID));
+        long id = Long.parseLong(resultSet.getString(Match.ID));
         int firstPercent = Integer.parseInt(resultSet.getString(Match.FIRST_PERCENT));
         int secondPercent = Integer.parseInt(resultSet.getString(Match.SECOND_PERCENT));
         float firstCoefficient = Float.parseFloat(resultSet.getString(Match.FIRST_COEFFICIENT));

@@ -20,9 +20,9 @@ public class AcceptMatchCommand implements Command {
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
         String idStr = requestContext.getRequestParameter(Parameter.ID);
-        Long id = Long.valueOf(idStr);
+        long id = Long.parseLong(idStr);
         String commissionStr = requestContext.getRequestParameter(Parameter.COMMISSION);
-        Float commission = Float.valueOf(commissionStr);
+        float commission = Float.parseFloat(commissionStr);
         matchService.addCommission(commission, id);
 
         return CommandResult.redirect(ACCEPT_MATCHES_COMMAND);

@@ -37,7 +37,7 @@ public class EditMatchCommand implements Command {
         }
         Match match = new Match(date, tournament, firstTeam, secondTeam);
         String idStr = requestContext.getRequestParameter(Parameter.ID);
-        Long id = Long.valueOf(idStr);
+        long id = Long.valueOf(idStr);
         matchService.editMatch(match, id);
 
         return CommandResult.redirect(MATCHES_COMMAND);
