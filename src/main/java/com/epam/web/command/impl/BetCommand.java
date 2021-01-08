@@ -33,7 +33,11 @@ public class BetCommand implements Command {
         long accountId = (Long) requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
         if (betService.getUserBalance(accountId) >= money) {
             long matchId = Long.parseLong(matchIdStr);
-            String team = requestContext.getRequestParameter(Parameter.BET_ON).toUpperCase();
+            String team = requestContext.getRequestParameter(Parameter.BET_ON);
+            if (team == null || team.isEmpty() || !(team.equals("SECOND") || team.equals("FIRST"))) {
+                System.out.println(team);
+                throw new InvalidInputException("Invalid team on bet.");
+            }
             Bet bet = new Bet(accountId, matchId, money, team, 0);
             betService.bet(bet);
 
