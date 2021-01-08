@@ -15,6 +15,7 @@ public class LoginCommand implements Command {
     private static final String HOME_PAGE_COMMAND = "controller?command=" + CommandName.HOME_PAGE;
     private static final String INCORRECT_DATA_KEY = "incorrect";
     private static final String BANNED_USER_KEY = "banned";
+    private static final String USER_ROLE = "USER";
 
     private final LoginService service;
 
@@ -28,10 +29,16 @@ public class LoginCommand implements Command {
         String password = requestContext.getRequestParameter(Parameter.PASSWORD);
         boolean isUserExist = service.isUserExist(login, password);
         if (isUserExist) {
-            boolean isUserBlocked = service.isBlocked(login);
-            if (!isUserBlocked) {
-                Account account = service.getUserByLogin(login);
-                requestContext.addSession(Attribute.ACCOUNT, account);
+            Account account = service.getAccountByLogin(login);
+            if (!account.isBlocked()) {
+                long id = account.getId();
+                requestContext.addSession(Attribute.ACCOUNT_ID, id);
+                String role = account.getRole();
+                requestContext.addSession(Attribute.ROLE, account.getRole());
+                if (role.equalsIgnoreCase(USER_ROLE)) {
+                    int balance = account.getBalance();
+                    requestContext.addSession(Attribute.USER_BALANCE, balance);
+                }
                 return CommandResult.redirect(HOME_PAGE_COMMAND);
             }
             requestContext.addAttribute(Attribute.ERROR_MESSAGE, BANNED_USER_KEY);

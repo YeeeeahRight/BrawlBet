@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sc" uri="custom-tags" %>
 
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="locale"/>
@@ -46,19 +47,23 @@
                                min="2021-01-05T00:00" max="2021-12-31T23:59"
                                placeholder="<fmt:message key="match.date.advice"/>"
                                name="date"
-                               value="${match.getHtmlFormattedDate()}"
+
+                               value="<sc:date-formatter date="${match.getDate()}" formatType="MATCH"></sc:date-formatter>"
                                required>
                         <input class="tournament" type="text"
                                placeholder="<fmt:message key="match.tournament.advice"/>"
-                               name="tournament" value="${match.getTournament()}"
+                               name="tournament"
+                               value="${match.getTournament()}"
                                required>
                         <input class="first-team" type="text"
                                placeholder="<fmt:message key="match.team.first.advice"/>"
-                               name="first_team" value="${match.getFirstTeam()}"
+                               name="first_team"
+                               value="${match.getFirstTeam()}"
                                required>
                         <input class="second-team" type="text"
                                placeholder="<fmt:message key="match.team.second.advice"/>"
-                               name="second_team" value="${match.getSecondTeam()}"
+                               name="second_team"
+                               value="${match.getSecondTeam()}"
                                required>
                         <button type="submit">
                             <fmt:message key="match.edit.button"/>

@@ -4,7 +4,7 @@ import com.epam.web.dao.helper.DaoHelper;
 import com.epam.web.dao.helper.DaoHelperFactory;
 import com.epam.web.model.entity.Account;
 import com.epam.web.exceptions.DaoException;
-import com.epam.web.dao.account.AccountDao;
+import com.epam.web.dao.impl.account.AccountDao;
 import com.epam.web.exceptions.ServiceException;
 
 import java.util.Optional;
@@ -24,38 +24,27 @@ public class LoginService {
             throw new ServiceException("Incorrect password: " + password);
         }
         try(DaoHelper daoHelper = daoHelperFactory.create()) {
-            //daoHelper.startTransaction();
-            AccountDao accountDao = daoHelper.createUserDao();
+            AccountDao accountDao = daoHelper.createAccountDao();
             Optional<Account> user = accountDao.findAccountByLoginPassword(login, password);
             return user.isPresent();
         } catch (DaoException e) {
-            throw new ServiceException(e.getMessage(), e);
+            throw new ServiceException(e);
         }
     }
 
-    public boolean isBlocked(String login) throws ServiceException {
-        try(DaoHelper daoHelper = daoHelperFactory.create()) {
-            AccountDao accountDao = daoHelper.createUserDao();
-            Optional<Account> user = accountDao.findAccountByLogin(login);
-            if (!user.isPresent()) {
-                throw new ServiceException("User not found.");
-            }
-            return user.get().isBlocked();
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage(), e);
+    public Account getAccountByLogin(String login) throws ServiceException {
+        if (login == null || login.isEmpty()) {
+            throw new ServiceException("Incorrect username: " + login);
         }
-    }
-
-    public Account getUserByLogin(String login) throws ServiceException {
         try(DaoHelper daoHelper = daoHelperFactory.create()) {
-            AccountDao accountDao = daoHelper.createUserDao();
+            AccountDao accountDao = daoHelper.createAccountDao();
             Optional<Account> user = accountDao.findAccountByLogin(login);
             if (!user.isPresent()) {
-                throw new ServiceException("User not found.");
+                throw new ServiceException("Account not found.");
             }
             return user.get();
         } catch (DaoException e) {
-            throw new ServiceException(e.getMessage(), e);
+            throw new ServiceException(e);
         }
     }
 }

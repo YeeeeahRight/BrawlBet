@@ -19,7 +19,7 @@ public class UnblockCommand implements Command {
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
         String idStr = requestContext.getRequestParameter(Parameter.ID);
-        long id = Long.valueOf(idStr);
+        long id = Long.parseLong(idStr);
         userService.unblock(id);
         return CommandResult.redirect(USERS_COMMAND);
     }
