@@ -1,8 +1,8 @@
 package com.epam.web.model.entity;
 
-import java.math.BigDecimal;
+import com.epam.web.model.Entity;
 
-public class Account {
+public class Account implements Entity {
     public static final String ID = "id";
     public static final String ROLE = "role";
     public static final String PASSWORD = "password";
@@ -14,34 +14,26 @@ public class Account {
     private final String name;
     private final String password;
     private final String role;
+    private final int balance;
+    private final boolean isBlocked;
 
     private long id;
 
-    private int balance;
-    private boolean isBlocked;
-
-    public Account(String name, String password, String role, long id, int balance, boolean isBlocked) {
+    public Account(long id, String name, String password, String role, int balance, boolean isBlocked) {
+        this.id = id;
         this.name = name;
         this.password = password;
         this.role = role;
-        this.id = id;
         this.balance = balance;
         this.isBlocked = isBlocked;
     }
 
-    public Account(String name, String password, String role) {
+    public Account(String name, String password, String role, int balance, boolean isBlocked) {
         this.name = name;
         this.password = password;
         this.role = role;
-    }
-
-
-    public void setBalance(int balance) {
         this.balance = balance;
-    }
-
-    public void setBlocked(boolean blocked) {
-        isBlocked = blocked;
+        this.isBlocked = isBlocked;
     }
 
     public int getBalance() {
@@ -67,6 +59,4 @@ public class Account {
     public long getId() {
         return id;
     }
-
-    
 }

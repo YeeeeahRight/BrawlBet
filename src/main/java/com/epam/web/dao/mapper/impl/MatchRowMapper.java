@@ -11,16 +11,13 @@ import java.text.ParseException;
 import java.util.Date;
 
 public class MatchRowMapper implements RowMapper<Match> {
+
     @Override
     public Match map(ResultSet resultSet) throws SQLException {
         String tournament = resultSet.getString(Match.TOURNAMENT);
         String firstTeam = resultSet.getString(Match.FIRST_TEAM);
         String secondTeam = resultSet.getString(Match.SECOND_TEAM);
         long id = Long.parseLong(resultSet.getString(Match.ID));
-        int firstPercent = Integer.parseInt(resultSet.getString(Match.FIRST_PERCENT));
-        int secondPercent = Integer.parseInt(resultSet.getString(Match.SECOND_PERCENT));
-        float firstCoefficient = Float.parseFloat(resultSet.getString(Match.FIRST_COEFFICIENT));
-        float secondCoefficient = Float.parseFloat(resultSet.getString(Match.SECOND_COEFFICIENT));
         float commission = Float.parseFloat(resultSet.getString(Match.COMMISSION));
         String dateString = resultSet.getString(Match.DATE);
         DateParser dateParser = new DateParser(dateString);
@@ -31,13 +28,6 @@ public class MatchRowMapper implements RowMapper<Match> {
             throw new SQLException("Invalid date format.");
         }
 
-        Match match = new Match(date, tournament, firstTeam, secondTeam, id);
-        match.setFirstPercent(firstPercent);
-        match.setSecondPercent(secondPercent);
-        match.setFirstCoefficient(firstCoefficient);
-        match.setSecondCoefficient(secondCoefficient);
-        match.setCommission(commission);
-
-        return match;
+        return new Match(id, date, tournament, firstTeam, secondTeam, commission);
     }
 }

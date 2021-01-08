@@ -1,4 +1,4 @@
-package com.epam.web.dao.match;
+package com.epam.web.dao.impl.match;
 
 import com.epam.web.model.entity.Match;
 import com.epam.web.exceptions.DaoException;

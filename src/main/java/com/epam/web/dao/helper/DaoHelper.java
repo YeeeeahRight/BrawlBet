@@ -2,11 +2,13 @@ package com.epam.web.dao.helper;
 
 import com.epam.web.connection.ConnectionPool;
 import com.epam.web.connection.ProxyConnection;
-import com.epam.web.dao.match.MatchDao;
-import com.epam.web.dao.match.MatchDaoImpl;
+import com.epam.web.dao.impl.bet.BetDao;
+import com.epam.web.dao.impl.bet.BetDaoImpl;
+import com.epam.web.dao.impl.match.MatchDao;
+import com.epam.web.dao.impl.match.MatchDaoImpl;
 import com.epam.web.exceptions.DaoException;
-import com.epam.web.dao.account.AccountDao;
-import com.epam.web.dao.account.AccountDaoImpl;
+import com.epam.web.dao.impl.account.AccountDao;
+import com.epam.web.dao.impl.account.AccountDaoImpl;
 
 import java.sql.SQLException;
 
@@ -17,7 +19,7 @@ public class DaoHelper implements AutoCloseable {
         this.connection = pool.getConnection();
     }
 
-    public AccountDao createUserDao() {
+    public AccountDao createAccountDao() {
         return new AccountDaoImpl(connection);
     }
 
@@ -25,11 +27,37 @@ public class DaoHelper implements AutoCloseable {
         return new MatchDaoImpl(connection);
     }
 
+    public BetDao createBetDao() {
+        return new BetDaoImpl(connection);
+    }
+
     public void startTransaction() throws DaoException {
         try {
             connection.setAutoCommit(false);
         } catch (SQLException e) {
             throw new DaoException(e.getMessage(), e);
+        }
+    }
+
+    private void rollback() throws DaoException {
+        try {
+            connection.rollback();
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    public void commit() throws DaoException {
+        try {
+            connection.commit();
+        } catch (SQLException e) {
+            rollback();
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                //LOGGER.error(e.getMessage(), e);
+            }
         }
     }
 

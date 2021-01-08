@@ -23,6 +23,13 @@ public class AddMatchCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
+        Match match = buildMatch(requestContext);
+        matchService.saveMatch(match);
+
+        return CommandResult.redirect(MATCHES_COMMAND);
+    }
+
+    private Match buildMatch(RequestContext requestContext) {
         String tournament = requestContext.getRequestParameter(Match.TOURNAMENT);
         String firstTeam = requestContext.getRequestParameter(Match.FIRST_TEAM);
         String secondTeam = requestContext.getRequestParameter(Match.SECOND_TEAM);
@@ -32,13 +39,8 @@ public class AddMatchCommand implements Command {
         try {
             date = dateParser.parse(DateFormatType.HTML);
         } catch (ParseException e) {
-            throw new ServiceException("Invalid date format.");
+            throw new IllegalArgumentException("Invalid date format.");
         }
-        Match match = new Match(date, tournament, firstTeam, secondTeam);
-        match.setFirstPercent(0);
-        match.setSecondPercent(0);
-        matchService.saveMatch(match);
-
-        return CommandResult.redirect(MATCHES_COMMAND);
+        return new Match(date, tournament, firstTeam, secondTeam, 0);
     }
 }

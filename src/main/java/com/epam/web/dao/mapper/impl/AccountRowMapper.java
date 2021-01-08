@@ -15,9 +15,9 @@ public class AccountRowMapper implements RowMapper<Account> {
         String password = resultSet.getString(Account.PASSWORD);
         String role = resultSet.getString(Account.ROLE);
         long id = Long.parseLong(resultSet.getString(Account.ID));
-        BigDecimal balance = BigDecimal.valueOf(Long.parseLong(resultSet.getString(Account.BALANCE)));
-        boolean isBanned = resultSet.getString(Account.STATUS).equals("1");
+        int balance = Integer.parseInt(resultSet.getString(Account.BALANCE));
+        boolean isBlocked = resultSet.getString(Account.STATUS).equals("1");
 
-        return new Account(name, password, role, id, balance, isBanned);
+        return new Account(id, name, password, role, balance, isBlocked);
     }
 }

@@ -2,13 +2,14 @@ package com.epam.web.dao;
 
 import com.epam.web.exceptions.DaoException;
 import com.epam.web.dao.mapper.RowMapper;
+import com.epam.web.model.Entity;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class AbstractDao<T> implements Dao<T> {
+public abstract class AbstractDao<T extends Entity> implements Dao<T> {
     private final Connection connection;
     private final RowMapper<T> mapper;
     private final String tableName;
