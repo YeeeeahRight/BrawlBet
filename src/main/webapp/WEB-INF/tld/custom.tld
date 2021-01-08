@@ -6,12 +6,29 @@
     <tlib-version>2.1</tlib-version>
     <short-name>sc</short-name>
     <uri>custom-tags</uri>
+
     <tag>
         <name>access</name>
         <tag-class>com.epam.web.tag.AccessTag</tag-class>
         <body-content>scriptless</body-content>
         <attribute>
             <name>role</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+    <tag>
+        <name>date-formatter</name>
+        <tag-class>com.epam.web.tag.DateFormatterTag</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <name>date</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>formatType</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
