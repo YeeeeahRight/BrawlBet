@@ -47,7 +47,7 @@
                         </div>
                     </div>
                         <div class="remove-button">
-                            <a href="${pageContext.request.contextPath}/controller?command=remove-match&id=${match.getId()}">
+                            <a href="${pageContext.request.contextPath}/controller?command=cancel-match&id=${match.getId()}">
                                 <div class="remove-image"></div>
                             </a>
                         </div>

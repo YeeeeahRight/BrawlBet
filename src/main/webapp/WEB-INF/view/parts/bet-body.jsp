@@ -71,47 +71,49 @@
                     </div>
                 </div>
             </div>
-            <form id="money-input-form" method="POST"
-                  action="${pageContext.request.contextPath}/controller?command=bet&id=${matchDto.getId()}">
-                <input id="money" type="number" required
-                       placeholder="<fmt:message key="bet.enter.money"/>"
-                       name="money" min="${minBet}" max="${maxBet}">
-                <input id="on" type="text" name="on" value=""/>
-                <div class="bet-buttons">
-                    <button type="submit" onclick="betOnFirst()" class="first-button">
-                        <div class="button">
-                            <div class="bet-on">
-                                <h1>
-                                    <fmt:message key="bet.on"/>${matchDto.getFirstTeam()}
-                                </h1>
+            <sc:access role="NOT_GUEST">
+                <form id="money-input-form" method="POST"
+                      action="${pageContext.request.contextPath}/controller?command=bet&id=${matchDto.getId()}">
+                    <input id="money" type="number" required
+                           placeholder="<fmt:message key="bet.enter.money"/>"
+                           name="money" min="${minBet}" max="${maxBet}">
+                    <input id="on" type="text" name="on" value=""/>
+                    <div class="bet-buttons">
+                        <button type="submit" onclick="betOnFirst()" class="first-button">
+                            <div class="button">
+                                <div class="bet-on">
+                                    <h1>
+                                        <fmt:message key="bet.on"/>${matchDto.getFirstTeam()}
+                                    </h1>
+                                </div>
+                                <div class="coefficient-value">
+                                    <h1>
+                                        <fmt:message key="bet.coefficient"/>
+                                        <fmt:formatNumber type="number" maxFractionDigits="3"
+                                                          value="${matchDto.getFirstCoefficient()}"/>
+                                    </h1>
+                                </div>
                             </div>
-                            <div class="coefficient-value">
-                                <h1>
-                                    <fmt:message key="bet.coefficient"/>
-                                    <fmt:formatNumber type="number" maxFractionDigits="3"
-                                                      value="${matchDto.getFirstCoefficient()}"/>
-                                </h1>
+                        </button>
+                        <button type="submit" onclick="betOnSecond()" class="second-button">
+                            <div class="button">
+                                <div class="bet-on">
+                                    <h1>
+                                        <fmt:message key="bet.on"/>${matchDto.getSecondTeam()}
+                                    </h1>
+                                </div>
+                                <div class="coefficient-value">
+                                    <h1>
+                                        <fmt:message key="bet.coefficient"/>
+                                        <fmt:formatNumber type="number" maxFractionDigits="3"
+                                                          value="${matchDto.getSecondCoefficient()}"/>
+                                    </h1>
+                                </div>
                             </div>
-                        </div>
-                    </button>
-                    <button type="submit" onclick="betOnSecond()" class="second-button">
-                        <div class="button">
-                            <div class="bet-on">
-                                <h1>
-                                    <fmt:message key="bet.on"/>${matchDto.getSecondTeam()}
-                                </h1>
-                            </div>
-                            <div class="coefficient-value">
-                                <h1>
-                                    <fmt:message key="bet.coefficient"/>
-                                    <fmt:formatNumber type="number" maxFractionDigits="3"
-                                                      value="${matchDto.getSecondCoefficient()}"/>
-                                </h1>
-                            </div>
-                        </div>
-                    </button>
-                </div>
-            </form>
+                        </button>
+                    </div>
+                </form>
+            </sc:access>
         </div>
     </div>
 </div>

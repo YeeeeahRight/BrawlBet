@@ -35,11 +35,14 @@ public class BetPageCommand implements Command {
         MatchBetsDto matchBetsDto = createMatchBetDto(match, bets);
         requestContext.addAttribute(Attribute.MATCH_BETS_DTO, matchBetsDto);
 
-        long accountId = (Long)requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
-        int balance = betService.getUserBalance(accountId);
-        requestContext.addAttribute(Attribute.MAX_BET, balance);
-        requestContext.addAttribute(Attribute.MIN_BET, 1);
-        requestContext.addSession(Attribute.USER_BALANCE, balance);
+        Long accountId = (Long)requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
+        //accountId equals null when guest
+        if (accountId != null) {
+            int balance = betService.getUserBalance(accountId);
+            requestContext.addAttribute(Attribute.MAX_BET, balance);
+            requestContext.addAttribute(Attribute.MIN_BET, 1);
+            requestContext.addSession(Attribute.USER_BALANCE, balance);
+        }
 
         return CommandResult.forward(Page.BET);
     }

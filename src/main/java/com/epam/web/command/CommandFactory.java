@@ -32,6 +32,8 @@ public class CommandFactory {
                 return new UsersCommand(new UserService(new DaoHelperFactory()));
             case CommandName.REMOVE_MATCH:
                 return new RemoveMatchCommand(new MatchService(new DaoHelperFactory()));
+            case CommandName.CANCEL_MATCH:
+                return new CancelMatchCommand(new MatchService(new DaoHelperFactory()));
             case CommandName.ADD_MATCH:
                 return new AddMatchCommand(new MatchService(new DaoHelperFactory()));
             case CommandName.EDIT_MATCH:

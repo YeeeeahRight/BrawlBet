@@ -2,15 +2,12 @@ package com.epam.web.command.impl;
 
 import com.epam.web.command.Command;
 import com.epam.web.command.CommandResult;
-import com.epam.web.constant.CommandName;
 import com.epam.web.constant.Parameter;
 import com.epam.web.exceptions.ServiceException;
 import com.epam.web.controller.request.RequestContext;
-import com.epam.web.model.entity.Match;
 import com.epam.web.service.MatchService;
 
 public class RemoveMatchCommand implements Command {
-    private static final String MATCHES_COMMAND = "controller?command=" + CommandName.MATCHES;
     private final MatchService matchService;
 
     public RemoveMatchCommand(MatchService matchService) {
@@ -21,13 +18,8 @@ public class RemoveMatchCommand implements Command {
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
         String idStr = requestContext.getRequestParameter(Parameter.ID);
         long id = Long.parseLong(idStr);
-        Match match = matchService.findById(id);
-        if (match.getCommission() == 0) {
-            matchService.removeById(id);
-        } else {
-            matchService.cancelMatch(id);
-        }
-
-        return CommandResult.redirect(MATCHES_COMMAND);
+        matchService.removeById(id);
+        String prevPage = requestContext.getHeader();
+        return CommandResult.redirect(prevPage);
     }
 }

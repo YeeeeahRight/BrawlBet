@@ -17,6 +17,7 @@ public final class CommandName {
     public static final String SIGN_UP = "sign-up";
     public static final String EDIT_MATCH = "edit-match";
     public static final String REMOVE_MATCH = "remove-match";
+    public static final String CANCEL_MATCH = "cancel-match";
     public static final String ADD_MATCH = "add-match";
     public static final String BLOCK_USER = "block-user";
     public static final String UNBLOCK_USER = "unblock-user";
