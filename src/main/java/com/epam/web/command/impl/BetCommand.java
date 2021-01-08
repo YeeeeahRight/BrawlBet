@@ -46,6 +46,7 @@ public class BetCommand implements Command {
         } else {
             throw new InvalidInputException("You have no money for your bet.");
         }
-        return CommandResult.redirect(requestContext.getHeader());
+        String prevPage = requestContext.getHeader();
+        return CommandResult.redirect(prevPage);
     }
 }
