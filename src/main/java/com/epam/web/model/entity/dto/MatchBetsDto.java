@@ -58,28 +58,32 @@ public class MatchBetsDto implements Entity {
         if (firstTeamBetsAmount + secondTeamBetsAmount == 0) {
             return 0;
         }
-        return (firstTeamBetsAmount / (firstTeamBetsAmount + secondTeamBetsAmount)) * 100;
+        float percent = firstTeamBetsAmount * 1.0f / (firstTeamBetsAmount + secondTeamBetsAmount);
+        return Math.round(percent * 100);
     }
 
     public int getSecondPercent() {
         if (firstTeamBetsAmount + secondTeamBetsAmount == 0) {
             return 0;
         }
-        return (secondTeamBetsAmount / (firstTeamBetsAmount + secondTeamBetsAmount)) * 100;
+        float percent = secondTeamBetsAmount * 1.0f / (firstTeamBetsAmount + secondTeamBetsAmount);
+        return Math.round(percent * 100);
     }
 
     public float getFirstCoefficient() {
         if (firstTeamBetsAmount * secondTeamBetsAmount == 0) {
             return 1.0f;
         }
-        return 1.0f - commission + (secondTeamBetsAmount * 1.0f / firstTeamBetsAmount);
+        float coefficient = secondTeamBetsAmount * 1.0f / firstTeamBetsAmount;
+        return coefficient - (coefficient * commission / 100) + 1.0f;
     }
 
     public float getSecondCoefficient() {
         if (firstTeamBetsAmount * secondTeamBetsAmount == 0) {
             return 1.0f;
         }
-        return 1.0f - commission + (firstTeamBetsAmount * 1.0f / secondTeamBetsAmount);
+        float coefficient = firstTeamBetsAmount * 1.0f / secondTeamBetsAmount;
+        return coefficient - (coefficient * commission / 100) + 1.0f;
     }
 
     @Override

@@ -15,7 +15,7 @@ public class LoginCommand implements Command {
     private static final String HOME_PAGE_COMMAND = "controller?command=" + CommandName.HOME_PAGE;
     private static final String INCORRECT_DATA_KEY = "incorrect";
     private static final String BANNED_USER_KEY = "banned";
-    private static final String USER_ROLE = "USER";
+    private static final String ADMIN_ROLE = "ADMIN";
 
     private final LoginService service;
 
@@ -35,7 +35,7 @@ public class LoginCommand implements Command {
                 requestContext.addSession(Attribute.ACCOUNT_ID, id);
                 String role = account.getRole();
                 requestContext.addSession(Attribute.ROLE, account.getRole());
-                if (role.equalsIgnoreCase(USER_ROLE)) {
+                if (!role.equalsIgnoreCase(ADMIN_ROLE)) {
                     int balance = account.getBalance();
                     requestContext.addSession(Attribute.USER_BALANCE, balance);
                 }

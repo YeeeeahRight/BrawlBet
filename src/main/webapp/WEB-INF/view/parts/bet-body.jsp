@@ -78,7 +78,7 @@
                        name="money" min="${minBet}" max="${maxBet}">
                 <input id="on" type="text" name="on" value=""/>
                 <div class="bet-buttons">
-                    <button type="first-button" onblur="betOnFirst()">
+                    <button type="submit" onclick="betOnFirst()" class="first-button">
                         <div class="button">
                             <div class="bet-on">
                                 <h1>
@@ -87,12 +87,14 @@
                             </div>
                             <div class="coefficient-value">
                                 <h1>
-                                    <fmt:message key="bet.coefficient"/>${matchDto.getFirstCoefficient()}
+                                    <fmt:message key="bet.coefficient"/>
+                                    <fmt:formatNumber type="number" maxFractionDigits="3"
+                                                      value="${matchDto.getFirstCoefficient()}"/>
                                 </h1>
                             </div>
                         </div>
                     </button>
-                    <button id="second-button" type="submit" onblur="betOnSecond()">
+                    <button type="submit" onclick="betOnSecond()" class="second-button">
                         <div class="button">
                             <div class="bet-on">
                                 <h1>
@@ -101,7 +103,9 @@
                             </div>
                             <div class="coefficient-value">
                                 <h1>
-                                    <fmt:message key="bet.coefficient"/>${matchDto.getSecondCoefficient()}
+                                    <fmt:message key="bet.coefficient"/>
+                                    <fmt:formatNumber type="number" maxFractionDigits="3"
+                                                      value="${matchDto.getSecondCoefficient()}"/>
                                 </h1>
                             </div>
                         </div>
@@ -112,4 +116,4 @@
     </div>
 </div>
 
-<script src="<c:url value="/static/js/set-team-on-bet.js"/>"></script>
+<script src="<c:url value="/static/js/bet-page.js"/>"></script>
