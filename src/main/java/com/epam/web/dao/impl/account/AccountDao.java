@@ -1,4 +1,4 @@
-package com.epam.web.dao.account;
+package com.epam.web.dao.impl.account;
 
 import com.epam.web.dao.Dao;
 import com.epam.web.exceptions.DaoException;
@@ -11,4 +11,5 @@ public interface AccountDao extends Dao<Account> {
     Optional<Account> findAccountByLogin(String login) throws DaoException;
     void block(long id) throws DaoException;
     void unblock(long id) throws DaoException;
+    void addMoneyToBalance(int money, long id) throws DaoException;
 }

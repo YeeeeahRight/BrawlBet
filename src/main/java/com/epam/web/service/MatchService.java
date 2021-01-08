@@ -1,10 +1,11 @@
 package com.epam.web.service;
 
-import com.epam.web.dao.account.AccountDao;
-import com.epam.web.dao.bet.BetDao;
+import com.epam.web.dao.impl.account.AccountDao;
+import com.epam.web.dao.impl.bet.BetDao;
 import com.epam.web.dao.helper.DaoHelper;
 import com.epam.web.dao.helper.DaoHelperFactory;
-import com.epam.web.dao.match.MatchDao;
+import com.epam.web.dao.impl.match.MatchDao;
+import com.epam.web.model.entity.Bet;
 import com.epam.web.model.entity.Match;
 import com.epam.web.exceptions.DaoException;
 import com.epam.web.exceptions.ServiceException;
@@ -24,7 +25,7 @@ public class MatchService {
             MatchDao matchDao = daoHelper.createMatchDao();
             return matchDao.getAll();
         } catch (DaoException e) {
-            throw new ServiceException(e.getMessage(), e);
+            throw new ServiceException(e);
         }
     }
 
@@ -33,7 +34,7 @@ public class MatchService {
             MatchDao matchDao = daoHelper.createMatchDao();
             matchDao.removeById(id);
         } catch (DaoException e) {
-            throw new ServiceException(e.getMessage(), e);
+            throw new ServiceException(e);
         }
     }
 
@@ -42,7 +43,7 @@ public class MatchService {
             MatchDao matchDao = daoHelper.createMatchDao();
             matchDao.save(match);
         } catch (DaoException e) {
-            throw new ServiceException(e.getMessage(), e);
+            throw new ServiceException(e);
         }
     }
 
@@ -51,7 +52,7 @@ public class MatchService {
             MatchDao matchDao = daoHelper.createMatchDao();
             matchDao.edit(match, id);
         } catch (DaoException e) {
-            throw new ServiceException(e.getMessage(), e);
+            throw new ServiceException(e);
         }
     }
 
@@ -64,7 +65,7 @@ public class MatchService {
             }
             return match.get();
         } catch (DaoException e) {
-            throw new ServiceException(e.getMessage(), e);
+            throw new ServiceException(e);
         }
     }
 
@@ -73,7 +74,7 @@ public class MatchService {
             MatchDao matchDao = daoHelper.createMatchDao();
             matchDao.addCommission(commission, id);
         } catch (DaoException e) {
-            throw new ServiceException(e.getMessage(), e);
+            throw new ServiceException(e);
         }
     }
 
@@ -82,7 +83,7 @@ public class MatchService {
             MatchDao matchDao = daoHelper.createMatchDao();
             return matchDao.getActiveMatches();
         } catch (DaoException e) {
-            throw new ServiceException(e.getMessage(), e);
+            throw new ServiceException(e);
         }
     }
 
@@ -91,10 +92,29 @@ public class MatchService {
             MatchDao matchDao = daoHelper.createMatchDao();
             return matchDao.getUnacceptedMatches();
         } catch (DaoException e) {
-            throw new ServiceException(e.getMessage(), e);
+            throw new ServiceException(e);
         }
     }
 
-
+    public void cancelMatch(long id) throws ServiceException {
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
+            MatchDao matchDao = daoHelper.createMatchDao();
+            BetDao betDao = daoHelper.createBetDao();
+            AccountDao accountDao = daoHelper.createAccountDao();
+            List<Bet> bets = betDao.getBetsByMatchId(id);
+            daoHelper.startTransaction();
+            for (Bet bet : bets) {
+                long accountId = bet.getAccountId();
+                int money = bet.getMoneyBet();
+                int received = bet.getMoneyReceived();
+                accountDao.addMoneyToBalance(money - received, accountId);
+            }
+            matchDao.removeById(id);
+            betDao.removeById(id);
+            daoHelper.commit();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 
 }

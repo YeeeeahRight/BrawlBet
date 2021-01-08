@@ -1,4 +1,4 @@
-package com.epam.web.dao.account;
+package com.epam.web.dao.impl.account;
 
 import com.epam.web.dao.AbstractDao;
 import com.epam.web.model.entity.Account;
@@ -9,8 +9,9 @@ import java.sql.Connection;
 import java.util.Optional;
 
 public class AccountDaoImpl extends AbstractDao<Account> implements AccountDao {
-    private static final String BLOCK_QUERY = "UPDATE accounts SET is_blocked=1 WHERE ID=";
-    private static final String UNBLOCK_QUERY = "UPDATE accounts SET is_blocked=0 WHERE ID=";
+    private static final String BLOCK_QUERY = "UPDATE accounts SET is_blocked=1 WHERE id=";
+    private static final String UNBLOCK_QUERY = "UPDATE accounts SET is_blocked=0 WHERE id=";
+    private static final String ADD_MONEY_BALANCE_QUERY = "UPDATE accounts SET balance=balance+? WHERE id=?";
     private static final String FIND_BY_LOGIN_AND_PASSWORD =
             "SELECT * FROM accounts WHERE name = ? AND password = ?";
     private static final String FIND_BY_LOGIN =
@@ -47,5 +48,10 @@ public class AccountDaoImpl extends AbstractDao<Account> implements AccountDao {
     @Override
     public void unblock(long id) throws DaoException {
         executeUpdate(UNBLOCK_QUERY + id);
+    }
+
+    @Override
+    public void addMoneyToBalance(int money, long id) throws DaoException {
+        updateSingle(ADD_MONEY_BALANCE_QUERY, money, id);
     }
 }

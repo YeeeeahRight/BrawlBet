@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sc" uri="custom-tags" %>
 
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="locale"/>
@@ -17,15 +18,15 @@
         </div>
     </div>
     <div class="main-body">
-        <c:forEach items="${matches}" var="match" varStatus="counter">
-            <a href="${pageContext.request.contextPath}/controller?command=bet-page&id=${match.getId()}">
+        <c:forEach items="${matchesBetsDto}" var="matchDto" varStatus="counter">
+            <a href="${pageContext.request.contextPath}/controller?command=bet-page&id=${matchDto.getId()}">
                 <div class="match match-${counter.index + 1}" >
                     <div class="match-body">
                         <div class="match-f-team">
-                            <h1>${match.getFirstTeam()}</h1>
+                            <h1>${matchDto.getFirstTeam()}</h1>
                         </div>
                         <div class="match-f-percent">
-                            <h1>${match.getFirstPercent()}
+                            <h1>${matchDto.getFirstPercent()}
                                 <%="%"%>
                             </h1>
                         </div>
@@ -33,20 +34,22 @@
                             <h1>-</h1>
                         </div>
                         <div class="match-s-percent">
-                            <h1>${match.getSecondPercent()}
+                            <h1>${matchDto.getSecondPercent()}
                                 <%="%"%>
                             </h1>
                         </div>
                         <div class="match-s-team">
-                            <h1>${match.getSecondTeam()}</h1>
+                            <h1>${matchDto.getSecondTeam()}</h1>
                         </div>
                     </div>
                     <div class="match-header">
                         <div class="match-date">
-                            <h1>${match.getMatchFormattedDate()}</h1>
+                            <h1>
+                                <sc:date-formatter date="${matchDto.getDate()}" formatType="MATCH"></sc:date-formatter>
+                            </h1>
                         </div>
                         <div class="match-tournament">
-                            <h1>${match.getTournament()}</h1>
+                            <h1>${matchDto.getTournament()}</h1>
                         </div>
                     </div>
                 </div>

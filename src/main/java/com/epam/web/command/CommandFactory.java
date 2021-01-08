@@ -3,10 +3,7 @@ package com.epam.web.command;
 import com.epam.web.command.impl.*;
 import com.epam.web.constant.CommandName;
 import com.epam.web.dao.helper.DaoHelperFactory;
-import com.epam.web.service.LoginService;
-import com.epam.web.service.MatchService;
-import com.epam.web.service.SignUpService;
-import com.epam.web.service.UserService;
+import com.epam.web.service.*;
 
 public class CommandFactory {
 
@@ -22,13 +19,13 @@ public class CommandFactory {
             case CommandName.SIGN_UP:
                 return new SignUpCommand(new SignUpService(new DaoHelperFactory()));
             case CommandName.BET:
-                return new BetCommand();
+                return new BetCommand(new BetService(new DaoHelperFactory()));
             case CommandName.LOCALIZATION:
                 return new LocalizationCommand();
             case CommandName.HOME_PAGE:
-                return new HomePageCommand(new MatchService(new DaoHelperFactory()));
+                return new HomePageCommand(new MatchService(new DaoHelperFactory()), new BetService(new DaoHelperFactory()));
             case CommandName.BET_PAGE:
-                return new BetPageCommand(new MatchService(new DaoHelperFactory()));
+                return new BetPageCommand(new MatchService(new DaoHelperFactory()), new BetService(new DaoHelperFactory()));
             case CommandName.MATCHES:
                 return new MatchesCommand(new MatchService(new DaoHelperFactory()));
             case CommandName.USERS:

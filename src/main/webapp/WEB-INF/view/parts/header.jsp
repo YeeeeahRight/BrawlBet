@@ -28,7 +28,7 @@
                     <fmt:message key="header.account.balance"/>
                 </h1>
                 <h1 class="account-balance">
-                    ${sessionScope.account.getBalance()}
+                    ${sessionScope.userBalance}
                 </h1>
             </div>
         </sc:access>

@@ -133,7 +133,7 @@
     text-align: center;
 }
 
-.money-input {
+#money {
     margin-top: 26px;
     margin-left: auto;
     margin-right: auto;
@@ -167,10 +167,6 @@ button:hover {
     opacity: 0.8;
 }
 
-.second-button {
-    margin-left: 100px;
-}
-
 .bet-on {
     font-size: 20px;
     text-align: center;
@@ -180,4 +176,17 @@ button:hover {
     margin-top: 6px;
     font-size: 20px;
     text-align: center;
+}
+
+#second-button {
+    margin-left:100px;
+}
+
+#money-input-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#on {
+    visibility: hidden;
 }

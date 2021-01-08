@@ -22,9 +22,11 @@ public class RemoveMatchCommand implements Command {
         String idStr = requestContext.getRequestParameter(Parameter.ID);
         long id = Long.parseLong(idStr);
         Match match = matchService.findById(id);
-
+        if (match.getCommission() == 0) {
             matchService.removeById(id);
-
+        } else {
+            matchService.cancelMatch(id);
+        }
 
         return CommandResult.redirect(MATCHES_COMMAND);
     }
