@@ -16,8 +16,10 @@ public class DateParser {
                 return DateFormatters.MYSQL_FORMATTER.parse(dateString);
             case HTML:
                 return DateFormatters.HTML_FORMATTER.parse(dateString);
-            case MATCH:
-                return DateFormatters.MATCH_FORMATTER.parse(dateString);
+            case LOCALE_RU:
+                return DateFormatters.RU_LOCALE_FORMATTER.parse(dateString);
+            case LOCALE_ENG:
+                return DateFormatters.ENG_LOCALE_FORMATTER.parse(dateString);
             default:
                 throw new IllegalArgumentException("Unknown date format type.");
         }

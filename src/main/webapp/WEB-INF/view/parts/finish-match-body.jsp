@@ -29,7 +29,8 @@
                     <div class="match-description">
                         <div class="match-header">
                             <h1 class="date">
-                                <sc:date-formatter date="${match.getDate()}" formatType="MATCH"></sc:date-formatter>
+                                <sc:date-formatter date="${match.getDate()}"
+                                                   formatType="${sessionScope.lang}"></sc:date-formatter>
                             </h1>
                             <h1 class="tournament">${match.getTournament()}</h1>
                         </div>

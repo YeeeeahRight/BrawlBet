@@ -21,7 +21,8 @@
                 <div class="match-header">
                     <div class="match-date">
                         <h1>
-                            <sc:date-formatter date="${matchDto.getDate()}" formatType="MATCH"></sc:date-formatter>
+                            <sc:date-formatter date="${matchDto.getDate()}"
+                                               formatType="${sessionScope.lang}"></sc:date-formatter>
                         </h1>
                     </div>
                 </div>
