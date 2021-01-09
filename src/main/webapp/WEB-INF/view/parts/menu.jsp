@@ -23,6 +23,14 @@
                 </h1>
             </div>
         </a>
+        <a href="${pageContext.request.contextPath}/controller?command=close-matches-page">
+            <div class="third-item">
+                <div class="menu-finish-image"></div>
+                <h1 class="item-text">
+                    <fmt:message key="menu.finish.matches"/>
+                </h1>
+            </div>
+        </a>
     </sc:access>
     <sc:access role="BOOKMAKER">
         <a href="${pageContext.request.contextPath}/controller?command=accept-matches-page">

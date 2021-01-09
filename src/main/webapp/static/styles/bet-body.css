@@ -190,3 +190,18 @@ button:hover {
 #on {
     visibility: hidden;
 }
+
+.match-finished-block {
+    width:730px;
+    margin-top:50px;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.match-finished-text {
+    font-size: 30px;
+    text-align: center;
+}

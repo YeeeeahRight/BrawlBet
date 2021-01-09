@@ -15,7 +15,6 @@ public class AccessFilter implements Filter {
     private static final String ADMIN_ROLE = "ADMIN";
     private static final String USER_ROLE = "USER";
     private static final String BOOKMAKER_ROLE = "BOOKMAKER";
-    private static final int ACCESS_DENIED_ERROR_CODE = 403;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -64,6 +63,8 @@ public class AccessFilter implements Filter {
             case CommandName.BLOCK_USER:
             case CommandName.UNBLOCK_USER:
             case CommandName.CANCEL_MATCH:
+            case CommandName.CLOSE_MATCHES_PAGE:
+            case CommandName.CLOSE_MATCH:
             case CommandName.USERS:
                 return role.equalsIgnoreCase(ADMIN_ROLE);
             case CommandName.REMOVE_MATCH:

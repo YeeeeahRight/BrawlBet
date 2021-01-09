@@ -19,11 +19,15 @@ public class CommandFactory {
             case CommandName.SIGN_UP:
                 return new SignUpCommand(new SignUpService(new DaoHelperFactory()));
             case CommandName.BET:
-                return new BetCommand(new BetService(new DaoHelperFactory()));
+                return new BetCommand(new MatchService(new DaoHelperFactory()), new BetService(new DaoHelperFactory()));
             case CommandName.LOCALIZATION:
                 return new LocalizationCommand();
             case CommandName.HOME_PAGE:
                 return new HomePageCommand(new MatchService(new DaoHelperFactory()), new BetService(new DaoHelperFactory()));
+            case CommandName.CLOSE_MATCHES_PAGE:
+                return new CloseMatchesPageCommand(new MatchService(new DaoHelperFactory()));
+            case CommandName.CLOSE_MATCH:
+                return new CloseMatchCommand(new MatchService(new DaoHelperFactory()));
             case CommandName.BET_PAGE:
                 return new BetPageCommand(new MatchService(new DaoHelperFactory()), new BetService(new DaoHelperFactory()));
             case CommandName.MATCHES:

@@ -34,7 +34,6 @@
     flex-direction: column;
 }
 
-
 .matches-image {
     width: 65px;
     height: 65px;
@@ -62,9 +61,18 @@
     margin-right: auto;
 }
 
+.menu-finish-image {
+    width: 65px;
+    height: 65px;
+    background: url(../images/finish.png) no-repeat center center;
+    background-size: cover;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .item-text {
     color: rgba(48, 48, 48, 1);
-    margin-top: 5px;
+    margin-top: 9px;
     text-align: center;
     width: 100%;
 }

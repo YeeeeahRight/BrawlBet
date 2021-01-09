@@ -1,0 +1,169 @@
+
+.body {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.main-header {
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.main-content {
+    background-color: rgba(221, 222, 224, 1.0);
+    width: 82.06%;
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column
+}
+
+.main-body {
+    height: 100%;
+    width: 100%;
+    font-size: 20px;
+
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.matches-icon-first {
+    width: 65px;
+    height: 65px;
+    margin-top: 20px;
+
+    background: url(../images/matches.png) no-repeat center center;
+    background-size: cover;
+}
+
+.matches-logo-text {
+    margin-top: 15px;
+    color: #303030;
+    font-size: 64px;
+}
+
+.matches-icon-second {
+    width: 65px;
+    height: 65px;
+    margin-top: 20px;
+
+    background: url(../images/matches.png) no-repeat center center;
+    background-size: cover;
+}
+
+.match {
+    width: 628px;
+    height: 64px;
+    margin-left: auto;
+    margin-right: auto;
+
+    display: flex;
+    justify-content: center;
+}
+
+.match-1 {
+    margin-top: 32px;
+}
+
+.match-2 {
+    margin-top: 26px;
+}
+
+.match-3 {
+    margin-top: 26px;
+}
+
+.match-4 {
+    margin-top: 26px;
+}
+
+.match-5 {
+    margin-top: 26px;
+}
+
+.match-6 {
+    margin-top: 476px;
+}
+
+.finish-button {
+    width: 68px;
+    height: 64px;
+    margin-right: 23px;
+    background: #F1F1F1;
+    border: 2px solid #94E512;
+}
+
+.finish-image {
+    margin-left: 3px;
+    width: 58px;
+    height: 58px;
+    margin-top: 1px;
+    background: url(../images/finish.png) no-repeat center center;
+    background-size: cover;
+}
+
+.match-description {
+    width: 448px;
+    height: 64px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.match-content {
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    background: #FFFFFF;
+}
+
+.f-team-name {
+    margin-left: 15px;
+    margin-top: 10px;
+
+    font-size: 18px;
+}
+
+.s-team-name {
+    margin-right: 15px;
+    margin-top: 9px;
+
+    font-size: 18px;
+}
+
+.versus {
+    font-size: 24px;
+    position: absolute;
+    left: 58%;
+}
+
+.match-header {
+    height: 24px;
+    font-size: 20px;
+    background: #F1F1F1;
+    display: flex;
+    justify-content: space-between;
+}
+
+.date {
+    text-align: left;
+    margin-left: 15px;
+}
+
+.tournament {
+    text-align: right;
+    margin-right: 15px;
+}
+
+.add-match-text:active {
+    font-size: 38px;
+}
+
+.finish-button:active {
+    border: 2.8px solid #94E512;
+}

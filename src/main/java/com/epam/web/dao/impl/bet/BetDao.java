@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface BetDao extends Dao<Bet> {
     List<Bet> getBetsByMatchId(long id) throws DaoException;
+    void close(int moneyReceived, long id) throws DaoException;
 }
