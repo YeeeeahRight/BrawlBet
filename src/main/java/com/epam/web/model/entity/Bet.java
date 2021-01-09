@@ -59,4 +59,55 @@ public class Bet implements Entity {
     public int getMoneyReceived() {
         return moneyReceived;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Bet bet = (Bet) o;
+
+        if (accountId != bet.accountId) {
+            return false;
+        }
+        if (matchId != bet.matchId) {
+            return false;
+        }
+        if (moneyReceived != bet.moneyReceived) {
+            return false;
+        }
+        if (moneyBet != bet.moneyBet) {
+            return false;
+        }
+        if (id != bet.id) {
+            return false;
+        }
+        return team.equals(bet.team);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (accountId ^ (accountId >>> 32));
+        result = 31 * result + (int) (matchId ^ (matchId >>> 32));
+        result = 31 * result + team.hashCode();
+        result = 31 * result + moneyReceived;
+        result = 31 * result + moneyBet;
+        result = 31 * result + (int) (id ^ (id >>> 32));
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Bet{" + "accountId=" + accountId +
+                ", matchId=" + matchId +
+                ", team='" + team + '\'' +
+                ", moneyReceived=" + moneyReceived +
+                ", moneyBet=" + moneyBet +
+                ", id=" + id +
+                '}';
+    }
 }

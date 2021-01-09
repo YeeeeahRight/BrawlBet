@@ -90,4 +90,66 @@ public class MatchBetsDto implements Entity {
     public long getId() {
         return id;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        MatchBetsDto that = (MatchBetsDto) o;
+
+        if (id != that.id) {
+            return false;
+        }
+        if (Float.compare(that.commission, commission) != 0) {
+            return false;
+        }
+        if (firstTeamBetsAmount != that.firstTeamBetsAmount) {
+            return false;
+        }
+        if (secondTeamBetsAmount != that.secondTeamBetsAmount) {
+            return false;
+        }
+        if (!date.equals(that.date)) {
+            return false;
+        }
+        if (!tournament.equals(that.tournament)) {
+            return false;
+        }
+        if (!firstTeam.equals(that.firstTeam)) {
+            return false;
+        }
+        return secondTeam.equals(that.secondTeam);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + date.hashCode();
+        result = 31 * result + tournament.hashCode();
+        result = 31 * result + firstTeam.hashCode();
+        result = 31 * result + secondTeam.hashCode();
+        result = 31 * result + (commission != +0.0f ? Float.floatToIntBits(commission) : 0);
+        result = 31 * result + firstTeamBetsAmount;
+        result = 31 * result + secondTeamBetsAmount;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "MatchBetsDto{" +
+                "id=" + id +
+                ", date=" + date +
+                ", tournament='" + tournament + '\'' +
+                ", firstTeam='" + firstTeam + '\'' +
+                ", secondTeam='" + secondTeam + '\'' +
+                ", commission=" + commission +
+                ", firstTeamBetsAmount=" + firstTeamBetsAmount +
+                ", secondTeamBetsAmount=" + secondTeamBetsAmount +
+                '}';
+    }
 }

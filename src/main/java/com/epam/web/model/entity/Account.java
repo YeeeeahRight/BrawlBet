@@ -59,4 +59,55 @@ public class Account implements Entity {
     public long getId() {
         return id;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Account account = (Account) o;
+
+        if (balance != account.balance) {
+            return false;
+        }
+        if (isBlocked != account.isBlocked) {
+            return false;
+        }
+        if (id != account.id) {
+            return false;
+        }
+        if (!name.equals(account.name)) {
+            return false;
+        }
+        if (!password.equals(account.password)) {
+            return false;
+        }
+        return role.equals(account.role);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + password.hashCode();
+        result = 31 * result + role.hashCode();
+        result = 31 * result + balance;
+        result = 31 * result + (isBlocked ? 1 : 0);
+        result = 31 * result + (int) (id ^ (id >>> 32));
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" + "name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                ", balance=" + balance +
+                ", isBlocked=" + isBlocked +
+                ", id=" + id +
+                '}';
+    }
 }

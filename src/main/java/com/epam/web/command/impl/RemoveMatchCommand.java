@@ -18,6 +18,7 @@ public class RemoveMatchCommand implements Command {
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
         String idStr = requestContext.getRequestParameter(Parameter.ID);
         long id = Long.parseLong(idStr);
+
         matchService.removeById(id);
         String prevPage = requestContext.getHeader();
         return CommandResult.redirect(prevPage);

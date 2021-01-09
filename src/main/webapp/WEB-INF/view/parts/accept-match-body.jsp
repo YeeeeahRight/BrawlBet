@@ -43,11 +43,11 @@
                             <div class="match-commission">
                                 <input class="commission-input" type="number" required step="0.01"
                                        placeholder="<fmt:message key="match.enter.commission"/>"
-                                       name="commission" min="0" max="8">
+                                       name="commission" min="1" max="8">
                             </div>
                         </div>
                         <div class="cancel-button">
-                            <a href="${pageContext.request.contextPath}/controller?command=remove-match&id=1">
+                            <a href="${pageContext.request.contextPath}/controller?command=remove-match&id=${match.getId()}">
                                 <div class="cancel-image"></div>
                             </a>
                         </div>

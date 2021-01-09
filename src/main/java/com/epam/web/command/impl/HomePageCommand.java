@@ -29,12 +29,12 @@ public class HomePageCommand implements Command {
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
         List<Match> activeMatches = matchService.getActiveMatches();
         List<Bet> bets = betService.getAll();
-        List<MatchBetsDto> matchBetsDtoList = createMatchBetDtoList(activeMatches, bets);
+        List<MatchBetsDto> matchBetsDtoList = buildMatchBetDtoList(activeMatches, bets);
         requestContext.addAttribute(Attribute.MATCHES_BETS_DTO, matchBetsDtoList);
         return CommandResult.forward(Page.HOME);
     }
 
-    private List<MatchBetsDto> createMatchBetDtoList(List<Match> activeMatches, List<Bet> bets) {
+    private List<MatchBetsDto> buildMatchBetDtoList(List<Match> activeMatches, List<Bet> bets) {
         List<MatchBetsDto> matchBetsDtoList = new ArrayList<>();
         for (Match match : activeMatches) {
             long id = match.getId();

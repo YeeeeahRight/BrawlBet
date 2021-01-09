@@ -12,7 +12,6 @@ import com.epam.web.model.entity.Match;
 import com.epam.web.model.entity.dto.MatchBetsDto;
 import com.epam.web.service.BetService;
 import com.epam.web.service.MatchService;
-import com.epam.web.service.UserService;
 
 import java.util.Date;
 import java.util.List;
@@ -30,12 +29,13 @@ public class BetPageCommand implements Command {
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
         String idStr = requestContext.getRequestParameter(Parameter.ID);
         long id = Long.parseLong(idStr);
+        boolean isMatchActive = matchService.isFinished(id);
+        requestContext.addAttribute(Attribute.IS_MATCH_FINISHED, isMatchActive);
         Match match = matchService.findById(id);
         List<Bet> bets = betService.getBetsByMatch(id);
         MatchBetsDto matchBetsDto = createMatchBetDto(match, bets);
         requestContext.addAttribute(Attribute.MATCH_BETS_DTO, matchBetsDto);
-
-        Long accountId = (Long)requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
+        Long accountId = (Long) requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
         //accountId equals null when guest
         if (accountId != null) {
             int balance = betService.getUserBalance(accountId);
