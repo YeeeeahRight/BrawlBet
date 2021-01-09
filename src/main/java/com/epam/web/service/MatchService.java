@@ -78,10 +78,11 @@ public class MatchService {
                 throw new ServiceException("This match already closed.");
             }
             List<Bet> bets = betDao.getBetsByMatchId(matchId);
+            String winner;
             if (bets.size() != 0) {
                 MatchBetsDto matchBetsDto = createMatchBetDto(match, bets);
                 int firstPercent = matchBetsDto.getFirstPercent();
-                String winner = calculateWinner(firstPercent);
+                winner = calculateWinner(firstPercent);
                 boolean isBetsOnOneTeam = (firstPercent == 0 || firstPercent == 100);
                 float coefficient;
                 if (isBetsOnOneTeam) {
@@ -106,8 +107,10 @@ public class MatchService {
                     betDao.close(moneyReceived, bet.getId());
                     accountDao.addMoneyToBalance(moneyReceived, bet.getAccountId());
                 }
+            } else {
+                winner = calculateWinner(50);
             }
-            matchDao.close(matchId);
+            matchDao.close(matchId, winner);
             daoHelper.commit();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -120,6 +123,7 @@ public class MatchService {
         String tournament = match.getTournament();
         String firstTeam = match.getFirstTeam();
         String secondTeam = match.getSecondTeam();
+        String winner = match.getWinner();
         float commission = match.getCommission();
         int firstTeamBetsAmount = 0;
         int secondTeamBetsAmount = 0;
@@ -135,7 +139,7 @@ public class MatchService {
             }
         }
         return new MatchBetsDto(id, date, tournament,
-                firstTeam, secondTeam, commission, firstTeamBetsAmount, secondTeamBetsAmount);
+                firstTeam, secondTeam, winner, commission, firstTeamBetsAmount, secondTeamBetsAmount);
     }
 
     private String calculateWinner(int firstTeamPercent) {

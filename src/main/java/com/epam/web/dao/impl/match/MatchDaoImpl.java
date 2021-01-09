@@ -13,7 +13,7 @@ import java.util.List;
 
 public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     private static final String EDIT_QUERY =
-            "UPDATE matches SET date=?, tournament=?, first_team=?, second_team=?, commission=? WHERE id=?";
+            "UPDATE matches SET date=?, tournament=?, first_team=?, second_team=? WHERE id=?";
     private static final String ADD_QUERY =
             "INSERT matches (date, tournament, first_team, second_team) VALUES" +
                     "(?, ?, ?, ?)";
@@ -24,7 +24,7 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
             "AND commission > 0 AND is_closed = 0";
     private static final String GET_UNFINISHED_MATCHES_QUERY = "SELECT * FROM matches WHERE date > ?";
     private static final String ADD_COMMISSION_QUERY = "UPDATE matches SET commission=? WHERE id=?";
-    private static final String CLOSE_QUERY = "UPDATE matches SET is_closed=1 WHERE id=?";
+    private static final String CLOSE_QUERY = "UPDATE matches SET is_closed=1, winner=? WHERE id=?";
 
     public MatchDaoImpl(Connection connection) {
         super(connection, new MatchRowMapper(), Match.TABLE);
@@ -47,9 +47,8 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
         String secondTeam = match.getSecondTeam();
         Date date = match.getDate();
         String dateStr = formatDate(date);
-        float commission = match.getCommission();
 
-        updateSingle(EDIT_QUERY, dateStr, tournament, firstTeam, secondTeam, commission, id);
+        updateSingle(EDIT_QUERY, dateStr, tournament, firstTeam, secondTeam, id);
     }
 
     private String formatDate(Date date) {
@@ -58,8 +57,8 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     }
 
     @Override
-    public void close(long id) throws DaoException {
-        updateSingle(CLOSE_QUERY, id);
+    public void close(long id, String winner) throws DaoException {
+        updateSingle(CLOSE_QUERY, winner, id);
     }
 
     @Override

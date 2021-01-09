@@ -42,6 +42,7 @@ public class HomePageCommand implements Command {
             String tournament = match.getTournament();
             String firstTeam = match.getFirstTeam();
             String secondTeam = match.getSecondTeam();
+            String winner = match.getWinner();
             float commission = match.getCommission();
             int firstTeamBetsAmount = 0;
             int secondTeamBetsAmount = 0;
@@ -57,7 +58,7 @@ public class HomePageCommand implements Command {
                 }
             }
             MatchBetsDto matchBetsDto = new MatchBetsDto(id, date, tournament,
-                    firstTeam, secondTeam, commission, firstTeamBetsAmount, secondTeamBetsAmount);
+                    firstTeam, secondTeam, winner, commission, firstTeamBetsAmount, secondTeamBetsAmount);
             matchBetsDtoList.add(matchBetsDto);
         }
         return matchBetsDtoList;

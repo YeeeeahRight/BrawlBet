@@ -44,7 +44,7 @@ public class EditMatchCommand implements Command {
         } catch (ParseException e) {
             throw new IllegalArgumentException("Invalid date format.");
         }
-        return new Match(date, tournament, firstTeam, secondTeam, 0,false);
+        return new Match(date, tournament, firstTeam, secondTeam, "NONE", 0,false);
     }
 }
 

@@ -13,32 +13,36 @@ public class Match implements Entity {
     public static final String SECOND_TEAM = "second_team";
     public static final String COMMISSION = "commission";
     public static final String IS_CLOSED = "is_closed";
+    public static final String WINNER = "winner";
 
     private final Date date;
     private final String tournament;
     private final String firstTeam;
     private final String secondTeam;
+    private final String winner;
     private final float commission;
     private final boolean isClosed;
     private long id;
 
     public Match(long id, Date date, String tournament, String firstTeam,
-                 String secondTeam, float commission, boolean isClosed) {
+                 String secondTeam, String winner, float commission, boolean isClosed) {
         this.id = id;
         this.date = date;
         this.tournament = tournament;
         this.firstTeam = firstTeam;
         this.secondTeam = secondTeam;
+        this.winner = winner;
         this.commission = commission;
         this.isClosed = isClosed;
     }
 
     public Match(Date date, String tournament, String firstTeam,
-                 String secondTeam, float commission, boolean isClosed) {
+                 String secondTeam, String winner, float commission, boolean isClosed) {
         this.date = date;
         this.tournament = tournament;
         this.firstTeam = firstTeam;
         this.secondTeam = secondTeam;
+        this.winner = winner;
         this.commission = commission;
         this.isClosed = isClosed;
     }
@@ -65,6 +69,10 @@ public class Match implements Entity {
 
     public boolean isClosed() {
         return isClosed;
+    }
+
+    public String getWinner() {
+        return winner;
     }
 
     public long getId() {

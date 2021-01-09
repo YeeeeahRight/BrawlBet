@@ -10,17 +10,19 @@ public class MatchBetsDto implements Entity {
     private final String tournament;
     private final String firstTeam;
     private final String secondTeam;
+    private final String winner;
     private final float commission;
     private final int firstTeamBetsAmount;
     private final int secondTeamBetsAmount;
 
     public MatchBetsDto(long id, Date date, String tournament, String firstTeam,
-                        String secondTeam, float commission, int firstTeamBetsAmount, int secondTeamBetsAmount) {
+                        String secondTeam, String winner, float commission, int firstTeamBetsAmount, int secondTeamBetsAmount) {
         this.id = id;
         this.date = date;
         this.tournament = tournament;
         this.firstTeam = firstTeam;
         this.secondTeam = secondTeam;
+        this.winner = winner;
         this.commission = commission;
         this.firstTeamBetsAmount = firstTeamBetsAmount;
         this.secondTeamBetsAmount = secondTeamBetsAmount;

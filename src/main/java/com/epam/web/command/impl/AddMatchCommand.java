@@ -14,6 +14,7 @@ import java.text.ParseException;
 import java.util.Date;
 
 public class AddMatchCommand implements Command {
+    private static final String MATCHES_COMMAND = "controller?command=" + CommandName.MATCHES;
     private final MatchService matchService;
 
     public AddMatchCommand(MatchService matchService) {
@@ -25,8 +26,7 @@ public class AddMatchCommand implements Command {
         Match match = buildMatch(requestContext);
         matchService.saveMatch(match);
 
-        String prevPage = requestContext.getHeader();
-        return CommandResult.redirect(prevPage);
+        return CommandResult.redirect(MATCHES_COMMAND);
     }
 
     private Match buildMatch(RequestContext requestContext) {
@@ -41,6 +41,6 @@ public class AddMatchCommand implements Command {
         } catch (ParseException e) {
             throw new IllegalArgumentException("Invalid date format.");
         }
-        return new Match(date, tournament, firstTeam, secondTeam, 0, false);
+        return new Match(date, tournament, firstTeam, secondTeam, "NONE", 0, false);
     }
 }

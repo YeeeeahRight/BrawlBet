@@ -53,6 +53,7 @@ public class BetPageCommand implements Command {
         String tournament = match.getTournament();
         String firstTeam = match.getFirstTeam();
         String secondTeam = match.getSecondTeam();
+        String winner = match.getWinner();
         float commission = match.getCommission();
         int firstTeamBetsAmount = 0;
         int secondTeamBetsAmount = 0;
@@ -68,6 +69,6 @@ public class BetPageCommand implements Command {
             }
         }
         return new MatchBetsDto(id, date, tournament,
-                firstTeam, secondTeam, commission, firstTeamBetsAmount, secondTeamBetsAmount);
+                firstTeam, secondTeam, winner, commission, firstTeamBetsAmount, secondTeamBetsAmount);
     }
 }

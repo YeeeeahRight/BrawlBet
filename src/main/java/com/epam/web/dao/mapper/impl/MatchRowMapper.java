@@ -20,6 +20,7 @@ public class MatchRowMapper implements RowMapper<Match> {
         long id = resultSet.getLong(Match.ID);
         float commission = resultSet.getFloat(Match.COMMISSION);
         String dateString = resultSet.getString(Match.DATE);
+        String winner = resultSet.getString(Match.WINNER);
         boolean isClosed = resultSet.getBoolean(Match.IS_CLOSED);
         DateParser dateParser = new DateParser(dateString);
         Date date;
@@ -29,6 +30,6 @@ public class MatchRowMapper implements RowMapper<Match> {
             throw new SQLException("Invalid date format.");
         }
 
-        return new Match(id, date, tournament, firstTeam, secondTeam, commission, isClosed);
+        return new Match(id, date, tournament, firstTeam, secondTeam, winner, commission, isClosed);
     }
 }

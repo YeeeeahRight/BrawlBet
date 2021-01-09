@@ -9,14 +9,14 @@
     <jsp:include page="../parts/menu.jsp"/>
     <div class="main-content">
         <div class="main-header">
-            <div class = "deposit-text">
+            <div class = "deposit-text-head">
                 <fmt:message key="menu.deposit"/>
             </div>
         </div>
         <div class="main-body">
             <div class="form">
                 <div class="deposit-form">
-                    <div class="deposit-text-head">
+                    <div class="deposit-text">
                         <h1>
                             <fmt:message key="user.amount.text"/>:
                         </h1>

@@ -16,7 +16,7 @@ public interface MatchDao {
     List<Match> getUnfinishedMatches() throws DaoException;
     void removeById(long id) throws DaoException;
     void save(Match match) throws DaoException;
-    void close(long id) throws DaoException;
+    void close(long id, String winner) throws DaoException;
     Optional<Match> findById(long id) throws DaoException;
     void edit(Match newMatch, long id) throws DaoException;
     void addCommission(float commission, long id) throws DaoException;
