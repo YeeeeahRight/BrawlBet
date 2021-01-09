@@ -54,6 +54,8 @@ public class AccessFilter implements Filter {
             case CommandName.LOGOUT:
                 return !role.equalsIgnoreCase(GUEST_ROLE);
             case CommandName.BET:
+            case CommandName.DEPOSIT:
+            case CommandName.DEPOSIT_PAGE:
                 return role.equalsIgnoreCase(USER_ROLE);
             case CommandName.MATCHES:
             case CommandName.ADD_MATCH:

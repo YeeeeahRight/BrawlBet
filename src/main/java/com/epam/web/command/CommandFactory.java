@@ -34,6 +34,8 @@ public class CommandFactory {
                 return new MatchesCommand(new MatchService(new DaoHelperFactory()));
             case CommandName.USERS:
                 return new UsersCommand(new UserService(new DaoHelperFactory()));
+            case CommandName.DEPOSIT:
+                return new DepositCommand(new UserService(new DaoHelperFactory()));
             case CommandName.REMOVE_MATCH:
                 return new RemoveMatchCommand(new MatchService(new DaoHelperFactory()));
             case CommandName.CANCEL_MATCH:
@@ -54,6 +56,7 @@ public class CommandFactory {
                 return new AcceptMatchCommand(new MatchService(new DaoHelperFactory()));
             case CommandName.ADD_MATCH_PAGE:
             case CommandName.LOGIN_PAGE:
+            case CommandName.DEPOSIT_PAGE:
             case CommandName.SIGN_UP_PAGE:
                 return new ForwardPageCommand(commandParam);
             default:

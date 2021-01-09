@@ -50,4 +50,22 @@
             </div>
         </a>
     </sc:access>
+    <sc:access role="USER">
+        <a href="${pageContext.request.contextPath}/controller?command=deposit-page">
+            <div class="first-item">
+                <div class="deposit-image"></div>
+                <h1 class="item-text">
+                    <fmt:message key="menu.deposit"/>
+                </h1>
+            </div>
+        </a>
+        <a href="${pageContext.request.contextPath}/controller?command=history">
+            <div class="second-item">
+                <div class="history-image"></div>
+                <h1 class="item-text">
+                    <fmt:message key="menu.history"/>
+                </h1>
+            </div>
+        </a>
+    </sc:access>
 </div>

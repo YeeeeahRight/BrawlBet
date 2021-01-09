@@ -86,6 +86,10 @@ public class MatchBetsDto implements Entity {
         return coefficient - (coefficient * commission / 100) + 1.0f;
     }
 
+    public float getCommissionByCoefficient(float coefficient) {
+        return (coefficient * commission / 100);
+    }
+
     @Override
     public long getId() {
         return id;

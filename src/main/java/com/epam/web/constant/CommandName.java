@@ -4,6 +4,7 @@ public final class CommandName {
     public static final String HOME_PAGE = "home-page";
     public static final String LOGIN_PAGE = "login-page";
     public static final String SIGN_UP_PAGE = "sign-up-page";
+    public static final String DEPOSIT_PAGE = "deposit-page";
     public static final String ADD_MATCH_PAGE = "add-match-page";
     public static final String EDIT_MATCH_PAGE = "edit-match-page";
     public static final String ACCEPT_MATCHES_PAGE = "accept-matches-page";
@@ -12,6 +13,7 @@ public final class CommandName {
     public static final String BET = "bet";
     public static final String LOCALIZATION = "localization";
     public static final String USERS = "users";
+    public static final String DEPOSIT = "deposit";
     public static final String MATCHES = "matches";
     public static final String LOGIN = "login";
     public static final String LOGOUT = "logout";

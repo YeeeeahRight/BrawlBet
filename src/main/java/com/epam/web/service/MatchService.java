@@ -5,7 +5,6 @@ import com.epam.web.dao.impl.bet.BetDao;
 import com.epam.web.dao.helper.DaoHelper;
 import com.epam.web.dao.helper.DaoHelperFactory;
 import com.epam.web.dao.impl.match.MatchDao;
-import com.epam.web.model.entity.Account;
 import com.epam.web.model.entity.Bet;
 import com.epam.web.model.entity.Match;
 import com.epam.web.exceptions.DaoException;
@@ -79,21 +78,34 @@ public class MatchService {
                 throw new ServiceException("This match already closed.");
             }
             List<Bet> bets = betDao.getBetsByMatchId(matchId);
-            MatchBetsDto matchBetsDto = createMatchBetDto(match, bets);
-            String winner = calculateWinner(matchBetsDto.getFirstPercent());
-            float coefficient = winner.equalsIgnoreCase(FIRST_TEAM) ?
-                    matchBetsDto.getFirstCoefficient() : matchBetsDto.getSecondCoefficient();
-            daoHelper.startTransaction();
-            for (Bet bet : bets) {
-                String team = bet.getTeam();
-                int moneyReceived;
-                if (team.equalsIgnoreCase(winner)) {
-                    moneyReceived = Math.round(bet.getMoneyBet() * coefficient);
+            if (bets.size() != 0) {
+                MatchBetsDto matchBetsDto = createMatchBetDto(match, bets);
+                int firstPercent = matchBetsDto.getFirstPercent();
+                String winner = calculateWinner(firstPercent);
+                boolean isBetsOnOneTeam = (firstPercent == 0 || firstPercent == 100);
+                float coefficient;
+                if (isBetsOnOneTeam) {
+                    coefficient = 1.0f;
                 } else {
-                    moneyReceived = bet.getMoneyBet() * -1;
+                    coefficient = winner.equalsIgnoreCase(FIRST_TEAM) ?
+                            matchBetsDto.getFirstCoefficient() : matchBetsDto.getSecondCoefficient();
+                    boolean isNotCountCommission = isOneUserBets(bets);
+                    if (isNotCountCommission) {
+                        coefficient -= matchBetsDto.getCommissionByCoefficient(coefficient);
+                    }
                 }
-                betDao.close(moneyReceived, bet.getId());
-                accountDao.addMoneyToBalance(moneyReceived, bet.getAccountId());
+                daoHelper.startTransaction();
+                for (Bet bet : bets) {
+                    String team = bet.getTeam();
+                    int moneyReceived;
+                    if (team.equalsIgnoreCase(winner)) {
+                        moneyReceived = Math.round(bet.getMoneyBet() * coefficient);
+                    } else {
+                        moneyReceived = bet.getMoneyBet() * -1;
+                    }
+                    betDao.close(moneyReceived, bet.getId());
+                    accountDao.addMoneyToBalance(moneyReceived, bet.getAccountId());
+                }
             }
             matchDao.close(matchId);
             daoHelper.commit();
@@ -129,6 +141,16 @@ public class MatchService {
     private String calculateWinner(int firstTeamPercent) {
         long percent = Math.round((Math.random() * 100) + 1);
         return percent > firstTeamPercent ? SECOND_TEAM : FIRST_TEAM;
+    }
+
+    private boolean isOneUserBets(List<Bet> bets) {
+        long prevAccountId = bets.get(0).getId();
+        for (Bet bet : bets) {
+            if (prevAccountId != bet.getId()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public List<Match> getUnclosedMatches() throws ServiceException {

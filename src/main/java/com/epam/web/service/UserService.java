@@ -25,6 +25,15 @@ public class UserService {
         }
     }
 
+    public void addMoney(int money, long id) throws ServiceException {
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
+            AccountDao matchDao = daoHelper.createAccountDao();
+            matchDao.addMoneyToBalance(money, id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
     public void unblock(long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDao matchDao = daoHelper.createAccountDao();

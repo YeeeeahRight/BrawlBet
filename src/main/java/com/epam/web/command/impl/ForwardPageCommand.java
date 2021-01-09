@@ -22,6 +22,8 @@ public class ForwardPageCommand implements Command {
                 return CommandResult.forward(Page.SIGN_UP);
             case CommandName.ADD_MATCH_PAGE:
                 return CommandResult.forward(Page.ADD_MATCH);
+            case CommandName.DEPOSIT_PAGE:
+                return CommandResult.forward(Page.DEPOSIT);
             default:
                 throw new IllegalArgumentException("Unknown page: " + page);
         }
