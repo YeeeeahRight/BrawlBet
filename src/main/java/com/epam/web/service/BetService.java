@@ -28,19 +28,6 @@ public class BetService {
         }
     }
 
-    public int getUserBalance(long userId) throws ServiceException {
-        try (DaoHelper daoHelper = daoHelperFactory.create()) {
-            AccountDao accountDao = daoHelper.createAccountDao();
-            Optional<Account> user = accountDao.findById(userId);
-            if (!user.isPresent()) {
-                throw new ServiceException("There is no user with this id anymore.");
-            }
-            return user.get().getBalance();
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
     public void bet(Bet bet) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             BetDao betDao = daoHelper.createBetDao();

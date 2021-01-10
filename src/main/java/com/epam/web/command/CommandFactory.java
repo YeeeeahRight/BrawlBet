@@ -18,8 +18,6 @@ public class CommandFactory {
                 return new LogoutCommand();
             case CommandName.SIGN_UP:
                 return new SignUpCommand(new SignUpService(new DaoHelperFactory()));
-            case CommandName.BET:
-                return new BetCommand(new MatchService(new DaoHelperFactory()), new BetService(new DaoHelperFactory()));
             case CommandName.LOCALIZATION:
                 return new LocalizationCommand();
             case CommandName.HOME_PAGE:
@@ -29,7 +27,11 @@ public class CommandFactory {
             case CommandName.CLOSE_MATCH:
                 return new CloseMatchCommand(new MatchService(new DaoHelperFactory()));
             case CommandName.BET_PAGE:
-                return new BetPageCommand(new MatchService(new DaoHelperFactory()), new BetService(new DaoHelperFactory()));
+                return new BetPageCommand(new MatchService(new DaoHelperFactory()), new BetService(new DaoHelperFactory()),
+                        new UserService(new DaoHelperFactory()));
+            case CommandName.BET:
+                return new BetCommand(new MatchService(new DaoHelperFactory()), new BetService(new DaoHelperFactory()),
+                        new UserService(new DaoHelperFactory()));
             case CommandName.MATCHES:
                 return new MatchesCommand(new MatchService(new DaoHelperFactory()));
             case CommandName.USERS:

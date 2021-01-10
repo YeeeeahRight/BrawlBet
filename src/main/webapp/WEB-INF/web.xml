@@ -25,6 +25,16 @@
   </filter-mapping>
 
   <filter>
+    <filter-name>BalanceFilter</filter-name>
+    <filter-class>com.epam.web.controller.filter.BalanceFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>BalanceFilter</filter-name>
+    <url-pattern>/* </url-pattern>
+  </filter-mapping>
+
+  <filter>
     <filter-name>AccessFilter</filter-name>
     <filter-class>com.epam.web.controller.filter.AccessFilter</filter-class>
   </filter>

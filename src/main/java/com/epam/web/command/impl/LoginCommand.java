@@ -37,7 +37,7 @@ public class LoginCommand implements Command {
                 requestContext.addSession(Attribute.ROLE, account.getRole());
                 if (!role.equalsIgnoreCase(ADMIN_ROLE)) {
                     int balance = account.getBalance();
-                    requestContext.addSession(Attribute.USER_BALANCE, balance);
+                    requestContext.addSession(Attribute.BALANCE, balance);
                 }
                 return CommandResult.redirect(HOME_PAGE_COMMAND);
             }

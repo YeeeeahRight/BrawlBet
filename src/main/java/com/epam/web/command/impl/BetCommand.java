@@ -10,6 +10,7 @@ import com.epam.web.exceptions.ServiceException;
 import com.epam.web.model.entity.Bet;
 import com.epam.web.service.BetService;
 import com.epam.web.service.MatchService;
+import com.epam.web.service.UserService;
 
 
 public class BetCommand implements Command {
@@ -18,10 +19,12 @@ public class BetCommand implements Command {
 
     private final MatchService matchService;
     private final BetService betService;
+    private final UserService userService;
 
-    public BetCommand(MatchService matchService, BetService betService) {
+    public BetCommand(MatchService matchService, BetService betService, UserService userService) {
         this.matchService = matchService;
         this.betService = betService;
+        this.userService = userService;
     }
 
     @Override
@@ -41,8 +44,8 @@ public class BetCommand implements Command {
         if (money <= 0) {
             throw new InvalidInputException("Your bet value is not a positive value.");
         }
-        long accountId = (Long) requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
-        if (betService.getUserBalance(accountId) < money) {
+        Long accountId = (Long)requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
+        if (userService.getBalance(accountId) < money) {
             throw new InvalidInputException("You have no money for your bet.");
         }
         String team = requestContext.getRequestParameter(Parameter.BET_ON);
@@ -52,8 +55,6 @@ public class BetCommand implements Command {
         }
         Bet bet = new Bet(accountId, matchId, money, team, 0);
         betService.bet(bet);
-        int balance = (Integer) requestContext.getSessionAttribute(Attribute.USER_BALANCE);
-        requestContext.addSession(Attribute.USER_BALANCE, balance - bet.getMoneyBet());
 
         String prevPage = requestContext.getHeader();
         return CommandResult.redirect(prevPage);

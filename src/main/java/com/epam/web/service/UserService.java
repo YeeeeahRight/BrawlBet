@@ -8,6 +8,7 @@ import com.epam.web.exceptions.DaoException;
 import com.epam.web.exceptions.ServiceException;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UserService {
     private final DaoHelperFactory daoHelperFactory;
@@ -20,6 +21,22 @@ public class UserService {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDao matchDao = daoHelper.createAccountDao();
             return matchDao.getAll();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public int getBalance(Long id) throws ServiceException {
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
+            if (id == null) {
+                throw new ServiceException("There is no user with this id.");
+            }
+            AccountDao matchDao = daoHelper.createAccountDao();
+            Optional<Account> user = matchDao.findById(id);
+            if (!user.isPresent()) {
+                throw new ServiceException("There is no user with this id anymore.");
+            }
+            return user.get().getBalance();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

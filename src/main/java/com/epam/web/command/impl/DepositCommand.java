@@ -31,9 +31,6 @@ public class DepositCommand implements Command {
         }
         userService.addMoney(money, accountId);
 
-        int balance = (Integer) requestContext.getSessionAttribute(Attribute.USER_BALANCE);
-        requestContext.addSession(Attribute.USER_BALANCE, balance + money);
-
         String prevPage = requestContext.getHeader();
         return CommandResult.redirect(prevPage);
     }

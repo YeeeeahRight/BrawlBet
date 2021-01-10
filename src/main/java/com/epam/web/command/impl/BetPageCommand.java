@@ -12,6 +12,7 @@ import com.epam.web.model.entity.Match;
 import com.epam.web.model.entity.dto.MatchBetsDto;
 import com.epam.web.service.BetService;
 import com.epam.web.service.MatchService;
+import com.epam.web.service.UserService;
 
 import java.util.Date;
 import java.util.List;
@@ -19,10 +20,12 @@ import java.util.List;
 public class BetPageCommand implements Command {
     private final MatchService matchService;
     private final BetService betService;
+    private final UserService userService;
 
-    public BetPageCommand(MatchService matchService, BetService betService) {
+    public BetPageCommand(MatchService matchService, BetService betService, UserService userService) {
         this.matchService = matchService;
         this.betService = betService;
+        this.userService = userService;
     }
 
     @Override
@@ -36,12 +39,13 @@ public class BetPageCommand implements Command {
         MatchBetsDto matchBetsDto = createMatchBetDto(match, bets);
         requestContext.addAttribute(Attribute.MATCH_BETS_DTO, matchBetsDto);
         Long accountId = (Long) requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
-        //accountId equals null when guest
         if (accountId != null) {
-            int balance = betService.getUserBalance(accountId);
-            requestContext.addAttribute(Attribute.MAX_BET, balance);
-            requestContext.addAttribute(Attribute.MIN_BET, 1);
-            requestContext.addSession(Attribute.USER_BALANCE, balance);
+            String role = (String)requestContext.getSessionAttribute(Attribute.ROLE);
+            if (role != null && role.equals("USER")) {
+                int balance = userService.getBalance(accountId);
+                requestContext.addAttribute(Attribute.MAX_BET, balance);
+                requestContext.addAttribute(Attribute.MIN_BET, 1);
+            }
         }
 
         return CommandResult.forward(Page.BET);

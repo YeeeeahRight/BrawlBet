@@ -11,7 +11,7 @@ public final class Attribute {
     public static final String ROLE = "role";
     public static final String ACCOUNT_ID = "accountId";
     public static final String USERS = "users";
-    public static final String USER_BALANCE = "userBalance";
+    public static final String BALANCE = "balance";
     public static final String MAX_BET = "maxBet";
     public static final String MIN_BET = "minBet";
     public static final String IS_MATCH_FINISHED = "isMatchFinished";
