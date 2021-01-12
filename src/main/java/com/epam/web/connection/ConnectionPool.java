@@ -1,20 +1,26 @@
 package com.epam.web.connection;
 
+import com.epam.web.exceptions.ConnectionPoolException;
+import com.epam.web.exceptions.DaoException;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayDeque;
 import java.util.Queue;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
-    //TODO: Change to atomic boolean
-    private static volatile ConnectionPool instance = null;
+    private static final int POOL_SIZE = 10;
+    private static final AtomicBoolean IS_POOL_CREATED = new AtomicBoolean(false);
+    private static final Semaphore SEMAPHORE = new Semaphore(POOL_SIZE, true);
+    private static final ReentrantLock INSTANCE_LOCKER = new ReentrantLock();
+    private static final ReentrantLock CONNECTION_LOCKER = new ReentrantLock();
+    private static ConnectionPool instance = null;
     private final Queue<ProxyConnection> availableConnections;
     private final Queue<ProxyConnection> usingConnections;
-    private final ReentrantLock connectionLocker = new ReentrantLock();
     private final ConnectionFactory connectionFactory = new ConnectionFactory();
-    private static final ReentrantLock INSTANCE_LOCKER = new ReentrantLock();
-    private static final int POOL_SIZE = 10;
 
     private ConnectionPool() {
         availableConnections = new ArrayDeque<>();
@@ -27,13 +33,12 @@ public class ConnectionPool {
     }
 
     public static ConnectionPool getInstance() {
-        ConnectionPool localInstance = instance;
-        if (localInstance == null) {
+        if (!IS_POOL_CREATED.get()) {
             INSTANCE_LOCKER.lock();
             try {
-                localInstance = instance;
-                if (localInstance == null) {
+                if (!IS_POOL_CREATED.get()) {
                     instance = new ConnectionPool();
+                    IS_POOL_CREATED.set(true);
                 }
             } finally {
                 INSTANCE_LOCKER.unlock();
@@ -43,34 +48,40 @@ public class ConnectionPool {
     }
 
     public void returnConnection(ProxyConnection proxyConnection) {
-        connectionLocker.lock();
+        CONNECTION_LOCKER.lock();
         try {
             if (usingConnections.contains(proxyConnection)) {
                 availableConnections.offer(proxyConnection);
+                usingConnections.poll();
+                SEMAPHORE.release();
             }
         } finally {
-            connectionLocker.unlock();
+            CONNECTION_LOCKER.unlock();
         }
     }
 
     public ProxyConnection getConnection() {
-        connectionLocker.lock();
         try {
-            ProxyConnection proxyConnection = availableConnections.poll();
-            usingConnections.offer(proxyConnection);
-            return proxyConnection;
+            SEMAPHORE.acquire();
+            CONNECTION_LOCKER.lock();
+            ProxyConnection currentConnection = availableConnections.poll();
+            usingConnections.offer(currentConnection);
+            return currentConnection;
+        } catch (InterruptedException e) {
+            throw new ConnectionPoolException(e);
         } finally {
-            connectionLocker.unlock();
+            CONNECTION_LOCKER.unlock();
         }
     }
 
-    public void closeAll() {
-        usingConnections.forEach(this::returnConnection);
+    public void closeAll() throws DaoException {
+        availableConnections.addAll(usingConnections);
+        usingConnections.clear();
         for (ProxyConnection proxyConnection : availableConnections) {
             try {
                 proxyConnection.finalCloseConnection();
             } catch (SQLException e) {
-               // LOGGER.error(e.getMessage(), e);
+                throw new DaoException(e);
             }
         }
     }
