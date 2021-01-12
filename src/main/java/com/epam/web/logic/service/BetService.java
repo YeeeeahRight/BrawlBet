@@ -6,6 +6,7 @@ import com.epam.web.dao.helper.DaoHelper;
 import com.epam.web.dao.helper.DaoHelperFactory;
 import com.epam.web.exceptions.DaoException;
 import com.epam.web.exceptions.ServiceException;
+import com.epam.web.logic.validator.Validator;
 import com.epam.web.model.entity.Account;
 import com.epam.web.model.entity.Bet;
 
@@ -14,9 +15,11 @@ import java.util.Optional;
 
 public class BetService {
     private final DaoHelperFactory daoHelperFactory;
+    private final Validator<Bet> betValidator;
 
-    public BetService(DaoHelperFactory daoHelperFactory) {
+    public BetService(DaoHelperFactory daoHelperFactory, Validator<Bet> betValidator) {
         this.daoHelperFactory = daoHelperFactory;
+        this.betValidator = betValidator;
     }
 
     public List<Bet> getAll() throws ServiceException {
@@ -29,6 +32,9 @@ public class BetService {
     }
 
     public void createBet(Bet bet) throws ServiceException {
+        if (!betValidator.isValid(bet)) {
+            throw new ServiceException("Invalid bet data.");
+        }
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             BetDao betDao = daoHelper.createBetDao();
             AccountDao accountDao = daoHelper.createAccountDao();

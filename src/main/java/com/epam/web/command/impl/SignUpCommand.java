@@ -42,9 +42,6 @@ public class SignUpCommand implements Command {
                     throw new InvalidParametersException("No password parameter in request.");
                 }
                 String repeatedPassword = requestContext.getRequestParameter(Parameter.REPEATED_PASSWORD);
-                if (repeatedPassword == null) {
-                    throw new InvalidParametersException("No repeated password parameter in request.");
-                }
                 boolean isPasswordCorrect = password.matches(PASSWORD_REGEX);
                 if (isPasswordCorrect) {
                     boolean isPasswordRepeated = password.equals(repeatedPassword);

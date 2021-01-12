@@ -39,9 +39,6 @@ public class BetCommand implements Command {
                 throw new ServiceException("This match is already finished.");
             }
             money = Integer.parseInt(moneyStr);
-            if (money <= 0) {
-                throw new InvalidParametersException("Your bet value is not a positive value.");
-            }
             String teamStr = requestContext.getRequestParameter(Parameter.BET_ON);
             try {
                 team = Team.valueOf(teamStr);

@@ -7,6 +7,7 @@ import com.epam.web.constant.Parameter;
 import com.epam.web.date.DateFormatType;
 import com.epam.web.date.DateParser;
 import com.epam.web.exceptions.InvalidParametersException;
+import com.epam.web.logic.validator.impl.MatchValidator;
 import com.epam.web.model.entity.Match;
 import com.epam.web.exceptions.ServiceException;
 import com.epam.web.controller.request.RequestContext;
@@ -25,7 +26,6 @@ public class EditMatchCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
-        Match match = buildMatch(requestContext);
         String idStr = requestContext.getRequestParameter(Parameter.ID);
         long id;
         try {
@@ -33,6 +33,7 @@ public class EditMatchCommand implements Command {
         } catch (NumberFormatException e) {
             throw new InvalidParametersException("Invalid match id parameter in request.");
         }
+        Match match = buildMatch(requestContext);
         matchService.editMatch(match, id);
 
         return CommandResult.redirect(MATCHES_COMMAND);

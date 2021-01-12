@@ -5,6 +5,7 @@ import com.epam.web.dao.impl.bet.BetDao;
 import com.epam.web.dao.helper.DaoHelper;
 import com.epam.web.dao.helper.DaoHelperFactory;
 import com.epam.web.dao.impl.match.MatchDao;
+import com.epam.web.logic.validator.Validator;
 import com.epam.web.model.entity.Bet;
 import com.epam.web.model.entity.Match;
 import com.epam.web.exceptions.DaoException;
@@ -16,12 +17,17 @@ import java.util.Optional;
 
 public class MatchService {
     private final DaoHelperFactory daoHelperFactory;
+    private final Validator<Match> matchValidator;
 
-    public MatchService(DaoHelperFactory daoHelperFactory) {
+    public MatchService(DaoHelperFactory daoHelperFactory, Validator<Match> matchValidator) {
         this.daoHelperFactory = daoHelperFactory;
+        this.matchValidator = matchValidator;
     }
 
     public void saveMatch(Match match) throws ServiceException {
+        if (!matchValidator.isValid(match)) {
+            throw new ServiceException("Invalid match data.");
+        }
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             MatchDao matchDao = daoHelper.createMatchDao();
             matchDao.save(match);
@@ -40,6 +46,9 @@ public class MatchService {
     }
 
     public void editMatch(Match match, long id) throws ServiceException {
+        if (!matchValidator.isValid(match)) {
+            throw new ServiceException("Invalid match data.");
+        }
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             MatchDao matchDao = daoHelper.createMatchDao();
             matchDao.edit(match, id);
