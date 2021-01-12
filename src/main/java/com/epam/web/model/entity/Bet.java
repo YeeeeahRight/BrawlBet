@@ -1,6 +1,7 @@
 package com.epam.web.model.entity;
 
 import com.epam.web.model.Entity;
+import com.epam.web.model.enumeration.Team;
 
 public class Bet implements Entity {
     public static final String TABLE = "bets";
@@ -13,12 +14,12 @@ public class Bet implements Entity {
 
     private final Long accountId;
     private final Long matchId;
-    private final String team;
+    private final Team team;
     private final Integer moneyReceived;
     private final Integer moneyBet;
     private final Long id;
 
-    public Bet(Long id, Long accountId, Long matchId, Integer moneyBet, String team, Integer moneyReceived) {
+    public Bet(Long id, Long accountId, Long matchId, Integer moneyBet, Team team, Integer moneyReceived) {
         this.id = id;
         this.accountId = accountId;
         this.matchId = matchId;
@@ -27,7 +28,7 @@ public class Bet implements Entity {
         this.moneyReceived = moneyReceived;
     }
 
-    public Bet(Long accountId, Long matchId, Integer moneyBet, String team) {
+    public Bet(Long accountId, Long matchId, Integer moneyBet, Team team) {
         this.id = null;
         this.accountId = accountId;
         this.matchId = matchId;
@@ -52,13 +53,14 @@ public class Bet implements Entity {
         return moneyBet;
     }
 
-    public String getTeam() {
+    public Team getTeam() {
         return team;
     }
 
     public Integer getMoneyReceived() {
         return moneyReceived;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -77,16 +79,14 @@ public class Bet implements Entity {
         if (!matchId.equals(bet.matchId)) {
             return false;
         }
-        if (!team.equals(bet.team)) {
-            return false;
-        }
+        if (team != bet.team) return false;
         if (!moneyReceived.equals(bet.moneyReceived)) {
             return false;
         }
         if (!moneyBet.equals(bet.moneyBet)) {
             return false;
         }
-        return id.equals(bet.id);
+        return id != null ? id.equals(bet.id) : bet.id == null;
     }
 
     @Override
@@ -96,7 +96,7 @@ public class Bet implements Entity {
         result = 31 * result + team.hashCode();
         result = 31 * result + moneyReceived.hashCode();
         result = 31 * result + moneyBet.hashCode();
-        result = 31 * result + id.hashCode();
+        result = 31 * result + (id != null ? id.hashCode() : 0);
         return result;
     }
 

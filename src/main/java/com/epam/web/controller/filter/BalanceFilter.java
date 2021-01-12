@@ -4,6 +4,7 @@ import com.epam.web.constant.Attribute;
 import com.epam.web.dao.helper.DaoHelperFactory;
 import com.epam.web.exceptions.ServiceException;
 import com.epam.web.logic.service.UserService;
+import com.epam.web.model.enumeration.AccountRole;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +23,8 @@ public class BalanceFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
         HttpSession session = ((HttpServletRequest)servletRequest).getSession();
-        String role = (String)session.getAttribute(Attribute.ROLE);
-        if (role != null && (role.equals("USER") || role.equals("BOOKMAKER"))) {
+        AccountRole role = (AccountRole)session.getAttribute(Attribute.ROLE);
+        if (role != null && role != AccountRole.ADMIN) {
             Long userId = (Long)session.getAttribute(Attribute.ACCOUNT_ID);
             setBalanceSession(session, userId);
         }

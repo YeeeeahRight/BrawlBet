@@ -10,14 +10,13 @@ import com.epam.web.exceptions.ServiceException;
 import com.epam.web.model.entity.Bet;
 import com.epam.web.model.entity.Match;
 import com.epam.web.model.entity.dto.MatchBetsDto;
+import com.epam.web.model.enumeration.Team;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 public class CloseMatchService {
-    private static final String FIRST_TEAM = "FIRST";
-    private static final String SECOND_TEAM = "SECOND";
     private static final int SAME_WIN_CHANCE = 50;
     private final DaoHelperFactory daoHelperFactory;
 
@@ -39,7 +38,7 @@ public class CloseMatchService {
                 throw new ServiceException("This match already closed.");
             }
             List<Bet> matchBets = betDao.getBetsByMatchId(matchId);
-            String winner;
+            Team winner;
             if (matchBets.size() > 0) {
                 MatchBetsDto matchBetsDto = createMatchBetDto(match, matchBets);
                 int firstPercent = matchBetsDto.getFirstPercent();
@@ -47,9 +46,9 @@ public class CloseMatchService {
                 float winCoefficient = calculateCoefficient(matchBetsDto, matchBets, winner);
                 daoHelper.startTransaction();
                 for (Bet bet : matchBets) {
-                    String team = bet.getTeam();
+                    Team team = bet.getTeam();
                     int moneyReceived;
-                    if (team.equalsIgnoreCase(winner)) {
+                    if (team == winner) {
                         moneyReceived = Math.round(bet.getMoneyBet() * winCoefficient);
                     } else {
                         moneyReceived = bet.getMoneyBet() * -1;
@@ -60,7 +59,7 @@ public class CloseMatchService {
             } else {
                 winner = calculateWinner(SAME_WIN_CHANCE);
             }
-            matchDao.close(matchId, winner);
+            matchDao.close(matchId, winner.toString());
             daoHelper.commit();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -80,8 +79,8 @@ public class CloseMatchService {
         for (Bet bet : bets) {
             long matchId = bet.getMatchId();
             if (matchId == id) {
-                String team = bet.getTeam();
-                if (team.equalsIgnoreCase(FIRST_TEAM)) {
+                Team team = bet.getTeam();
+                if (team == Team.FIRST) {
                     firstTeamBetsAmount += bet.getMoneyBet();
                 } else {
                     secondTeamBetsAmount += bet.getMoneyBet();
@@ -92,15 +91,15 @@ public class CloseMatchService {
                 firstTeam, secondTeam, winner, commission, firstTeamBetsAmount, secondTeamBetsAmount);
     }
 
-    private String calculateWinner(int firstTeamPercent) {
+    private Team calculateWinner(int firstTeamPercent) {
         long percent = Math.round((Math.random() * 100) + 1);
-        return percent > firstTeamPercent ? SECOND_TEAM : FIRST_TEAM;
+        return percent > firstTeamPercent ? Team.SECOND : Team.FIRST;
     }
 
-    private float calculateCoefficient(MatchBetsDto matchBetsDto, List<Bet> matchBets, String winner) {
+    private float calculateCoefficient(MatchBetsDto matchBetsDto, List<Bet> matchBets, Team winner) {
         float coefficient = 1.0f;
         if (isBetsOnTwoTeams(matchBets)) {
-            coefficient = winner.equalsIgnoreCase(FIRST_TEAM) ?
+            coefficient = winner == Team.FIRST ?
                     matchBetsDto.getFirstCoefficient() : matchBetsDto.getSecondCoefficient();
             if (isOneUserBets(matchBets)) {
                 coefficient -= matchBetsDto.getCommissionByCoefficient(coefficient);
@@ -120,10 +119,10 @@ public class CloseMatchService {
     }
 
     private boolean isBetsOnTwoTeams(List<Bet> bets) {
-        String firstBetTeam = bets.get(0).getTeam();
+        Team firstBetTeam = bets.get(0).getTeam();
         for (int i = 1; i < bets.size(); i++) {
-            String currentBetTeam = bets.get(i).getTeam();
-            if (!firstBetTeam.equals(currentBetTeam)) {
+            Team currentBetTeam = bets.get(i).getTeam();
+            if (firstBetTeam != currentBetTeam) {
                 return true;
             }
         }

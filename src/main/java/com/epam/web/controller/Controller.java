@@ -6,6 +6,7 @@ import com.epam.web.command.CommandResult;
 import com.epam.web.connection.ConnectionPool;
 import com.epam.web.constant.Attribute;
 import com.epam.web.constant.Page;
+import com.epam.web.constant.Parameter;
 import com.epam.web.controller.request.RequestContext;
 import com.epam.web.controller.request.RequestContextCreator;
 import com.epam.web.controller.request.RequestFiller;
@@ -18,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class Controller extends HttpServlet {
-    private static final String COMMAND_NAME_PARAM = "command";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
@@ -33,7 +33,7 @@ public class Controller extends HttpServlet {
     private void process(HttpServletRequest req, HttpServletResponse resp) {
         RequestContextCreator requestContextCreator = new RequestContextCreator();
         CommandResult commandResult;
-        String commandParam = req.getParameter(COMMAND_NAME_PARAM);
+        String commandParam = req.getParameter(Parameter.COMMAND);
         Command command;
         try {
             command = CommandFactory.createCommand(commandParam);

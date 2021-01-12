@@ -46,7 +46,7 @@
                             </h1>
                             <h1 class="role-data">
                                 <c:choose>
-                                    <c:when test="${user.getRole().equals('BOOKMAKER')}">
+                                    <c:when test="${user.getRole().toString().equals('BOOKMAKER')}">
                                         <fmt:message key="user.bookmaker"/>
                                     </c:when>
                                     <c:otherwise>

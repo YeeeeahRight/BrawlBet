@@ -48,7 +48,8 @@
                                placeholder="<fmt:message key="match.date.advice"/>"
                                name="date"
 
-                               value="<sc:date-formatter date="${match.getDate()}" formatType="HTML"></sc:date-formatter>"
+                               value="<sc:date-formatter date="${match.getDate()}"
+                               formatType="HTML"></sc:date-formatter>"
                                required>
                         <input class="tournament" type="text"
                                placeholder="<fmt:message key="match.tournament.advice"/>"

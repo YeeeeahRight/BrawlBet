@@ -10,8 +10,8 @@ import com.epam.web.exceptions.ServiceException;
 import com.epam.web.logic.service.UserService;
 
 public class DepositCommand implements Command {
-    private final int MAX_DEPOSIT = 100;
-    private final int MIN_DEPOSIT = 1;
+    private static final int MAX_DEPOSIT = 100;
+    private static final int MIN_DEPOSIT = 1;
     private final UserService userService;
 
     public DepositCommand(UserService userService) {

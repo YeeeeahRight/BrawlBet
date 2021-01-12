@@ -12,12 +12,10 @@ import com.epam.web.model.entity.Bet;
 import com.epam.web.logic.service.BetService;
 import com.epam.web.logic.service.MatchService;
 import com.epam.web.logic.service.UserService;
+import com.epam.web.model.enumeration.Team;
 
 
 public class BetCommand implements Command {
-    private static final String FIRST_TEAM = "FIRST";
-    private static final String SECOND_TEAM = "SECOND";
-
     private final MatchService matchService;
     private final BetService betService;
     private final UserService userService;
@@ -34,7 +32,7 @@ public class BetCommand implements Command {
         String moneyStr = requestContext.getRequestParameter(Parameter.MONEY);
         long matchId;
         int money;
-        String team;
+        Team team;
         try {
             matchId = Long.parseLong(matchIdStr);
             if (matchService.isFinishedMatch(matchId)) {
@@ -44,8 +42,10 @@ public class BetCommand implements Command {
             if (money <= 0) {
                 throw new InvalidParametersException("Your bet value is not a positive value.");
             }
-            team = requestContext.getRequestParameter(Parameter.BET_ON);
-            if (team.isEmpty() || !(team.equals(FIRST_TEAM) || team.equals(SECOND_TEAM))) {
+            String teamStr = requestContext.getRequestParameter(Parameter.BET_ON);
+            try {
+                team = Team.valueOf(teamStr);
+            } catch (IllegalArgumentException e) {
                 throw new InvalidInputException("Invalid team on bet.");
             }
         } catch (NumberFormatException e) {

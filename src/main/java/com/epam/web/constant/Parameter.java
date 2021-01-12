@@ -1,6 +1,7 @@
 package com.epam.web.constant;
 
 public class Parameter {
+    public static final String COMMAND = "command";
     public static final String ID = "id";
     public static final String LANGUAGE = "lang";
     public static final String LOGIN = "login";

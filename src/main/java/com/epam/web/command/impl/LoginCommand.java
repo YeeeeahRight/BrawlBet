@@ -11,12 +11,12 @@ import com.epam.web.model.entity.Account;
 import com.epam.web.exceptions.ServiceException;
 import com.epam.web.controller.request.RequestContext;
 import com.epam.web.logic.service.LoginService;
+import com.epam.web.model.enumeration.AccountRole;
 
 public class LoginCommand implements Command {
     private static final String HOME_PAGE_COMMAND = "controller?command=" + CommandName.HOME_PAGE;
     private static final String INCORRECT_DATA_KEY = "incorrect";
     private static final String BANNED_USER_KEY = "banned";
-    private static final String ADMIN_ROLE = "ADMIN";
 
     private final LoginService service;
 
@@ -40,9 +40,9 @@ public class LoginCommand implements Command {
             if (!account.isBlocked()) {
                 long id = account.getId();
                 requestContext.addSession(Attribute.ACCOUNT_ID, id);
-                String role = account.getRole();
-                requestContext.addSession(Attribute.ROLE, account.getRole());
-                if (!role.equalsIgnoreCase(ADMIN_ROLE)) {
+                AccountRole role = account.getRole();
+                requestContext.addSession(Attribute.ROLE, role);
+                if (role != AccountRole.ADMIN) {
                     int balance = account.getBalance();
                     requestContext.addSession(Attribute.BALANCE, balance);
                 }

@@ -16,7 +16,6 @@ public class LocalizationCommand implements Command {
     private static final String RU_LOCALE = "ru_RU";
     private static final String BE_LOCALE = "be_BY";
 
-    private static final String COMMAND_PARAM = "command";
     private static final String PARAMETER_SPLITERATOR = "&";
 
     private static final String LOGIN_PAGE = "controller?command=" + CommandName.LOGIN_PAGE;
@@ -59,7 +58,7 @@ public class LocalizationCommand implements Command {
     }
 
     private String extractCommand(String url) {
-        int commandIndex = url.indexOf(COMMAND_PARAM) + COMMAND_PARAM.length() + 1;
+        int commandIndex = url.indexOf(Parameter.COMMAND) + Parameter.COMMAND.length() + 1;
         int lastCommandIndex = url.indexOf(PARAMETER_SPLITERATOR);
         if (lastCommandIndex == -1) {
             return url.substring(commandIndex);

@@ -26,7 +26,7 @@ public class AccountDaoImpl extends AbstractDao<Account> implements AccountDao {
     public void save(Account item) throws DaoException {
         String name = item.getName();
         String password = item.getPassword();
-        String role = item.getRole();
+        String role = item.getRole().toString();
         updateSingle(INSERT_QUERY, name, password, role);
     }
 

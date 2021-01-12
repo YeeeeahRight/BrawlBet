@@ -8,12 +8,15 @@ import com.epam.web.constant.Parameter;
 import com.epam.web.exceptions.InvalidParametersException;
 import com.epam.web.exceptions.ServiceException;
 import com.epam.web.controller.request.RequestContext;
+import com.epam.web.model.entity.Account;
 import com.epam.web.model.entity.Bet;
 import com.epam.web.model.entity.Match;
 import com.epam.web.model.entity.dto.MatchBetsDto;
 import com.epam.web.logic.service.BetService;
 import com.epam.web.logic.service.MatchService;
 import com.epam.web.logic.service.UserService;
+import com.epam.web.model.enumeration.AccountRole;
+import com.epam.web.model.enumeration.Team;
 
 import java.util.Date;
 import java.util.List;
@@ -46,8 +49,8 @@ public class BetPageCommand implements Command {
         requestContext.addAttribute(Attribute.MATCH_BETS_DTO, matchBetsDto);
         Long accountId = (Long) requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
         if (accountId != null) {
-            String role = (String)requestContext.getSessionAttribute(Attribute.ROLE);
-            if (role != null && role.equals("USER")) {
+            AccountRole role = (AccountRole)requestContext.getSessionAttribute(Attribute.ROLE);
+            if (role == AccountRole.USER) {
                 int balance = userService.getBalance(accountId);
                 requestContext.addAttribute(Attribute.MAX_BET, balance);
                 requestContext.addAttribute(Attribute.MIN_BET, 1);
@@ -70,8 +73,8 @@ public class BetPageCommand implements Command {
         for (Bet bet : bets) {
             Long matchId = bet.getMatchId();
             if (matchId.equals(id)) {
-                String team = bet.getTeam();
-                if (team.equalsIgnoreCase("FIRST")) {
+                Team team = bet.getTeam();
+                if (team == Team.FIRST) {
                     firstTeamBetsAmount += bet.getMoneyBet();
                 } else {
                     secondTeamBetsAmount += bet.getMoneyBet();

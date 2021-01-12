@@ -8,14 +8,12 @@ import com.epam.web.model.entity.Account;
 import com.epam.web.exceptions.ServiceException;
 import com.epam.web.controller.request.RequestContext;
 import com.epam.web.logic.service.UserService;
+import com.epam.web.model.enumeration.AccountRole;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UsersCommand implements Command {
-    private static final String USER_ROLE = "USER";
-    private static final String BOOKMAKER_ROLE = "BOOKMAKER";
-
     private final UserService userService;
 
     public UsersCommand(UserService userService) {
@@ -33,10 +31,10 @@ public class UsersCommand implements Command {
     private List<Account> getUserList(List<Account> accounts) {
         List<Account> showedAccounts = new ArrayList<>();
         for (Account account : accounts) {
-            String role = account.getRole();
-            if (role.equals(USER_ROLE)) {
+            AccountRole role = account.getRole();
+            if (role == AccountRole.USER) {
                 showedAccounts.add(account);
-            } else if (role.equals(BOOKMAKER_ROLE)) {
+            } else if (role == AccountRole.BOOKMAKER) {
                 showedAccounts.add(0, account);
             }
         }

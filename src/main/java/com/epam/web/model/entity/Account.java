@@ -1,6 +1,7 @@
 package com.epam.web.model.entity;
 
 import com.epam.web.model.Entity;
+import com.epam.web.model.enumeration.AccountRole;
 
 public class Account implements Entity {
     public static final String ID = "id";
@@ -13,12 +14,12 @@ public class Account implements Entity {
 
     private final String name;
     private final String password;
-    private final String role;
+    private final AccountRole role;
     private final Integer balance;
     private final Boolean isBlocked;
     private final Long id;
 
-    public Account(Long id, String name, String password, String role, Integer balance, Boolean isBlocked) {
+    public Account(Long id, String name, String password, AccountRole role, Integer balance, Boolean isBlocked) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -27,7 +28,7 @@ public class Account implements Entity {
         this.isBlocked = isBlocked;
     }
 
-    public Account(String name, String password, String role) {
+    public Account(String name, String password, AccountRole role) {
         this.id = null;
         this.name = name;
         this.password = password;
@@ -52,7 +53,7 @@ public class Account implements Entity {
         return password;
     }
 
-    public String getRole() {
+    public AccountRole getRole() {
         return role;
     }
 
@@ -77,7 +78,7 @@ public class Account implements Entity {
         if (!password.equals(account.password)) {
             return false;
         }
-        if (!role.equals(account.role)) {
+        if (role != account.role) {
             return false;
         }
         if (!balance.equals(account.balance)) {
@@ -86,7 +87,7 @@ public class Account implements Entity {
         if (!isBlocked.equals(account.isBlocked)) {
             return false;
         }
-        return id.equals(account.id);
+        return id != null ? id.equals(account.id) : account.id == null;
     }
 
     @Override
@@ -96,7 +97,7 @@ public class Account implements Entity {
         result = 31 * result + role.hashCode();
         result = 31 * result + balance.hashCode();
         result = 31 * result + isBlocked.hashCode();
-        result = 31 * result + id.hashCode();
+        result = 31 * result + (id != null ? id.hashCode() : 0);
         return result;
     }
 

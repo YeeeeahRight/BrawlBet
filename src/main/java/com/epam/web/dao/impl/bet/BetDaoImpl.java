@@ -22,7 +22,7 @@ public class BetDaoImpl extends AbstractDao<Bet> implements BetDao{
         long accountId = item.getAccountId();
         long matchId = item.getMatchId();
         int money = item.getMoneyBet();
-        String team = item.getTeam();
+        String team = item.getTeam().toString();
         updateSingle(INSERT_QUERY, accountId, matchId, money, team);
     }
 

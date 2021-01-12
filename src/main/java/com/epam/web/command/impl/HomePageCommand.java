@@ -11,6 +11,7 @@ import com.epam.web.controller.request.RequestContext;
 import com.epam.web.model.entity.dto.MatchBetsDto;
 import com.epam.web.logic.service.BetService;
 import com.epam.web.logic.service.MatchService;
+import com.epam.web.model.enumeration.Team;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,8 +50,8 @@ public class HomePageCommand implements Command {
             for (Bet bet : bets) {
                 long matchId = bet.getMatchId();
                 if (matchId == id) {
-                    String team = bet.getTeam();
-                    if (team.equalsIgnoreCase("FIRST")) {
+                    Team team = bet.getTeam();
+                    if (team == Team.FIRST) {
                         firstTeamBetsAmount += bet.getMoneyBet();
                     } else {
                         secondTeamBetsAmount += bet.getMoneyBet();

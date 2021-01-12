@@ -2,6 +2,8 @@ package com.epam.web.controller.filter;
 
 import com.epam.web.constant.Attribute;
 import com.epam.web.constant.CommandName;
+import com.epam.web.constant.Parameter;
+import com.epam.web.model.enumeration.AccountRole;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +12,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class AccessFilter implements Filter {
-    private static final String COMMAND_NAME_PARAM = "command";
     private static final String GUEST_ROLE = "GUEST";
     private static final String ADMIN_ROLE = "ADMIN";
     private static final String USER_ROLE = "USER";
@@ -26,14 +27,18 @@ public class AccessFilter implements Filter {
             ServletRequest request,
             ServletResponse response,
             FilterChain next) throws IOException, ServletException {
-        String commandName = request.getParameter(COMMAND_NAME_PARAM);
+        String commandName = request.getParameter(Parameter.COMMAND);
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpSession session = httpRequest.getSession();
-        String role = (String)session.getAttribute(Attribute.ROLE);
-        if (role == null) {
-            role = GUEST_ROLE;
+        AccountRole role = (AccountRole)session.getAttribute(Attribute.ROLE);
+        String roleString;
+        if (role != null) {
+            roleString = role.toString();
+        } else {
+            roleString = GUEST_ROLE;
         }
-        boolean isAccessAllowed = isAccessAllowed(commandName, role);
+
+        boolean isAccessAllowed = isAccessAllowed(commandName, roleString);
         if (isAccessAllowed) {
             next.doFilter(request, response);
         } else {
