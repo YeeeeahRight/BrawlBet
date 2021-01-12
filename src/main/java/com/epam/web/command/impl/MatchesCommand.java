@@ -21,6 +21,7 @@ public class MatchesCommand implements Command {
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
         List<Match> matches = matchService.getUnclosedMatches();
+        matches.sort((m1, m2) -> m1.getDate().compareTo(m2.getDate()));
         requestContext.addAttribute(Attribute.MATCHES, matches);
 
         return CommandResult.forward(Page.MATCHES);

@@ -14,6 +14,7 @@ import com.epam.web.logic.service.MatchService;
 import com.epam.web.model.enumeration.Team;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class HomePageCommand implements Command {
         List<Match> activeMatches = matchService.getActiveMatches();
         List<Bet> bets = betService.getAll();
         List<MatchBetsDto> matchBetsDtoList = buildMatchBetDtoList(activeMatches, bets);
+        matchBetsDtoList.sort((m1, m2) -> m1.getDate().compareTo(m2.getDate()));
         requestContext.addAttribute(Attribute.MATCHES_BETS_DTO, matchBetsDtoList);
         return CommandResult.forward(Page.HOME);
     }
