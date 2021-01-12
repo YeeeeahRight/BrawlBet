@@ -2,8 +2,8 @@ package com.epam.web.controller.filter;
 
 import com.epam.web.constant.Attribute;
 import com.epam.web.dao.helper.DaoHelperFactory;
-import com.epam.web.exceptions.ServiceException;
-import com.epam.web.logic.service.UserService;
+import com.epam.web.exception.ServiceException;
+import com.epam.web.logic.service.account.AccountServiceImpl;
 import com.epam.web.model.enumeration.AccountRole;
 
 import javax.servlet.*;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class BalanceFilter implements Filter {
-    private static final UserService USER_SERVICE = new UserService(new DaoHelperFactory());
+    private static final AccountServiceImpl USER_SERVICE = new AccountServiceImpl(new DaoHelperFactory());
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

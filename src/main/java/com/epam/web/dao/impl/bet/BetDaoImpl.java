@@ -2,7 +2,7 @@ package com.epam.web.dao.impl.bet;
 
 import com.epam.web.dao.AbstractDao;
 import com.epam.web.dao.mapper.impl.BetRowMapper;
-import com.epam.web.exceptions.DaoException;
+import com.epam.web.exception.DaoException;
 import com.epam.web.model.entity.Bet;
 
 import java.sql.Connection;

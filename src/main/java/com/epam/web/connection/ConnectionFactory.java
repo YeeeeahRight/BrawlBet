@@ -1,6 +1,6 @@
 package com.epam.web.connection;
 
-import com.epam.web.exceptions.ConnectionPoolException;
+import com.epam.web.exception.ConnectionPoolException;
 import com.mysql.cj.jdbc.Driver;
 
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class ConnectionFactory {
             DriverManager.registerDriver(new Driver());
             return DriverManager.getConnection(url, properties);
         } catch (SQLException | IOException e) {
-            throw new ConnectionPoolException(e.getMessage(), e);
+            throw new ConnectionPoolException(e);
         }
     }
 }

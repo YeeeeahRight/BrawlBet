@@ -1,7 +1,7 @@
 package com.epam.web.connection;
 
-import com.epam.web.exceptions.ConnectionPoolException;
-import com.epam.web.exceptions.DaoException;
+import com.epam.web.exception.ConnectionPoolException;
+import com.epam.web.exception.DaoException;
 
 import java.sql.Connection;
 import java.sql.SQLException;

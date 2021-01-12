@@ -2,7 +2,7 @@ package com.epam.web.dao.impl.account;
 
 import com.epam.web.dao.AbstractDao;
 import com.epam.web.model.entity.Account;
-import com.epam.web.exceptions.DaoException;
+import com.epam.web.exception.DaoException;
 import com.epam.web.dao.mapper.impl.AccountRowMapper;
 
 import java.sql.Connection;

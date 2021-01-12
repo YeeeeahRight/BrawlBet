@@ -6,7 +6,7 @@ import com.epam.web.dao.impl.bet.BetDao;
 import com.epam.web.dao.impl.bet.BetDaoImpl;
 import com.epam.web.dao.impl.match.MatchDao;
 import com.epam.web.dao.impl.match.MatchDaoImpl;
-import com.epam.web.exceptions.DaoException;
+import com.epam.web.exception.DaoException;
 import com.epam.web.dao.impl.account.AccountDao;
 import com.epam.web.dao.impl.account.AccountDaoImpl;
 

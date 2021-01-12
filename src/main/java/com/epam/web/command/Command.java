@@ -1,7 +1,7 @@
 package com.epam.web.command;
 
-import com.epam.web.exceptions.InvalidParametersException;
-import com.epam.web.exceptions.ServiceException;
+import com.epam.web.exception.InvalidParametersException;
+import com.epam.web.exception.ServiceException;
 import com.epam.web.controller.request.RequestContext;
 
 public interface Command {

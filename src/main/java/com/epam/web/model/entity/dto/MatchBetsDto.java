@@ -127,7 +127,7 @@ public class MatchBetsDto implements Entity {
         if (!winner.equals(that.winner)) {
             return false;
         }
-        if (!commission.equals(that.commission)){
+        if (!commission.equals(that.commission)) {
             return false;
         }
         if (!firstTeamBetsAmount.equals(that.firstTeamBetsAmount)) {

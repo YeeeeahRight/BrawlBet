@@ -4,7 +4,7 @@ import com.epam.web.dao.AbstractDao;
 import com.epam.web.date.DateFormatType;
 import com.epam.web.date.DateFormatter;
 import com.epam.web.model.entity.Match;
-import com.epam.web.exceptions.DaoException;
+import com.epam.web.exception.DaoException;
 import com.epam.web.dao.mapper.impl.MatchRowMapper;
 
 import java.sql.Connection;

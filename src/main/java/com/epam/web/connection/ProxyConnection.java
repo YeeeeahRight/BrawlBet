@@ -29,7 +29,7 @@ public class ProxyConnection implements Connection {
         pool.returnConnection(this);
     }
 
-    /*package-private*/void finalCloseConnection() throws SQLException {
+    /*package-private*/ void finalCloseConnection() throws SQLException {
         connection.close();
     }
 

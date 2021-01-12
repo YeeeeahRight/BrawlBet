@@ -1,6 +1,6 @@
 package com.epam.web.dao;
 
-import com.epam.web.exceptions.DaoException;
+import com.epam.web.exception.DaoException;
 import com.epam.web.dao.mapper.RowMapper;
 import com.epam.web.model.Entity;
 
@@ -21,7 +21,7 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
     }
 
     @Override
-    public List<T> getAll() throws DaoException{
+    public List<T> getAll() throws DaoException {
         return executeQuery("SELECT * FROM " + tableName);
     }
 
@@ -31,13 +31,13 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
     }
 
     @Override
-    public Optional<T> findById(long id) throws DaoException{
+    public Optional<T> findById(long id) throws DaoException {
         T item = executeQuery("SELECT * FROM " + tableName + " WHERE id=" + id).get(0);
         return Optional.of(item);
     }
 
     protected List<T> executeQuery(String query, Object... params) throws DaoException {
-        try (PreparedStatement statement = createStatement(query, params)){
+        try (PreparedStatement statement = createStatement(query, params)) {
             ResultSet resultSet = statement.executeQuery();
             List<T> entities = new ArrayList<>();
             while (resultSet.next()) {
@@ -53,7 +53,7 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
     private PreparedStatement createStatement(String query, Object... params) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(query);
         for (int i = 1; i <= params.length; i++) {
-            statement.setObject(i, params[i-1]);
+            statement.setObject(i, params[i - 1]);
         }
         return statement;
     }
@@ -78,7 +78,7 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
         }
     }
 
-    protected void updateSingle(String query, Object ...params) throws DaoException {
+    protected void updateSingle(String query, Object... params) throws DaoException {
         try (PreparedStatement preparedStatement = createStatement(query, params)) {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
