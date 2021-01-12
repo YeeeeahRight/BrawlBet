@@ -45,14 +45,13 @@ public class AccessFilter implements Filter {
         if (commandName == null) {
             return true;
         }
+        //case CommandName.LOGOUT: was !role.equals(GUEST)
         switch (commandName) {
             case CommandName.SIGN_UP:
             case CommandName.SIGN_UP_PAGE:
             case CommandName.LOGIN:
             case CommandName.LOGIN_PAGE:
                 return role.equalsIgnoreCase(GUEST_ROLE);
-            case CommandName.LOGOUT:
-                return !role.equalsIgnoreCase(GUEST_ROLE);
             case CommandName.BET:
             case CommandName.DEPOSIT:
             case CommandName.DEPOSIT_PAGE:

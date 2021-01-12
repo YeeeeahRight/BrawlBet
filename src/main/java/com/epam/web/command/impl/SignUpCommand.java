@@ -6,9 +6,10 @@ import com.epam.web.constant.Attribute;
 import com.epam.web.constant.CommandName;
 import com.epam.web.constant.Page;
 import com.epam.web.constant.Parameter;
+import com.epam.web.exceptions.InvalidParametersException;
 import com.epam.web.exceptions.ServiceException;
 import com.epam.web.controller.request.RequestContext;
-import com.epam.web.service.SignUpService;
+import com.epam.web.logic.service.SignUpService;
 
 public class SignUpCommand implements Command {
     private static final String LOGIN_PAGE_COMMAND = "controller?command=" + CommandName.LOGIN_PAGE;
@@ -26,20 +27,29 @@ public class SignUpCommand implements Command {
     }
 
     @Override
-    public CommandResult execute(RequestContext requestContext) throws ServiceException {
+    public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
         String login = requestContext.getRequestParameter(Parameter.LOGIN);
+        if (login == null) {
+            throw new InvalidParametersException("No login parameter in request.");
+        }
         boolean isCorrectLogin = login.matches(LOGIN_REGEX);
         if (isCorrectLogin) {
             boolean isUsernameExist = signUpService.isUsernameExist(login);
             if (!isUsernameExist) {
                 requestContext.addAttribute(Attribute.SAVED_LOGIN, login);
                 String password = requestContext.getRequestParameter(Parameter.PASSWORD);
+                if (password == null) {
+                    throw new InvalidParametersException("No password parameter in request.");
+                }
                 String repeatedPassword = requestContext.getRequestParameter(Parameter.REPEATED_PASSWORD);
+                if (repeatedPassword == null) {
+                    throw new InvalidParametersException("No repeated password parameter in request.");
+                }
                 boolean isPasswordCorrect = password.matches(PASSWORD_REGEX);
                 if (isPasswordCorrect) {
                     boolean isPasswordRepeated = password.equals(repeatedPassword);
                     if (isPasswordRepeated) {
-                        signUpService.sign(login, repeatedPassword);
+                        signUpService.signUp(login, repeatedPassword);
                         return CommandResult.redirect(LOGIN_PAGE_COMMAND);
                     }
                     requestContext.addAttribute(Attribute.ERROR_MESSAGE, DIFFERENT_PASSWORDS_KEY);

@@ -6,10 +6,11 @@ import com.epam.web.constant.Attribute;
 import com.epam.web.constant.CommandName;
 import com.epam.web.constant.Page;
 import com.epam.web.constant.Parameter;
+import com.epam.web.exceptions.InvalidParametersException;
 import com.epam.web.model.entity.Account;
 import com.epam.web.exceptions.ServiceException;
 import com.epam.web.controller.request.RequestContext;
-import com.epam.web.service.LoginService;
+import com.epam.web.logic.service.LoginService;
 
 public class LoginCommand implements Command {
     private static final String HOME_PAGE_COMMAND = "controller?command=" + CommandName.HOME_PAGE;
@@ -24,10 +25,16 @@ public class LoginCommand implements Command {
     }
 
     @Override
-    public CommandResult execute(RequestContext requestContext) throws ServiceException {
+    public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
         String login = requestContext.getRequestParameter(Parameter.LOGIN);
+        if (login == null) {
+            throw new InvalidParametersException("No login parameter in request.");
+        }
         String password = requestContext.getRequestParameter(Parameter.PASSWORD);
-        boolean isUserExist = service.isUserExist(login, password);
+        if (password == null) {
+            throw new InvalidParametersException("No password parameter in request.");
+        }
+        boolean isUserExist = service.isUserExistByLoginPassword(login, password);
         if (isUserExist) {
             Account account = service.getAccountByLogin(login);
             if (!account.isBlocked()) {

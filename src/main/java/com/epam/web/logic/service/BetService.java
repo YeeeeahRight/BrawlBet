@@ -1,4 +1,4 @@
-package com.epam.web.service;
+package com.epam.web.logic.service;
 
 import com.epam.web.dao.impl.account.AccountDao;
 import com.epam.web.dao.impl.bet.BetDao;
@@ -28,7 +28,7 @@ public class BetService {
         }
     }
 
-    public void bet(Bet bet) throws ServiceException {
+    public void createBet(Bet bet) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             BetDao betDao = daoHelper.createBetDao();
             AccountDao accountDao = daoHelper.createAccountDao();
@@ -36,7 +36,7 @@ public class BetService {
             long accountId = bet.getAccountId();
             Optional<Account> account = accountDao.findById(accountId);
             if (!account.isPresent()) {
-                throw new ServiceException("There is no user with this id anymore.");
+                throw new ServiceException("There is no bet with this id.");
             }
             daoHelper.startTransaction();
             accountDao.addMoneyToBalance(money * -1, accountId);

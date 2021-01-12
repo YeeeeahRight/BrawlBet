@@ -5,11 +5,13 @@ import com.epam.web.command.CommandResult;
 import com.epam.web.constant.Attribute;
 import com.epam.web.constant.Parameter;
 import com.epam.web.controller.request.RequestContext;
-import com.epam.web.exceptions.InvalidInputException;
+import com.epam.web.exceptions.InvalidParametersException;
 import com.epam.web.exceptions.ServiceException;
-import com.epam.web.service.UserService;
+import com.epam.web.logic.service.UserService;
 
 public class DepositCommand implements Command {
+    private final int MAX_DEPOSIT = 100;
+    private final int MIN_DEPOSIT = 1;
     private final UserService userService;
 
     public DepositCommand(UserService userService) {
@@ -17,19 +19,20 @@ public class DepositCommand implements Command {
     }
 
     @Override
-    public CommandResult execute(RequestContext requestContext) throws ServiceException {
-        long accountId = (Long) requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
+    public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
         String moneyStr = requestContext.getRequestParameter(Parameter.MONEY);
-        if (moneyStr == null || moneyStr.isEmpty()) {
-            throw new InvalidInputException("Deposit value is invalid.");
-        }
         int money;
         try {
             money = Integer.parseInt(moneyStr);
         } catch (NumberFormatException e) {
-            throw new InvalidInputException("Deposit value is not a number.");
+            throw new InvalidParametersException("Invalid money parameter in request.");
         }
-        userService.addMoney(money, accountId);
+        if (money > MAX_DEPOSIT || money < MIN_DEPOSIT) {
+            throw new InvalidParametersException("Deposit value is not in range[" +
+                    MIN_DEPOSIT + " - " + MAX_DEPOSIT +"].");
+        }
+        long accountId = (Long) requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
+        userService.addMoneyById(money, accountId);
 
         String prevPage = requestContext.getHeader();
         return CommandResult.redirect(prevPage);

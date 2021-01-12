@@ -5,18 +5,19 @@ import com.epam.web.model.Entity;
 import java.util.Date;
 
 public class MatchBetsDto implements Entity {
-    private final long id;
+    private final Long id;
     private final Date date;
     private final String tournament;
     private final String firstTeam;
     private final String secondTeam;
     private final String winner;
-    private final float commission;
-    private final int firstTeamBetsAmount;
-    private final int secondTeamBetsAmount;
+    private final Float commission;
+    private final Integer firstTeamBetsAmount;
+    private final Integer secondTeamBetsAmount;
 
-    public MatchBetsDto(long id, Date date, String tournament, String firstTeam,
-                        String secondTeam, String winner, float commission, int firstTeamBetsAmount, int secondTeamBetsAmount) {
+    public MatchBetsDto(Long id, Date date, String tournament, String firstTeam,
+                        String secondTeam, String winner, Float commission,
+                        Integer firstTeamBetsAmount, Integer secondTeamBetsAmount) {
         this.id = id;
         this.date = date;
         this.tournament = tournament;
@@ -44,15 +45,15 @@ public class MatchBetsDto implements Entity {
         return secondTeam;
     }
 
-    public float getCommission() {
+    public Float getCommission() {
         return commission;
     }
 
-    public int getFirstTeamBetsAmount() {
+    public Integer getFirstTeamBetsAmount() {
         return firstTeamBetsAmount;
     }
 
-    public int getSecondTeamBetsAmount() {
+    public Integer getSecondTeamBetsAmount() {
         return secondTeamBetsAmount;
     }
 
@@ -93,7 +94,7 @@ public class MatchBetsDto implements Entity {
     }
 
     @Override
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -108,16 +109,7 @@ public class MatchBetsDto implements Entity {
 
         MatchBetsDto that = (MatchBetsDto) o;
 
-        if (id != that.id) {
-            return false;
-        }
-        if (Float.compare(that.commission, commission) != 0) {
-            return false;
-        }
-        if (firstTeamBetsAmount != that.firstTeamBetsAmount) {
-            return false;
-        }
-        if (secondTeamBetsAmount != that.secondTeamBetsAmount) {
+        if (!id.equals(that.id)) {
             return false;
         }
         if (!date.equals(that.date)) {
@@ -129,19 +121,32 @@ public class MatchBetsDto implements Entity {
         if (!firstTeam.equals(that.firstTeam)) {
             return false;
         }
-        return secondTeam.equals(that.secondTeam);
+        if (!secondTeam.equals(that.secondTeam)) {
+            return false;
+        }
+        if (!winner.equals(that.winner)) {
+            return false;
+        }
+        if (!commission.equals(that.commission)){
+            return false;
+        }
+        if (!firstTeamBetsAmount.equals(that.firstTeamBetsAmount)) {
+            return false;
+        }
+        return secondTeamBetsAmount.equals(that.secondTeamBetsAmount);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
+        int result = id.hashCode();
         result = 31 * result + date.hashCode();
         result = 31 * result + tournament.hashCode();
         result = 31 * result + firstTeam.hashCode();
         result = 31 * result + secondTeam.hashCode();
-        result = 31 * result + (commission != +0.0f ? Float.floatToIntBits(commission) : 0);
-        result = 31 * result + firstTeamBetsAmount;
-        result = 31 * result + secondTeamBetsAmount;
+        result = 31 * result + winner.hashCode();
+        result = 31 * result + commission.hashCode();
+        result = 31 * result + firstTeamBetsAmount.hashCode();
+        result = 31 * result + secondTeamBetsAmount.hashCode();
         return result;
     }
 
@@ -153,6 +158,7 @@ public class MatchBetsDto implements Entity {
                 ", tournament='" + tournament + '\'' +
                 ", firstTeam='" + firstTeam + '\'' +
                 ", secondTeam='" + secondTeam + '\'' +
+                ", winner='" + winner + '\'' +
                 ", commission=" + commission +
                 ", firstTeamBetsAmount=" + firstTeamBetsAmount +
                 ", secondTeamBetsAmount=" + secondTeamBetsAmount +

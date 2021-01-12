@@ -7,7 +7,7 @@ import com.epam.web.constant.Page;
 import com.epam.web.model.entity.Account;
 import com.epam.web.exceptions.ServiceException;
 import com.epam.web.controller.request.RequestContext;
-import com.epam.web.service.UserService;
+import com.epam.web.logic.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;

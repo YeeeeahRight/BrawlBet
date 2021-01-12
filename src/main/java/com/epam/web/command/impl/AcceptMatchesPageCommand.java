@@ -7,7 +7,7 @@ import com.epam.web.constant.Page;
 import com.epam.web.controller.request.RequestContext;
 import com.epam.web.exceptions.ServiceException;
 import com.epam.web.model.entity.Match;
-import com.epam.web.service.MatchService;
+import com.epam.web.logic.service.MatchService;
 
 import java.util.List;
 

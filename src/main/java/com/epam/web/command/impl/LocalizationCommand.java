@@ -7,6 +7,7 @@ import com.epam.web.constant.CommandName;
 import com.epam.web.constant.Page;
 import com.epam.web.constant.Parameter;
 import com.epam.web.controller.request.RequestContext;
+import com.epam.web.exceptions.InvalidParametersException;
 
 public class LocalizationCommand implements Command {
     private static final String RU = "ru";
@@ -22,8 +23,11 @@ public class LocalizationCommand implements Command {
     private static final String SIGN_UP_PAGE = "controller?command=" + CommandName.SIGN_UP_PAGE;
 
     @Override
-    public CommandResult execute(RequestContext requestContext) {
+    public CommandResult execute(RequestContext requestContext) throws InvalidParametersException {
         String language = requestContext.getRequestParameter(Parameter.LANGUAGE);
+        if (language == null) {
+            throw new InvalidParametersException("No language parameter in request.");
+        }
         String locale = EN_LOCALE;
         switch (language) {
             case RU:
@@ -34,6 +38,7 @@ public class LocalizationCommand implements Command {
                 break;
         }
         requestContext.addSession(Attribute.LANGUAGE, locale);
+
         String page = requestContext.getHeader();
         String prevCommand = extractCommand(page);
         if (CommandName.LOGIN.equals(prevCommand) || CommandName.SIGN_UP.equals(prevCommand)) {

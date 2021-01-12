@@ -1,4 +1,4 @@
-package com.epam.web.service;
+package com.epam.web.logic.service;
 
 import com.epam.web.dao.helper.DaoHelper;
 import com.epam.web.dao.helper.DaoHelperFactory;
@@ -16,13 +16,7 @@ public class LoginService {
         this.daoHelperFactory = daoHelperFactory;
     }
 
-    public boolean isUserExist(String login, String password) throws ServiceException {
-        if (login == null || login.isEmpty()) {
-            throw new ServiceException("Incorrect username: " + login);
-        }
-        if (password == null || password.isEmpty()) {
-            throw new ServiceException("Incorrect password: " + password);
-        }
+    public boolean isUserExistByLoginPassword(String login, String password) throws ServiceException {
         try(DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDao accountDao = daoHelper.createAccountDao();
             Optional<Account> user = accountDao.findAccountByLoginPassword(login, password);
@@ -33,14 +27,11 @@ public class LoginService {
     }
 
     public Account getAccountByLogin(String login) throws ServiceException {
-        if (login == null || login.isEmpty()) {
-            throw new ServiceException("Incorrect username: " + login);
-        }
         try(DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDao accountDao = daoHelper.createAccountDao();
             Optional<Account> user = accountDao.findAccountByLogin(login);
             if (!user.isPresent()) {
-                throw new ServiceException("Account not found.");
+                throw new ServiceException("Account is not found.");
             }
             return user.get();
         } catch (DaoException e) {

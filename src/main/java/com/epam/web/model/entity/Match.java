@@ -20,12 +20,12 @@ public class Match implements Entity {
     private final String firstTeam;
     private final String secondTeam;
     private final String winner;
-    private final float commission;
-    private final boolean isClosed;
-    private long id;
+    private final Float commission;
+    private final Boolean isClosed;
+    private final Long id;
 
-    public Match(long id, Date date, String tournament, String firstTeam,
-                 String secondTeam, String winner, float commission, boolean isClosed) {
+    public Match(Long id, Date date, String tournament, String firstTeam,
+                 String secondTeam, String winner, Float commission, Boolean isClosed) {
         this.id = id;
         this.date = date;
         this.tournament = tournament;
@@ -37,14 +37,15 @@ public class Match implements Entity {
     }
 
     public Match(Date date, String tournament, String firstTeam,
-                 String secondTeam, String winner, float commission, boolean isClosed) {
+                 String secondTeam) {
+        this.id = null;
         this.date = date;
         this.tournament = tournament;
         this.firstTeam = firstTeam;
         this.secondTeam = secondTeam;
-        this.winner = winner;
-        this.commission = commission;
-        this.isClosed = isClosed;
+        this.winner = "NONE";
+        this.commission = 0.0f;
+        this.isClosed = false;
     }
 
     public Date getDate() {
@@ -63,11 +64,11 @@ public class Match implements Entity {
         return secondTeam;
     }
 
-    public float getCommission() {
+    public Float getCommission() {
         return commission;
     }
 
-    public boolean isClosed() {
+    public Boolean isClosed() {
         return isClosed;
     }
 
@@ -75,7 +76,7 @@ public class Match implements Entity {
         return winner;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -90,15 +91,6 @@ public class Match implements Entity {
 
         Match match = (Match) o;
 
-        if (Float.compare(match.commission, commission) != 0) {
-            return false;
-        }
-        if (isClosed != match.isClosed) {
-            return false;
-        }
-        if (id != match.id) {
-            return false;
-        }
         if (!date.equals(match.date)) {
             return false;
         }
@@ -108,7 +100,19 @@ public class Match implements Entity {
         if (!firstTeam.equals(match.firstTeam)) {
             return false;
         }
-        return secondTeam.equals(match.secondTeam);
+        if (!secondTeam.equals(match.secondTeam)) {
+            return false;
+        }
+        if (!winner.equals(match.winner)) {
+            return false;
+        }
+        if (!commission.equals(match.commission)) {
+            return false;
+        }
+        if (!isClosed.equals(match.isClosed)) {
+            return false;
+        }
+        return id.equals(match.id);
     }
 
     @Override
@@ -117,9 +121,10 @@ public class Match implements Entity {
         result = 31 * result + tournament.hashCode();
         result = 31 * result + firstTeam.hashCode();
         result = 31 * result + secondTeam.hashCode();
-        result = 31 * result + (commission != +0.0f ? Float.floatToIntBits(commission) : 0);
-        result = 31 * result + (isClosed ? 1 : 0);
-        result = 31 * result + (int) (id ^ (id >>> 32));
+        result = 31 * result + winner.hashCode();
+        result = 31 * result + commission.hashCode();
+        result = 31 * result + isClosed.hashCode();
+        result = 31 * result + id.hashCode();
         return result;
     }
 

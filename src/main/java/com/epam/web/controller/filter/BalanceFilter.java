@@ -2,9 +2,8 @@ package com.epam.web.controller.filter;
 
 import com.epam.web.constant.Attribute;
 import com.epam.web.dao.helper.DaoHelperFactory;
-import com.epam.web.exceptions.NotFoundException;
 import com.epam.web.exceptions.ServiceException;
-import com.epam.web.service.UserService;
+import com.epam.web.logic.service.UserService;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

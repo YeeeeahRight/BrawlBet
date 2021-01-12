@@ -7,7 +7,7 @@
 
   <servlet>
     <servlet-name>main</servlet-name>
-    <servlet-class>com.epam.web.controller.Servlet</servlet-class>
+    <servlet-class>com.epam.web.controller.Controller</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>main</servlet-name>

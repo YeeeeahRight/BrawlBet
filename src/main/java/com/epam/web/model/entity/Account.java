@@ -14,12 +14,11 @@ public class Account implements Entity {
     private final String name;
     private final String password;
     private final String role;
-    private final int balance;
-    private final boolean isBlocked;
+    private final Integer balance;
+    private final Boolean isBlocked;
+    private final Long id;
 
-    private long id;
-
-    public Account(long id, String name, String password, String role, int balance, boolean isBlocked) {
+    public Account(Long id, String name, String password, String role, Integer balance, Boolean isBlocked) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -28,19 +27,20 @@ public class Account implements Entity {
         this.isBlocked = isBlocked;
     }
 
-    public Account(String name, String password, String role, int balance, boolean isBlocked) {
+    public Account(String name, String password, String role) {
+        this.id = null;
         this.name = name;
         this.password = password;
         this.role = role;
-        this.balance = balance;
-        this.isBlocked = isBlocked;
+        this.balance = 0;
+        this.isBlocked = false;
     }
 
-    public int getBalance() {
+    public Integer getBalance() {
         return balance;
     }
 
-    public boolean isBlocked() {
+    public Boolean isBlocked() {
         return isBlocked;
     }
 
@@ -56,7 +56,7 @@ public class Account implements Entity {
         return role;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -71,22 +71,22 @@ public class Account implements Entity {
 
         Account account = (Account) o;
 
-        if (balance != account.balance) {
-            return false;
-        }
-        if (isBlocked != account.isBlocked) {
-            return false;
-        }
-        if (id != account.id) {
-            return false;
-        }
         if (!name.equals(account.name)) {
             return false;
         }
         if (!password.equals(account.password)) {
             return false;
         }
-        return role.equals(account.role);
+        if (!role.equals(account.role)) {
+            return false;
+        }
+        if (!balance.equals(account.balance)) {
+            return false;
+        }
+        if (!isBlocked.equals(account.isBlocked)) {
+            return false;
+        }
+        return id.equals(account.id);
     }
 
     @Override
@@ -94,9 +94,9 @@ public class Account implements Entity {
         int result = name.hashCode();
         result = 31 * result + password.hashCode();
         result = 31 * result + role.hashCode();
-        result = 31 * result + balance;
-        result = 31 * result + (isBlocked ? 1 : 0);
-        result = 31 * result + (int) (id ^ (id >>> 32));
+        result = 31 * result + balance.hashCode();
+        result = 31 * result + isBlocked.hashCode();
+        result = 31 * result + id.hashCode();
         return result;
     }
 

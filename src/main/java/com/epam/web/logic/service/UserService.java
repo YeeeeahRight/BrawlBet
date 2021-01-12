@@ -1,4 +1,4 @@
-package com.epam.web.service;
+package com.epam.web.logic.service;
 
 import com.epam.web.dao.helper.DaoHelper;
 import com.epam.web.dao.helper.DaoHelperFactory;
@@ -26,15 +26,12 @@ public class UserService {
         }
     }
 
-    public int getBalance(Long id) throws ServiceException {
+    public int getBalance(long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
-            if (id == null) {
-                throw new ServiceException("There is no user with this id.");
-            }
             AccountDao matchDao = daoHelper.createAccountDao();
             Optional<Account> user = matchDao.findById(id);
             if (!user.isPresent()) {
-                throw new ServiceException("There is no user with this id anymore.");
+                throw new ServiceException("There is no user with this id.");
             }
             return user.get().getBalance();
         } catch (DaoException e) {
@@ -42,7 +39,7 @@ public class UserService {
         }
     }
 
-    public void addMoney(int money, long id) throws ServiceException {
+    public void addMoneyById(int money, long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDao matchDao = daoHelper.createAccountDao();
             matchDao.addMoneyToBalance(money, id);
@@ -51,7 +48,7 @@ public class UserService {
         }
     }
 
-    public void unblock(long id) throws ServiceException {
+    public void unblockById(long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDao matchDao = daoHelper.createAccountDao();
             matchDao.unblock(id);

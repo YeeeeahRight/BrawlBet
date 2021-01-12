@@ -11,23 +11,14 @@ public class Bet implements Entity {
     public static final String TEAM = "team";
     public static final String MONEY_RECEIVED = "money_received";
 
-    private final long accountId;
-    private final long matchId;
+    private final Long accountId;
+    private final Long matchId;
     private final String team;
-    private final int moneyReceived;
-    private final int moneyBet;
-    private long id;
+    private final Integer moneyReceived;
+    private final Integer moneyBet;
+    private final Long id;
 
-
-    public Bet(long accountId, long matchId, int moneyBet, String team, int moneyReceived) {
-        this.accountId = accountId;
-        this.matchId = matchId;
-        this.moneyBet = moneyBet;
-        this.team = team;
-        this.moneyReceived = moneyReceived;
-    }
-
-    public Bet(long id, long accountId, long matchId, int moneyBet, String team, int moneyReceived) {
+    public Bet(Long id, Long accountId, Long matchId, Integer moneyBet, String team, Integer moneyReceived) {
         this.id = id;
         this.accountId = accountId;
         this.matchId = matchId;
@@ -36,19 +27,28 @@ public class Bet implements Entity {
         this.moneyReceived = moneyReceived;
     }
 
-    public long getId() {
+    public Bet(Long accountId, Long matchId, Integer moneyBet, String team) {
+        this.id = null;
+        this.accountId = accountId;
+        this.matchId = matchId;
+        this.moneyBet = moneyBet;
+        this.team = team;
+        this.moneyReceived = 0;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public long getAccountId() {
+    public Long getAccountId() {
         return accountId;
     }
 
-    public long getMatchId() {
+    public Long getMatchId() {
         return matchId;
     }
 
-    public int getMoneyBet() {
+    public Integer getMoneyBet() {
         return moneyBet;
     }
 
@@ -56,7 +56,7 @@ public class Bet implements Entity {
         return team;
     }
 
-    public int getMoneyReceived() {
+    public Integer getMoneyReceived() {
         return moneyReceived;
     }
 
@@ -71,32 +71,32 @@ public class Bet implements Entity {
 
         Bet bet = (Bet) o;
 
-        if (accountId != bet.accountId) {
+        if (!accountId.equals(bet.accountId)) {
             return false;
         }
-        if (matchId != bet.matchId) {
+        if (!matchId.equals(bet.matchId)) {
             return false;
         }
-        if (moneyReceived != bet.moneyReceived) {
+        if (!team.equals(bet.team)) {
             return false;
         }
-        if (moneyBet != bet.moneyBet) {
+        if (!moneyReceived.equals(bet.moneyReceived)) {
             return false;
         }
-        if (id != bet.id) {
+        if (!moneyBet.equals(bet.moneyBet)) {
             return false;
         }
-        return team.equals(bet.team);
+        return id.equals(bet.id);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (accountId ^ (accountId >>> 32));
-        result = 31 * result + (int) (matchId ^ (matchId >>> 32));
+        int result = accountId.hashCode();
+        result = 31 * result + matchId.hashCode();
         result = 31 * result + team.hashCode();
-        result = 31 * result + moneyReceived;
-        result = 31 * result + moneyBet;
-        result = 31 * result + (int) (id ^ (id >>> 32));
+        result = 31 * result + moneyReceived.hashCode();
+        result = 31 * result + moneyBet.hashCode();
+        result = 31 * result + id.hashCode();
         return result;
     }
 

@@ -7,7 +7,7 @@ import com.epam.web.constant.Page;
 import com.epam.web.controller.request.RequestContext;
 import com.epam.web.exceptions.ServiceException;
 import com.epam.web.model.entity.Match;
-import com.epam.web.service.MatchService;
+import com.epam.web.logic.service.MatchService;
 
 import java.util.List;
 
@@ -22,6 +22,7 @@ public class CloseMatchesPageCommand implements Command {
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
         List<Match> finishedMatches = matchService.getFinishedMatches();
         requestContext.addAttribute(Attribute.MATCHES, finishedMatches);
+
         return CommandResult.forward(Page.FINISH_MATCHES);
     }
 }

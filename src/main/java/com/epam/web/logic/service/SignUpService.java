@@ -1,4 +1,4 @@
-package com.epam.web.service;
+package com.epam.web.logic.service;
 
 import com.epam.web.dao.helper.DaoHelper;
 import com.epam.web.dao.helper.DaoHelperFactory;
@@ -11,16 +11,24 @@ import java.util.Optional;
 
 public class SignUpService {
     private static final String USER_ROLE = "user";
+    private static final int MAX_LOGIN_LENGTH = 20;
+    private static final int MAX_PASSWORD_LENGTH = 30;
     private final DaoHelperFactory daoHelperFactory;
 
     public SignUpService(DaoHelperFactory daoHelperFactory) {
         this.daoHelperFactory = daoHelperFactory;
     }
 
-    public void sign(String login, String password) throws ServiceException {
+    public void signUp(String login, String password) throws ServiceException {
+        if (login == null || login.isEmpty() || login.length() > MAX_LOGIN_LENGTH) {
+            throw new ServiceException("Incorrect username: " + login);
+        }
+        if (password == null || password.isEmpty() || password.length() > MAX_PASSWORD_LENGTH) {
+            throw new ServiceException("Incorrect password: " + password);
+        }
         try(DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDao accountDao = daoHelper.createAccountDao();
-            Account newAccount = new Account(login, password, USER_ROLE, 0, false);
+            Account newAccount = new Account(login, password, USER_ROLE);
             accountDao.save(newAccount);
         } catch (DaoException e) {
             throw new ServiceException(e);

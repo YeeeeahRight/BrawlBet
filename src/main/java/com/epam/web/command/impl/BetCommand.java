@@ -6,11 +6,12 @@ import com.epam.web.constant.Attribute;
 import com.epam.web.constant.Parameter;
 import com.epam.web.controller.request.RequestContext;
 import com.epam.web.exceptions.InvalidInputException;
+import com.epam.web.exceptions.InvalidParametersException;
 import com.epam.web.exceptions.ServiceException;
 import com.epam.web.model.entity.Bet;
-import com.epam.web.service.BetService;
-import com.epam.web.service.MatchService;
-import com.epam.web.service.UserService;
+import com.epam.web.logic.service.BetService;
+import com.epam.web.logic.service.MatchService;
+import com.epam.web.logic.service.UserService;
 
 
 public class BetCommand implements Command {
@@ -28,33 +29,34 @@ public class BetCommand implements Command {
     }
 
     @Override
-    public CommandResult execute(RequestContext requestContext) throws ServiceException {
+    public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
         String matchIdStr = requestContext.getRequestParameter(Parameter.ID);
-        long matchId = Long.parseLong(matchIdStr);
-        if (matchService.isFinished(matchId)) {
-            throw new InvalidInputException("This match is already finished.");
-        }
         String moneyStr = requestContext.getRequestParameter(Parameter.MONEY);
+        long matchId;
         int money;
+        String team;
         try {
+            matchId = Long.parseLong(matchIdStr);
+            if (matchService.isFinishedMatch(matchId)) {
+                throw new ServiceException("This match is already finished.");
+            }
             money = Integer.parseInt(moneyStr);
+            if (money <= 0) {
+                throw new InvalidParametersException("Your bet value is not a positive value.");
+            }
+            team = requestContext.getRequestParameter(Parameter.BET_ON);
+            if (team.isEmpty() || !(team.equals(FIRST_TEAM) || team.equals(SECOND_TEAM))) {
+                throw new InvalidInputException("Invalid team on bet.");
+            }
         } catch (NumberFormatException e) {
-            throw new InvalidInputException("Your bet is not a number.");
-        }
-        if (money <= 0) {
-            throw new InvalidInputException("Your bet value is not a positive value.");
+            throw new InvalidParametersException("Invalid parameters in request.");
         }
         Long accountId = (Long)requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
         if (userService.getBalance(accountId) < money) {
-            throw new InvalidInputException("You have no money for your bet.");
+            throw new ServiceException("You have no money for your bet.");
         }
-        String team = requestContext.getRequestParameter(Parameter.BET_ON);
-        if (team == null || team.isEmpty() ||
-                !(team.equals(FIRST_TEAM) || team.equals(SECOND_TEAM))) {
-            throw new InvalidInputException("Invalid team on bet.");
-        }
-        Bet bet = new Bet(accountId, matchId, money, team, 0);
-        betService.bet(bet);
+        Bet bet = new Bet(accountId, matchId, money, team);
+        betService.createBet(bet);
 
         String prevPage = requestContext.getHeader();
         return CommandResult.redirect(prevPage);

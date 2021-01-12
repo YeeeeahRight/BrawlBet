@@ -6,10 +6,11 @@ import com.epam.web.constant.CommandName;
 import com.epam.web.constant.Parameter;
 import com.epam.web.date.DateFormatType;
 import com.epam.web.date.DateParser;
+import com.epam.web.exceptions.InvalidParametersException;
 import com.epam.web.model.entity.Match;
 import com.epam.web.exceptions.ServiceException;
 import com.epam.web.controller.request.RequestContext;
-import com.epam.web.service.MatchService;
+import com.epam.web.logic.service.MatchService;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -23,10 +24,15 @@ public class EditMatchCommand implements Command {
     }
 
     @Override
-    public CommandResult execute(RequestContext requestContext) throws ServiceException {
+    public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
         Match match = buildMatch(requestContext);
         String idStr = requestContext.getRequestParameter(Parameter.ID);
-        long id = Long.parseLong(idStr);
+        long id;
+        try {
+            id = Long.parseLong(idStr);
+        } catch (NumberFormatException e) {
+            throw new InvalidParametersException("Invalid match id parameter in request.");
+        }
         matchService.editMatch(match, id);
 
         return CommandResult.redirect(MATCHES_COMMAND);
@@ -44,7 +50,7 @@ public class EditMatchCommand implements Command {
         } catch (ParseException e) {
             throw new IllegalArgumentException("Invalid date format.");
         }
-        return new Match(date, tournament, firstTeam, secondTeam, "NONE", 0,false);
+        return new Match(date, tournament, firstTeam, secondTeam);
     }
 }
 

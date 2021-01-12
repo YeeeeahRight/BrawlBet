@@ -9,8 +9,8 @@ import com.epam.web.model.entity.Match;
 import com.epam.web.exceptions.ServiceException;
 import com.epam.web.controller.request.RequestContext;
 import com.epam.web.model.entity.dto.MatchBetsDto;
-import com.epam.web.service.BetService;
-import com.epam.web.service.MatchService;
+import com.epam.web.logic.service.BetService;
+import com.epam.web.logic.service.MatchService;
 
 import java.util.ArrayList;
 import java.util.Date;

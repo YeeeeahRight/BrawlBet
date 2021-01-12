@@ -5,6 +5,7 @@ import com.epam.web.command.CommandFactory;
 import com.epam.web.command.CommandResult;
 import com.epam.web.connection.ConnectionPool;
 import com.epam.web.constant.Attribute;
+import com.epam.web.constant.Page;
 import com.epam.web.controller.request.RequestContext;
 import com.epam.web.controller.request.RequestContextCreator;
 import com.epam.web.controller.request.RequestFiller;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class Servlet extends HttpServlet {
+public class Controller extends HttpServlet {
     private static final String COMMAND_NAME_PARAM = "command";
 
     @Override
@@ -50,6 +51,9 @@ public class Servlet extends HttpServlet {
     private void dispatch(CommandResult commandResult, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String page = commandResult.getPage();
+        if (page == null) {
+            response.sendRedirect(Page.HOME);
+        }
         if (commandResult.getIsRedirect()) {
             response.sendRedirect(page);
         } else {

@@ -3,7 +3,7 @@ package com.epam.web.command;
 import com.epam.web.command.impl.*;
 import com.epam.web.constant.CommandName;
 import com.epam.web.dao.helper.DaoHelperFactory;
-import com.epam.web.service.*;
+import com.epam.web.logic.service.*;
 
 public class CommandFactory {
 
@@ -25,7 +25,7 @@ public class CommandFactory {
             case CommandName.CLOSE_MATCHES_PAGE:
                 return new CloseMatchesPageCommand(new MatchService(new DaoHelperFactory()));
             case CommandName.CLOSE_MATCH:
-                return new CloseMatchCommand(new MatchService(new DaoHelperFactory()));
+                return new CloseMatchCommand(new CloseMatchService(new DaoHelperFactory()));
             case CommandName.BET_PAGE:
                 return new BetPageCommand(new MatchService(new DaoHelperFactory()), new BetService(new DaoHelperFactory()),
                         new UserService(new DaoHelperFactory()));
