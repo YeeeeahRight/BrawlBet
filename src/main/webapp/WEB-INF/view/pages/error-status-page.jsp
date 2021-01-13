@@ -16,7 +16,7 @@
     <body>
         <div class="container">
             <jsp:include page="../parts/header.jsp"/>
-            <jsp:include page="../parts/page-not-found-body.jsp"/>
+            <jsp:include page="../parts/error-status-body.jsp"/>
         </div>
     </body>
 </html>

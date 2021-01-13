@@ -10,6 +10,10 @@ import com.epam.web.constant.Parameter;
 import com.epam.web.controller.request.RequestContext;
 import com.epam.web.controller.request.RequestContextCreator;
 import com.epam.web.controller.request.RequestFiller;
+import com.epam.web.exception.InvalidParametersException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,19 +22,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
 public class Controller extends HttpServlet {
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         process(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         process(req, resp);
     }
 
-    private void process(HttpServletRequest req, HttpServletResponse resp) {
+    private void process(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         RequestContextCreator requestContextCreator = new RequestContextCreator();
         CommandResult commandResult;
         String commandParam = req.getParameter(Parameter.COMMAND);
@@ -42,9 +48,12 @@ public class Controller extends HttpServlet {
             RequestFiller requestFiller = new RequestFiller();
             requestFiller.fillData(req, requestContext);
             dispatch(commandResult, req, resp);
+        } catch (InvalidParametersException e) {
+            LOGGER.warn(e.getMessage(), e);
+            handleException(req, resp, e.getMessage());
         } catch (Exception e) {
-            e.printStackTrace();
-            processError(req, resp, e.getMessage());
+            LOGGER.error(e.getMessage(), e);
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -54,7 +63,7 @@ public class Controller extends HttpServlet {
         if (page == null) {
             response.sendRedirect(Page.HOME);
         }
-        if (commandResult.getIsRedirect()) {
+        if (commandResult.isRedirect()) {
             response.sendRedirect(page);
         } else {
             RequestDispatcher dispatcher = request.getRequestDispatcher(page);
@@ -62,20 +71,26 @@ public class Controller extends HttpServlet {
         }
     }
 
-    private void processError(HttpServletRequest req, HttpServletResponse resp, String errorMessage) {
-        CommandResult commandResult = CommandResult.error();
+    private void handleException(HttpServletRequest req, HttpServletResponse resp, String errorMessage)
+            throws IOException {
         req.setAttribute(Attribute.ERROR_MESSAGE, errorMessage);
+        RequestDispatcher dispatcher = req.getRequestDispatcher(Page.ERROR);
         try {
-            dispatch(commandResult, req, resp);
+            dispatcher.forward(req, resp);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
     @Override
     public void destroy() {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        connectionPool.closeAll();
+        try {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connectionPool.closeAll();
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
+        }
         super.destroy();
     }
 }

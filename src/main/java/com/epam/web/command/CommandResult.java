@@ -19,15 +19,11 @@ public class CommandResult {
         return new CommandResult(page, false);
     }
 
-    public static CommandResult error() {
-        return new CommandResult(Page.ERROR, false);
-    }
-
     public String getPage() {
         return page;
     }
 
-    public boolean getIsRedirect() {
+    public boolean isRedirect() {
         return isRedirect;
     }
 
