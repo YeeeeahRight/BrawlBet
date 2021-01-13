@@ -32,8 +32,7 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
 
     @Override
     public Optional<T> findById(long id) throws DaoException {
-        T item = executeQuery("SELECT * FROM " + tableName + " WHERE id=" + id).get(0);
-        return Optional.of(item);
+        return executeForSingleResult("SELECT * FROM " + tableName + " WHERE id=" + id);
     }
 
     protected List<T> executeQuery(String query, Object... params) throws DaoException {
