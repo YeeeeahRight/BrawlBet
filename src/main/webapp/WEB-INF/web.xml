@@ -53,17 +53,25 @@
 
     <!--Errors handling-->
     <error-page>
+        <error-code>400</error-code>
+        <location>/WEB-INF/view/pages/error-status-page.jsp</location>
+    </error-page>
+
+    <error-page>
         <error-code>403</error-code>
         <location>/WEB-INF/view/pages/error-status-page.jsp</location>
     </error-page>
+
     <error-page>
         <error-code>404</error-code>
         <location>/WEB-INF/view/pages/error-status-page.jsp</location>
     </error-page>
+
     <error-page>
         <error-code>500</error-code>
         <location>/WEB-INF/view/pages/error-status-page.jsp</location>
     </error-page>
+
     <error-page>
         <location>/WEB-INF/view/pages/error-page.jsp</location>
     </error-page>
