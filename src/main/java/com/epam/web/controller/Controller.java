@@ -48,12 +48,9 @@ public class Controller extends HttpServlet {
             RequestFiller requestFiller = new RequestFiller();
             requestFiller.fillData(req, requestContext);
             dispatch(commandResult, req, resp);
-        } catch (InvalidParametersException e) {
-            LOGGER.warn(e.getMessage(), e);
-            handleException(req, resp, e.getMessage());
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            handleException(req, resp, e.getMessage());
         }
     }
 
@@ -78,7 +75,7 @@ public class Controller extends HttpServlet {
         try {
             dispatcher.forward(req, resp);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.fatal(e.getMessage(), e);
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
