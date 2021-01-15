@@ -21,7 +21,7 @@
                 <div class="match-header">
                     <div class="match-date">
                         <h1>
-                            <sc:date-formatter date="${matchDto.getDate()}"
+                            <sc:date-formatter date="${match.getDate()}"
                                                formatType="${sessionScope.lang}"></sc:date-formatter>
                         </h1>
                     </div>
@@ -30,12 +30,12 @@
                     <div class="f-team">
                         <div class="f-team-name">
                             <h1>
-                                ${matchDto.getFirstTeam()}
+                                ${match.getFirstTeam()}
                             </h1>
                         </div>
                         <div class="f-percent-name">
                             <h1>
-                                ${matchDto.getFirstPercent()}%
+                                ${firstPercent}%
                             </h1>
                         </div>
                     </div>
@@ -47,12 +47,12 @@
                     <div class="s-team">
                         <div class="s-team-name">
                             <h1>
-                                ${matchDto.getSecondTeam()}
+                                ${match.getSecondTeam()}
                             </h1>
                         </div>
                         <div class="s-percent-name">
                             <h1>
-                                ${matchDto.getSecondPercent()}%
+                                ${secondPercent}%
                             </h1>
                         </div>
                     </div>
@@ -60,14 +60,14 @@
                 <div class="match-footer">
                     <div class="match-tournament">
                         <h1>
-                            ${matchDto.getTournament()}
+                            ${match.getTournament()}
                         </h1>
                     </div>
                 </div>
                 <div class="match-description">
                     <div class="commission">
                         <h1>
-                            <fmt:message key="bet.commission"/>${matchDto.getCommission()}%
+                            <fmt:message key="bet.commission"/>${match.getCommission()}%
                         </h1>
                     </div>
                 </div>
@@ -83,24 +83,35 @@
                 <c:otherwise>
                     <sc:access role="USER">
                         <form id="money-input-form" method="POST"
-                              action="${pageContext.request.contextPath}/controller?command=bet&id=${matchDto.getId()}">
+                              action="${pageContext.request.contextPath}/controller?command=bet&id=${match.getId()}">
                             <input id="money" type="number" step="0.01" required
                                    placeholder="<fmt:message key="bet.enter.money"/>"
-                                   name="money" min="${minBet}" max="${maxBet}">
+                                   name="money" min="${minBet}" max="${maxBet}" oninput="calculatePotentialGains()">
                             <input id="on" type="text" name="on" value=""/>
                             <div class="bet-buttons">
                                 <button type="submit" onclick="betOnFirst()" class="first-button">
                                     <div class="button">
                                         <div class="bet-on">
                                             <h1>
-                                                <fmt:message key="bet.on"/>${matchDto.getFirstTeam()}
+                                                <fmt:message key="bet.on"/>${match.getFirstTeam()}
                                             </h1>
                                         </div>
                                         <div class="coefficient-value">
                                             <h1>
                                                 <fmt:message key="bet.coefficient"/>
+                                            </h1>
+                                            <h1 id="first-coefficient">
                                                 <fmt:formatNumber type="number" maxFractionDigits="3"
-                                                                  value="${matchDto.getFirstCoefficient()}"/>
+                                                                  value="${firstCoefficient}"/>
+                                            </h1>
+                                        </div>
+                                        <div class="potential-gain-value">
+                                            <h1 class="potential-gain-text">
+                                                <fmt:message key="bet.potential.gain"/>
+                                            </h1>
+                                            <h1 id="first-potential-gain">
+                                                <fmt:formatNumber type="number" maxFractionDigits="3"
+                                                                  value=""/>
                                             </h1>
                                         </div>
                                     </div>
@@ -109,14 +120,25 @@
                                     <div class="button">
                                         <div class="bet-on">
                                             <h1>
-                                                <fmt:message key="bet.on"/>${matchDto.getSecondTeam()}
+                                                <fmt:message key="bet.on"/>${match.getSecondTeam()}
                                             </h1>
                                         </div>
                                         <div class="coefficient-value">
                                             <h1>
                                                 <fmt:message key="bet.coefficient"/>
+                                            </h1>
+                                            <h1 id="second-coefficient">
                                                 <fmt:formatNumber type="number" maxFractionDigits="3"
-                                                                  value="${matchDto.getSecondCoefficient()}"/>
+                                                                  value="${secondCoefficient}"/>
+                                            </h1>
+                                        </div>
+                                        <div class="potential-gain-value">
+                                            <h1 class="potential-gain-text">
+                                                <fmt:message key="bet.potential.gain"/>
+                                            </h1>
+                                            <h1 id="second-potential-gain">
+                                                <fmt:formatNumber type="number" maxFractionDigits="3"
+                                                                  value=""/>
                                             </h1>
                                         </div>
                                     </div>

@@ -6,6 +6,20 @@ function betOnSecond() {
     document.getElementById("on").value = "SECOND";
 }
 
+function calculatePotentialGains() {
+    let moneyAttribute = document.getElementById("money");
+    let moneyValue = parseFloat(moneyAttribute.value);
+    if (moneyValue > 0 && moneyValue < moneyAttribute.getAttribute("max")) {
+        let firstCoefficientText = document.getElementById("first-coefficient").innerHTML;
+        let secondCoefficientText = document.getElementById("second-coefficient").innerHTML;
+        let firstCoefficient = parseFloat(firstCoefficientText.replace(/,/,'.'));
+        let secondCoefficient = parseFloat(secondCoefficientText.replace(/,/,'.'));
+        let firstPotentialGain = (firstCoefficient - 1) * moneyValue;
+        let secondPotentialGain = (secondCoefficient - 1) * moneyValue;
+        document.getElementById("first-potential-gain").innerHTML = firstPotentialGain.toFixed(2);
+        document.getElementById("second-potential-gain").innerHTML = secondPotentialGain.toFixed(2);
+    }
+}
 
 const money = document.getElementById("money");
 
