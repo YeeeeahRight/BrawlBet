@@ -4,6 +4,7 @@ import com.epam.web.dao.Dao;
 import com.epam.web.exception.DaoException;
 import com.epam.web.model.entity.Account;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 public interface AccountDao extends Dao<Account> {
@@ -15,5 +16,5 @@ public interface AccountDao extends Dao<Account> {
 
     void unblock(long id) throws DaoException;
 
-    void addMoneyToBalance(int money, long id) throws DaoException;
+    void addMoneyToBalance(float money, long id) throws DaoException;
 }

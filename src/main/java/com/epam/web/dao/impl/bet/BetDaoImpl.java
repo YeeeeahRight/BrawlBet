@@ -5,6 +5,7 @@ import com.epam.web.dao.mapper.impl.BetRowMapper;
 import com.epam.web.exception.DaoException;
 import com.epam.web.model.entity.Bet;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class BetDaoImpl extends AbstractDao<Bet> implements BetDao{
     public void save(Bet item) throws DaoException {
         long accountId = item.getAccountId();
         long matchId = item.getMatchId();
-        int money = item.getMoneyBet();
+        float money = item.getMoneyBet();
         String team = item.getTeam().toString();
         updateSingle(INSERT_QUERY, accountId, matchId, money, team);
     }
@@ -32,7 +33,7 @@ public class BetDaoImpl extends AbstractDao<Bet> implements BetDao{
     }
 
     @Override
-    public void close(int moneyReceived, long id) throws DaoException {
+    public void close(float moneyReceived, long id) throws DaoException {
         updateSingle(CLOSE_QUERY, moneyReceived, id);
     }
 }

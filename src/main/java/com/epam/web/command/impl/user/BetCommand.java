@@ -29,14 +29,14 @@ public class BetCommand implements Command {
         String matchIdStr = requestContext.getRequestParameter(Parameter.ID);
         String moneyStr = requestContext.getRequestParameter(Parameter.MONEY);
         long matchId;
-        int money;
+        float money;
         Team team;
         try {
             matchId = Long.parseLong(matchIdStr);
             if (matchService.isFinishedMatch(matchId)) {
                 throw new ServiceException("This match is already finished.");
             }
-            money = Integer.parseInt(moneyStr);
+            money = Float.parseFloat(moneyStr);
             String teamStr = requestContext.getRequestParameter(Parameter.BET_ON);
             try {
                 team = Team.valueOf(teamStr);
@@ -46,8 +46,8 @@ public class BetCommand implements Command {
         } catch (NumberFormatException e) {
             throw new InvalidParametersException("Invalid parameters in request.");
         }
-        Long accountId = (Long)requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
-        if (accountService.getBalance(accountId) < money) {
+        Long accountId = (Long) requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
+        if (accountService.getBalance(accountId) < 0.0f) {
             throw new ServiceException("You have no money for your bet.");
         }
         Bet bet = new Bet(accountId, matchId, money, team);

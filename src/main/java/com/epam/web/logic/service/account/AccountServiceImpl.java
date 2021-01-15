@@ -28,7 +28,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public int getBalance(long id) throws ServiceException {
+    public float getBalance(long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDao matchDao = daoHelper.createAccountDao();
             Optional<Account> user = matchDao.findById(id);
@@ -42,7 +42,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void addMoneyById(int money, long id) throws ServiceException {
+    public void addMoneyById(float money, long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDao matchDao = daoHelper.createAccountDao();
             matchDao.addMoneyToBalance(money, id);

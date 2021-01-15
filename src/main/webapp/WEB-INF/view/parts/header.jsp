@@ -28,7 +28,8 @@
                     <fmt:message key="header.account.balance"/>
                 </h1>
                 <h1 class="account-balance">
-                        ${sessionScope.balance}
+                    <fmt:formatNumber type="number" maxFractionDigits="2"
+                                      value="${sessionScope.balance}"/>
                 </h1>
             </div>
         </sc:access>
@@ -43,7 +44,8 @@
                     <fmt:message key="header.account.balance"/>
                 </h1>
                 <h1 class="account-balance">
-                        ${sessionScope.balance}
+                    <fmt:formatNumber type="number" maxFractionDigits="2"
+                                      value="${sessionScope.balance}"/>
                 </h1>
             </div>
         </sc:access>

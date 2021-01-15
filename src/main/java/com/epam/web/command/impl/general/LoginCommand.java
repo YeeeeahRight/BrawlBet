@@ -42,10 +42,6 @@ public class LoginCommand implements Command {
                 requestContext.addSession(Attribute.ACCOUNT_ID, id);
                 AccountRole role = account.getRole();
                 requestContext.addSession(Attribute.ROLE, role);
-                if (role != AccountRole.ADMIN) {
-                    int balance = account.getBalance();
-                    requestContext.addSession(Attribute.BALANCE, balance);
-                }
                 return CommandResult.redirect(HOME_PAGE_COMMAND);
             }
             requestContext.addAttribute(Attribute.ERROR_MESSAGE, BANNED_USER_KEY);

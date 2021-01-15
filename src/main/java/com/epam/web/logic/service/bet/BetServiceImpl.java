@@ -10,6 +10,7 @@ import com.epam.web.logic.validator.Validator;
 import com.epam.web.model.entity.Account;
 import com.epam.web.model.entity.Bet;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +41,7 @@ public class BetServiceImpl implements BetService {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             BetDao betDao = daoHelper.createBetDao();
             AccountDao accountDao = daoHelper.createAccountDao();
-            int money = bet.getMoneyBet();
+            float money = bet.getMoneyBet();
             long accountId = bet.getAccountId();
             Optional<Account> account = accountDao.findById(accountId);
             if (!account.isPresent()) {

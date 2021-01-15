@@ -42,8 +42,8 @@ public class BetPageCommand implements Command {
         } catch (NumberFormatException e) {
             throw new InvalidParametersException("Invalid id match parameter in request.");
         }
-        boolean isMatchActive = matchService.isFinishedMatch(id);
-        requestContext.addAttribute(Attribute.IS_MATCH_FINISHED, isMatchActive);
+        boolean isMatchFinished = matchService.isFinishedMatch(id);
+        requestContext.addAttribute(Attribute.IS_MATCH_FINISHED, isMatchFinished);
         Match match = matchService.findById(id);
         List<Bet> bets = betService.getBetsByMatch(id);
         MatchBetsDto matchBetsDto = createMatchBetDto(match, bets);
@@ -52,9 +52,9 @@ public class BetPageCommand implements Command {
         if (accountId != null) {
             AccountRole role = (AccountRole) requestContext.getSessionAttribute(Attribute.ROLE);
             if (role == AccountRole.USER) {
-                int balance = accountService.getBalance(accountId);
+                float balance = accountService.getBalance(accountId);
                 requestContext.addAttribute(Attribute.MAX_BET, balance);
-                requestContext.addAttribute(Attribute.MIN_BET, 1);
+                requestContext.addAttribute(Attribute.MIN_BET, 0.1);
             }
         }
 
@@ -69,16 +69,17 @@ public class BetPageCommand implements Command {
         String secondTeam = match.getSecondTeam();
         String winner = match.getWinner();
         Float commission = match.getCommission();
-        Integer firstTeamBetsAmount = 0;
-        Integer secondTeamBetsAmount = 0;
+        Float firstTeamBetsAmount = 0.0f;
+        Float secondTeamBetsAmount = 0.0f;
         for (Bet bet : bets) {
             Long matchId = bet.getMatchId();
             if (matchId.equals(id)) {
                 Team team = bet.getTeam();
+                Float moneyBet = bet.getMoneyBet();
                 if (team == Team.FIRST) {
-                    firstTeamBetsAmount += bet.getMoneyBet();
+                    firstTeamBetsAmount += moneyBet;
                 } else {
-                    secondTeamBetsAmount += bet.getMoneyBet();
+                    secondTeamBetsAmount += moneyBet;
                 }
             }
         }

@@ -24,7 +24,6 @@ public class RemoveMatchCommand implements Command {
         } catch (NumberFormatException e ){
             throw new InvalidParametersException("Invalid match id parameter in request.");
         }
-
         matchService.removeById(id);
         String prevPage = requestContext.getHeader();
         return CommandResult.redirect(prevPage);

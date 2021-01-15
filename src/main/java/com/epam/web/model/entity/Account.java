@@ -15,11 +15,11 @@ public class Account implements Entity {
     private final String name;
     private final String password;
     private final AccountRole role;
-    private final Integer balance;
+    private final Float balance;
     private final Boolean isBlocked;
     private final Long id;
 
-    public Account(Long id, String name, String password, AccountRole role, Integer balance, Boolean isBlocked) {
+    public Account(Long id, String name, String password, AccountRole role, Float balance, Boolean isBlocked) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -33,11 +33,11 @@ public class Account implements Entity {
         this.name = name;
         this.password = password;
         this.role = role;
-        this.balance = 0;
+        this.balance = 0.0f;
         this.isBlocked = false;
     }
 
-    public Integer getBalance() {
+    public Float getBalance() {
         return balance;
     }
 

@@ -18,6 +18,7 @@ import java.util.Optional;
 
 public class CloseMatchServiceImpl implements CloseMatchService {
     private static final int SAME_WIN_CHANCE = 50;
+
     private final DaoHelperFactory daoHelperFactory;
 
     public CloseMatchServiceImpl(DaoHelperFactory daoHelperFactory) {
@@ -40,17 +41,17 @@ public class CloseMatchServiceImpl implements CloseMatchService {
             }
             List<Bet> matchBets = betDao.getBetsByMatchId(matchId);
             Team winner;
+            daoHelper.startTransaction();
             if (matchBets.size() > 0) {
                 MatchBetsDto matchBetsDto = createMatchBetDto(match, matchBets);
                 int firstPercent = matchBetsDto.getFirstPercent();
                 winner = calculateWinner(firstPercent);
                 float winCoefficient = calculateCoefficient(matchBetsDto, matchBets, winner);
-                daoHelper.startTransaction();
                 for (Bet bet : matchBets) {
                     Team team = bet.getTeam();
-                    int moneyReceived;
+                    float moneyReceived;
                     if (team == winner) {
-                        moneyReceived = Math.round(bet.getMoneyBet() * winCoefficient);
+                        moneyReceived = bet.getMoneyBet() * winCoefficient;
                     } else {
                         moneyReceived = bet.getMoneyBet() * -1;
                     }
@@ -74,9 +75,9 @@ public class CloseMatchServiceImpl implements CloseMatchService {
         String firstTeam = match.getFirstTeam();
         String secondTeam = match.getSecondTeam();
         String winner = match.getWinner();
-        float commission = match.getCommission();
-        int firstTeamBetsAmount = 0;
-        int secondTeamBetsAmount = 0;
+        Float commission = match.getCommission();
+        float firstTeamBetsAmount = 0.0f;
+        float secondTeamBetsAmount = 0.0f;
         for (Bet bet : bets) {
             long matchId = bet.getMatchId();
             if (matchId == id) {
@@ -102,17 +103,17 @@ public class CloseMatchServiceImpl implements CloseMatchService {
         if (isBetsOnTwoTeams(matchBets)) {
             coefficient = winner == Team.FIRST ?
                     matchBetsDto.getFirstCoefficient() : matchBetsDto.getSecondCoefficient();
-            if (isOneUserBets(matchBets)) {
-                coefficient -= matchBetsDto.getCommissionByCoefficient(coefficient);
+            if (!isOneUserBets(matchBets)) {
+                coefficient -= coefficient * matchBetsDto.getCommission() / 100;
             }
         }
         return coefficient;
     }
 
     private boolean isOneUserBets(List<Bet> bets) {
-        long prevAccountId = bets.get(0).getId();
+        long prevAccountId = bets.get(0).getAccountId();
         for (Bet bet : bets) {
-            if (prevAccountId != bet.getId()) {
+            if (prevAccountId != bet.getAccountId()) {
                 return false;
             }
         }

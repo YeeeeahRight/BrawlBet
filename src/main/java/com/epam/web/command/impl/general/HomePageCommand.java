@@ -45,9 +45,9 @@ public class HomePageCommand implements Command {
             String firstTeam = match.getFirstTeam();
             String secondTeam = match.getSecondTeam();
             String winner = match.getWinner();
-            float commission = match.getCommission();
-            int firstTeamBetsAmount = 0;
-            int secondTeamBetsAmount = 0;
+            Float commission = match.getCommission();
+            float firstTeamBetsAmount = 0.0f;
+            float secondTeamBetsAmount = 0.0f;
             for (Bet bet : bets) {
                 long matchId = bet.getMatchId();
                 if (matchId == id) {

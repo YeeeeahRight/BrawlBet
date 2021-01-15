@@ -22,9 +22,9 @@
                         </h1>
                     </div>
                     <form method = "POST" action="${pageContext.request.contextPath}/controller?command=deposit">
-                        <input type="number"
+                        <input type="number" step="0.01"
                                placeholder="<fmt:message key="user.deposit.input"/>"
-                               name="money" min="1" max="100" required>
+                               name="money" min="0.1" max="100.00" required>
                         <button type="submit">
                             <fmt:message key="user.get"/>
                         </button>

@@ -144,8 +144,8 @@ public class MatchServiceImpl implements MatchService{
             daoHelper.startTransaction();
             for (Bet bet : bets) {
                 long accountId = bet.getAccountId();
-                int money = bet.getMoneyBet();
-                int received = bet.getMoneyReceived();
+                float money = bet.getMoneyBet();
+                float received = bet.getMoneyReceived();
                 accountDao.addMoneyToBalance(money - received, accountId);
             }
             matchDao.removeById(id);

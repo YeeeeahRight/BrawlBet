@@ -10,8 +10,8 @@ import com.epam.web.exception.ServiceException;
 import com.epam.web.logic.service.account.AccountService;
 
 public class DepositCommand implements Command {
-    private static final int MAX_DEPOSIT = 100;
-    private static final int MIN_DEPOSIT = 1;
+    private static final float MAX_DEPOSIT = 100.0f;
+    private static final float MIN_DEPOSIT = 0.1f;
     private final AccountService accountService;
 
     public DepositCommand(AccountService accountService) {
@@ -21,9 +21,9 @@ public class DepositCommand implements Command {
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
         String moneyStr = requestContext.getRequestParameter(Parameter.MONEY);
-        int money;
+        float money;
         try {
-            money = Integer.parseInt(moneyStr);
+            money = Float.parseFloat(moneyStr);
         } catch (NumberFormatException e) {
             throw new InvalidParametersException("Invalid money parameter in request.");
         }

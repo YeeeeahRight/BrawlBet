@@ -1,5 +1,7 @@
 package com.epam.web.connection;
 
+import com.epam.web.exception.ConnectionPoolException;
+
 import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
@@ -25,7 +27,10 @@ public class ProxyConnection implements Connection {
     }
 
     @Override
-    public void close() {
+    public void close() throws SQLException {
+        if (!this.getAutoCommit()) {
+            this.setAutoCommit(true);
+        }
         pool.returnConnection(this);
     }
 

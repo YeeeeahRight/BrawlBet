@@ -12,12 +12,12 @@ public class MatchBetsDto implements Entity {
     private final String secondTeam;
     private final String winner;
     private final Float commission;
-    private final Integer firstTeamBetsAmount;
-    private final Integer secondTeamBetsAmount;
+    private final Float firstTeamBetsAmount;
+    private final Float secondTeamBetsAmount;
 
     public MatchBetsDto(Long id, Date date, String tournament, String firstTeam,
                         String secondTeam, String winner, Float commission,
-                        Integer firstTeamBetsAmount, Integer secondTeamBetsAmount) {
+                        Float firstTeamBetsAmount, Float secondTeamBetsAmount) {
         this.id = id;
         this.date = date;
         this.tournament = tournament;
@@ -49,48 +49,42 @@ public class MatchBetsDto implements Entity {
         return commission;
     }
 
-    public Integer getFirstTeamBetsAmount() {
+    public Float getFirstTeamBetsAmount() {
         return firstTeamBetsAmount;
     }
 
-    public Integer getSecondTeamBetsAmount() {
+    public Float getSecondTeamBetsAmount() {
         return secondTeamBetsAmount;
     }
 
     public int getFirstPercent() {
-        if (firstTeamBetsAmount + secondTeamBetsAmount == 0) {
+        if (firstTeamBetsAmount + secondTeamBetsAmount == 0.0f) {
             return 0;
         }
-        float percent = firstTeamBetsAmount * 1.0f / (firstTeamBetsAmount + secondTeamBetsAmount);
-        return Math.round(percent * 100);
+        float percent = firstTeamBetsAmount * 100 / (firstTeamBetsAmount + secondTeamBetsAmount);
+        return Math.round(percent);
     }
 
     public int getSecondPercent() {
-        if (firstTeamBetsAmount + secondTeamBetsAmount == 0) {
+        if (firstTeamBetsAmount + secondTeamBetsAmount == 0.0f) {
             return 0;
         }
-        float percent = secondTeamBetsAmount * 1.0f / (firstTeamBetsAmount + secondTeamBetsAmount);
-        return Math.round(percent * 100);
+        float percent = secondTeamBetsAmount * 100 / (firstTeamBetsAmount + secondTeamBetsAmount);
+        return Math.round(percent);
     }
 
     public float getFirstCoefficient() {
         if (firstTeamBetsAmount * secondTeamBetsAmount == 0) {
             return 1.0f;
         }
-        float coefficient = secondTeamBetsAmount * 1.0f / firstTeamBetsAmount;
-        return coefficient - (coefficient * commission / 100) + 1.0f;
+        return (secondTeamBetsAmount / firstTeamBetsAmount) + 1;
     }
 
     public float getSecondCoefficient() {
         if (firstTeamBetsAmount * secondTeamBetsAmount == 0) {
             return 1.0f;
         }
-        float coefficient = firstTeamBetsAmount * 1.0f / secondTeamBetsAmount;
-        return coefficient - (coefficient * commission / 100) + 1.0f;
-    }
-
-    public float getCommissionByCoefficient(float coefficient) {
-        return (coefficient * commission / 100);
+        return (firstTeamBetsAmount / secondTeamBetsAmount) + 1;
     }
 
     @Override

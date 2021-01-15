@@ -84,7 +84,7 @@
                     <sc:access role="USER">
                         <form id="money-input-form" method="POST"
                               action="${pageContext.request.contextPath}/controller?command=bet&id=${matchDto.getId()}">
-                            <input id="money" type="number" required
+                            <input id="money" type="number" step="0.01" required
                                    placeholder="<fmt:message key="bet.enter.money"/>"
                                    name="money" min="${minBet}" max="${maxBet}">
                             <input id="on" type="text" name="on" value=""/>

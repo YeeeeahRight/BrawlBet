@@ -4,7 +4,6 @@ import com.epam.web.model.entity.Account;
 import com.epam.web.dao.mapper.RowMapper;
 import com.epam.web.model.enumeration.AccountRole;
 
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -17,7 +16,7 @@ public class AccountRowMapper implements RowMapper<Account> {
         String roleStr = resultSet.getString(Account.ROLE);
         AccountRole accountRole = AccountRole.valueOf(roleStr);
         long id = resultSet.getLong(Account.ID);
-        int balance = resultSet.getInt(Account.BALANCE);
+        float balance = resultSet.getFloat(Account.BALANCE);
         boolean isBlocked = resultSet.getString(Account.STATUS).equals("1");
 
         return new Account(id, name, password, accountRole, balance, isBlocked);

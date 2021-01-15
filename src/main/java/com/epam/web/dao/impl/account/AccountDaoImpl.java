@@ -5,6 +5,7 @@ import com.epam.web.model.entity.Account;
 import com.epam.web.exception.DaoException;
 import com.epam.web.dao.mapper.impl.AccountRowMapper;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.Optional;
 
@@ -51,7 +52,7 @@ public class AccountDaoImpl extends AbstractDao<Account> implements AccountDao {
     }
 
     @Override
-    public void addMoneyToBalance(int money, long id) throws DaoException {
+    public void addMoneyToBalance(float money, long id) throws DaoException {
         updateSingle(ADD_MONEY_BALANCE_QUERY, money, id);
     }
 }

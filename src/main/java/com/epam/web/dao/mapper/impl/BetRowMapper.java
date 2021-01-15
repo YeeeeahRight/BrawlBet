@@ -14,8 +14,8 @@ public class BetRowMapper implements RowMapper<Bet> {
         long id = resultSet.getLong(Bet.ID);
         long accountId = resultSet.getLong(Bet.ACCOUNT_ID);
         long matchId = resultSet.getLong(Bet.MATCH_ID);
-        int moneyBet = resultSet.getInt(Bet.MONEY_BET);
-        int moneyReceived = resultSet.getInt(Bet.MONEY_RECEIVED);
+        float moneyBet = resultSet.getFloat(Bet.MONEY_BET);
+        float moneyReceived = resultSet.getFloat(Bet.MONEY_RECEIVED);
         String teamStr = resultSet.getString(Bet.TEAM);
         Team team = Team.valueOf(teamStr);
 

@@ -15,11 +15,11 @@ public class Bet implements Entity {
     private final Long accountId;
     private final Long matchId;
     private final Team team;
-    private final Integer moneyReceived;
-    private final Integer moneyBet;
+    private final Float moneyReceived;
+    private final Float moneyBet;
     private final Long id;
 
-    public Bet(Long id, Long accountId, Long matchId, Integer moneyBet, Team team, Integer moneyReceived) {
+    public Bet(Long id, Long accountId, Long matchId, Float moneyBet, Team team, Float moneyReceived) {
         this.id = id;
         this.accountId = accountId;
         this.matchId = matchId;
@@ -28,13 +28,13 @@ public class Bet implements Entity {
         this.moneyReceived = moneyReceived;
     }
 
-    public Bet(Long accountId, Long matchId, Integer moneyBet, Team team) {
+    public Bet(Long accountId, Long matchId, Float moneyBet, Team team) {
         this.id = null;
         this.accountId = accountId;
         this.matchId = matchId;
         this.moneyBet = moneyBet;
         this.team = team;
-        this.moneyReceived = 0;
+        this.moneyReceived = 0.0f;
     }
 
     public Long getId() {
@@ -49,7 +49,7 @@ public class Bet implements Entity {
         return matchId;
     }
 
-    public Integer getMoneyBet() {
+    public Float getMoneyBet() {
         return moneyBet;
     }
 
@@ -57,7 +57,7 @@ public class Bet implements Entity {
         return team;
     }
 
-    public Integer getMoneyReceived() {
+    public Float getMoneyReceived() {
         return moneyReceived;
     }
 
@@ -79,7 +79,9 @@ public class Bet implements Entity {
         if (!matchId.equals(bet.matchId)) {
             return false;
         }
-        if (team != bet.team) return false;
+        if (team != bet.team) {
+            return false;
+        }
         if (!moneyReceived.equals(bet.moneyReceived)) {
             return false;
         }
