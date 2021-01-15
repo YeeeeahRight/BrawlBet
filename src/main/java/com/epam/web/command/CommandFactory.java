@@ -9,6 +9,7 @@ import com.epam.web.command.impl.user.BetCommand;
 import com.epam.web.command.impl.user.DepositCommand;
 import com.epam.web.constant.CommandName;
 import com.epam.web.dao.helper.DaoHelperFactory;
+import com.epam.web.logic.calculator.BetCalculatorImpl;
 import com.epam.web.logic.service.account.SignUpServiceImpl;
 import com.epam.web.logic.service.account.AccountServiceImpl;
 import com.epam.web.logic.service.bet.BetServiceImpl;
@@ -37,16 +38,17 @@ public class CommandFactory {
             case CommandName.HOME_PAGE:
                 return new HomePageCommand(new MatchServiceImpl(new DaoHelperFactory(),
                         new MatchValidator()), new BetServiceImpl(new DaoHelperFactory(),
-                        new BetValidator()));
+                        new BetValidator()), new BetCalculatorImpl());
             case CommandName.CLOSE_MATCHES_PAGE:
                 return new CloseMatchesPageCommand(new MatchServiceImpl(new DaoHelperFactory(),
                         new MatchValidator()));
             case CommandName.CLOSE_MATCH:
-                return new CloseMatchCommand(new CloseMatchServiceImpl(new DaoHelperFactory()));
+                return new CloseMatchCommand(new CloseMatchServiceImpl(new DaoHelperFactory(),
+                        new BetCalculatorImpl()));
             case CommandName.BET_PAGE:
-                return new BetPageCommand(new MatchServiceImpl(new DaoHelperFactory(),
-                        new MatchValidator()), new BetServiceImpl(new DaoHelperFactory(),
-                        new BetValidator()), new AccountServiceImpl(new DaoHelperFactory()));
+                return new BetPageCommand(new MatchServiceImpl(new DaoHelperFactory(), new MatchValidator()),
+                        new BetServiceImpl(new DaoHelperFactory(), new BetValidator()),
+                        new AccountServiceImpl(new DaoHelperFactory()), new BetCalculatorImpl());
             case CommandName.BET:
                 return new BetCommand(new MatchServiceImpl(new DaoHelperFactory(),
                         new MatchValidator()), new BetServiceImpl(new DaoHelperFactory(),

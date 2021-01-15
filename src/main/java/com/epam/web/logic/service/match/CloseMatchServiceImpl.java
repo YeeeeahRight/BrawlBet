@@ -7,12 +7,11 @@ import com.epam.web.dao.impl.bet.BetDao;
 import com.epam.web.dao.impl.match.MatchDao;
 import com.epam.web.exception.DaoException;
 import com.epam.web.exception.ServiceException;
+import com.epam.web.logic.calculator.BetCalculator;
 import com.epam.web.model.entity.Bet;
 import com.epam.web.model.entity.Match;
-import com.epam.web.model.entity.dto.MatchBetsDto;
 import com.epam.web.model.enumeration.Team;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,9 +19,11 @@ public class CloseMatchServiceImpl implements CloseMatchService {
     private static final int SAME_WIN_CHANCE = 50;
 
     private final DaoHelperFactory daoHelperFactory;
+    private final BetCalculator betCalculator;
 
-    public CloseMatchServiceImpl(DaoHelperFactory daoHelperFactory) {
+    public CloseMatchServiceImpl(DaoHelperFactory daoHelperFactory, BetCalculator betCalculator) {
         this.daoHelperFactory = daoHelperFactory;
+        this.betCalculator = betCalculator;
     }
 
     @Override
@@ -43,17 +44,21 @@ public class CloseMatchServiceImpl implements CloseMatchService {
             Team winner;
             daoHelper.startTransaction();
             if (matchBets.size() > 0) {
-                MatchBetsDto matchBetsDto = createMatchBetDto(match, matchBets);
-                int firstPercent = matchBetsDto.getFirstPercent();
+                float firstTeamBetsAmount = betCalculator.calculateBetsAmount(Team.FIRST, matchBets);
+                float secondTeamBetsAmount = betCalculator.calculateBetsAmount(Team.SECOND, matchBets);
+                int firstPercent = betCalculator.calculatePercent(Team.FIRST, firstTeamBetsAmount,
+                        secondTeamBetsAmount);
                 winner = calculateWinner(firstPercent);
-                float winCoefficient = calculateCoefficient(matchBetsDto, matchBets, winner);
+                float commission = match.getCommission();
+                float winCoefficient = calculateCoefficient(commission,
+                        firstTeamBetsAmount, secondTeamBetsAmount, matchBets, winner);
                 for (Bet bet : matchBets) {
                     Team team = bet.getTeam();
                     float moneyReceived;
                     if (team == winner) {
                         moneyReceived = bet.getMoneyBet() * winCoefficient;
                     } else {
-                        moneyReceived = bet.getMoneyBet() * -1;
+                        moneyReceived = 0;
                     }
                     betDao.close(moneyReceived, bet.getId());
                     accountDao.addMoneyToBalance(moneyReceived, bet.getAccountId());
@@ -68,43 +73,24 @@ public class CloseMatchServiceImpl implements CloseMatchService {
         }
     }
 
-    private MatchBetsDto createMatchBetDto(Match match, List<Bet> bets) {
-        long id = match.getId();
-        Date date = match.getDate();
-        String tournament = match.getTournament();
-        String firstTeam = match.getFirstTeam();
-        String secondTeam = match.getSecondTeam();
-        String winner = match.getWinner();
-        Float commission = match.getCommission();
-        float firstTeamBetsAmount = 0.0f;
-        float secondTeamBetsAmount = 0.0f;
-        for (Bet bet : bets) {
-            long matchId = bet.getMatchId();
-            if (matchId == id) {
-                Team team = bet.getTeam();
-                if (team == Team.FIRST) {
-                    firstTeamBetsAmount += bet.getMoneyBet();
-                } else {
-                    secondTeamBetsAmount += bet.getMoneyBet();
-                }
-            }
-        }
-        return new MatchBetsDto(id, date, tournament,
-                firstTeam, secondTeam, winner, commission, firstTeamBetsAmount, secondTeamBetsAmount);
-    }
-
     private Team calculateWinner(int firstTeamPercent) {
         long percent = Math.round((Math.random() * 100) + 1);
         return percent > firstTeamPercent ? Team.SECOND : Team.FIRST;
     }
 
-    private float calculateCoefficient(MatchBetsDto matchBetsDto, List<Bet> matchBets, Team winner) {
+    private float calculateCoefficient(float commission, float firstTeamBetsAmount,
+                                       float secondTeamBetsAmount, List<Bet> matchBets, Team winner) {
         float coefficient = 1.0f;
         if (isBetsOnTwoTeams(matchBets)) {
-            coefficient = winner == Team.FIRST ?
-                    matchBetsDto.getFirstCoefficient() : matchBetsDto.getSecondCoefficient();
+            if (winner == Team.FIRST) {
+                coefficient = betCalculator.calculateCoefficient(Team.FIRST, firstTeamBetsAmount,
+                        secondTeamBetsAmount);
+            } else {
+                coefficient = betCalculator.calculateCoefficient(Team.SECOND, firstTeamBetsAmount,
+                        secondTeamBetsAmount);
+            }
             if (!isOneUserBets(matchBets)) {
-                coefficient -= coefficient * matchBetsDto.getCommission() / 100;
+                coefficient -= coefficient * commission / 100;
             }
         }
         return coefficient;
