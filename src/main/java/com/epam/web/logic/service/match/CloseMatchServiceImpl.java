@@ -97,9 +97,9 @@ public class CloseMatchServiceImpl implements CloseMatchService {
     }
 
     private boolean isOneUserBets(List<Bet> bets) {
-        long prevAccountId = bets.get(0).getAccountId();
-        for (Bet bet : bets) {
-            if (prevAccountId != bet.getAccountId()) {
+        for (int i = bets.size() - 1; i >= 0; i--) {
+            long currentAccountId = bets.get(i).getAccountId();
+            if (i > 0 && bets.get(i - 1).getAccountId() != currentAccountId) {
                 return false;
             }
         }

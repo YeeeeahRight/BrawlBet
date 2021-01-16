@@ -124,13 +124,15 @@
     background-color: rgba(241, 241, 241, 1);
     margin-top: 10px;
     height: 41px;
+    font-size: 20px;
     border: 1px Black dashed;
 }
 
-.commission {
-    margin-top: 9px;
-    font-size: 20px;
+.commission-text {
+    display: flex;
+    justify-content: center;
     text-align: center;
+    margin-top: 9px;
 }
 
 #money {
@@ -180,6 +182,10 @@ button:hover {
     justify-content: center;
 }
 
+.coefficient-text {
+    margin-right: 3px;
+}
+
 .potential-gain-value {
     margin-top: 5px;
     font-size: 17px;
@@ -189,7 +195,7 @@ button:hover {
 }
 
 .potential-gain-text {
-    margin-right: 5px;
+    margin-right: 3px;
 }
 
 .second-button {
@@ -218,4 +224,48 @@ button:hover {
 .match-finished-text {
     font-size: 30px;
     text-align: center;
+}
+
+.bets-amounts {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    height: 40px;
+    font-size: 15px;
+}
+
+.first-bet-amount {
+    background-color: rgba(241, 241, 241, 1);
+    border: 1px Black dashed;
+    width: 310px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin-right: 80px;
+}
+
+.bet-amount-text {
+    margin-right: 3px;
+    margin-top: 10px;
+}
+
+.second-bet-amount {
+    background-color: rgba(241, 241, 241, 1);
+    border: 1px Black dashed;
+    width: 310px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+#second-bets-amount {
+    margin-top: 10px;
+}
+
+#first-bets-amount {
+    margin-top: 10px;
+}
+
+#commission {
+    margin-left:6px;
 }

@@ -16,5 +16,7 @@ public final class Attribute {
     public static final String SECOND_COEFFICIENT = "secondCoefficient";
     public static final String FIRST_PERCENT = "firstPercent";
     public static final String SECOND_PERCENT = "secondPercent";
+    public static final String FIRST_BETS_AMOUNT = "firstBetsAmount";
+    public static final String SECOND_BETS_AMOUNT = "secondBetsAmount";
     public static final String IS_MATCH_FINISHED = "isMatchFinished";
 }

@@ -51,6 +51,8 @@ public class BetPageCommand implements Command {
         Long accountId = (Long) requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
         float firstTeamBetsAmount = betCalculator.calculateBetsAmount(Team.FIRST, bets);
         float secondTeamBetsAmount = betCalculator.calculateBetsAmount(Team.SECOND, bets);
+        requestContext.addAttribute(Attribute.FIRST_BETS_AMOUNT, firstTeamBetsAmount);
+        requestContext.addAttribute(Attribute.SECOND_BETS_AMOUNT, secondTeamBetsAmount);
         int firstPercent = betCalculator.calculatePercent(Team.FIRST,
                 firstTeamBetsAmount, secondTeamBetsAmount);
         int secondPercent = betCalculator.calculatePercent(Team.SECOND,
@@ -81,9 +83,9 @@ public class BetPageCommand implements Command {
     }
 
     private boolean isOneUserBets(List<Bet> bets) {
-        long prevAccountId = bets.get(0).getAccountId();
-        for (Bet bet : bets) {
-            if (prevAccountId != bet.getAccountId()) {
+        for (int i = bets.size() - 1; i >= 0; i--) {
+            long currentAccountId = bets.get(i).getAccountId();
+            if (i > 0 && bets.get(i - 1).getAccountId() != currentAccountId) {
                 return false;
             }
         }
