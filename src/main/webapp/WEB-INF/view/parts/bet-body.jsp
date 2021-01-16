@@ -74,97 +74,101 @@
                         </h1>
                     </div>
                 </div>
-            </div>
-            <c:if test="${isMatchFinished}">
-                <div class="match-finished-block">
-                    <h1 class="match-finished-text">
-                        <fmt:message key="match.finished"/>
-                    </h1>
-                </div>
-            </c:if>
-            <sc:access role="USER">
-                <form id="money-input-form" method="POST"
-                      action="${pageContext.request.contextPath}/controller?command=bet&id=${match.getId()}">
-                    <input id="money" type="number" step="0.01" required
-                           placeholder="<fmt:message key="bet.enter.money"/>"
-                           name="money" min="${minBet}" max="${maxBet}" oninput="calculatePotentialGains()">
-                    <input id="on" type="text" name="on" value=""/>
-                    <div class="bet-buttons">
-                        <button type="submit" onclick="betOnFirst()" class="first-button">
-                            <div class="button">
-                                <div class="bet-on">
-                                    <h1>
-                                        <fmt:message key="bet.on"/>${match.getFirstTeam()}
-                                    </h1>
-                                </div>
-                                <div class="coefficient-value">
-                                    <h1 class="coefficient-text">
-                                        <fmt:message key="bet.coefficient"/>
-                                    </h1>
-                                    <h1 id="first-coefficient">
-                                        <fmt:formatNumber type="number" maxFractionDigits="3"
-                                                          value="${firstCoefficient}"/>
-                                    </h1>
-                                </div>
-                                <div class="potential-gain-value">
-                                    <h1 class="potential-gain-text">
-                                        <fmt:message key="bet.potential.gain"/>
-                                    </h1>
-                                    <h1 id="first-potential-gain">
-                                        <fmt:formatNumber type="number" maxFractionDigits="3"
-                                                          value=""/>
-                                    </h1>
-                                </div>
-                            </div>
-                        </button>
-                        <button type="submit" onclick="betOnSecond()" class="second-button">
-                            <div class="button">
-                                <div class="bet-on">
-                                    <h1>
-                                        <fmt:message key="bet.on"/>${match.getSecondTeam()}
-                                    </h1>
-                                </div>
-                                <div class="coefficient-value">
-                                    <h1 class="coefficient-text">
-                                        <fmt:message key="bet.coefficient"/>
-                                    </h1>
-                                    <h1 id="second-coefficient">
-                                        <fmt:formatNumber type="number" maxFractionDigits="3"
-                                                          value="${secondCoefficient}"/>
-                                    </h1>
-                                </div>
-                                <div class="potential-gain-value">
-                                    <h1 class="potential-gain-text">
-                                        <fmt:message key="bet.potential.gain"/>
-                                    </h1>
-                                    <h1 id="second-potential-gain">
-                                        <fmt:formatNumber type="number" maxFractionDigits="3"
-                                                          value=""/>
-                                    </h1>
-                                </div>
-                            </div>
-                        </button>
+                <div class="bets-amounts">
+                    <div class="first-bet-amount">
+                        <h1 class="bet-amount-text">
+                            <fmt:message key="bet.left.amount"/>
+                        </h1>
+                        <h1 id="first-bets-amount">
+                            ${firstBetsAmount}
+                        </h1>
                     </div>
-                </form>
-            </sc:access>
-            <div class="bets-amounts">
-                <div class="first-bet-amount">
-                    <h1 class="bet-amount-text">
-                        <fmt:message key="bet.left.amount"/>
-                    </h1>
-                    <h1 id="first-bets-amount">
-                        ${firstBetsAmount}
-                    </h1>
-                </div>
-                <div class="second-bet-amount">
-                    <h1 class="bet-amount-text">
-                        <fmt:message key="bet.right.amount"/>
-                    </h1>
-                    <h1 id="second-bets-amount">
-                        ${secondBetsAmount}
-                    </h1>
+                    <div class="second-bet-amount">
+                        <h1 class="bet-amount-text">
+                            <fmt:message key="bet.right.amount"/>
+                        </h1>
+                        <h1 id="second-bets-amount">
+                            ${secondBetsAmount}
+                        </h1>
+                    </div>
                 </div>
             </div>
+            <c:choose>
+                <c:when test="${isMatchFinished}">
+                    <div class="match-finished-block">
+                        <h1 class="match-finished-text">
+                            <fmt:message key="match.finished"/>
+                        </h1>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <sc:access role="USER">
+                        <form id="money-input-form" method="POST"
+                              action="${pageContext.request.contextPath}/controller?command=bet&id=${match.getId()}">
+                            <input id="money" type="number" step="0.01" required
+                                   placeholder="<fmt:message key="bet.enter.money"/>"
+                                   name="money" min="${minBet}" max="${maxBet}" oninput="calculatePotentialGains()">
+                            <input id="on" type="text" name="on" value=""/>
+                            <div class="bet-buttons">
+                                <button type="submit" onclick="betOnFirst()" class="first-button">
+                                    <div class="button">
+                                        <div class="bet-on">
+                                            <h1>
+                                                <fmt:message key="bet.on"/>${match.getFirstTeam()}
+                                            </h1>
+                                        </div>
+                                        <div class="coefficient-value">
+                                            <h1 class="coefficient-text">
+                                                <fmt:message key="bet.coefficient"/>
+                                            </h1>
+                                            <h1 id="first-coefficient">
+                                                <fmt:formatNumber type="number" maxFractionDigits="3"
+                                                                  value="${firstCoefficient}"/>
+                                            </h1>
+                                        </div>
+                                        <div class="potential-gain-value">
+                                            <h1 class="potential-gain-text">
+                                                <fmt:message key="bet.potential.gain"/>
+                                            </h1>
+                                            <h1 id="first-potential-gain">
+                                                <fmt:formatNumber type="number" maxFractionDigits="3"
+                                                                  value=""/>
+                                            </h1>
+                                        </div>
+                                    </div>
+                                </button>
+                                <button type="submit" onclick="betOnSecond()" class="second-button">
+                                    <div class="button">
+                                        <div class="bet-on">
+                                            <h1>
+                                                <fmt:message key="bet.on"/>${match.getSecondTeam()}
+                                            </h1>
+                                        </div>
+                                        <div class="coefficient-value">
+                                            <h1 class="coefficient-text">
+                                                <fmt:message key="bet.coefficient"/>
+                                            </h1>
+                                            <h1 id="second-coefficient">
+                                                <fmt:formatNumber type="number" maxFractionDigits="3"
+                                                                  value="${secondCoefficient}"/>
+                                            </h1>
+                                        </div>
+                                        <div class="potential-gain-value">
+                                            <h1 class="potential-gain-text">
+                                                <fmt:message key="bet.potential.gain"/>
+                                            </h1>
+                                            <h1 id="second-potential-gain">
+                                                <fmt:formatNumber type="number" maxFractionDigits="3"
+                                                                  value=""/>
+                                            </h1>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </form>
+                    </sc:access>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
 </div>

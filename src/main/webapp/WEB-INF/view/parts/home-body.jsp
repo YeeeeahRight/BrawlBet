@@ -18,16 +18,16 @@
         </div>
     </div>
     <div class="main-body">
-        <c:forEach items="${matches}" var="match" varStatus="counter">
-            <a href="${pageContext.request.contextPath}/controller?command=bet-page&id=${match.getId()}">
+        <c:forEach items="${matchesDto}" var="matchDto" varStatus="counter">
+            <a href="${pageContext.request.contextPath}/controller?command=bet-page&id=${matchDto.getId()}">
                 <div class="match match-${counter.index + 1}" >
                     <div class="match-body">
                         <div class="match-f-team">
-                            <h1>${match.getFirstTeam()}</h1>
+                            <h1>${matchDto.getFirstTeam()}</h1>
                         </div>
                         <div class="match-f-percent">
                             <h1>
-                                ${firstPercent}%
+                                ${matchDto.getFirstPercent()}%
                             </h1>
                         </div>
                         <div class="match-versus-icon">
@@ -35,22 +35,22 @@
                         </div>
                         <div class="match-s-percent">
                             <h1>
-                                ${secondPercent}%
+                                ${matchDto.getSecondPercent()}%
                             </h1>
                         </div>
                         <div class="match-s-team">
-                            <h1>${match.getSecondTeam()}</h1>
+                            <h1>${matchDto.getSecondTeam()}</h1>
                         </div>
                     </div>
                     <div class="match-header">
                         <div class="match-date">
                             <h1>
-                                <sc:date-formatter date="${match.getDate()}"
+                                <sc:date-formatter date="${matchDto.getDate()}"
                                                    formatType="${sessionScope.lang}"></sc:date-formatter>
                             </h1>
                         </div>
                         <div class="match-tournament">
-                            <h1>${match.getTournament()}</h1>
+                            <h1>${matchDto.getTournament()}</h1>
                         </div>
                     </div>
                 </div>

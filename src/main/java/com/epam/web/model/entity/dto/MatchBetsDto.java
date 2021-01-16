@@ -10,23 +10,23 @@ public class MatchBetsDto implements Entity {
     private final String tournament;
     private final String firstTeam;
     private final String secondTeam;
-    private final String winner;
-    private final Float commission;
-    private final Float firstTeamBetsAmount;
-    private final Float secondTeamBetsAmount;
+    private final int firstPercent;
+    private final int secondPercent;
 
-    public MatchBetsDto(Long id, Date date, String tournament, String firstTeam,
-                        String secondTeam, String winner, Float commission,
-                        Float firstTeamBetsAmount, Float secondTeamBetsAmount) {
+    public MatchBetsDto(Long id, Date date, String tournament, String firstTeam, String secondTeam,
+                        int firstPercent, int secondPercent) {
         this.id = id;
         this.date = date;
         this.tournament = tournament;
         this.firstTeam = firstTeam;
         this.secondTeam = secondTeam;
-        this.winner = winner;
-        this.commission = commission;
-        this.firstTeamBetsAmount = firstTeamBetsAmount;
-        this.secondTeamBetsAmount = secondTeamBetsAmount;
+        this.firstPercent = firstPercent;
+        this.secondPercent = secondPercent;
+    }
+
+    @Override
+    public Long getId() {
+        return id;
     }
 
     public Date getDate() {
@@ -45,37 +45,12 @@ public class MatchBetsDto implements Entity {
         return secondTeam;
     }
 
-    public Float getCommission() {
-        return commission;
-    }
-
-    public Float getFirstTeamBetsAmount() {
-        return firstTeamBetsAmount;
-    }
-
-    public Float getSecondTeamBetsAmount() {
-        return secondTeamBetsAmount;
-    }
-
     public int getFirstPercent() {
-        if (firstTeamBetsAmount + secondTeamBetsAmount == 0.0f) {
-            return 0;
-        }
-        float percent = firstTeamBetsAmount * 100 / (firstTeamBetsAmount + secondTeamBetsAmount);
-        return Math.round(percent);
+        return firstPercent;
     }
 
     public int getSecondPercent() {
-        if (firstTeamBetsAmount + secondTeamBetsAmount == 0.0f) {
-            return 0;
-        }
-        float percent = secondTeamBetsAmount * 100 / (firstTeamBetsAmount + secondTeamBetsAmount);
-        return Math.round(percent);
-    }
-
-    @Override
-    public Long getId() {
-        return id;
+        return secondPercent;
     }
 
     @Override
@@ -89,6 +64,12 @@ public class MatchBetsDto implements Entity {
 
         MatchBetsDto that = (MatchBetsDto) o;
 
+        if (firstPercent != that.firstPercent) {
+            return false;
+        }
+        if (secondPercent != that.secondPercent) {
+            return false;
+        }
         if (!id.equals(that.id)) {
             return false;
         }
@@ -101,19 +82,7 @@ public class MatchBetsDto implements Entity {
         if (!firstTeam.equals(that.firstTeam)) {
             return false;
         }
-        if (!secondTeam.equals(that.secondTeam)) {
-            return false;
-        }
-        if (!winner.equals(that.winner)) {
-            return false;
-        }
-        if (!commission.equals(that.commission)) {
-            return false;
-        }
-        if (!firstTeamBetsAmount.equals(that.firstTeamBetsAmount)) {
-            return false;
-        }
-        return secondTeamBetsAmount.equals(that.secondTeamBetsAmount);
+        return secondTeam.equals(that.secondTeam);
     }
 
     @Override
@@ -123,10 +92,8 @@ public class MatchBetsDto implements Entity {
         result = 31 * result + tournament.hashCode();
         result = 31 * result + firstTeam.hashCode();
         result = 31 * result + secondTeam.hashCode();
-        result = 31 * result + winner.hashCode();
-        result = 31 * result + commission.hashCode();
-        result = 31 * result + firstTeamBetsAmount.hashCode();
-        result = 31 * result + secondTeamBetsAmount.hashCode();
+        result = 31 * result + firstPercent;
+        result = 31 * result + secondPercent;
         return result;
     }
 
@@ -138,10 +105,8 @@ public class MatchBetsDto implements Entity {
                 ", tournament='" + tournament + '\'' +
                 ", firstTeam='" + firstTeam + '\'' +
                 ", secondTeam='" + secondTeam + '\'' +
-                ", winner='" + winner + '\'' +
-                ", commission=" + commission +
-                ", firstTeamBetsAmount=" + firstTeamBetsAmount +
-                ", secondTeamBetsAmount=" + secondTeamBetsAmount +
+                ", firstPercent=" + firstPercent +
+                ", secondPercent=" + secondPercent +
                 '}';
     }
 }

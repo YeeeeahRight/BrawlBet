@@ -35,7 +35,7 @@
 }
 
 .match {
-    height: 245px;
+    height: 296px;
     width: 720px;
     margin-left: auto;
     margin-right: auto;
@@ -136,7 +136,7 @@
 }
 
 #money {
-    margin-top: 26px;
+    margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
     width: 210px;
@@ -147,8 +147,8 @@
 }
 
 .bet-buttons {
-    margin-top: 27px;
-    height: 86px;
+    margin-top: 10px;
+    height: 100px;
     display: flex;
 
     justify-content: center;
@@ -227,7 +227,7 @@ button:hover {
 }
 
 .bets-amounts {
-    margin-top: 30px;
+    margin-top: 10px;
     display: flex;
     justify-content: center;
     height: 40px;
@@ -241,7 +241,7 @@ button:hover {
     text-align: center;
     display: flex;
     justify-content: center;
-    margin-right: 80px;
+    margin-right: 100px;
 }
 
 .bet-amount-text {
