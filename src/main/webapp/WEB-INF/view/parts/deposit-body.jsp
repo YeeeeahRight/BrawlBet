@@ -10,7 +10,9 @@
     <div class="main-content">
         <div class="main-header">
             <div class = "deposit-text-head">
-                <fmt:message key="menu.deposit"/>
+                <h1>
+                    <fmt:message key="menu.deposit"/>
+                </h1>
             </div>
         </div>
         <div class="main-body">

@@ -1,0 +1,195 @@
+.body {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.main-content {
+    background-color: rgba(221, 222, 224, 1.0);
+    width: 82.06%;
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column
+}
+
+.main-header {
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.main-body {
+    height: 100%;
+    width: 100%;
+    font-size: 20px;
+
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.my-bets-logo-text {
+    margin-top: 21px;
+    color: #303030;
+    font-size: 64px;
+    margin-left: 15px;
+}
+
+.my-bets-image-logo {
+    margin-top: 20px;
+    width: 57px;
+    height: 69px;
+    background: url(../images/bets.png) no-repeat center center;
+    background-size: cover;
+}
+
+.bet {
+    width: 775px;
+    height: 65px;
+    margin-left: auto;
+    margin-right: auto;
+
+    display: flex;
+    justify-content: center;
+}
+
+.bet-1 {
+    margin-top: 28px;
+}
+
+.bet-2 {
+    margin-top: 20px;
+}
+
+.bet-3 {
+    margin-top: 20px;
+}
+
+.bet-4 {
+    margin-top: 20px;
+}
+
+.bet-5 {
+    margin-top: 20px;
+}
+
+.bet-6 {
+    margin-top: 20px;
+}
+
+.bet-info {
+    width: 141px;
+    height: 65px;
+    margin-right: 25px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    background: #FFFFFF;
+    border: 2px solid #484848;
+}
+
+.bet-on-text {
+    margin-top: -3px;
+    font-size: 15px;
+}
+
+.bet-on-team {
+    margin-top: -4px;
+    font-size: 16px;
+}
+
+.bet-on-money {
+    font-size: 20px;
+}
+
+.bet-description {
+    width: 433px;
+    height: 65px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    color: black;
+    background: #FFFFFF;
+}
+
+.bet-description:hover {
+    border: 2px solid #303030;
+}
+
+.bet-header {
+    height: 22px;
+    display: flex;
+    background: #F1F1F1;
+    justify-content: space-between;
+}
+
+.date-text {
+    margin-left: 12px;
+}
+
+.tournament-text {
+    margin-right: 12px;
+}
+
+.bet-content {
+    height: 42px;
+    display: flex;
+    justify-content: center;
+}
+
+.match-f-team {
+    margin-left: 8px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.match-f-percent {
+    margin-left: 15px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.match-versus-icon {
+    margin: auto 20px;
+}
+
+.match-s-percent {
+    margin-right: 15px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.match-s-team {
+    margin-right: 8px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.gain-info {
+    width: 141px;
+    height: 65px;
+    margin-left: 25px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background: #FFFFFF;
+    border: 3px solid rgb(148,229,18);
+}
+
+.gain-text {
+    margin-top: 6px;
+    font-size: 15px;
+}
+
+.gain-money {
+    margin-top: 6px;
+    font-size: 20px;
+}
+
+.true {
+    color: rgb(148,229,18);
+}

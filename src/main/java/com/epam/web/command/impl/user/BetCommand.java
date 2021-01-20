@@ -13,6 +13,8 @@ import com.epam.web.logic.service.match.MatchService;
 import com.epam.web.model.entity.Bet;
 import com.epam.web.model.enumeration.Team;
 
+import java.util.Date;
+
 public class BetCommand implements Command {
     private final MatchService matchService;
     private final BetService betService;
@@ -47,10 +49,11 @@ public class BetCommand implements Command {
             throw new InvalidParametersException("Invalid parameters in request.");
         }
         Long accountId = (Long) requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
-        if (accountService.getBalance(accountId) < 0.0f) {
+        if (accountService.getBalance(accountId) < money) {
             throw new ServiceException("You have no money for your bet.");
         }
-        Bet bet = new Bet(accountId, matchId, money, team);
+        Date betDate = new Date();
+        Bet bet = new Bet(accountId, matchId, money, team, betDate);
         betService.createBet(bet);
 
         String prevPage = requestContext.getHeader();

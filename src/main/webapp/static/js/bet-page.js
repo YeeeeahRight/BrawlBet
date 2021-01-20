@@ -6,10 +6,15 @@ function betOnSecond() {
     document.getElementById("on").value = "SECOND";
 }
 
+const initialFirstCoefficient = document.getElementById("first-coefficient").innerHTML;
+const initialSecondCoefficient = document.getElementById("second-coefficient").innerHTML;
+
 function calculatePotentialGains() {
+    console.log(initialFirstCoefficient);
+    console.log(initialSecondCoefficient);
     let moneyAttribute = document.getElementById("money");
     let moneyValue = parseFloat(moneyAttribute.value);
-    if (moneyValue > 0 && moneyValue < moneyAttribute.getAttribute("max")) {
+    if (moneyValue > 0 && moneyValue <= moneyAttribute.getAttribute("max")) {
         let firstBetsAmount = parseFloat(document.getElementById("first-bets-amount").innerHTML);
         let secondBetsAmount = parseFloat(document.getElementById("second-bets-amount").innerHTML);
         let firstCoefficient = calculateCoefficient("FIRST", firstBetsAmount + moneyValue, secondBetsAmount);
@@ -29,6 +34,8 @@ function calculatePotentialGains() {
     } else {
         document.getElementById("first-potential-gain").innerHTML = '-';
         document.getElementById("second-potential-gain").innerHTML = '-';
+        document.getElementById("first-coefficient").innerHTML = initialFirstCoefficient
+        document.getElementById("second-coefficient").innerHTML = initialSecondCoefficient;
     }
 }
 
@@ -52,7 +59,7 @@ const money = document.getElementById("money");
 
 money.addEventListener("input", function (event) {
     let lang = document.getElementById("html").getAttribute("lang");
-    if (money.getAttribute("max") === "0") {
+    if (money.getAttribute("max") === "0.0") {
         let message;
         switch (lang) {
             case "ru":

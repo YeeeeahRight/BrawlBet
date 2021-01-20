@@ -38,7 +38,7 @@
 }
 
 .user {
-    width: 628px;
+    width: 690px;
     height: 66px;
     margin-left: auto;
     margin-right: auto;
@@ -110,7 +110,7 @@
 }
 
 .user-description {
-    width: 448px;
+    width: 510px;
     height: 66px;
     display: flex;
     justify-content: space-between;

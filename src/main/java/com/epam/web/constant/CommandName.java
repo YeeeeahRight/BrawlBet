@@ -9,7 +9,7 @@ public final class CommandName {
     public static final String EDIT_MATCH_PAGE = "edit-match-page";
     public static final String ACCEPT_MATCHES_PAGE = "accept-matches-page";
     public static final String CLOSE_MATCHES_PAGE = "close-matches-page";
-    public static final String BET_PAGE = "bet-page";
+    public static final String MATCH_PAGE = "match-page";
     public static final String BET = "bet";
     public static final String LOCALIZATION = "localization";
     public static final String USERS = "users";
@@ -26,4 +26,5 @@ public final class CommandName {
     public static final String UNBLOCK_USER = "unblock-user";
     public static final String ACCEPT_MATCH = "accept-match";
     public static final String CLOSE_MATCH = "close-match";
+    public static final String MY_BETS = "my-bets";
 }

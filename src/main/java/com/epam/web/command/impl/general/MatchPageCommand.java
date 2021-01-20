@@ -19,16 +19,14 @@ import com.epam.web.model.enumeration.Team;
 
 import java.util.List;
 
-public class BetPageCommand implements Command {
+public class MatchPageCommand implements Command {
+    private static final float MIN_BET = 0.1f;
     private final MatchService matchService;
-    private final BetService betService;
     private final AccountService accountService;
     private final BetCalculator betCalculator;
 
-    public BetPageCommand(MatchService matchService, BetService betService,
-                          AccountService accountService, BetCalculator betCalculator) {
+    public MatchPageCommand(MatchService matchService, AccountService accountService, BetCalculator betCalculator) {
         this.matchService = matchService;
-        this.betService = betService;
         this.accountService = accountService;
         this.betCalculator = betCalculator;
     }
@@ -47,48 +45,42 @@ public class BetPageCommand implements Command {
         requestContext.addAttribute(Attribute.IS_MATCH_FINISHED, isMatchFinished);
         Match match = matchService.findById(id);
         requestContext.addAttribute(Attribute.MATCH, match);
-        List<Bet> bets = betService.getBetsByMatch(id);
         Long accountId = (Long) requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
-        float firstTeamBetsAmount = betCalculator.calculateBetsAmount(Team.FIRST, bets);
-        float secondTeamBetsAmount = betCalculator.calculateBetsAmount(Team.SECOND, bets);
+        float firstTeamBetsAmount = match.getFirstTeamBets();
+        float secondTeamBetsAmount = match.getSecondTeamBets();
         requestContext.addAttribute(Attribute.FIRST_BETS_AMOUNT, firstTeamBetsAmount);
         requestContext.addAttribute(Attribute.SECOND_BETS_AMOUNT, secondTeamBetsAmount);
         int firstPercent = betCalculator.calculatePercent(Team.FIRST,
                 firstTeamBetsAmount, secondTeamBetsAmount);
         int secondPercent = betCalculator.calculatePercent(Team.SECOND,
                 firstTeamBetsAmount, secondTeamBetsAmount);
+        int sumPercents = firstPercent + secondPercent;
+        if (sumPercents == 101) {
+            firstPercent--;
+        }
         requestContext.addAttribute(Attribute.FIRST_PERCENT, firstPercent);
         requestContext.addAttribute(Attribute.SECOND_PERCENT, secondPercent);
         if (accountId != null) {
             AccountRole role = (AccountRole) requestContext.getSessionAttribute(Attribute.ROLE);
             if (role == AccountRole.USER) {
-                float balance = accountService.getBalance(accountId);
-                requestContext.addAttribute(Attribute.MAX_BET, balance);
-                requestContext.addAttribute(Attribute.MIN_BET, 0.1f);
+                float maxBet = accountService.getBalance(accountId);
+                if (maxBet < MIN_BET) {
+                    maxBet = 0f;
+                }
+                requestContext.addAttribute(Attribute.MAX_BET, maxBet);
+                requestContext.addAttribute(Attribute.MIN_BET, MIN_BET);
                 float firstCoefficient = betCalculator.calculateCoefficient(Team.FIRST,
                         firstTeamBetsAmount, secondTeamBetsAmount);
                 float secondCoefficient = betCalculator.calculateCoefficient(Team.SECOND,
                         firstTeamBetsAmount, secondTeamBetsAmount);
-                if (!isOneUserBets(bets)) {
-                    float commission = match.getCommission();
-                    firstCoefficient -= firstCoefficient * commission / 100;
-                    secondCoefficient -= secondCoefficient * commission / 100;
-                }
+                float commission = match.getCommission();
+                firstCoefficient -= firstCoefficient * commission / 100;
+                secondCoefficient -= secondCoefficient * commission / 100;
                 requestContext.addAttribute(Attribute.FIRST_COEFFICIENT, firstCoefficient);
                 requestContext.addAttribute(Attribute.SECOND_COEFFICIENT, secondCoefficient);
             }
         }
 
         return CommandResult.forward(Page.BET);
-    }
-
-    private boolean isOneUserBets(List<Bet> bets) {
-        for (int i = bets.size() - 1; i >= 0; i--) {
-            long currentAccountId = bets.get(i).getAccountId();
-            if (i > 0 && bets.get(i - 1).getAccountId() != currentAccountId) {
-                return false;
-            }
-        }
-        return true;
     }
 }

@@ -10,5 +10,7 @@ import java.util.List;
 public interface BetDao extends Dao<Bet> {
     List<Bet> getBetsByMatchId(long id) throws DaoException;
 
+    List<Bet> getBetsByAccountId(long id) throws DaoException;
+
     void close(float moneyReceived, long id) throws DaoException;
 }

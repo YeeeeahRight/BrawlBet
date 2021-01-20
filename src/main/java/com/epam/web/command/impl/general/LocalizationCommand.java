@@ -39,9 +39,11 @@ public class LocalizationCommand implements Command {
         requestContext.addSession(Attribute.LANGUAGE, locale);
 
         String page = requestContext.getHeader();
-        String prevCommand = extractCommand(page);
-        if (CommandName.LOGIN.equals(prevCommand) || CommandName.SIGN_UP.equals(prevCommand)) {
-            page = changeCommandToCommandPage(prevCommand);
+        if (page != null) {
+            String prevCommand = extractCommand(page);
+            if (CommandName.LOGIN.equals(prevCommand) || CommandName.SIGN_UP.equals(prevCommand)) {
+                page = changeCommandToCommandPage(prevCommand);
+            }
         }
         return CommandResult.redirect(page);
     }

@@ -44,8 +44,8 @@ public class CloseMatchServiceImpl implements CloseMatchService {
             Team winner;
             daoHelper.startTransaction();
             if (matchBets.size() > 0) {
-                float firstTeamBetsAmount = betCalculator.calculateBetsAmount(Team.FIRST, matchBets);
-                float secondTeamBetsAmount = betCalculator.calculateBetsAmount(Team.SECOND, matchBets);
+                float firstTeamBetsAmount = match.getFirstTeamBets();
+                float secondTeamBetsAmount = match.getSecondTeamBets();
                 int firstPercent = betCalculator.calculatePercent(Team.FIRST, firstTeamBetsAmount,
                         secondTeamBetsAmount);
                 winner = calculateWinner(firstPercent);
@@ -66,7 +66,8 @@ public class CloseMatchServiceImpl implements CloseMatchService {
             } else {
                 winner = calculateWinner(SAME_WIN_CHANCE);
             }
-            matchDao.close(matchId, winner.toString());
+            String winnerTeam = winner == Team.FIRST ? match.getFirstTeam() : match.getSecondTeam();
+            matchDao.close(matchId, winnerTeam);
             daoHelper.commit();
         } catch (DaoException e) {
             throw new ServiceException(e);

@@ -2,6 +2,7 @@ package com.epam.web.dao.impl.match;
 
 import com.epam.web.model.entity.Match;
 import com.epam.web.exception.DaoException;
+import com.epam.web.model.enumeration.Team;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,8 @@ public interface MatchDao {
     void edit(Match newMatch, long id) throws DaoException;
 
     void addCommission(float commission, long id) throws DaoException;
+    
+    void addTeamBets(Team team, float betAmount, long id) throws DaoException;
 
     List<Match> getUnacceptedMatches() throws DaoException;
 

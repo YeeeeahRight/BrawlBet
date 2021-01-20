@@ -16,16 +16,16 @@
             </div>
         </div>
         <div class="main-body">
-            <c:forEach items="${users}" var="user" varStatus="counter">
+            <c:forEach items="${users}" var="betMatchDto" varStatus="counter">
                 <div class="user user-${counter.index + 1}" >
                     <div class="unban-button">
-                        <a href="${pageContext.request.contextPath}/controller?command=unblock-user&id=${user.getId()}">
+                        <a href="${pageContext.request.contextPath}/controller?command=unblock-user&id=${betMatchDto.getId()}">
                             <div class="unban-image"></div>
                         </a>
                     </div>
                     <div class="user-description">
                         <div class="user-header">
-                            <h1 class="username">${user.getName()}</h1>
+                            <h1 class="username">${betMatchDto.getName()}</h1>
                         </div>
                         <div class="user-content">
                             <h1 class="status-text">
@@ -33,7 +33,7 @@
                             </h1>
                             <h1 class="status-data">
                                 <c:choose>
-                                    <c:when test="${user.isBlocked()}">
+                                    <c:when test="${betMatchDto.isBlocked()}">
                                         <fmt:message key="user.blocked"/>
                                     </c:when>
                                     <c:otherwise>
@@ -46,7 +46,7 @@
                             </h1>
                             <h1 class="role-data">
                                 <c:choose>
-                                    <c:when test="${user.getRole().toString().equals('BOOKMAKER')}">
+                                    <c:when test="${betMatchDto.getRole().toString().equals('BOOKMAKER')}">
                                         <fmt:message key="user.bookmaker"/>
                                     </c:when>
                                     <c:otherwise>
@@ -57,11 +57,14 @@
                             <h1 class="balance-text">
                                 <fmt:message key="user.balance"/>:
                             </h1>
-                            <h1 class="balance-data">${user.getBalance()}</h1>
+                            <h1 class="balance-data">
+                                <fmt:formatNumber type="number" maxFractionDigits="2"
+                                                  value="${betMatchDto.getBalance()}"/>
+                            </h1>
                         </div>
                     </div>
                     <div class="ban-button">
-                        <a href="${pageContext.request.contextPath}/controller?command=block-user&id=${user.getId()}">
+                        <a href="${pageContext.request.contextPath}/controller?command=block-user&id=${betMatchDto.getId()}">
                             <div class="ban-image"></div>
                         </a>
                     </div>

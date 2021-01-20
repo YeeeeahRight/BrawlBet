@@ -7,6 +7,7 @@ import com.epam.web.command.impl.bookmaker.RemoveMatchCommand;
 import com.epam.web.command.impl.general.*;
 import com.epam.web.command.impl.user.BetCommand;
 import com.epam.web.command.impl.user.DepositCommand;
+import com.epam.web.command.impl.user.MyBetsCommand;
 import com.epam.web.constant.CommandName;
 import com.epam.web.dao.helper.DaoHelperFactory;
 import com.epam.web.logic.calculator.BetCalculatorImpl;
@@ -37,17 +38,15 @@ public class CommandFactory {
                 return new LocalizationCommand();
             case CommandName.HOME_PAGE:
                 return new HomePageCommand(new MatchServiceImpl(new DaoHelperFactory(),
-                        new MatchValidator()), new BetServiceImpl(new DaoHelperFactory(),
-                        new BetValidator()), new BetCalculatorImpl());
+                        new MatchValidator()), new BetCalculatorImpl());
             case CommandName.CLOSE_MATCHES_PAGE:
                 return new CloseMatchesPageCommand(new MatchServiceImpl(new DaoHelperFactory(),
                         new MatchValidator()));
             case CommandName.CLOSE_MATCH:
                 return new CloseMatchCommand(new CloseMatchServiceImpl(new DaoHelperFactory(),
                         new BetCalculatorImpl()));
-            case CommandName.BET_PAGE:
-                return new BetPageCommand(new MatchServiceImpl(new DaoHelperFactory(), new MatchValidator()),
-                        new BetServiceImpl(new DaoHelperFactory(), new BetValidator()),
+            case CommandName.MATCH_PAGE:
+                return new MatchPageCommand(new MatchServiceImpl(new DaoHelperFactory(), new MatchValidator()),
                         new AccountServiceImpl(new DaoHelperFactory()), new BetCalculatorImpl());
             case CommandName.BET:
                 return new BetCommand(new MatchServiceImpl(new DaoHelperFactory(),
@@ -60,6 +59,10 @@ public class CommandFactory {
                 return new UsersCommand(new AccountServiceImpl(new DaoHelperFactory()));
             case CommandName.DEPOSIT:
                 return new DepositCommand(new AccountServiceImpl(new DaoHelperFactory()));
+            case CommandName.MY_BETS:
+                return new MyBetsCommand(new BetServiceImpl(new DaoHelperFactory(), new BetValidator()),
+                        new MatchServiceImpl(new DaoHelperFactory(), new MatchValidator()),
+                        new BetCalculatorImpl());
             case CommandName.REMOVE_MATCH:
                 return new RemoveMatchCommand(new MatchServiceImpl(new DaoHelperFactory(),
                         new MatchValidator()));

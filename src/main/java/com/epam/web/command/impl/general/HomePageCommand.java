@@ -20,27 +20,24 @@ import java.util.List;
 
 public class HomePageCommand implements Command {
     private final MatchService matchService;
-    private final BetService betService;
     private final BetCalculator betCalculator;
 
-    public HomePageCommand(MatchService matchService, BetService betService, BetCalculator betCalculator) {
+    public HomePageCommand(MatchService matchService, BetCalculator betCalculator) {
         this.matchService = matchService;
-        this.betService = betService;
         this.betCalculator = betCalculator;
     }
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
         List<Match> activeMatches = matchService.getActiveMatches();
-        List<Bet> bets = betService.getAll();
-        List<MatchBetsDto> matchBetsDtoList = buildMatchBetDtoList(activeMatches, bets);
+        List<MatchBetsDto> matchBetsDtoList = buildMatchBetDtoList(activeMatches);
         matchBetsDtoList.sort((m1, m2) -> m1.getDate().compareTo(m2.getDate()));
-        requestContext.addAttribute(Attribute.MATCHES_DTO, matchBetsDtoList);
+        requestContext.addAttribute(Attribute.MATCH_BETS_DTO_LIST, matchBetsDtoList);
 
         return CommandResult.forward(Page.HOME);
     }
 
-    private List<MatchBetsDto> buildMatchBetDtoList(List<Match> activeMatches, List<Bet> bets) {
+    private List<MatchBetsDto> buildMatchBetDtoList(List<Match> activeMatches) {
         List<MatchBetsDto> matchBetsDtoList = new ArrayList<>();
         for (Match match : activeMatches) {
             long id = match.getId();
@@ -48,21 +45,14 @@ public class HomePageCommand implements Command {
             String tournament = match.getTournament();
             String firstTeam = match.getFirstTeam();
             String secondTeam = match.getSecondTeam();
-            float firstTeamBetsAmount = 0.0f;
-            float secondTeamBetsAmount = 0.0f;
-            for (Bet bet : bets) {
-                long matchId = bet.getMatchId();
-                if (matchId == id) {
-                    Team team = bet.getTeam();
-                    if (team == Team.FIRST) {
-                        firstTeamBetsAmount += bet.getMoneyBet();
-                    } else {
-                        secondTeamBetsAmount += bet.getMoneyBet();
-                    }
-                }
-            }
+            float firstTeamBetsAmount = match.getFirstTeamBets();
+            float secondTeamBetsAmount = match.getSecondTeamBets();
             int firstPercent = betCalculator.calculatePercent(Team.FIRST, firstTeamBetsAmount, secondTeamBetsAmount);
             int secondPercent = betCalculator.calculatePercent(Team.SECOND, firstTeamBetsAmount, secondTeamBetsAmount);
+            int sumPercents = firstPercent + secondPercent;
+            if (sumPercents == 101) {
+                firstPercent--;
+            }
             MatchBetsDto matchBetsDto = new MatchBetsDto(id, date, tournament,
                     firstTeam, secondTeam, firstPercent, secondPercent);
             matchBetsDtoList.add(matchBetsDto);

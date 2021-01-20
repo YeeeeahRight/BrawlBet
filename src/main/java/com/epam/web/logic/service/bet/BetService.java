@@ -10,5 +10,7 @@ public interface BetService {
 
     void createBet(Bet bet) throws ServiceException;
 
-    List<Bet> getBetsByMatch(long matchId) throws ServiceException;
+    List<Bet> getBetsByMatchId(long matchId) throws ServiceException;
+
+    List<Bet> getBetsByAccountId(long accountId) throws ServiceException;
 }

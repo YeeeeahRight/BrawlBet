@@ -63,7 +63,7 @@
 
 .deposit-image {
     width: 70px;
-    height: 65px;
+    height: 67px;
     background: url(../images/deposit.png) no-repeat center center;
     background-size: cover;
     margin-left: auto;
@@ -74,6 +74,15 @@
     width: 65px;
     height: 65px;
     background: url(../images/finish.png) no-repeat center center;
+    background-size: cover;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.my-bets-image {
+    width: 60px;
+    height: 72px;
+    background: url(../images/betsMenu.png) no-repeat center center;
     background-size: cover;
     margin-left: auto;
     margin-right: auto;

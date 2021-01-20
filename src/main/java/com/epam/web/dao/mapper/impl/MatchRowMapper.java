@@ -19,17 +19,22 @@ public class MatchRowMapper implements RowMapper<Match> {
         String secondTeam = resultSet.getString(Match.SECOND_TEAM);
         long id = resultSet.getLong(Match.ID);
         float commission = resultSet.getFloat(Match.COMMISSION);
-        String dateString = resultSet.getString(Match.DATE);
         String winner = resultSet.getString(Match.WINNER);
         boolean isClosed = resultSet.getBoolean(Match.IS_CLOSED);
+        float firstTeamBets = resultSet.getFloat(Match.FIRST_TEAM_BETS);
+        float secondTeamBets = resultSet.getFloat(Match.SECOND_TEAM_BETS);
+        String dateString = resultSet.getString(Match.DATE);
+        Date date = parseDate(dateString);
+        return new Match(id, date, tournament, firstTeam, secondTeam, winner, commission,
+                isClosed, firstTeamBets, secondTeamBets);
+    }
+
+    private Date parseDate(String dateString) throws SQLException {
         DateParser dateParser = new DateParser(dateString);
-        Date date;
         try {
-            date = dateParser.parse(DateFormatType.MYSQL);
+            return dateParser.parse(DateFormatType.MYSQL);
         } catch (ParseException e) {
             throw new SQLException("Invalid date format.");
         }
-
-        return new Match(id, date, tournament, firstTeam, secondTeam, winner, commission, isClosed);
     }
 }

@@ -59,11 +59,11 @@
                 </h1>
             </div>
         </a>
-        <a href="${pageContext.request.contextPath}/controller?command=history">
+        <a href="${pageContext.request.contextPath}/controller?command=my-bets">
             <div class="second-item">
-                <div class="history-image"></div>
+                <div class="my-bets-image"></div>
                 <h1 class="item-text">
-                    <fmt:message key="menu.history"/>
+                    <fmt:message key="menu.my.bets"/>
                 </h1>
             </div>
         </a>

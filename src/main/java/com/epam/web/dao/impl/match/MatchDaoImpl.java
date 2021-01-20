@@ -6,6 +6,7 @@ import com.epam.web.date.DateFormatter;
 import com.epam.web.model.entity.Match;
 import com.epam.web.exception.DaoException;
 import com.epam.web.dao.mapper.impl.MatchRowMapper;
+import com.epam.web.model.enumeration.Team;
 
 import java.sql.Connection;
 import java.util.Date;
@@ -17,13 +18,18 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     private static final String ADD_QUERY =
             "INSERT matches (date, tournament, first_team, second_team) VALUES" +
                     "(?, ?, ?, ?)";
-    private static final String GET_ACTIVE_MATCHES_QUERY = "SELECT * FROM matches WHERE commission > 0 AND is_closed = 0";
+    private static final String GET_ACTIVE_MATCHES_QUERY = "SELECT * FROM matches WHERE commission > 0 " +
+            "AND is_closed = 0";
     private static final String GET_UNACCEPTED_MATCHES_QUERY = "SELECT * FROM matches WHERE commission = 0";
     private static final String GET_UNCLOSED_MATCHES_QUERY = "SELECT * FROM matches WHERE is_closed = 0";
     private static final String GET_FINISHED_MATCHES_QUERY = "SELECT * FROM matches WHERE date <= ? " +
             "AND commission > 0 AND is_closed = 0";
     private static final String GET_UNFINISHED_MATCHES_QUERY = "SELECT * FROM matches WHERE date > ?";
     private static final String ADD_COMMISSION_QUERY = "UPDATE matches SET commission=? WHERE id=?";
+    private static final String ADD_FIRST_TEAM_BETS_QUERY = "UPDATE matches SET first_team_bets= " +
+            "first_team_bets + ? WHERE id=?";
+    private static final String ADD_SECOND_TEAM_BETS_QUERY = "UPDATE matches SET second_team_bets= " +
+            "second_team_bets + ? WHERE id=?";
     private static final String CLOSE_QUERY = "UPDATE matches SET is_closed=1, winner=? WHERE id=?";
 
     public MatchDaoImpl(Connection connection) {
@@ -90,5 +96,21 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
 
     public void addCommission(float commission, long id) throws DaoException {
         updateSingle(ADD_COMMISSION_QUERY, commission, id);
+    }
+
+    @Override
+    public void addTeamBets(Team team, float betAmount, long id) throws DaoException {
+        String query;
+        switch (team) {
+            case FIRST:
+                query = ADD_FIRST_TEAM_BETS_QUERY;
+                break;
+            case SECOND:
+                query = ADD_SECOND_TEAM_BETS_QUERY;
+                break;
+            default:
+                throw new DaoException("Unknown team.");
+        }
+        updateSingle(query, betAmount, id);
     }
 }

@@ -80,7 +80,8 @@
                             <fmt:message key="bet.left.amount"/>
                         </h1>
                         <h1 id="first-bets-amount">
-                            ${firstBetsAmount}
+                            <fmt:formatNumber type="number" maxFractionDigits="2"
+                                              value="${firstBetsAmount}"/>
                         </h1>
                     </div>
                     <div class="second-bet-amount">
@@ -88,7 +89,8 @@
                             <fmt:message key="bet.right.amount"/>
                         </h1>
                         <h1 id="second-bets-amount">
-                            ${secondBetsAmount}
+                            <fmt:formatNumber type="number" maxFractionDigits="2"
+                                              value="${secondBetsAmount}"/>
                         </h1>
                     </div>
                 </div>
@@ -114,7 +116,7 @@
                                     <div class="button">
                                         <div class="bet-on">
                                             <h1>
-                                                <fmt:message key="bet.on"/>${match.getFirstTeam()}
+                                                <fmt:message key="bet.on.upper"/>${match.getFirstTeam()}
                                             </h1>
                                         </div>
                                         <div class="coefficient-value">
@@ -141,7 +143,7 @@
                                     <div class="button">
                                         <div class="bet-on">
                                             <h1>
-                                                <fmt:message key="bet.on"/>${match.getSecondTeam()}
+                                                <fmt:message key="bet.on.upper"/>${match.getSecondTeam()}
                                             </h1>
                                         </div>
                                         <div class="coefficient-value">

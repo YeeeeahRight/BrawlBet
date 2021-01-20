@@ -8,8 +8,8 @@
 
 <div class="main-content">
     <div class="main-header">
-        <div class ="logo-content">
-            <div class = "bets-text">
+        <div class="logo-content">
+            <div class="bets-text">
                 <h1>
                     <fmt:message key="bets.bets"/>
                 </h1>
@@ -18,39 +18,45 @@
         </div>
     </div>
     <div class="main-body">
-        <c:forEach items="${matchesDto}" var="matchDto" varStatus="counter">
-            <a href="${pageContext.request.contextPath}/controller?command=bet-page&id=${matchDto.getId()}">
-                <div class="match match-${counter.index + 1}" >
+        <c:forEach items="${matchBetsDtoList}" var="matchBetsDto" varStatus="counter">
+            <a href="${pageContext.request.contextPath}/controller?command=match-page&id=${matchBetsDto.getId()}">
+                <div class="match match-${counter.index + 1}">
                     <div class="match-body">
                         <div class="match-f-team">
-                            <h1>${matchDto.getFirstTeam()}</h1>
+                            <h1>
+                                    ${matchBetsDto.getFirstTeam()}
+                            </h1>
                         </div>
                         <div class="match-f-percent">
                             <h1>
-                                ${matchDto.getFirstPercent()}%
+                                    ${matchBetsDto.getFirstPercent()}%
                             </h1>
                         </div>
                         <div class="match-versus-icon">
-                            <h1>-</h1>
+                            <h1>
+                                -
+                            </h1>
                         </div>
                         <div class="match-s-percent">
                             <h1>
-                                ${matchDto.getSecondPercent()}%
+                                    ${matchBetsDto.getSecondPercent()}%
                             </h1>
                         </div>
                         <div class="match-s-team">
-                            <h1>${matchDto.getSecondTeam()}</h1>
+                            <h1>
+                                    ${matchBetsDto.getSecondTeam()}
+                            </h1>
                         </div>
                     </div>
                     <div class="match-header">
                         <div class="match-date">
                             <h1>
-                                <sc:date-formatter date="${matchDto.getDate()}"
+                                <sc:date-formatter date="${matchBetsDto.getDate()}"
                                                    formatType="${sessionScope.lang}"></sc:date-formatter>
                             </h1>
                         </div>
                         <div class="match-tournament">
-                            <h1>${matchDto.getTournament()}</h1>
+                            <h1>${matchBetsDto.getTournament()}</h1>
                         </div>
                     </div>
                 </div>

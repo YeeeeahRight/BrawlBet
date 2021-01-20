@@ -116,6 +116,7 @@
     background: url(../images/accept.png) no-repeat center center;
     background-size: cover;
     margin-left: 1px;
+    cursor: pointer;
 }
 
 .match-description {
