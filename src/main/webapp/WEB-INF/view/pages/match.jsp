@@ -10,14 +10,14 @@
         <meta charset="UTF-8">
         <link href="${pageContext.request.contextPath}/static/styles/general-styles.css" rel="stylesheet" type="text/css">
         <link href="${pageContext.request.contextPath}/static/styles/header.css" rel="stylesheet" type="text/css">
-        <link href="${pageContext.request.contextPath}/static/styles/bet-body.css" rel="stylesheet" type="text/css">
+        <link href="${pageContext.request.contextPath}/static/styles/match-body.css" rel="stylesheet" type="text/css">
         <link href="${pageContext.request.contextPath}/static/styles/menu.css" rel="stylesheet" type="text/css">
         <title>Brawl bet!</title>
     </head>
     <body>
         <div class="container">
             <jsp:include page="../parts/header.jsp"/>
-            <jsp:include page="../parts/bet-body.jsp"/>
+            <jsp:include page="../parts/match-body.jsp"/>
         </div>
     </body>
 </html>

@@ -96,9 +96,21 @@
                 </div>
             </div>
             <c:choose>
+                <c:when test="${isMatchClosed}">
+                    <div class="match-info-block">
+                        <div class="match-info-text">
+                            <h1>
+                                <fmt:message key="match.closed"/>
+                            </h1>
+                            <h1>
+                                <fmt:message key="match.winner"/>${match.getWinner()}
+                            </h1>
+                        </div>
+                    </div>
+                </c:when>
                 <c:when test="${isMatchFinished}">
-                    <div class="match-finished-block">
-                        <h1 class="match-finished-text">
+                    <div class="match-info-block">
+                        <h1 class="match-info-text">
                             <fmt:message key="match.finished"/>
                         </h1>
                     </div>

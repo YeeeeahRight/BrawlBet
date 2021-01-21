@@ -211,7 +211,7 @@ button:hover {
     visibility: hidden;
 }
 
-.match-finished-block {
+.match-info-block {
     width:730px;
     margin-top:50px;
     margin-right: auto;
@@ -221,8 +221,8 @@ button:hover {
     justify-content: center;
 }
 
-.match-finished-text {
-    font-size: 30px;
+.match-info-text {
+    font-size: 32px;
     text-align: center;
 }
 

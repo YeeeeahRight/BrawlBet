@@ -17,6 +17,7 @@ import com.epam.web.model.entity.Match;
 import com.epam.web.model.enumeration.AccountRole;
 import com.epam.web.model.enumeration.Team;
 
+import java.util.Date;
 import java.util.List;
 
 public class MatchPageCommand implements Command {
@@ -41,10 +42,14 @@ public class MatchPageCommand implements Command {
         } catch (NumberFormatException e) {
             throw new InvalidParametersException("Invalid id match parameter in request.");
         }
-        boolean isMatchFinished = matchService.isFinishedMatch(id);
-        requestContext.addAttribute(Attribute.IS_MATCH_FINISHED, isMatchFinished);
         Match match = matchService.findById(id);
         requestContext.addAttribute(Attribute.MATCH, match);
+        boolean isMatchClosed = match.isClosed();
+        requestContext.addAttribute(Attribute.IS_MATCH_CLOSED, isMatchClosed);
+        if (!isMatchClosed) {
+            boolean isMatchFinished = isFinishedMatch(match);
+            requestContext.addAttribute(Attribute.IS_MATCH_FINISHED, isMatchFinished);
+        }
         Long accountId = (Long) requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
         float firstTeamBetsAmount = match.getFirstTeamBets();
         float secondTeamBetsAmount = match.getSecondTeamBets();
@@ -82,5 +87,11 @@ public class MatchPageCommand implements Command {
         }
 
         return CommandResult.forward(Page.BET);
+    }
+
+    private boolean isFinishedMatch(Match match) {
+        long matchTime = match.getDate().getTime();
+        long currentTime = new Date().getTime();
+        return currentTime >= matchTime;
     }
 }
