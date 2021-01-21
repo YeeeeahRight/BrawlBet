@@ -28,12 +28,12 @@
                 </div>
                 <div class="match-body">
                     <div class="f-team">
-                        <div class="f-team-name">
+                        <div class="f-team-name ${isMatchClosed && match.getFirstTeam().equals(match.getWinner())}">
                             <h1>
                                 ${match.getFirstTeam()}
                             </h1>
                         </div>
-                        <div class="f-percent-name">
+                        <div class="f-percent">
                             <h1>
                                 ${firstPercent}%
                             </h1>
@@ -44,13 +44,13 @@
                             VS
                         </h1>
                     </div>
-                    <div class="s-team">
+                    <div class="s-team ${isMatchClosed && match.getSecondTeam().equals(match.getWinner())}">
                         <div class="s-team-name">
                             <h1>
                                 ${match.getSecondTeam()}
                             </h1>
                         </div>
-                        <div class="s-percent-name">
+                        <div class="s-percent">
                             <h1>
                                 ${secondPercent}%
                             </h1>

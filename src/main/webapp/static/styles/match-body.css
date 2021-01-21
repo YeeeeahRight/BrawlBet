@@ -80,7 +80,7 @@
     text-align: center;
 }
 
-.f-percent-name {
+.f-percent {
     margin-top: 5px;
     text-align: center;
 }
@@ -103,7 +103,7 @@
     text-align: center;
 }
 
-.s-percent-name {
+.s-percent {
     margin-top: 5px;
     text-align: center;
 }
@@ -209,6 +209,10 @@ button:hover {
 
 #on {
     visibility: hidden;
+}
+
+.true {
+    color: rgba(148, 229, 18, 1.0);
 }
 
 .match-info-block {

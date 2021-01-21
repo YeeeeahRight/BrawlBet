@@ -49,17 +49,23 @@
                                             ${betMatchDto.getFirstTeam()}
                                     </h1>
                                 </div>
-                                <div class="match-f-percent">
+                                <div class="match-f-percent ${betMatchDto.getFirstTeam().equals(betMatchDto.getWinner())}">
                                     <h1>
                                             ${betMatchDto.getFirstPercent()}%
                                     </h1>
                                 </div>
+                                <c:if test="${betMatchDto.getFirstTeam().equals(betMatchDto.getWinner())}">
+                                    <div class="winner-image"></div>
+                                </c:if>
                                 <div class="match-versus-icon">
                                     <h1>
                                         -
                                     </h1>
                                 </div>
-                                <div class="match-s-percent">
+                                <c:if test="${betMatchDto.getSecondTeam().equals(betMatchDto.getWinner())}">
+                                    <div class="winner-image"></div>
+                                </c:if>
+                                <div class="match-s-percent ${betMatchDto.getSecondTeam().equals(betMatchDto.getWinner())}">
                                     <h1>
                                             ${betMatchDto.getSecondPercent()}%
                                     </h1>
