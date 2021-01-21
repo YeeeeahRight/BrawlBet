@@ -108,6 +108,13 @@
                         </div>
                     </div>
                 </c:when>
+                <c:when test="${isMatchUnaccepted}">
+                    <div class="match-info-block">
+                        <h1 class="match-info-text">
+                            <fmt:message key="match.unaccepted"/>
+                        </h1>
+                    </div>
+                </c:when>
                 <c:when test="${isMatchFinished}">
                     <div class="match-info-block">
                         <h1 class="match-info-text">

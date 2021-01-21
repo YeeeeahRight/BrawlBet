@@ -95,10 +95,10 @@ public class MatchServiceImpl implements MatchService{
     }
 
     @Override
-    public List<Match> getActiveMatches() throws ServiceException {
+    public List<Match> getAcceptedMatches() throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             MatchDao matchDao = daoHelper.createMatchDao();
-            return matchDao.getActiveMatches();
+            return matchDao.getAcceptedMatches();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

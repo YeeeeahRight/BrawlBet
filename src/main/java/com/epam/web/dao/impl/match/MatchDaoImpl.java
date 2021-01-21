@@ -18,8 +18,7 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     private static final String ADD_QUERY =
             "INSERT matches (date, tournament, first_team, second_team) VALUES" +
                     "(?, ?, ?, ?)";
-    private static final String GET_ACTIVE_MATCHES_QUERY = "SELECT * FROM matches WHERE commission > 0 " +
-            "AND is_closed = 0";
+    private static final String GET_ACCEPTED_MATCHES_QUERY = "SELECT * FROM matches WHERE commission > 0";
     private static final String GET_UNACCEPTED_MATCHES_QUERY = "SELECT * FROM matches WHERE commission = 0";
     private static final String GET_UNCLOSED_MATCHES_QUERY = "SELECT * FROM matches WHERE is_closed = 0";
     private static final String GET_FINISHED_MATCHES_QUERY = "SELECT * FROM matches WHERE date <= ? " +
@@ -73,8 +72,8 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     }
 
     @Override
-    public List<Match> getActiveMatches() throws DaoException {
-        return executeQuery(GET_ACTIVE_MATCHES_QUERY);
+    public List<Match> getAcceptedMatches() throws DaoException {
+        return executeQuery(GET_ACCEPTED_MATCHES_QUERY);
     }
 
     @Override

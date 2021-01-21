@@ -17,9 +17,11 @@ import com.epam.web.model.enumeration.Team;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 public class MyBetsCommand implements Command {
+    private static final String NO_WINNER = "NONE";
     private final BetService betService;
     private final MatchService matchService;
     private final BetCalculator betCalculator;
@@ -35,7 +37,7 @@ public class MyBetsCommand implements Command {
         long accountId = (Long) requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
         List<Bet> accountBets = betService.getBetsByAccountId(accountId);
         List<BetMatchDto> betMatchDtoList = buildBetMatchDtoList(accountBets);
-        betMatchDtoList.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+        sortBetMatchDtoList(betMatchDtoList);
         requestContext.addAttribute(Attribute.BET_MATCH_DTO_LIST, betMatchDtoList);
 
         return CommandResult.forward(Page.MY_BETS);
@@ -67,5 +69,19 @@ public class MyBetsCommand implements Command {
             betMatchDtoList.add(betMatchDto);
         }
         return betMatchDtoList;
+    }
+
+    private void sortBetMatchDtoList(List<BetMatchDto> betMatchDtoList) {
+        betMatchDtoList.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+        List<BetMatchDto> closedBetMatchDtoList = new ArrayList<>();
+        Iterator<BetMatchDto> betMatchDtoIterator = betMatchDtoList.iterator();
+        while (betMatchDtoIterator.hasNext()) {
+            BetMatchDto betMatchDto = betMatchDtoIterator.next();
+            if (!betMatchDto.getWinner().equalsIgnoreCase(NO_WINNER)) {
+                closedBetMatchDtoList.add(betMatchDto);
+                betMatchDtoIterator.remove();
+            }
+        }
+        betMatchDtoList.addAll(closedBetMatchDtoList);
     }
 }

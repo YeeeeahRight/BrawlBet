@@ -8,46 +8,17 @@
 
 <div class="main-content">
     <div class="main-header">
-        <div class="logo-content">
-            <div class="bets-text">
-                <h1>
-                    <fmt:message key="bets.bets"/>
-                </h1>
-            </div>
-            <div class="bets-icon"></div>
+        <div class="bets-icon"></div>
+        <div class="bets-text">
+            <h1>
+                <fmt:message key="bets.bets"/>
+            </h1>
         </div>
     </div>
     <div class="main-body">
         <c:forEach items="${matchBetsDtoList}" var="matchBetsDto" varStatus="counter">
             <a href="${pageContext.request.contextPath}/controller?command=match-page&id=${matchBetsDto.getId()}">
-                <div class="match match-${counter.index + 1}">
-                    <div class="match-body">
-                        <div class="match-f-team">
-                            <h1>
-                                    ${matchBetsDto.getFirstTeam()}
-                            </h1>
-                        </div>
-                        <div class="match-f-percent">
-                            <h1>
-                                    ${matchBetsDto.getFirstPercent()}%
-                            </h1>
-                        </div>
-                        <div class="match-versus-icon">
-                            <h1>
-                                -
-                            </h1>
-                        </div>
-                        <div class="match-s-percent">
-                            <h1>
-                                    ${matchBetsDto.getSecondPercent()}%
-                            </h1>
-                        </div>
-                        <div class="match-s-team">
-                            <h1>
-                                    ${matchBetsDto.getSecondTeam()}
-                            </h1>
-                        </div>
-                    </div>
+                <div class="match match-${counter.index + 1}" id="${matchBetsDto.isClosed()}">
                     <div class="match-header">
                         <div class="match-date">
                             <h1>
@@ -57,6 +28,41 @@
                         </div>
                         <div class="match-tournament">
                             <h1>${matchBetsDto.getTournament()}</h1>
+                        </div>
+                    </div>
+                    <div class="match-body">
+                        <div class="match-f-team ${matchBetsDto.getFirstTeam().equals(matchBetsDto.getWinner())}">
+                            <h1>
+                                    ${matchBetsDto.getFirstTeam()}
+                            </h1>
+                        </div>
+                        <div class="match-body-center">
+                            <div class="match-f-percent">
+                                <h1>
+                                        ${matchBetsDto.getFirstPercent()}%
+                                </h1>
+                            </div>
+                            <c:if test="${matchBetsDto.getFirstTeam().equals(matchBetsDto.getWinner())}">
+                                <div class="winner-image"></div>
+                            </c:if>
+                            <div class="match-versus-icon">
+                                <h1>
+                                    -
+                                </h1>
+                            </div>
+                            <c:if test="${matchBetsDto.getSecondTeam().equals(matchBetsDto.getWinner())}">
+                                <div class="winner-image"></div>
+                            </c:if>
+                            <div class="match-s-percent">
+                                <h1>
+                                        ${matchBetsDto.getSecondPercent()}%
+                                </h1>
+                            </div>
+                        </div>
+                        <div class="match-s-team ${matchBetsDto.getSecondTeam().equals(matchBetsDto.getWinner())}">
+                            <h1>
+                                    ${matchBetsDto.getSecondTeam()}
+                            </h1>
                         </div>
                     </div>
                 </div>

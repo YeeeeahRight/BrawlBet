@@ -10,11 +10,13 @@ public class MatchBetsDto implements Entity {
     private final String tournament;
     private final String firstTeam;
     private final String secondTeam;
+    private final String winner;
+    private final boolean isClosed;
     private final int firstPercent;
     private final int secondPercent;
 
     public MatchBetsDto(Long id, Date date, String tournament, String firstTeam, String secondTeam,
-                        int firstPercent, int secondPercent) {
+                        int firstPercent, int secondPercent, String winner, boolean isClosed) {
         this.id = id;
         this.date = date;
         this.tournament = tournament;
@@ -22,6 +24,8 @@ public class MatchBetsDto implements Entity {
         this.secondTeam = secondTeam;
         this.firstPercent = firstPercent;
         this.secondPercent = secondPercent;
+        this.winner = winner;
+        this.isClosed = isClosed;
     }
 
     @Override
@@ -53,6 +57,14 @@ public class MatchBetsDto implements Entity {
         return secondPercent;
     }
 
+    public String getWinner() {
+        return winner;
+    }
+
+    public boolean isClosed() {
+        return isClosed;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -64,6 +76,9 @@ public class MatchBetsDto implements Entity {
 
         MatchBetsDto that = (MatchBetsDto) o;
 
+        if (isClosed != that.isClosed) {
+            return false;
+        }
         if (firstPercent != that.firstPercent) {
             return false;
         }
@@ -82,7 +97,10 @@ public class MatchBetsDto implements Entity {
         if (!firstTeam.equals(that.firstTeam)) {
             return false;
         }
-        return secondTeam.equals(that.secondTeam);
+        if (!secondTeam.equals(that.secondTeam)) {
+            return false;
+        }
+        return winner.equals(that.winner);
     }
 
     @Override
@@ -92,6 +110,8 @@ public class MatchBetsDto implements Entity {
         result = 31 * result + tournament.hashCode();
         result = 31 * result + firstTeam.hashCode();
         result = 31 * result + secondTeam.hashCode();
+        result = 31 * result + winner.hashCode();
+        result = 31 * result + (isClosed ? 1 : 0);
         result = 31 * result + firstPercent;
         result = 31 * result + secondPercent;
         return result;
@@ -105,6 +125,8 @@ public class MatchBetsDto implements Entity {
                 ", tournament='" + tournament + '\'' +
                 ", firstTeam='" + firstTeam + '\'' +
                 ", secondTeam='" + secondTeam + '\'' +
+                ", winner='" + winner + '\'' +
+                ", isClosed=" + isClosed +
                 ", firstPercent=" + firstPercent +
                 ", secondPercent=" + secondPercent +
                 '}';

@@ -22,7 +22,7 @@ public interface MatchService {
 
     List<Match> getUnclosedMatches() throws ServiceException;
 
-    List<Match> getActiveMatches() throws ServiceException;
+    List<Match> getAcceptedMatches() throws ServiceException;
 
     List<Match> getUnacceptedMatches() throws ServiceException;
 

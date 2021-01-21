@@ -22,4 +22,5 @@ public final class Attribute {
     public static final String SECOND_BETS_AMOUNT = "secondBetsAmount";
     public static final String IS_MATCH_FINISHED = "isMatchFinished";
     public static final String IS_MATCH_CLOSED = "isMatchClosed";
+    public static final String IS_MATCH_UNACCEPTED = "isMatchUnaccepted";
 }

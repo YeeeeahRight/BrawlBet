@@ -26,7 +26,7 @@ public interface MatchDao {
 
     List<Match> getUnacceptedMatches() throws DaoException;
 
-    List<Match> getActiveMatches() throws DaoException;
+    List<Match> getAcceptedMatches() throws DaoException;
 
     List<Match> getUnclosedMatches() throws DaoException;
 
