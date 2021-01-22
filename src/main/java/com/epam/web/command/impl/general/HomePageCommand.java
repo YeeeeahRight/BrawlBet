@@ -49,11 +49,12 @@ public class HomePageCommand implements Command {
             boolean isClosed = match.isClosed();
             float firstTeamBetsAmount = match.getFirstTeamBets();
             float secondTeamBetsAmount = match.getSecondTeamBets();
-            int firstPercent = betCalculator.calculatePercent(Team.FIRST, firstTeamBetsAmount, secondTeamBetsAmount);
-            int secondPercent = betCalculator.calculatePercent(Team.SECOND, firstTeamBetsAmount, secondTeamBetsAmount);
-            int sumPercents = firstPercent + secondPercent;
-            if (sumPercents == 101) {
-                firstPercent--;
+            int firstPercent = 0;
+            int secondPercent = 0;
+            if (firstTeamBetsAmount + secondTeamBetsAmount != 0) {
+                firstPercent = betCalculator.calculatePercent(Team.FIRST,
+                        firstTeamBetsAmount, secondTeamBetsAmount);
+                secondPercent = 100 - firstPercent;
             }
             MatchBetsDto matchBetsDto = new MatchBetsDto(id, date, tournament,
                     firstTeam, secondTeam, firstPercent, secondPercent, winner, isClosed);

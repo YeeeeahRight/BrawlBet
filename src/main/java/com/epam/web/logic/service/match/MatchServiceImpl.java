@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-public class MatchServiceImpl implements MatchService{
+public class MatchServiceImpl implements MatchService {
     private final DaoHelperFactory daoHelperFactory;
     private final Validator<Match> matchValidator;
 
@@ -147,9 +147,10 @@ public class MatchServiceImpl implements MatchService{
                 float money = bet.getMoneyBet();
                 float received = bet.getMoneyReceived();
                 accountDao.addMoneyToBalance(money - received, accountId);
+                long matchId = bet.getMatchId();
+                betDao.removeById(matchId);
             }
             matchDao.removeById(id);
-            betDao.removeById(id);
             daoHelper.commit();
         } catch (DaoException e) {
             throw new ServiceException(e);

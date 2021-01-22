@@ -4,10 +4,14 @@ import com.epam.web.dao.Dao;
 import com.epam.web.exception.DaoException;
 import com.epam.web.model.entity.Account;
 
-import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 public interface AccountDao extends Dao<Account> {
+    List<Account> getUsers() throws DaoException;
+
+    Optional<Account> findBookmaker() throws DaoException;
+
     Optional<Account> findAccountByLoginPassword(String login, String password) throws DaoException;
 
     Optional<Account> findAccountByLogin(String login) throws DaoException;

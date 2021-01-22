@@ -28,8 +28,8 @@ public class DepositCommand implements Command {
             throw new InvalidParametersException("Invalid money parameter in request.");
         }
         if (money > MAX_DEPOSIT || money < MIN_DEPOSIT) {
-            throw new InvalidParametersException("Deposit value is not in range[" +
-                    MIN_DEPOSIT + " - " + MAX_DEPOSIT +"].");
+            throw new InvalidParametersException(
+                    String.format("Deposit value is not in range[%f-%f]", MIN_DEPOSIT, MAX_DEPOSIT));
         }
         long accountId = (Long) requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
         accountService.addMoneyById(money, accountId);

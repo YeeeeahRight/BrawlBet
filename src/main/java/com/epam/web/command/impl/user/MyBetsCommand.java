@@ -54,11 +54,12 @@ public class MyBetsCommand implements Command {
             String tournament = match.getTournament();
             float firstTeamBets = match.getFirstTeamBets();
             float secondTeamBets = match.getSecondTeamBets();
-            int firstPercent = betCalculator.calculatePercent(Team.FIRST, firstTeamBets, secondTeamBets);
-            int secondPercent = betCalculator.calculatePercent(Team.SECOND, firstTeamBets, secondTeamBets);
-            int sumPercents = firstPercent + secondPercent;
-            if (sumPercents == 101) {
-                firstPercent--;
+            int firstPercent = 0;
+            int secondPercent = 0;
+            if (firstTeamBets + secondTeamBets != 0) {
+                firstPercent = betCalculator.calculatePercent(Team.FIRST,
+                        firstTeamBets, secondTeamBets);
+                secondPercent = 100 - firstPercent;
             }
             String winner = match.getWinner();
             String firstTeam = match.getFirstTeam();

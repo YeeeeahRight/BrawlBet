@@ -24,7 +24,7 @@ public class CloseMatchCommand implements Command {
         } catch (NumberFormatException e) {
             throw new InvalidParametersException("Invalid match id parameter in request.");
         }
-        closeMatchService.close(id);
+        closeMatchService.closeMatchById(id);
 
         String prevPage = requestContext.getHeader();
         return CommandResult.redirect(prevPage);

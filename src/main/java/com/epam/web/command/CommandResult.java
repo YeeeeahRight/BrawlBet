@@ -1,7 +1,5 @@
 package com.epam.web.command;
 
-import com.epam.web.constant.Page;
-
 public class CommandResult {
     private final String page;
     private final boolean isRedirect;

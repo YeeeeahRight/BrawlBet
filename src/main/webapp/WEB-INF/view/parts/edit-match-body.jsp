@@ -46,26 +46,24 @@
                                type="datetime-local"
                                min="2021-01-05T00:00" max="2021-12-31T23:59"
                                placeholder="<fmt:message key="match.date.advice"/>"
-                               name="date"
-
-                               value="<sc:date-formatter date="${match.getDate()}"
+                               name="date" value="<sc:date-formatter date="${match.getDate()}"
                                formatType="HTML"></sc:date-formatter>"
                                required>
                         <input class="tournament" type="text"
                                placeholder="<fmt:message key="match.tournament.advice"/>"
-                               name="tournament"
+                               name="tournament" maxlength="15"
                                value="${match.getTournament()}"
                                required>
                         <input class="first-team" type="text"
                                placeholder="<fmt:message key="match.team.first.advice"/>"
-                               name="first_team"
+                               name="firstTeam" id="firstTeam"
                                value="${match.getFirstTeam()}"
-                               required>
+                               maxlength="15" required>
                         <input class="second-team" type="text"
                                placeholder="<fmt:message key="match.team.second.advice"/>"
-                               name="second_team"
+                               name="secondTeam" id="secondTeam"
                                value="${match.getSecondTeam()}"
-                               required>
+                               maxlength="15" required>
                         <button type="submit">
                             <fmt:message key="match.edit.button"/>
                         </button>
@@ -75,3 +73,5 @@
         </div>
     </div>
 </div>
+
+<script src="<c:url value="/static/js/check-same-teams.js"/>"></script>

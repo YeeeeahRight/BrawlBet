@@ -98,7 +98,7 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     }
 
     @Override
-    public void addTeamBets(Team team, float betAmount, long id) throws DaoException {
+    public void addTeamBetAmount(Team team, float betAmount, long id) throws DaoException {
         String query;
         switch (team) {
             case FIRST:

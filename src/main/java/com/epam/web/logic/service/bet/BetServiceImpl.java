@@ -8,13 +8,10 @@ import com.epam.web.dao.impl.match.MatchDao;
 import com.epam.web.exception.DaoException;
 import com.epam.web.exception.ServiceException;
 import com.epam.web.logic.validator.Validator;
-import com.epam.web.model.entity.Account;
 import com.epam.web.model.entity.Bet;
-import com.epam.web.model.entity.Match;
 import com.epam.web.model.enumeration.Team;
 
 import java.util.List;
-import java.util.Optional;
 
 public class BetServiceImpl implements BetService {
     private final DaoHelperFactory daoHelperFactory;
@@ -50,7 +47,7 @@ public class BetServiceImpl implements BetService {
             daoHelper.startTransaction();
             accountDao.addMoneyToBalance(money * -1, accountId);
             betDao.save(bet);
-            matchDao.addTeamBets(team, money, bet.getMatchId());
+            matchDao.addTeamBetAmount(team, money, bet.getMatchId());
             daoHelper.commit();
         } catch (DaoException e) {
             throw new ServiceException(e);

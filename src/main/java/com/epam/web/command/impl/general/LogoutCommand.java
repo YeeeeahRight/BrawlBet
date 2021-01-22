@@ -11,8 +11,7 @@ public class LogoutCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) {
-        requestContext.removeSessionAttribute(Attribute.ACCOUNT_ID);
-        requestContext.removeSessionAttribute(Attribute.ROLE);
+        requestContext.addSession(Attribute.INVALIDATE_ATTRIBUTE, true);
 
         return CommandResult.redirect(HOME_PAGE_COMMAND);
     }

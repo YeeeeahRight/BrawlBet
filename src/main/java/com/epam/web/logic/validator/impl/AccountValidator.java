@@ -6,7 +6,7 @@ import com.epam.web.model.enumeration.AccountRole;
 
 public class AccountValidator implements Validator<Account> {
     private static final int MAX_LOGIN_LENGTH = 20;
-    private static final int MAX_PASSWORD_LENGTH = 30;
+    private static final int MAX_PASSWORD_LENGTH = 25;
 
     @Override
     public boolean isValid(Account account) {

@@ -21,7 +21,7 @@ public class AccessTag extends TagSupport {
         HttpSession session = pageContext.getSession();
         AccountRole role = (AccountRole) session.getAttribute(Attribute.ROLE);
         if (role == null) {
-            if (this.role.equalsIgnoreCase(GUEST)) {
+            if (GUEST.equalsIgnoreCase(this.role)) {
                 return EVAL_BODY_INCLUDE;
             }
         } else if (role.toString().equalsIgnoreCase(this.role)

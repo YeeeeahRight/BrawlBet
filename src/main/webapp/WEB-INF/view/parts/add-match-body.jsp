@@ -48,13 +48,13 @@
                                name="date" required>
                         <input class="tournament" type="text"
                                placeholder="<fmt:message key="match.tournament.advice"/>"
-                               name="tournament" required>
+                               name="tournament" maxlength="15" required>
                         <input class="first-team" type="text" id="firstTeam"
                                placeholder="<fmt:message key="match.team.first.advice"/>"
-                               name="firstTeam" required>
+                               name="firstTeam" maxlength="15" required>
                         <input class="second-team" type="text" id="secondTeam"
                                placeholder="<fmt:message key="match.team.second.advice"/>"
-                               name="secondTeam" required>
+                               name="secondTeam" maxlength="15" required>
                         <button type="submit">
                             <fmt:message key="match.add.button"/>
                         </button>
@@ -65,4 +65,4 @@
     </div>
 </div>
 
-<script src="<c:url value="/static/js/add-match.js"/>"></script>
+<script src="<c:url value="/static/js/check-same-teams.js"/>"></script>

@@ -27,6 +27,11 @@ public class AddMatchCommand implements Command {
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
         Match match = buildMatch(requestContext);
+        String firstTeam = match.getFirstTeam();
+        String secondTeam = match.getSecondTeam();
+        if (firstTeam.equalsIgnoreCase(secondTeam)) {
+            throw new InvalidParametersException("Team names should be different.");
+        }
         matchService.saveMatch(match);
 
         return CommandResult.redirect(MATCHES_COMMAND);
@@ -43,9 +48,6 @@ public class AddMatchCommand implements Command {
             date = dateParser.parse(DateFormatType.HTML);
         } catch (ParseException e) {
             throw new InvalidParametersException("Invalid date format.");
-        }
-        if (firstTeam.equalsIgnoreCase(secondTeam)) {
-            throw new InvalidParametersException("Team names should be different.");
         }
         return new Match(date, tournament, firstTeam, secondTeam);
     }

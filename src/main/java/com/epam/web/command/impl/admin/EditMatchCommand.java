@@ -33,16 +33,21 @@ public class EditMatchCommand implements Command {
             throw new InvalidParametersException("Invalid match id parameter in request.");
         }
         Match match = buildMatch(requestContext);
+        String firstTeam = match.getFirstTeam();
+        String secondTeam = match.getSecondTeam();
+        if (firstTeam.equalsIgnoreCase(secondTeam)) {
+            throw new InvalidParametersException("Team names should be different.");
+        }
         matchService.editMatch(match, id);
 
         return CommandResult.redirect(MATCHES_COMMAND);
     }
 
     private Match buildMatch(RequestContext requestContext) {
-        String tournament = requestContext.getRequestParameter(Match.TOURNAMENT);
-        String firstTeam = requestContext.getRequestParameter(Match.FIRST_TEAM);
-        String secondTeam = requestContext.getRequestParameter(Match.SECOND_TEAM);
-        String dateStr = requestContext.getRequestParameter(Match.DATE);
+        String tournament = requestContext.getRequestParameter(Parameter.TOURNAMENT);
+        String firstTeam = requestContext.getRequestParameter(Parameter.FIRST_TEAM);
+        String secondTeam = requestContext.getRequestParameter(Parameter.SECOND_TEAM);
+        String dateStr = requestContext.getRequestParameter(Parameter.DATE);
         DateParser dateParser = new DateParser(dateStr);
         Date date;
         try {

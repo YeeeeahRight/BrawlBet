@@ -27,7 +27,7 @@ public class CloseMatchServiceImpl implements CloseMatchService {
     }
 
     @Override
-    public void close(long matchId) throws ServiceException {
+    public void closeMatchById(long matchId) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             MatchDao matchDao = daoHelper.createMatchDao();
             BetDao betDao = daoHelper.createBetDao();

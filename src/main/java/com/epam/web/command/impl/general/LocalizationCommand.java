@@ -27,17 +27,8 @@ public class LocalizationCommand implements Command {
         if (language == null) {
             throw new InvalidParametersException("No language parameter in request.");
         }
-        String locale = EN_LOCALE;
-        switch (language) {
-            case RU:
-                locale = RU_LOCALE;
-                break;
-            case BE:
-                locale = BE_LOCALE;
-                break;
-        }
+        String locale = getLocaleByLanguage(language);
         requestContext.addSession(Attribute.LANGUAGE, locale);
-
         String page = requestContext.getHeader();
         if (page != null) {
             String prevCommand = extractCommand(page);
@@ -46,6 +37,16 @@ public class LocalizationCommand implements Command {
             }
         }
         return CommandResult.redirect(page);
+    }
+
+    private String getLocaleByLanguage(String language) {
+        switch (language) {
+            case RU:
+                return RU_LOCALE;
+            case BE:
+                return BE_LOCALE;
+        }
+        return EN_LOCALE;
     }
 
     private String changeCommandToCommandPage(String prevCommand) {

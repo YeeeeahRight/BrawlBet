@@ -6,12 +6,15 @@ function betOnSecond() {
     document.getElementById("on").value = "SECOND";
 }
 
-const initialFirstCoefficient = document.getElementById("first-coefficient").innerHTML;
-const initialSecondCoefficient = document.getElementById("second-coefficient").innerHTML;
+
+const firstPotentialGainField = document.getElementById("first-potential-gain");
+const secondPotentialGainField = document.getElementById("second-potential-gain");
+const firstCoefficientField = document.getElementById("first-coefficient");
+const secondCoefficientField = document.getElementById("second-coefficient");
+const initialFirstCoefficient = firstCoefficientField.innerHTML;
+const initialSecondCoefficient = secondCoefficientField.innerHTML;
 
 function calculatePotentialGains() {
-    console.log(initialFirstCoefficient);
-    console.log(initialSecondCoefficient);
     let moneyAttribute = document.getElementById("money");
     let moneyValue = parseFloat(moneyAttribute.value);
     if (moneyValue > 0 && moneyValue <= moneyAttribute.getAttribute("max")) {
@@ -19,23 +22,21 @@ function calculatePotentialGains() {
         let secondBetsAmount = parseFloat(document.getElementById("second-bets-amount").innerHTML);
         let firstCoefficient = calculateCoefficient("FIRST", firstBetsAmount + moneyValue, secondBetsAmount);
         let secondCoefficient = calculateCoefficient("SECOND", firstBetsAmount, secondBetsAmount + moneyValue);
-        document.getElementById("first-coefficient").innerHTML = (firstCoefficient + 1).toFixed(3);
-        document.getElementById("second-coefficient").innerHTML = (secondCoefficient + 1).toFixed(3);
-        let firstPotentialGain;
-        let secondPotentialGain;
+        firstCoefficientField.innerHTML = (firstCoefficient + 1).toFixed(3);
+        secondCoefficientField.innerHTML = (secondCoefficient + 1).toFixed(3);
         if (firstBetsAmount + secondBetsAmount === 0.0) {
             firstCoefficient = 1;
             secondCoefficient = 1;
         }
-        firstPotentialGain = firstCoefficient * moneyValue;
-        secondPotentialGain = secondCoefficient * moneyValue;
-        document.getElementById("first-potential-gain").innerHTML = firstPotentialGain.toFixed(2);
-        document.getElementById("second-potential-gain").innerHTML = secondPotentialGain.toFixed(2);
+        let firstPotentialGain = firstCoefficient * moneyValue;
+        let secondPotentialGain = secondCoefficient * moneyValue;
+        firstPotentialGainField.innerHTML = firstPotentialGain.toFixed(2);
+        secondPotentialGainField.innerHTML = secondPotentialGain.toFixed(2);
     } else {
-        document.getElementById("first-potential-gain").innerHTML = '-';
-        document.getElementById("second-potential-gain").innerHTML = '-';
-        document.getElementById("first-coefficient").innerHTML = initialFirstCoefficient
-        document.getElementById("second-coefficient").innerHTML = initialSecondCoefficient;
+        firstPotentialGainField.innerHTML = '-';
+        secondPotentialGainField.innerHTML = '-';
+        firstCoefficientField.innerHTML = initialFirstCoefficient
+        secondCoefficientField.innerHTML = initialSecondCoefficient;
     }
 }
 
@@ -49,7 +50,8 @@ function calculateCoefficient(team, firstBetsAmount, secondBetsAmount) {
     } else {
         result = (secondBetsAmount / firstBetsAmount);
     }
-    let commission = parseFloat(document.getElementById("commission").innerHTML);
+    let commissionStr = document.getElementById("commission").innerHTML;
+    let commission = parseFloat(commissionStr);
 
     result -= result * commission / 100;
     return result;
@@ -58,8 +60,8 @@ function calculateCoefficient(team, firstBetsAmount, secondBetsAmount) {
 const money = document.getElementById("money");
 
 money.addEventListener("input", function (event) {
-    let lang = document.getElementById("html").getAttribute("lang");
     if (money.getAttribute("max") === "0.0") {
+        let lang = document.getElementById("html").getAttribute("lang");
         let message;
         switch (lang) {
             case "ru":

@@ -42,10 +42,10 @@
                         <div class="input-form">
                             <input type="text"
                                    placeholder="<fmt:message key="login.username.advice"/>"
-                                   name="login" required>
+                                   name="login" maxlength="20" required>
                             <input type="password"
                                    placeholder="<fmt:message key="login.password.advice"/>"
-                                   name="password" required>
+                                   name="password" maxlength="25" required>
                             <button type="submit">
                                 <fmt:message key="login.submit"/>
                             </button>

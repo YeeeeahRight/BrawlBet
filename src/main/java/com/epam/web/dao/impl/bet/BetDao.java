@@ -4,7 +4,6 @@ import com.epam.web.dao.Dao;
 import com.epam.web.exception.DaoException;
 import com.epam.web.model.entity.Bet;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public interface BetDao extends Dao<Bet> {

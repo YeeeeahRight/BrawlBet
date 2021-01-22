@@ -38,13 +38,13 @@
                     <div class="input-form">
                         <input type="text"
                                placeholder="<fmt:message key="login.username.advice"/>"
-                               name="login" value="${login}" required>
+                               name="login" value="${login}" maxlength="20" required>
                         <input class="password" type="password"
                                placeholder="<fmt:message key="login.password.advice"/>"
-                               name="password" required>
+                               name="password" maxlength="25" required>
                         <input class="repeated-password" type="password"
                                placeholder="<fmt:message key="login.password.repeat"/>"
-                               name="repeatedPassword" required>
+                               name="repeatedPassword" maxlength="25" required>
                         <button type="submit">
                             <fmt:message key="login.submit"/>
                         </button>

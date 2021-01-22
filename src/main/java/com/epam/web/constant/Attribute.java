@@ -23,4 +23,5 @@ public final class Attribute {
     public static final String IS_MATCH_FINISHED = "isMatchFinished";
     public static final String IS_MATCH_CLOSED = "isMatchClosed";
     public static final String IS_MATCH_UNACCEPTED = "isMatchUnaccepted";
+    public static final String INVALIDATE_ATTRIBUTE = "invalidate";
 }

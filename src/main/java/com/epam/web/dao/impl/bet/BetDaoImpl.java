@@ -7,7 +7,6 @@ import com.epam.web.date.DateFormatter;
 import com.epam.web.exception.DaoException;
 import com.epam.web.model.entity.Bet;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
