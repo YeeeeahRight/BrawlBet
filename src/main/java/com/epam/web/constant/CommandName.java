@@ -27,4 +27,5 @@ public final class CommandName {
     public static final String ACCEPT_MATCH = "accept-match";
     public static final String CLOSE_MATCH = "close-match";
     public static final String MY_BETS = "my-bets";
+    public static final String BOOKMAKER_HISTORY = "bookmaker-history";
 }

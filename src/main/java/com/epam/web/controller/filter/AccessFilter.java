@@ -50,7 +50,6 @@ public class AccessFilter implements Filter {
         if (commandName == null) {
             return true;
         }
-        //case CommandName.LOGOUT: was !role.equals(GUEST)
         switch (commandName) {
             case CommandName.SIGN_UP:
             case CommandName.SIGN_UP_PAGE:
@@ -60,6 +59,7 @@ public class AccessFilter implements Filter {
             case CommandName.BET:
             case CommandName.DEPOSIT:
             case CommandName.DEPOSIT_PAGE:
+            case CommandName.MY_BETS:
                 return role.equalsIgnoreCase(USER_ROLE);
             case CommandName.MATCHES:
             case CommandName.ADD_MATCH:
@@ -76,10 +76,10 @@ public class AccessFilter implements Filter {
             case CommandName.REMOVE_MATCH:
             case CommandName.ACCEPT_MATCH:
             case CommandName.ACCEPT_MATCHES_PAGE:
+            case CommandName.BOOKMAKER_HISTORY:
                 return role.equalsIgnoreCase(BOOKMAKER_ROLE);
-            default:
-                return true;
         }
+        return true;
     }
 
     @Override

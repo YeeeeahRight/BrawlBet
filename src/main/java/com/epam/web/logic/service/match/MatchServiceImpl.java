@@ -85,6 +85,16 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
+    public List<Match> getClosedMatches() throws ServiceException {
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
+            MatchDao matchDao = daoHelper.createMatchDao();
+            return matchDao.getClosedMatches();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public void addCommissionById(float commission, long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             MatchDao matchDao = daoHelper.createMatchDao();

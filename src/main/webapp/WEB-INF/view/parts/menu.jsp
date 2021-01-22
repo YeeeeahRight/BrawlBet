@@ -41,7 +41,7 @@
                 </h1>
             </div>
         </a>
-        <a href="${pageContext.request.contextPath}/controller?command=history">
+        <a href="${pageContext.request.contextPath}/controller?command=bookmaker-history">
             <div class="second-item">
                 <div class="history-image"></div>
                 <h1 class="item-text">

@@ -3,6 +3,7 @@ package com.epam.web.command;
 import com.epam.web.command.impl.admin.*;
 import com.epam.web.command.impl.bookmaker.AcceptMatchCommand;
 import com.epam.web.command.impl.bookmaker.AcceptMatchesPageCommand;
+import com.epam.web.command.impl.bookmaker.BookmakerHistory;
 import com.epam.web.command.impl.bookmaker.RemoveMatchCommand;
 import com.epam.web.command.impl.general.*;
 import com.epam.web.command.impl.user.BetCommand;
@@ -63,6 +64,9 @@ public class CommandFactory {
                 return new MyBetsCommand(new BetServiceImpl(new DaoHelperFactory(), new BetValidator()),
                         new MatchServiceImpl(new DaoHelperFactory(), new MatchValidator()),
                         new BetCalculatorImpl());
+            case CommandName.BOOKMAKER_HISTORY:
+                return new BookmakerHistory(new MatchServiceImpl(new DaoHelperFactory(),
+                        new MatchValidator()));
             case CommandName.REMOVE_MATCH:
                 return new RemoveMatchCommand(new MatchServiceImpl(new DaoHelperFactory(),
                         new MatchValidator()));

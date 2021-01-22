@@ -28,6 +28,8 @@ public interface MatchDao {
 
     List<Match> getUnclosedMatches() throws DaoException;
 
+    List<Match> getClosedMatches() throws DaoException;
+
     List<Match> getFinishedMatches() throws DaoException;
 
     List<Match> getUnfinishedMatches() throws DaoException;

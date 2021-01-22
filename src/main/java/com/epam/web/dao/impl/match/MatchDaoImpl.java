@@ -21,6 +21,7 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     private static final String GET_ACCEPTED_MATCHES_QUERY = "SELECT * FROM matches WHERE commission > 0";
     private static final String GET_UNACCEPTED_MATCHES_QUERY = "SELECT * FROM matches WHERE commission = 0";
     private static final String GET_UNCLOSED_MATCHES_QUERY = "SELECT * FROM matches WHERE is_closed = 0";
+    private static final String GET_CLOSED_MATCHES_QUERY = "SELECT * FROM matches WHERE is_closed = 1";
     private static final String GET_FINISHED_MATCHES_QUERY = "SELECT * FROM matches WHERE date <= ? " +
             "AND commission > 0 AND is_closed = 0";
     private static final String GET_UNFINISHED_MATCHES_QUERY = "SELECT * FROM matches WHERE date > ?";
@@ -79,6 +80,11 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     @Override
     public List<Match> getUnclosedMatches() throws DaoException {
         return executeQuery(GET_UNCLOSED_MATCHES_QUERY);
+    }
+
+    @Override
+    public List<Match> getClosedMatches() throws DaoException {
+        return executeQuery(GET_CLOSED_MATCHES_QUERY);
     }
 
     @Override

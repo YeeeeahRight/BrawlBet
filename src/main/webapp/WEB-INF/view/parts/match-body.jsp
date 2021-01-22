@@ -27,8 +27,8 @@
                     </div>
                 </div>
                 <div class="match-body">
-                    <div class="f-team">
-                        <div class="f-team-name ${isMatchClosed && match.getFirstTeam().equals(match.getWinner())}">
+                    <div class="f-team ${isMatchClosed && match.getFirstTeam().equals(match.getWinner())}">
+                        <div class="f-team-name">
                             <h1>
                                 ${match.getFirstTeam()}
                             </h1>
