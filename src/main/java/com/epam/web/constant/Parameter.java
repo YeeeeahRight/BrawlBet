@@ -1,6 +1,10 @@
 package com.epam.web.constant;
 
 public class Parameter {
+    public static final String FIRST_TEAM = "firstTeam";
+    public static final String SECOND_TEAM = "secondTeam";
+    public static final String DATE = "date";
+    public static final String TOURNAMENT = "tournament";
     public static final String COMMAND = "command";
     public static final String ID = "id";
     public static final String LANGUAGE = "lang";

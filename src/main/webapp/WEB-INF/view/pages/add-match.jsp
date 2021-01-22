@@ -4,7 +4,7 @@
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="locale"/>
 
-<html lang="<fmt:message key="html.lang"/>">
+<html lang="<fmt:message key="html.lang"/>" id="html">
     <head>
         <meta charset="UTF-8">
         <link href="${pageContext.request.contextPath}/static/styles/general-styles.css" rel="stylesheet" type="text/css">

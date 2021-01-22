@@ -49,12 +49,12 @@
                         <input class="tournament" type="text"
                                placeholder="<fmt:message key="match.tournament.advice"/>"
                                name="tournament" required>
-                        <input class="first-team" type="text"
+                        <input class="first-team" type="text" id="firstTeam"
                                placeholder="<fmt:message key="match.team.first.advice"/>"
-                               name="first_team" required>
-                        <input class="second-team" type="text"
+                               name="firstTeam" required>
+                        <input class="second-team" type="text" id="secondTeam"
                                placeholder="<fmt:message key="match.team.second.advice"/>"
-                               name="second_team" required>
+                               name="secondTeam" required>
                         <button type="submit">
                             <fmt:message key="match.add.button"/>
                         </button>
@@ -64,3 +64,5 @@
         </div>
     </div>
 </div>
+
+<script src="<c:url value="/static/js/add-match.js"/>"></script>
