@@ -163,7 +163,7 @@
     flex-direction: column;
     text-align: center;
     background: #FFFFFF;
-    border: 3px solid rgb(148,229,18);
+    border: 3px solid rgb(148, 229, 18);
 }
 
 .gain-text {
@@ -177,5 +177,5 @@
 }
 
 .true {
-    color: rgb(148,229,18);
+    color: rgb(148, 229, 18);
 }

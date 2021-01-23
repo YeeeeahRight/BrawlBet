@@ -10,10 +10,8 @@
 <head>
     <meta charset="UTF-8">
     <link href="${pageContext.request.contextPath}/static/styles/general-styles.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/static/styles/header.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/static/styles/bookmaker-history.css" rel="stylesheet"
           type="text/css">
-    <link href="${pageContext.request.contextPath}/static/styles/menu.css" rel="stylesheet" type="text/css">
     <title>Brawl bet!</title>
 </head>
 <body>
@@ -32,7 +30,7 @@
             </div>
             <div class="main-body">
                 <c:forEach items="${matches}" var="match" varStatus="counter">
-                    <div class="match match-${counter.index + 1}">
+                    <div class="match">
                         <div class="commission-info">
                             <h1 class="commission-text">
                                 <fmt:message key="match.commission"/>

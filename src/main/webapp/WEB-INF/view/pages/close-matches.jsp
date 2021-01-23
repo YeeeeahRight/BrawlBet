@@ -10,10 +10,8 @@
 <head>
     <meta charset="UTF-8">
     <link href="${pageContext.request.contextPath}/static/styles/general-styles.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/static/styles/header.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/static/styles/finish-matches.css" rel="stylesheet"
+    <link href="${pageContext.request.contextPath}/static/styles/close-matches.css" rel="stylesheet"
           type="text/css">
-    <link href="${pageContext.request.contextPath}/static/styles/menu.css" rel="stylesheet" type="text/css">
     <title>Brawl bet!</title>
 </head>
 <body>
@@ -26,7 +24,7 @@
                 <div class="matches-icon-first"></div>
                 <div class="matches-logo-text">
                     <h1>
-                        <fmt:message key="match.finishing"/>
+                        <fmt:message key="match.closing"/>
                     </h1>
                 </div>
                 <div class="matches-icon-second"></div>
@@ -35,7 +33,8 @@
                 <c:forEach items="${matches}" var="match" varStatus="counter">
                     <div class="match match-${counter.index + 1}">
                         <div class="finish-button">
-                            <a href="${pageContext.request.contextPath}/controller?command=close-match&id=${match.getId()}">
+                            <a href="${pageContext.request.contextPath}/controller?command=close-match&id=
+                                                                                                ${match.getId()}">
                                 <div class="finish-image"></div>
                             </a>
                         </div>

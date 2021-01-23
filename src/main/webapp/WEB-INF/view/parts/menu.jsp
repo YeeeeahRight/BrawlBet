@@ -25,9 +25,9 @@
         </a>
         <a href="${pageContext.request.contextPath}/controller?command=close-matches-page">
             <div class="third-item">
-                <div class="menu-finish-image"></div>
+                <div class="menu-close-matches"></div>
                 <h1 class="item-text">
-                    <fmt:message key="menu.finish.matches"/>
+                    <fmt:message key="menu.close.matches"/>
                 </h1>
             </div>
         </a>

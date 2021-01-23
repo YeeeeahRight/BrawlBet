@@ -9,9 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <link href="${pageContext.request.contextPath}/static/styles/general-styles.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/static/styles/header.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/static/styles/users.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/static/styles/menu.css" rel="stylesheet" type="text/css">
     <title>Brawl bet!</title>
 </head>
 <body>
@@ -29,9 +27,10 @@
             </div>
             <div class="main-body">
                 <c:forEach items="${users}" var="betMatchDto" varStatus="counter">
-                    <div class="user user-${counter.index + 1}">
+                    <div class="user">
                         <div class="unban-button">
-                            <a href="${pageContext.request.contextPath}/controller?command=unblock-user&id=${betMatchDto.getId()}">
+                            <a href="${pageContext.request.contextPath}/controller?command=unblock-user&id=
+                                                                                                ${betMatchDto.getId()}">
                                 <div class="unban-image"></div>
                             </a>
                         </div>
@@ -76,7 +75,8 @@
                             </div>
                         </div>
                         <div class="ban-button">
-                            <a href="${pageContext.request.contextPath}/controller?command=block-user&id=${betMatchDto.getId()}">
+                            <a href="${pageContext.request.contextPath}/controller?command=block-user&id=
+                                                                                                ${betMatchDto.getId()}">
                                 <div class="ban-image"></div>
                             </a>
                         </div>

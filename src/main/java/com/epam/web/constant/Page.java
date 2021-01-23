@@ -12,7 +12,7 @@ public final class Page {
     public static final String USERS = "WEB-INF/view/pages/users.jsp";
     public static final String BET = "WEB-INF/view/pages/match.jsp";
     public static final String ACCEPT_MATCHES = "WEB-INF/view/pages/accept-matches.jsp";
-    public static final String FINISH_MATCHES = "WEB-INF/view/pages/finish-matches.jsp";
+    public static final String FINISH_MATCHES = "WEB-INF/view/pages/close-matches.jsp";
     public static final String MY_BETS = "WEB-INF/view/pages/my-bets.jsp";
     public static final String BOOKMAKER_HISTORY = "WEB-INF/view/pages/bookmaker-history.jsp";
 }

@@ -10,9 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <link href="${pageContext.request.contextPath}/static/styles/general-styles.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/static/styles/header.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/static/styles/matches.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/static/styles/menu.css" rel="stylesheet" type="text/css">
     <title>Brawl bet!</title>
 </head>
 <body>
@@ -39,9 +37,10 @@
                     </a>
                 </div>
                 <c:forEach items="${matches}" var="match" varStatus="counter">
-                    <div class="match match-${counter.index + 1}">
+                    <div class="match">
                         <div class="edit-button">
-                            <a href="${pageContext.request.contextPath}/controller?command=edit-match-page&id=${match.getId()}">
+                            <a href="${pageContext.request.contextPath}/controller?command=edit-match-page&id=
+                                                                                                    ${match.getId()}">
                                 <div class="edit-image"></div>
                             </a>
                         </div>
@@ -60,7 +59,8 @@
                             </div>
                         </div>
                         <div class="remove-button">
-                            <a href="${pageContext.request.contextPath}/controller?command=cancel-match&id=${match.getId()}">
+                            <a href="${pageContext.request.contextPath}/controller?command=cancel-match&id=
+                                                                                                    ${match.getId()}">
                                 <div class="remove-image"></div>
                             </a>
                         </div>

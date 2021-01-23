@@ -216,8 +216,8 @@ button:hover {
 }
 
 .match-info-block {
-    width:730px;
-    margin-top:50px;
+    width: 730px;
+    margin-top: 50px;
     margin-right: auto;
     margin-left: auto;
     display: flex;
@@ -272,5 +272,5 @@ button:hover {
 }
 
 #commission {
-    margin-left:6px;
+    margin-left: 6px;
 }

@@ -70,10 +70,10 @@
     margin-right: auto;
 }
 
-.menu-finish-image {
+.menu-close-matches {
     width: 65px;
     height: 65px;
-    background: url(../images/finish.png) no-repeat center center;
+    background: url(../images/close.png) no-repeat center center;
     background-size: cover;
     margin-left: auto;
     margin-right: auto;

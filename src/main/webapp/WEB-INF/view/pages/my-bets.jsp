@@ -10,9 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <link href="${pageContext.request.contextPath}/static/styles/general-styles.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/static/styles/header.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/static/styles/my-bets.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/static/styles/menu.css" rel="stylesheet" type="text/css">
     <title>Brawl bet!</title>
 </head>
 <body>
@@ -31,7 +29,7 @@
             </div>
             <div class="main-body">
                 <c:forEach items="${betMatchDtoList}" var="betMatchDto" varStatus="counter">
-                    <div class="bet bet-${counter.index + 1}">
+                    <div class="bet">
                         <div class="bet-info">
                             <h1 class="bet-on-text">
                                 <fmt:message key="bet.on"/>
@@ -44,7 +42,8 @@
                                                   value="${betMatchDto.getMoneyBet()}"/>
                             </h1>
                         </div>
-                        <a href="${pageContext.request.contextPath}/controller?command=match-page&id=${betMatchDto.getId()}">
+                        <a href="${pageContext.request.contextPath}/controller?command=match-page&id=
+                                                                                                ${betMatchDto.getId()}">
                             <div class="bet-description">
                                 <div class="bet-header">
                                     <h1 class="date-text">
@@ -56,12 +55,14 @@
                                     </h1>
                                 </div>
                                 <div class="bet-content">
-                                    <div class="match-f-team ${betMatchDto.getFirstTeam().equals(betMatchDto.getWinner())}">
+                                    <div class="match-f-team ${betMatchDto.getFirstTeam()
+                                                                          .equals(betMatchDto.getWinner())}">
                                         <h1>
                                                 ${betMatchDto.getFirstTeam()}
                                         </h1>
                                     </div>
-                                    <div class="match-f-percent ${betMatchDto.getFirstTeam().equals(betMatchDto.getWinner())}">
+                                    <div class="match-f-percent ${betMatchDto.getFirstTeam()
+                                                                             .equals(betMatchDto.getWinner())}">
                                         <h1>
                                                 ${betMatchDto.getFirstPercent()}%
                                         </h1>
@@ -77,12 +78,14 @@
                                     <c:if test="${betMatchDto.getSecondTeam().equals(betMatchDto.getWinner())}">
                                         <div class="winner-image"></div>
                                     </c:if>
-                                    <div class="match-s-percent ${betMatchDto.getSecondTeam().equals(betMatchDto.getWinner())}">
+                                    <div class="match-s-percent ${betMatchDto.getSecondTeam()
+                                                                             .equals(betMatchDto.getWinner())}">
                                         <h1>
                                                 ${betMatchDto.getSecondPercent()}%
                                         </h1>
                                     </div>
-                                    <div class="match-s-team ${betMatchDto.getSecondTeam().equals(betMatchDto.getWinner())}">
+                                    <div class="match-s-team ${betMatchDto.getSecondTeam()
+                                                                           .equals(betMatchDto.getWinner())}">
                                         <h1>
                                                 ${betMatchDto.getSecondTeam()}
                                         </h1>
