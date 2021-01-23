@@ -106,7 +106,7 @@ public class MatchPageCommand implements Command {
         float commission = match.getCommission();
         firstCoefficient -= firstCoefficient * commission / 100;
         secondCoefficient -= secondCoefficient * commission / 100;
-        requestContext.addAttribute(Attribute.FIRST_COEFFICIENT, firstCoefficient);
-        requestContext.addAttribute(Attribute.SECOND_COEFFICIENT, secondCoefficient);
+        requestContext.addAttribute(Attribute.FIRST_COEFFICIENT, firstCoefficient + 1);
+        requestContext.addAttribute(Attribute.SECOND_COEFFICIENT, secondCoefficient + 1);
     }
 }

@@ -21,6 +21,7 @@ public class CloseMatchesPageCommand implements Command {
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
         List<Match> finishedMatches = matchService.getFinishedMatches();
+        finishedMatches.sort((m1, m2) -> m1.getDate().compareTo(m2.getDate()));
         requestContext.addAttribute(Attribute.MATCHES, finishedMatches);
 
         return CommandResult.forward(Page.FINISH_MATCHES);

@@ -28,6 +28,6 @@ public class BetCalculatorImpl implements BetCalculator {
         if (firstTeamBetsAmount * secondTeamBetsAmount == 0) {
             return 1.0f;
         }
-        return (secondTeamBetsAmount / firstTeamBetsAmount) + 1;
+        return (secondTeamBetsAmount / firstTeamBetsAmount);
     }
 }

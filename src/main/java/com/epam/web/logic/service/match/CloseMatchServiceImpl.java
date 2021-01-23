@@ -8,6 +8,7 @@ import com.epam.web.dao.impl.match.MatchDao;
 import com.epam.web.exception.DaoException;
 import com.epam.web.exception.ServiceException;
 import com.epam.web.logic.calculator.BetCalculator;
+import com.epam.web.model.entity.Account;
 import com.epam.web.model.entity.Bet;
 import com.epam.web.model.entity.Match;
 import com.epam.web.model.enumeration.Team;
@@ -58,10 +59,17 @@ public class CloseMatchServiceImpl implements CloseMatchService {
                     if (team == winner) {
                         moneyReceived = bet.getMoneyBet() * winCoefficient;
                     } else {
-                        moneyReceived = 0;
+                        moneyReceived = 0f;
                     }
                     betDao.close(moneyReceived, bet.getId());
                     accountDao.addMoneyToBalance(moneyReceived, bet.getAccountId());
+                }
+                Optional<Account> bookmakerOptional = accountDao.findBookmaker();
+                if (bookmakerOptional.isPresent()) {
+                    Account bookmaker = bookmakerOptional.get();
+                    float matchGain = winner == Team.FIRST ? secondTeamBetsAmount : firstTeamBetsAmount;
+                    float bookmakerGain = matchGain * commission / 100f;
+                    accountDao.addMoneyToBalance(bookmakerGain, bookmaker.getId());
                 }
             } else {
                 winner = calculateWinner(SAME_WIN_CHANCE);
@@ -91,10 +99,10 @@ public class CloseMatchServiceImpl implements CloseMatchService {
                         secondTeamBetsAmount);
             }
             if (!isOneUserBets(matchBets)) {
-                coefficient -= coefficient * commission / 100;
+                coefficient -= coefficient * commission / 100f;
             }
         }
-        return coefficient;
+        return coefficient + 1;
     }
 
     private boolean isOneUserBets(List<Bet> bets) {
