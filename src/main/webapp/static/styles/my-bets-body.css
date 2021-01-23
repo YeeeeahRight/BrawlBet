@@ -51,33 +51,9 @@
     height: 65px;
     margin-left: auto;
     margin-right: auto;
-
+    margin-top: 20px;
     display: flex;
     justify-content: center;
-}
-
-.bet-1 {
-    margin-top: 28px;
-}
-
-.bet-2 {
-    margin-top: 20px;
-}
-
-.bet-3 {
-    margin-top: 20px;
-}
-
-.bet-4 {
-    margin-top: 20px;
-}
-
-.bet-5 {
-    margin-top: 20px;
-}
-
-.bet-6 {
-    margin-top: 20px;
 }
 
 .bet-info {

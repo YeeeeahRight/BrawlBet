@@ -61,33 +61,9 @@
     height: 64px;
     margin-left: auto;
     margin-right: auto;
-
+    margin-top: 24px;
     display: flex;
     justify-content: center;
-}
-
-.match-1 {
-    margin-top: 32px;
-}
-
-.match-2 {
-    margin-top: 26px;
-}
-
-.match-3 {
-    margin-top: 26px;
-}
-
-.match-4 {
-    margin-top: 26px;
-}
-
-.match-5 {
-    margin-top: 26px;
-}
-
-.match-6 {
-    margin-top: 476px;
 }
 
 .finish-button {

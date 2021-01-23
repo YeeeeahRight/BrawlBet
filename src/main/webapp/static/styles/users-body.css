@@ -42,34 +42,10 @@
     height: 66px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 21px;
 
     display: flex;
     justify-content: center;
-}
-
-
-.user-1 {
-    margin-top: 28px;
-}
-
-.user-2 {
-    margin-top: 28px;
-}
-
-.user-3 {
-    margin-top: 28px;
-}
-
-.user-4 {
-    margin-top: 28px;
-}
-
-.user-5 {
-    margin-top: 28px;
-}
-
-.user-6 {
-    margin-top: 28px;
 }
 
 .unban-button {
