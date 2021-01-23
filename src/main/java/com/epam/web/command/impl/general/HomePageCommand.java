@@ -29,9 +29,9 @@ public class HomePageCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
-        List<Match> activeMatches = matchService.getAcceptedMatches();
+        List<Match> activeMatches = matchService.getAcceptedMatchesRange(0, 300);
+        sortMatchesByClosing(activeMatches);
         List<MatchBetsDto> matchBetsDtoList = buildMatchBetDtoList(activeMatches);
-        sortMatchBetsDtoList(matchBetsDtoList);
         requestContext.addAttribute(Attribute.MATCH_BETS_DTO_LIST, matchBetsDtoList);
 
         return CommandResult.forward(Page.HOME);
@@ -63,17 +63,16 @@ public class HomePageCommand implements Command {
         return matchBetsDtoList;
     }
 
-    private void sortMatchBetsDtoList(List<MatchBetsDto> matchBetsDtoList) {
-        matchBetsDtoList.sort((m1, m2) -> m1.getDate().compareTo(m2.getDate()));
-        List<MatchBetsDto> closedMatchBetsDtoList = new ArrayList<>();
-        Iterator<MatchBetsDto> matchBetsDtoIterator = matchBetsDtoList.iterator();
-        while (matchBetsDtoIterator.hasNext()) {
-            MatchBetsDto matchBetsDto = matchBetsDtoIterator.next();
-            if (!matchBetsDto.getWinner().equalsIgnoreCase(NO_WINNER)) {
-                closedMatchBetsDtoList.add(matchBetsDto);
-                matchBetsDtoIterator.remove();
+    private void sortMatchesByClosing(List<Match> matches) {
+        List<Match> closedMatches = new ArrayList<>();
+        Iterator<Match> matchIterator = matches.iterator();
+        while (matchIterator.hasNext()) {
+            Match currentMatch = matchIterator.next();
+            if (!currentMatch.getWinner().equalsIgnoreCase(NO_WINNER)) {
+                closedMatches.add(currentMatch);
+                matchIterator.remove();
             }
         }
-        matchBetsDtoList.addAll(closedMatchBetsDtoList);
+        matches.addAll(closedMatches);
     }
 }

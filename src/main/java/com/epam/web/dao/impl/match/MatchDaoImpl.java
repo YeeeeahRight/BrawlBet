@@ -18,12 +18,17 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     private static final String ADD_QUERY =
             "INSERT matches (date, tournament, first_team, second_team) VALUES" +
                     "(?, ?, ?, ?)";
-    private static final String GET_ACCEPTED_MATCHES_QUERY = "SELECT * FROM matches WHERE commission > 0";
-    private static final String GET_UNACCEPTED_MATCHES_QUERY = "SELECT * FROM matches WHERE commission = 0";
-    private static final String GET_UNCLOSED_MATCHES_QUERY = "SELECT * FROM matches WHERE is_closed = 0";
-    private static final String GET_CLOSED_MATCHES_QUERY = "SELECT * FROM matches WHERE is_closed = 1";
-    private static final String GET_FINISHED_MATCHES_QUERY = "SELECT * FROM matches WHERE date <= ? " +
-            "AND commission > 0 AND is_closed = 0";
+    private static final String GET_ACCEPTED_MATCHES_QUERY_RANGE =
+            "SELECT * FROM matches WHERE commission > 0 ORDER BY date LIMIT ?,?";
+    private static final String GET_UNACCEPTED_MATCHES_QUERY_RANGE =
+            "SELECT * FROM matches WHERE commission = 0 ORDER BY date LIMIT ?,?";
+    private static final String GET_UNCLOSED_MATCHES_QUERY_RANGE =
+            "SELECT * FROM matches WHERE is_closed = 0 ORDER BY date LIMIT ?,?";
+    private static final String GET_CLOSED_MATCHES_QUERY_RANGE =
+            "SELECT * FROM matches WHERE is_closed = 1 ORDER BY date DESC LIMIT ?, ?";
+    private static final String GET_FINISHED_MATCHES_QUERY_RANGE =
+            "SELECT * FROM matches WHERE date <= ? AND commission > 0 AND is_closed = 0 " +
+            "ORDER BY date LIMIT ?,?";
     private static final String GET_UNFINISHED_MATCHES_QUERY = "SELECT * FROM matches WHERE date > ?";
     private static final String ADD_COMMISSION_QUERY = "UPDATE matches SET commission=? WHERE id=?";
     private static final String ADD_FIRST_TEAM_BETS_QUERY = "UPDATE matches SET first_team_bets= " +
@@ -68,29 +73,29 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     }
 
     @Override
-    public List<Match> getUnacceptedMatches() throws DaoException {
-        return executeQuery(GET_UNACCEPTED_MATCHES_QUERY);
+    public List<Match> getUnacceptedMatchesRange(int beginIndex, int endIndex) throws DaoException {
+        return executeQuery(GET_UNACCEPTED_MATCHES_QUERY_RANGE, beginIndex, endIndex);
     }
 
     @Override
-    public List<Match> getAcceptedMatches() throws DaoException {
-        return executeQuery(GET_ACCEPTED_MATCHES_QUERY);
+    public List<Match> getAcceptedMatchesRange(int beginIndex, int endIndex) throws DaoException {
+        return executeQuery(GET_ACCEPTED_MATCHES_QUERY_RANGE, beginIndex, endIndex);
     }
 
     @Override
-    public List<Match> getUnclosedMatches() throws DaoException {
-        return executeQuery(GET_UNCLOSED_MATCHES_QUERY);
+    public List<Match> getUnclosedMatchesRange(int beginIndex, int endIndex) throws DaoException {
+        return executeQuery(GET_UNCLOSED_MATCHES_QUERY_RANGE, beginIndex, endIndex);
     }
 
     @Override
-    public List<Match> getClosedMatches() throws DaoException {
-        return executeQuery(GET_CLOSED_MATCHES_QUERY);
+    public List<Match> getClosedMatchesRange(int beginIndex, int endIndex) throws DaoException {
+        return executeQuery(GET_CLOSED_MATCHES_QUERY_RANGE, beginIndex, endIndex);
     }
 
     @Override
-    public List<Match> getFinishedMatches() throws DaoException {
+    public List<Match> getFinishedMatchesRange(int beginIndex, int endIndex) throws DaoException {
         String dateStr = formatDate(new Date());
-        return executeQuery(GET_FINISHED_MATCHES_QUERY, dateStr);
+        return executeQuery(GET_FINISHED_MATCHES_QUERY_RANGE, dateStr, beginIndex, endIndex);
     }
 
     @Override

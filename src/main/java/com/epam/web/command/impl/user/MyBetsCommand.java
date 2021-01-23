@@ -35,7 +35,7 @@ public class MyBetsCommand implements Command {
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
         long accountId = (Long) requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
-        List<Bet> accountBets = betService.getBetsByAccountId(accountId);
+        List<Bet> accountBets = betService.getBetsByAccountIdRange(accountId, 0, 300);
         List<BetMatchDto> betMatchDtoList = buildBetMatchDtoList(accountBets);
         sortBetMatchDtoList(betMatchDtoList);
         requestContext.addAttribute(Attribute.BET_MATCH_DTO_LIST, betMatchDtoList);
@@ -73,7 +73,6 @@ public class MyBetsCommand implements Command {
     }
 
     private void sortBetMatchDtoList(List<BetMatchDto> betMatchDtoList) {
-        betMatchDtoList.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
         List<BetMatchDto> closedBetMatchDtoList = new ArrayList<>();
         Iterator<BetMatchDto> betMatchDtoIterator = betMatchDtoList.iterator();
         while (betMatchDtoIterator.hasNext()) {

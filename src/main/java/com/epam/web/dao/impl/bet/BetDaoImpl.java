@@ -13,7 +13,8 @@ import java.util.List;
 
 public class BetDaoImpl extends AbstractDao<Bet> implements BetDao{
     private static final String GET_BETS_BY_MATCH_QUERY = "SELECT * from bets WHERE match_id=?";
-    private static final String GET_BETS_BY_ACCOUNT_QUERY = "SELECT * from bets WHERE account_id=?";
+    private static final String GET_BETS_BY_ACCOUNT_QUERY_RANGE =
+            "SELECT * from bets WHERE account_id=? ORDER BY bet_date DESC LIMIT ?,?";
     private static final String INSERT_QUERY = "INSERT bets(account_id, match_id, money_bet, team, bet_date) " +
             "VALUES(?, ?, ?, ?, ?)";
     private static final String CLOSE_QUERY = "UPDATE bets SET money_received=? WHERE id=?";
@@ -43,8 +44,8 @@ public class BetDaoImpl extends AbstractDao<Bet> implements BetDao{
     }
 
     @Override
-    public List<Bet> getBetsByAccountId(long id) throws DaoException {
-        return executeQuery(GET_BETS_BY_ACCOUNT_QUERY, id);
+    public List<Bet> getBetsByAccountIdRange(long id, int beginIndex, int endIndex) throws DaoException {
+        return executeQuery(GET_BETS_BY_ACCOUNT_QUERY_RANGE, id, beginIndex, endIndex);
     }
 
     @Override

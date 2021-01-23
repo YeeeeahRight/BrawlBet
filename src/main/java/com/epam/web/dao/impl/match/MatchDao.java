@@ -22,15 +22,15 @@ public interface MatchDao {
 
     void addTeamBetAmount(Team team, float betAmount, long id) throws DaoException;
 
-    List<Match> getUnacceptedMatches() throws DaoException;
+    List<Match> getUnacceptedMatchesRange(int beginIndex, int endIndex) throws DaoException;
 
-    List<Match> getAcceptedMatches() throws DaoException;
+    List<Match> getAcceptedMatchesRange(int beginIndex, int endIndex) throws DaoException;
 
-    List<Match> getUnclosedMatches() throws DaoException;
+    List<Match> getUnclosedMatchesRange(int beginIndex, int endIndex) throws DaoException;
 
-    List<Match> getClosedMatches() throws DaoException;
+    List<Match> getClosedMatchesRange(int beginIndex, int endIndex) throws DaoException;
 
-    List<Match> getFinishedMatches() throws DaoException;
+    List<Match> getFinishedMatchesRange(int beginIndex, int endIndex) throws DaoException;
 
     List<Match> getUnfinishedMatches() throws DaoException;
 

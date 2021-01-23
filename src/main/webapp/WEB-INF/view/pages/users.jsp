@@ -29,8 +29,7 @@
                 <c:forEach items="${users}" var="betMatchDto" varStatus="counter">
                     <div class="user">
                         <div class="unban-button">
-                            <a href="${pageContext.request.contextPath}/controller?command=unblock-user&id=
-                                                                                                ${betMatchDto.getId()}">
+                            <a href="${pageContext.request.contextPath}/controller?command=unblock-user&id=${betMatchDto.getId()}">
                                 <div class="unban-image"></div>
                             </a>
                         </div>
@@ -75,8 +74,7 @@
                             </div>
                         </div>
                         <div class="ban-button">
-                            <a href="${pageContext.request.contextPath}/controller?command=block-user&id=
-                                                                                                ${betMatchDto.getId()}">
+                            <a href="${pageContext.request.contextPath}/controller?command=block-user&id=${betMatchDto.getId()}">
                                 <div class="ban-image"></div>
                             </a>
                         </div>

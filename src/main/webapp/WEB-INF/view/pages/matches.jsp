@@ -39,8 +39,7 @@
                 <c:forEach items="${matches}" var="match" varStatus="counter">
                     <div class="match">
                         <div class="edit-button">
-                            <a href="${pageContext.request.contextPath}/controller?command=edit-match-page&id=
-                                                                                                    ${match.getId()}">
+                            <a href="${pageContext.request.contextPath}/controller?command=edit-match-page&id=${match.getId()}">
                                 <div class="edit-image"></div>
                             </a>
                         </div>
@@ -59,8 +58,7 @@
                             </div>
                         </div>
                         <div class="remove-button">
-                            <a href="${pageContext.request.contextPath}/controller?command=cancel-match&id=
-                                                                                                    ${match.getId()}">
+                            <a href="${pageContext.request.contextPath}/controller?command=cancel-match&id=${match.getId()}">
                                 <div class="remove-image"></div>
                             </a>
                         </div>

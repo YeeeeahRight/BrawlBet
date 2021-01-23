@@ -33,8 +33,7 @@
                 <c:forEach items="${matches}" var="match" varStatus="counter">
                     <div class="match match-${counter.index + 1}">
                         <div class="finish-button">
-                            <a href="${pageContext.request.contextPath}/controller?command=close-match&id=
-                                                                                                ${match.getId()}">
+                            <a href="${pageContext.request.contextPath}/controller?command=close-match&id=${match.getId()}">
                                 <div class="finish-image"></div>
                             </a>
                         </div>

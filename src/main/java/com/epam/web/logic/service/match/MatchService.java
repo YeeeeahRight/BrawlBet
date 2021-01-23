@@ -20,15 +20,15 @@ public interface MatchService {
 
     boolean isFinishedMatch(long id) throws ServiceException;
 
-    List<Match> getUnclosedMatches() throws ServiceException;
+    List<Match> getUnclosedMatchesRange(int beginIndex, int endIndex) throws ServiceException;
 
-    List<Match> getClosedMatches() throws ServiceException;
+    List<Match> getClosedMatchesRange(int beginIndex, int endIndex) throws ServiceException;
 
-    List<Match> getAcceptedMatches() throws ServiceException;
+    List<Match> getAcceptedMatchesRange(int beginIndex, int endIndex) throws ServiceException;
 
-    List<Match> getUnacceptedMatches() throws ServiceException;
+    List<Match> getUnacceptedMatchesRange(int beginIndex, int endIndex) throws ServiceException;
 
-    List<Match> getFinishedMatches() throws ServiceException;
+    List<Match> getFinishedMatchesRange(int beginIndex, int endIndex) throws ServiceException;
 
     List<Match> getUnfinishedMatches() throws ServiceException;
 }

@@ -31,8 +31,7 @@
             </div>
             <div class="main-body">
                 <c:forEach items="${matches}" var="match" varStatus="counter">
-                    <form method="POST" action="${pageContext.request.contextPath}
-                                        /controller?command=accept-match&id=${match.getId()}">
+                    <form method="POST" action="${pageContext.request.contextPath}/controller?command=accept-match&id=${match.getId()}">
                         <div class="match">
                             <div class="accept-button">
                                 <button type="submit">
@@ -59,8 +58,7 @@
                                 </div>
                             </div>
                             <div class="cancel-button">
-                                <a href="${pageContext.request.contextPath}
-                                        /controller?command=remove-match&id=${match.getId()}">
+                                <a href="${pageContext.request.contextPath}/controller?command=remove-match&id=${match.getId()}">
                                     <div class="cancel-image"></div>
                                 </a>
                             </div>

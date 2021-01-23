@@ -42,8 +42,7 @@
                                                   value="${betMatchDto.getMoneyBet()}"/>
                             </h1>
                         </div>
-                        <a href="${pageContext.request.contextPath}/controller?command=match-page&id=
-                                                                                                ${betMatchDto.getId()}">
+                        <a href="${pageContext.request.contextPath}/controller?command=match-page&id=${betMatchDto.getId()}">
                             <div class="bet-description">
                                 <div class="bet-header">
                                     <h1 class="date-text">

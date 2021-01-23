@@ -9,11 +9,7 @@ import com.epam.web.exception.InvalidParametersException;
 import com.epam.web.exception.ServiceException;
 import com.epam.web.logic.service.match.MatchService;
 import com.epam.web.model.entity.Match;
-import com.epam.web.model.entity.dto.MatchBetsDto;
-import com.epam.web.model.enumeration.Team;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class BookmakerHistory implements Command {
@@ -25,7 +21,7 @@ public class BookmakerHistory implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
-        List<Match> matches = matchService.getClosedMatches();
+        List<Match> matches = matchService.getClosedMatchesRange(0, 300);
         requestContext.addAttribute(Attribute.MATCHES, matches);
 
         return CommandResult.forward(Page.BOOKMAKER_HISTORY);
