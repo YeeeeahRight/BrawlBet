@@ -29,7 +29,7 @@
                 </h1>
                 <h1 class="account-balance">
                     <fmt:formatNumber type="number" maxFractionDigits="2"
-                                      value="${sessionScope.balance}"/>
+                                      pattern="0.0" value="${sessionScope.balance}"/>
                 </h1>
             </div>
         </sc:access>
@@ -45,7 +45,7 @@
                 </h1>
                 <h1 class="account-balance">
                     <fmt:formatNumber type="number" maxFractionDigits="2"
-                                      value="${sessionScope.balance}"/>
+                                      pattern="0.0" value="${sessionScope.balance}"/>
                 </h1>
             </div>
         </sc:access>

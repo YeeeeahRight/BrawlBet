@@ -40,7 +40,7 @@
                             </h1>
                             <h1 class="bet-on-money">
                                 <fmt:formatNumber type="number" maxFractionDigits="2"
-                                                  value="${betMatchDto.getMoneyBet()}"/>
+                                                  pattern="0.0" value="${betMatchDto.getMoneyBet()}"/>
                             </h1>
                         </div>
                         <a href="${pageContext.request.contextPath}/controller?command=match-page&id=${betMatchDto.getId()}">
@@ -99,7 +99,7 @@
                             </h1>
                             <h1 class="gain-money">
                                 <fmt:formatNumber type="number" maxFractionDigits="2"
-                                                  value="${betMatchDto.getMoneyReceived()}"/>
+                                                  pattern="0.0" value="${betMatchDto.getMoneyReceived()}"/>
                             </h1>
                         </div>
                     </div>

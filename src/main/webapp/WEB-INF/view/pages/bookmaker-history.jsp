@@ -83,7 +83,7 @@
                             <h1 class="gain-money">
                                 <c:set var="betsAmount" value="${match.getWinner().equals(match.getFirstTeam()) ?
                                                     match.getSecondTeamBets() : match.getFirstTeamBets()}"/>
-                                <fmt:formatNumber type="number" maxFractionDigits="2"
+                                <fmt:formatNumber type="number" maxFractionDigits="2" pattern="0.0"
                                                   value="${betsAmount * match.getCommission() / 100}"/>
                             </h1>
                         </div>

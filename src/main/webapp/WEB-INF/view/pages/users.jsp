@@ -70,7 +70,7 @@
                                 </h1>
                                 <h1 class="balance-data">
                                     <fmt:formatNumber type="number" maxFractionDigits="2"
-                                                      value="${betMatchDto.getBalance()}"/>
+                                                      pattern="0.0" value="${betMatchDto.getBalance()}"/>
                                 </h1>
                             </div>
                         </div>

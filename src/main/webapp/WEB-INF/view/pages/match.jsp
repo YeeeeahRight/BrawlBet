@@ -91,7 +91,7 @@
                             </h1>
                             <h1 id="first-bets-amount">
                                 <fmt:formatNumber type="number" maxFractionDigits="2"
-                                                  value="${firstBetsAmount}"/>
+                                                  pattern="0.0" value="${firstBetsAmount}"/>
                             </h1>
                         </div>
                         <div class="second-bet-amount">
@@ -100,7 +100,7 @@
                             </h1>
                             <h1 id="second-bets-amount">
                                 <fmt:formatNumber type="number" maxFractionDigits="2"
-                                                  value="${secondBetsAmount}"/>
+                                                  pattern="0.0" value="${secondBetsAmount}"/>
                             </h1>
                         </div>
                     </div>
@@ -154,7 +154,7 @@
                                                 </h1>
                                                 <h1 id="first-coefficient">
                                                     <fmt:formatNumber type="number" maxFractionDigits="3"
-                                                                      value="${firstCoefficient}"/>
+                                                                      pattern="0.0" value="${firstCoefficient}"/>
                                                 </h1>
                                             </div>
                                             <div class="potential-gain-value">
@@ -181,7 +181,7 @@
                                                 </h1>
                                                 <h1 id="second-coefficient">
                                                     <fmt:formatNumber type="number" maxFractionDigits="3"
-                                                                      value="${secondCoefficient}"/>
+                                                                      pattern="0.0" value="${secondCoefficient}"/>
                                                 </h1>
                                             </div>
                                             <div class="potential-gain-value">
