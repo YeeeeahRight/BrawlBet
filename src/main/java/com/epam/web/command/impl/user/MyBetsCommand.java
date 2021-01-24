@@ -4,12 +4,14 @@ import com.epam.web.command.Command;
 import com.epam.web.command.CommandResult;
 import com.epam.web.constant.Attribute;
 import com.epam.web.constant.Page;
+import com.epam.web.constant.Parameter;
 import com.epam.web.controller.request.RequestContext;
 import com.epam.web.exception.InvalidParametersException;
 import com.epam.web.exception.ServiceException;
 import com.epam.web.logic.calculator.BetCalculator;
 import com.epam.web.logic.service.bet.BetService;
 import com.epam.web.logic.service.match.MatchService;
+import com.epam.web.logic.service.match.MatchType;
 import com.epam.web.model.entity.Bet;
 import com.epam.web.model.entity.Match;
 import com.epam.web.model.entity.dto.BetMatchDto;
@@ -21,6 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class MyBetsCommand implements Command {
+    private static final int MAX_BETS_PAGE = 6;
     private static final String NO_WINNER = "NONE";
     private final BetService betService;
     private final MatchService matchService;
@@ -33,12 +36,30 @@ public class MyBetsCommand implements Command {
     }
 
     @Override
-    public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
+    public CommandResult execute(RequestContext requestContext) throws ServiceException,
+            InvalidParametersException {
+        String pageStr = requestContext.getRequestParameter(Parameter.PAGE);
+        int page;
+        try {
+            page = Integer.parseInt(pageStr);
+        } catch (NumberFormatException e) {
+            throw new InvalidParametersException("Invalid page number in request.");
+        }
+        if (page < 1) {
+            throw new InvalidParametersException("Not positive page number in request.");
+        }
+        int firstMatchIndex = MAX_BETS_PAGE * (page - 1);
         long accountId = (Long) requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
-        List<Bet> accountBets = betService.getBetsByAccountIdRange(accountId, 0, 300);
+        List<Bet> accountBets = betService.getBetsByAccountIdRange(accountId, firstMatchIndex, MAX_BETS_PAGE);
+        if (accountBets.size() == 0 && page > 1) {
+            throw new InvalidParametersException("No bets on this page");
+        }
         List<BetMatchDto> betMatchDtoList = buildBetMatchDtoList(accountBets);
         sortBetMatchDtoList(betMatchDtoList);
         requestContext.addAttribute(Attribute.BET_MATCH_DTO_LIST, betMatchDtoList);
+        requestContext.addAttribute(Attribute.CURRENT_PAGE, page);
+        int maxPage = ((betService.getBetsAmountByAccountId(accountId) - 1) / MAX_BETS_PAGE) + 1;
+        requestContext.addAttribute(Attribute.MAX_PAGE, maxPage);
 
         return CommandResult.forward(Page.MY_BETS);
     }

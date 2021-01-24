@@ -1,0 +1,45 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.first-arrow {
+    width: 22px;
+    height: 24px;
+    background: url(../images/arrow.png) no-repeat center center;
+    background-size: cover;
+    transform: rotate(180deg);
+    margin-right: 12px;
+}
+
+.second-arrow {
+    width: 22px;
+    height: 24px;
+    background: url(../images/arrow.png) no-repeat center center;
+    background-size: cover;
+    margin-left: 10px;
+}
+
+#page {
+    font-size: 20px;
+    width: 47px;
+    height: 24px;
+    margin-right: 5px;
+}
+
+.first-arrow:active {
+    border: 1px solid #303030;
+}
+
+.second-arrow:active {
+    border: 1px solid #303030;
+}
+
+#false {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.65;
+}

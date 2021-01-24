@@ -161,3 +161,20 @@
     background-size: cover;
     margin: auto 2px;
 }
+
+.pagination {
+    margin-top: 510px;
+    margin-right: 6%;
+}
+
+#arrow-not-valid {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.65;
+}
+
+#false {
+    pointer-events: auto;
+    cursor: pointer;
+    opacity: 1;
+}

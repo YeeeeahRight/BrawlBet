@@ -1,5 +1,6 @@
 package com.epam.web.dao.impl.match;
 
+import com.epam.web.logic.service.match.MatchType;
 import com.epam.web.model.entity.Match;
 import com.epam.web.exception.DaoException;
 import com.epam.web.model.enumeration.Team;
@@ -22,16 +23,8 @@ public interface MatchDao {
 
     void addTeamBetAmount(Team team, float betAmount, long id) throws DaoException;
 
-    List<Match> getUnacceptedMatchesRange(int beginIndex, int endIndex) throws DaoException;
+    List<Match> getMatchesTypeRange(MatchType matchType, int offset, int amount) throws DaoException;
 
-    List<Match> getAcceptedMatchesRange(int beginIndex, int endIndex) throws DaoException;
-
-    List<Match> getUnclosedMatchesRange(int beginIndex, int endIndex) throws DaoException;
-
-    List<Match> getClosedMatchesRange(int beginIndex, int endIndex) throws DaoException;
-
-    List<Match> getFinishedMatchesRange(int beginIndex, int endIndex) throws DaoException;
-
-    List<Match> getUnfinishedMatches() throws DaoException;
+    int getMatchesTypeAmount(MatchType matchType) throws DaoException;
 
 }

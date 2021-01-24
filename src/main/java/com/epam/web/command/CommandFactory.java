@@ -89,6 +89,8 @@ public class CommandFactory {
             case CommandName.ACCEPT_MATCHES_PAGE:
                 return new AcceptMatchesPageCommand(new MatchServiceImpl(new DaoHelperFactory(),
                         new MatchValidator()));
+            case CommandName.PAGINATION:
+                return new PaginationCommand();
             case CommandName.ACCEPT_MATCH:
                 return new AcceptMatchCommand(new MatchServiceImpl(new DaoHelperFactory(),
                         new MatchValidator()));

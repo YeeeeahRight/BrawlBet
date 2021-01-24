@@ -10,6 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <link href="${pageContext.request.contextPath}/static/styles/general-styles.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/static/styles/pagination.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/static/styles/home.css" rel="stylesheet" type="text/css">
     <title>Brawl bet!</title>
 </head>
@@ -80,6 +81,25 @@
                         </div>
                     </a>
                 </c:forEach>
+                <div class="pagination">
+                    <c:if test="${currentPage < 2}">
+                        <c:set var="isFirstArrowValid" value="arrow-not-valid"></c:set>
+                    </c:if>
+                    <a class="first-arrow" id="${isFirstArrowValid}"
+                       href="${pageContext.request.contextPath}/controller?command=home-page&page=${currentPage - 1}"></a>
+                    <form method="POST" action="${pageContext.request.contextPath}/controller?command=pagination">
+                        <input type="number" id="page" value="${currentPage}"
+                               name="page" min="1" max="${maxPage}" required>
+                    </form>
+                    <h1>
+                        <fmt:message key="pagination.of"/> ${maxPage}
+                    </h1>
+                    <c:if test="${currentPage >= maxPage}">
+                        <c:set var="isSecondArrowValid" value="arrow-not-valid"></c:set>
+                    </c:if>
+                    <a class="second-arrow" id="${isSecondArrowValid}"
+                       href="${pageContext.request.contextPath}/controller?command=home-page&page=${currentPage + 1}"></a>
+                </div>
             </div>
         </div>
     </div>

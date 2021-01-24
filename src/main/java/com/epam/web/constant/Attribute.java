@@ -24,4 +24,6 @@ public final class Attribute {
     public static final String IS_MATCH_CLOSED = "isMatchClosed";
     public static final String IS_MATCH_UNACCEPTED = "isMatchUnaccepted";
     public static final String INVALIDATE_ATTRIBUTE = "invalidate";
+    public static final String CURRENT_PAGE = "currentPage";
+    public static final String MAX_PAGE = "maxPage";
 }

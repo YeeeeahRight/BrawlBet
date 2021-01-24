@@ -20,15 +20,7 @@ public interface MatchService {
 
     boolean isFinishedMatch(long id) throws ServiceException;
 
-    List<Match> getUnclosedMatchesRange(int beginIndex, int endIndex) throws ServiceException;
+    List<Match> getMatchesTypeRange(MatchType matchType, int offset, int amount) throws ServiceException;
 
-    List<Match> getClosedMatchesRange(int beginIndex, int endIndex) throws ServiceException;
-
-    List<Match> getAcceptedMatchesRange(int beginIndex, int endIndex) throws ServiceException;
-
-    List<Match> getUnacceptedMatchesRange(int beginIndex, int endIndex) throws ServiceException;
-
-    List<Match> getFinishedMatchesRange(int beginIndex, int endIndex) throws ServiceException;
-
-    List<Match> getUnfinishedMatches() throws ServiceException;
+    int getMatchesTypeAmount(MatchType matchType) throws ServiceException;
 }

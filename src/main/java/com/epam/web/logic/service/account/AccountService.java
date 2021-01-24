@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AccountService {
-    List<Account> getUsers() throws ServiceException;
+    List<Account> getUsersRange(int offset, int amount) throws ServiceException;
+
+    int getUsersAmount() throws ServiceException;
 
     Optional<Account> findBookmaker() throws ServiceException;
 

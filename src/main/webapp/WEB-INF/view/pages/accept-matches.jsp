@@ -12,6 +12,7 @@
     <link href="${pageContext.request.contextPath}/static/styles/general-styles.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/static/styles/accept-matches.css" rel="stylesheet"
           type="text/css">
+    <link href="${pageContext.request.contextPath}/static/styles/pagination.css" rel="stylesheet" type="text/css">
     <title>Brawl bet!</title>
 </head>
 <body>
@@ -31,7 +32,8 @@
             </div>
             <div class="main-body">
                 <c:forEach items="${matches}" var="match" varStatus="counter">
-                    <form method="POST" action="${pageContext.request.contextPath}/controller?command=accept-match&id=${match.getId()}">
+                    <form method="POST"
+                          action="${pageContext.request.contextPath}/controller?command=accept-match&id=${match.getId()}">
                         <div class="match">
                             <div class="accept-button">
                                 <button type="submit">
@@ -65,6 +67,19 @@
                         </div>
                     </form>
                 </c:forEach>
+                <div class="pagination">
+                    <a class="first-arrow" id="${currentPage > 1}"
+                       href="${pageContext.request.contextPath}/controller?command=accept-matches-page&page=${currentPage - 1}"></a>
+                    <form method="POST" action="${pageContext.request.contextPath}/controller?command=pagination">
+                        <input type="number" id="page" value="${currentPage}"
+                               name="page" min="1" max="${maxPage}" required>
+                    </form>
+                    <h1>
+                        <fmt:message key="pagination.of"/> ${maxPage}
+                    </h1>
+                    <a class="second-arrow" id="${currentPage < maxPage}"
+                       href="${pageContext.request.contextPath}/controller?command=accept-matches-page&page=${currentPage + 1}"></a>
+                </div>
             </div>
         </div>
     </div>

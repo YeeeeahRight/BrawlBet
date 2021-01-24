@@ -65,10 +65,20 @@ public class BetServiceImpl implements BetService {
     }
 
     @Override
-    public List<Bet> getBetsByAccountIdRange(long accountId, int beginIndex, int endIndex) throws ServiceException {
+    public List<Bet> getBetsByAccountIdRange(long accountId, int beginIndex, int amount) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             BetDao betDao = daoHelper.createBetDao();
-            return betDao.getBetsByAccountIdRange(accountId, beginIndex, endIndex);
+            return betDao.getBetsByAccountIdRange(accountId, beginIndex, amount);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int getBetsAmountByAccountId(long accountId) throws ServiceException {
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
+            BetDao betDao = daoHelper.createBetDao();
+            return betDao.getBetsAmountByAccountId(accountId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

@@ -4,8 +4,11 @@ import com.epam.web.command.Command;
 import com.epam.web.command.CommandResult;
 import com.epam.web.constant.Attribute;
 import com.epam.web.constant.Page;
+import com.epam.web.constant.Parameter;
+import com.epam.web.exception.InvalidParametersException;
 import com.epam.web.logic.calculator.BetCalculator;
 import com.epam.web.logic.service.match.MatchService;
+import com.epam.web.logic.service.match.MatchType;
 import com.epam.web.model.entity.Match;
 import com.epam.web.exception.ServiceException;
 import com.epam.web.controller.request.RequestContext;
@@ -18,6 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class HomePageCommand implements Command {
+    private static final int MAX_MATCHES_PAGE = 6;
     private static final String NO_WINNER = "NONE";
     private final MatchService matchService;
     private final BetCalculator betCalculator;
@@ -28,11 +32,30 @@ public class HomePageCommand implements Command {
     }
 
     @Override
-    public CommandResult execute(RequestContext requestContext) throws ServiceException {
-        List<Match> activeMatches = matchService.getAcceptedMatchesRange(0, 300);
+    public CommandResult execute(RequestContext requestContext) throws ServiceException,
+            InvalidParametersException {
+        String pageStr = requestContext.getRequestParameter(Parameter.PAGE);
+        int page;
+        try {
+            page = Integer.parseInt(pageStr);
+        } catch (NumberFormatException e) {
+            throw new InvalidParametersException("Invalid page number in request.");
+        }
+        if (page < 1) {
+            throw new InvalidParametersException("Not positive page number in request.");
+        }
+        int firstMatchIndex = MAX_MATCHES_PAGE * (page - 1);
+        List<Match> activeMatches = matchService.getMatchesTypeRange(MatchType.ACCEPTED,
+                firstMatchIndex, MAX_MATCHES_PAGE);
+        if (activeMatches.size() == 0 && page > 1) {
+            throw new InvalidParametersException("No matches on this page");
+        }
         sortMatchesByClosing(activeMatches);
         List<MatchBetsDto> matchBetsDtoList = buildMatchBetDtoList(activeMatches);
         requestContext.addAttribute(Attribute.MATCH_BETS_DTO_LIST, matchBetsDtoList);
+        requestContext.addAttribute(Attribute.CURRENT_PAGE, page);
+        int maxPage = ((matchService.getMatchesTypeAmount(MatchType.ACCEPTED) - 1) / MAX_MATCHES_PAGE) + 1;
+        requestContext.addAttribute(Attribute.MAX_PAGE, maxPage);
 
         return CommandResult.forward(Page.HOME);
     }

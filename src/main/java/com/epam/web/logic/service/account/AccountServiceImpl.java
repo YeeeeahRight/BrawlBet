@@ -18,10 +18,20 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<Account> getUsers() throws ServiceException {
+    public List<Account> getUsersRange(int offset, int amount) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDao matchDao = daoHelper.createAccountDao();
-            return matchDao.getUsers();
+            return matchDao.getUsersRange(offset, amount);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int getUsersAmount() throws ServiceException {
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
+            AccountDao matchDao = daoHelper.createAccountDao();
+            return matchDao.getUsersAmount();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

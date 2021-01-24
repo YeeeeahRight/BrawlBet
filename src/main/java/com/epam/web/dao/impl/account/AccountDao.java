@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AccountDao extends Dao<Account> {
-    List<Account> getUsers() throws DaoException;
+    List<Account> getUsersRange(int offset, int amount) throws DaoException;
+
+    int getUsersAmount() throws DaoException;
 
     Optional<Account> findBookmaker() throws DaoException;
 

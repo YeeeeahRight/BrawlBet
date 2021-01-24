@@ -17,8 +17,8 @@ public class AccountDaoImpl extends AbstractDao<Account> implements AccountDao {
             "SELECT * FROM accounts WHERE name = ? AND password = ?";
     private static final String FIND_BY_LOGIN =
             "SELECT * FROM accounts WHERE name = ?";
-    private static final String GET_USERS_QUERY =
-            "SELECT * FROM accounts WHERE role = 'USER'";
+    private static final String GET_USERS_QUERY_RANGE =
+            "SELECT * FROM accounts WHERE role = 'USER' LIMIT ?,?";
     private static final String GET_BOOKMAKER_QUERY =
             "SELECT * FROM accounts WHERE role = 'BOOKMAKER'";
     private static final String INSERT_QUERY = "INSERT accounts(name, password, role) VALUES(?, ?, ?)";
@@ -36,8 +36,14 @@ public class AccountDaoImpl extends AbstractDao<Account> implements AccountDao {
     }
 
     @Override
-    public List<Account> getUsers() throws DaoException {
-        return executeQuery(GET_USERS_QUERY);
+    public List<Account> getUsersRange(int offset, int amount) throws DaoException {
+        return executeQuery(GET_USERS_QUERY_RANGE, offset, amount);
+    }
+
+    @Override
+    public int getUsersAmount() throws DaoException {
+        Optional<String> additionalCondition = Optional.of("WHERE role='USER'");
+        return getRowsAmount(additionalCondition);
     }
 
     @Override

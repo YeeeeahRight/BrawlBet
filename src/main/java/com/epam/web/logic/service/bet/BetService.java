@@ -12,5 +12,7 @@ public interface BetService {
 
     List<Bet> getBetsByMatchId(long matchId) throws ServiceException;
 
-    List<Bet> getBetsByAccountIdRange(long accountId, int beginIndex, int endIndex) throws ServiceException;
+    List<Bet> getBetsByAccountIdRange(long accountId, int beginIndex, int amount) throws ServiceException;
+
+    int getBetsAmountByAccountId(long accountId) throws ServiceException;
 }

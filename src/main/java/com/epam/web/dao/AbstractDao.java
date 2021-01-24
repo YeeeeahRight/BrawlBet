@@ -26,6 +26,21 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
     }
 
     @Override
+    public int getRowsAmount(Optional<String> additionalCondition) throws DaoException {
+        String queryRowsAmount = "SELECT COUNT(*) FROM " + tableName;
+        if (additionalCondition.isPresent()) {
+            queryRowsAmount += " " + additionalCondition.get();
+        }
+        try (PreparedStatement statement = createStatement(queryRowsAmount)) {
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt("COUNT(*)");
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
     public void removeById(long id) throws DaoException {
         executeUpdate("DELETE FROM " + tableName + " WHERE id=" + id);
     }

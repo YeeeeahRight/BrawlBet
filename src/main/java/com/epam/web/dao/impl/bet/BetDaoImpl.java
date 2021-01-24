@@ -10,8 +10,9 @@ import com.epam.web.model.entity.Bet;
 import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
-public class BetDaoImpl extends AbstractDao<Bet> implements BetDao{
+public class BetDaoImpl extends AbstractDao<Bet> implements BetDao {
     private static final String GET_BETS_BY_MATCH_QUERY = "SELECT * from bets WHERE match_id=?";
     private static final String GET_BETS_BY_ACCOUNT_QUERY_RANGE =
             "SELECT * from bets WHERE account_id=? ORDER BY bet_date DESC LIMIT ?,?";
@@ -44,12 +45,18 @@ public class BetDaoImpl extends AbstractDao<Bet> implements BetDao{
     }
 
     @Override
-    public List<Bet> getBetsByAccountIdRange(long id, int beginIndex, int endIndex) throws DaoException {
-        return executeQuery(GET_BETS_BY_ACCOUNT_QUERY_RANGE, id, beginIndex, endIndex);
+    public List<Bet> getBetsByAccountIdRange(long id, int beginIndex, int amount) throws DaoException {
+        return executeQuery(GET_BETS_BY_ACCOUNT_QUERY_RANGE, id, beginIndex, amount);
     }
 
     @Override
     public void close(float moneyReceived, long id) throws DaoException {
         updateSingle(CLOSE_QUERY, moneyReceived, id);
+    }
+
+    @Override
+    public int getBetsAmountByAccountId(long accountId) throws DaoException {
+        Optional<String> additionalCondition = Optional.of("WHERE account_id=" + accountId);
+        return getRowsAmount(additionalCondition);
     }
 }

@@ -16,7 +16,8 @@ import java.text.ParseException;
 import java.util.Date;
 
 public class EditMatchCommand implements Command {
-    private static final String MATCHES_COMMAND = "controller?command=" + CommandName.MATCHES;
+    private static final String MATCHES_COMMAND = "controller?command=" + CommandName.MATCHES +
+            "&" + Parameter.PAGE + "=1";
     private final MatchService matchService;
 
     public EditMatchCommand(MatchService matchService) {

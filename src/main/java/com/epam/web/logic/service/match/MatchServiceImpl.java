@@ -75,20 +75,20 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public List<Match> getUnclosedMatchesRange(int beginIndex, int endIndex) throws ServiceException {
+    public List<Match> getMatchesTypeRange(MatchType matchType, int offset, int amount) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             MatchDao matchDao = daoHelper.createMatchDao();
-            return matchDao.getUnclosedMatchesRange(beginIndex, endIndex);
+            return matchDao.getMatchesTypeRange(matchType, offset, amount);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<Match> getClosedMatchesRange(int beginIndex, int endIndex) throws ServiceException {
+    public int getMatchesTypeAmount(MatchType matchType) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             MatchDao matchDao = daoHelper.createMatchDao();
-            return matchDao.getClosedMatchesRange(beginIndex, endIndex);
+            return matchDao.getMatchesTypeAmount(matchType);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -99,46 +99,6 @@ public class MatchServiceImpl implements MatchService {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             MatchDao matchDao = daoHelper.createMatchDao();
             matchDao.addCommission(commission, id);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public List<Match> getAcceptedMatchesRange(int beginIndex, int endIndex) throws ServiceException {
-        try (DaoHelper daoHelper = daoHelperFactory.create()) {
-            MatchDao matchDao = daoHelper.createMatchDao();
-            return matchDao.getAcceptedMatchesRange(beginIndex, endIndex);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public List<Match> getUnacceptedMatchesRange(int beginIndex, int endIndex) throws ServiceException {
-        try (DaoHelper daoHelper = daoHelperFactory.create()) {
-            MatchDao matchDao = daoHelper.createMatchDao();
-            return matchDao.getUnacceptedMatchesRange(beginIndex, endIndex);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public List<Match> getFinishedMatchesRange(int beginIndex, int endIndex) throws ServiceException {
-        try (DaoHelper daoHelper = daoHelperFactory.create()) {
-            MatchDao matchDao = daoHelper.createMatchDao();
-            return matchDao.getFinishedMatchesRange(beginIndex, endIndex);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public List<Match> getUnfinishedMatches() throws ServiceException {
-        try (DaoHelper daoHelper = daoHelperFactory.create()) {
-            MatchDao matchDao = daoHelper.createMatchDao();
-            return matchDao.getUnfinishedMatches();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

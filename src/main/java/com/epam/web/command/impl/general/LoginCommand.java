@@ -14,7 +14,8 @@ import com.epam.web.controller.request.RequestContext;
 import com.epam.web.model.enumeration.AccountRole;
 
 public class LoginCommand implements Command {
-    private static final String HOME_PAGE_COMMAND = "controller?command=" + CommandName.HOME_PAGE;
+    private static final String HOME_PAGE_COMMAND = "controller?command=" + CommandName.HOME_PAGE +
+            "&" + Parameter.PAGE + "=1";
     private static final String INCORRECT_DATA_KEY = "incorrect";
     private static final String BANNED_USER_KEY = "banned";
 
@@ -28,11 +29,11 @@ public class LoginCommand implements Command {
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
         String login = requestContext.getRequestParameter(Parameter.LOGIN);
         if (login == null) {
-            throw new InvalidParametersException("No login parameter in request.");
+            throw new InvalidParametersException("No login parameter in request in request.");
         }
         String password = requestContext.getRequestParameter(Parameter.PASSWORD);
         if (password == null) {
-            throw new InvalidParametersException("No password parameter in request.");
+            throw new InvalidParametersException("No password parameter in request in request.");
         }
         boolean isUserExist = service.isAccountExistByLoginPassword(login, password);
         if (isUserExist) {

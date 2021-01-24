@@ -3,6 +3,7 @@ package com.epam.web.dao.impl.match;
 import com.epam.web.dao.AbstractDao;
 import com.epam.web.date.DateFormatType;
 import com.epam.web.date.DateFormatter;
+import com.epam.web.logic.service.match.MatchType;
 import com.epam.web.model.entity.Match;
 import com.epam.web.exception.DaoException;
 import com.epam.web.dao.mapper.impl.MatchRowMapper;
@@ -11,6 +12,7 @@ import com.epam.web.model.enumeration.Team;
 import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     private static final String EDIT_QUERY =
@@ -19,7 +21,7 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
             "INSERT matches (date, tournament, first_team, second_team) VALUES" +
                     "(?, ?, ?, ?)";
     private static final String GET_ACCEPTED_MATCHES_QUERY_RANGE =
-            "SELECT * FROM matches WHERE commission > 0 ORDER BY date LIMIT ?,?";
+            "SELECT * FROM matches WHERE commission > 0 ORDER BY winner='NONE' DESC, date LIMIT ?,?";
     private static final String GET_UNACCEPTED_MATCHES_QUERY_RANGE =
             "SELECT * FROM matches WHERE commission = 0 ORDER BY date LIMIT ?,?";
     private static final String GET_UNCLOSED_MATCHES_QUERY_RANGE =
@@ -29,7 +31,6 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     private static final String GET_FINISHED_MATCHES_QUERY_RANGE =
             "SELECT * FROM matches WHERE date <= ? AND commission > 0 AND is_closed = 0 " +
             "ORDER BY date LIMIT ?,?";
-    private static final String GET_UNFINISHED_MATCHES_QUERY = "SELECT * FROM matches WHERE date > ?";
     private static final String ADD_COMMISSION_QUERY = "UPDATE matches SET commission=? WHERE id=?";
     private static final String ADD_FIRST_TEAM_BETS_QUERY = "UPDATE matches SET first_team_bets= " +
             "first_team_bets + ? WHERE id=?";
@@ -73,35 +74,49 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     }
 
     @Override
-    public List<Match> getUnacceptedMatchesRange(int beginIndex, int endIndex) throws DaoException {
-        return executeQuery(GET_UNACCEPTED_MATCHES_QUERY_RANGE, beginIndex, endIndex);
+    public List<Match> getMatchesTypeRange(MatchType matchType, int offset, int amount) throws DaoException {
+        switch (matchType) {
+            case UNACCEPTED:
+                return executeQuery(GET_UNACCEPTED_MATCHES_QUERY_RANGE, offset, amount);
+            case ACCEPTED:
+                return executeQuery(GET_ACCEPTED_MATCHES_QUERY_RANGE, offset, amount);
+            case UNCLOSED:
+                return executeQuery(GET_UNCLOSED_MATCHES_QUERY_RANGE, offset, amount);
+            case FINISHED:
+                String dateStr = formatDate(new Date());
+                return executeQuery(GET_FINISHED_MATCHES_QUERY_RANGE, dateStr, offset, amount);
+            case CLOSED:
+                return executeQuery(GET_CLOSED_MATCHES_QUERY_RANGE, offset, amount);
+            default:
+                throw new DaoException("Unknown match type.");
+        }
     }
 
     @Override
-    public List<Match> getAcceptedMatchesRange(int beginIndex, int endIndex) throws DaoException {
-        return executeQuery(GET_ACCEPTED_MATCHES_QUERY_RANGE, beginIndex, endIndex);
-    }
-
-    @Override
-    public List<Match> getUnclosedMatchesRange(int beginIndex, int endIndex) throws DaoException {
-        return executeQuery(GET_UNCLOSED_MATCHES_QUERY_RANGE, beginIndex, endIndex);
-    }
-
-    @Override
-    public List<Match> getClosedMatchesRange(int beginIndex, int endIndex) throws DaoException {
-        return executeQuery(GET_CLOSED_MATCHES_QUERY_RANGE, beginIndex, endIndex);
-    }
-
-    @Override
-    public List<Match> getFinishedMatchesRange(int beginIndex, int endIndex) throws DaoException {
-        String dateStr = formatDate(new Date());
-        return executeQuery(GET_FINISHED_MATCHES_QUERY_RANGE, dateStr, beginIndex, endIndex);
-    }
-
-    @Override
-    public List<Match> getUnfinishedMatches() throws DaoException {
-        String dateStr = formatDate(new Date());
-        return executeQuery(GET_UNFINISHED_MATCHES_QUERY, dateStr);
+    public int getMatchesTypeAmount(MatchType matchType) throws DaoException {
+        Optional<String> additionalCondition;
+        switch (matchType) {
+            case UNACCEPTED:
+                additionalCondition = Optional.of("WHERE commission = 0");
+                break;
+            case ACCEPTED:
+                additionalCondition = Optional.of("WHERE commission > 0");
+                break;
+            case UNCLOSED:
+                additionalCondition = Optional.of("WHERE is_closed = 0");
+                break;
+            case FINISHED:
+                String dateStr = formatDate(new Date());
+                additionalCondition = Optional.of("WHERE date <= '" + dateStr + "' AND commission > 0" +
+                        " AND is_closed = 0");
+                break;
+            case CLOSED:
+                additionalCondition = Optional.of("WHERE is_closed = 1");
+                break;
+            default:
+                throw new DaoException("Unknown match type.");
+        }
+        return getRowsAmount(additionalCondition);
     }
 
     public void addCommission(float commission, long id) throws DaoException {

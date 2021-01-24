@@ -8,7 +8,7 @@
 <header>
     <div class="logo">
         <h1 class="brawl-bet-text">
-            <a href="${pageContext.request.contextPath}/controller?command=home-page">
+            <a href="${pageContext.request.contextPath}/controller?command=home-page&page=1">
                 <span class="brawl-text">BRAWL </span>
                 <span class="bet-text">BET</span>
             </a>

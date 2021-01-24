@@ -15,4 +15,6 @@ public interface Dao<T extends Entity> {
     void save(T item) throws DaoException;
 
     void removeById(long id) throws DaoException;
+
+    int getRowsAmount(Optional<String> additionalCondition) throws DaoException;
 }
