@@ -43,9 +43,9 @@ public class Match implements Entity {
         this.secondTeamBets = secondTeamBets;
     }
 
-    public Match(Date date, String tournament, String firstTeam,
+    public Match(Long id, Date date, String tournament, String firstTeam,
                  String secondTeam) {
-        this.id = null;
+        this.id = id;
         this.date = date;
         this.tournament = tournament;
         this.firstTeam = firstTeam;

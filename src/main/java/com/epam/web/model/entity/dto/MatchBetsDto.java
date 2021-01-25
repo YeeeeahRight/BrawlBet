@@ -1,10 +1,8 @@
 package com.epam.web.model.entity.dto;
 
-import com.epam.web.model.Entity;
-
 import java.util.Date;
 
-public class MatchBetsDto implements Entity {
+public class MatchBetsDto {
     private final Long id;
     private final Date date;
     private final String tournament;
@@ -28,7 +26,6 @@ public class MatchBetsDto implements Entity {
         this.isClosed = isClosed;
     }
 
-    @Override
     public Long getId() {
         return id;
     }

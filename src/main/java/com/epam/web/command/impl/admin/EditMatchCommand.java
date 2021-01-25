@@ -26,6 +26,18 @@ public class EditMatchCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
+        Match match = buildMatch(requestContext);
+        String firstTeam = match.getFirstTeam();
+        String secondTeam = match.getSecondTeam();
+        if (firstTeam.equalsIgnoreCase(secondTeam)) {
+            throw new InvalidParametersException("Team names should be different.");
+        }
+        matchService.saveMatch(match);
+
+        return CommandResult.redirect(MATCHES_COMMAND);
+    }
+
+    private Match buildMatch(RequestContext requestContext) throws InvalidParametersException {
         String idStr = requestContext.getRequestParameter(Parameter.ID);
         long id;
         try {
@@ -33,18 +45,6 @@ public class EditMatchCommand implements Command {
         } catch (NumberFormatException e) {
             throw new InvalidParametersException("Invalid match id parameter in request.");
         }
-        Match match = buildMatch(requestContext);
-        String firstTeam = match.getFirstTeam();
-        String secondTeam = match.getSecondTeam();
-        if (firstTeam.equalsIgnoreCase(secondTeam)) {
-            throw new InvalidParametersException("Team names should be different.");
-        }
-        matchService.editMatch(match, id);
-
-        return CommandResult.redirect(MATCHES_COMMAND);
-    }
-
-    private Match buildMatch(RequestContext requestContext) {
         String tournament = requestContext.getRequestParameter(Parameter.TOURNAMENT);
         String firstTeam = requestContext.getRequestParameter(Parameter.FIRST_TEAM);
         String secondTeam = requestContext.getRequestParameter(Parameter.SECOND_TEAM);
@@ -56,7 +56,7 @@ public class EditMatchCommand implements Command {
         } catch (ParseException e) {
             throw new IllegalArgumentException("Invalid date format.");
         }
-        return new Match(date, tournament, firstTeam, secondTeam);
+        return new Match(id, date, tournament, firstTeam, secondTeam);
     }
 }
 

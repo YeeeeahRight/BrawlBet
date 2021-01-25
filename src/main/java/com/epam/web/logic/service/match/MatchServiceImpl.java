@@ -48,20 +48,7 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public void editMatch(Match match, long id) throws ServiceException {
-        if (!matchValidator.isValid(match)) {
-            throw new ServiceException("Invalid match data.");
-        }
-        try (DaoHelper daoHelper = daoHelperFactory.create()) {
-            MatchDao matchDao = daoHelper.createMatchDao();
-            matchDao.edit(match, id);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public Match findById(long id) throws ServiceException {
+    public Match getMatchById(long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             MatchDao matchDao = daoHelper.createMatchDao();
             Optional<Match> match = matchDao.findById(id);
@@ -98,7 +85,7 @@ public class MatchServiceImpl implements MatchService {
     public void addCommissionById(float commission, long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             MatchDao matchDao = daoHelper.createMatchDao();
-            matchDao.addCommission(commission, id);
+            matchDao.addCommissionById(commission, id);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -116,7 +103,7 @@ public class MatchServiceImpl implements MatchService {
                 long accountId = bet.getAccountId();
                 float money = bet.getMoneyBet();
                 float received = bet.getMoneyReceived();
-                accountDao.addMoneyToBalance(money - received, accountId);
+                accountDao.addMoneyById(money - received, accountId);
                 long matchId = bet.getMatchId();
                 betDao.removeById(matchId);
             }

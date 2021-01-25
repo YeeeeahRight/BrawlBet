@@ -23,17 +23,7 @@ public class BetServiceImpl implements BetService {
     }
 
     @Override
-    public List<Bet> getAll() throws ServiceException {
-        try (DaoHelper daoHelper = daoHelperFactory.create()) {
-            BetDao betDao = daoHelper.createBetDao();
-            return betDao.getAll();
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public void createBet(Bet bet) throws ServiceException {
+    public void saveBet(Bet bet) throws ServiceException {
         if (!betValidator.isValid(bet)) {
             throw new ServiceException("Invalid bet data.");
         }
@@ -45,7 +35,7 @@ public class BetServiceImpl implements BetService {
             long accountId = bet.getAccountId();
             Team team = bet.getTeam();
             daoHelper.startTransaction();
-            accountDao.addMoneyToBalance(money * -1, accountId);
+            accountDao.addMoneyById(money * -1, accountId);
             betDao.save(bet);
             matchDao.addTeamBetAmount(team, money, bet.getMatchId());
             daoHelper.commit();
@@ -65,10 +55,10 @@ public class BetServiceImpl implements BetService {
     }
 
     @Override
-    public List<Bet> getBetsByAccountIdRange(long accountId, int beginIndex, int amount) throws ServiceException {
+    public List<Bet> getBetsByAccountIdRange(long accountId, int offset, int amount) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             BetDao betDao = daoHelper.createBetDao();
-            return betDao.getBetsByAccountIdRange(accountId, beginIndex, amount);
+            return betDao.getBetsByAccountIdRange(accountId, offset, amount);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

@@ -11,7 +11,6 @@ import com.epam.web.exception.ServiceException;
 import com.epam.web.logic.calculator.BetCalculator;
 import com.epam.web.logic.service.bet.BetService;
 import com.epam.web.logic.service.match.MatchService;
-import com.epam.web.logic.service.match.MatchType;
 import com.epam.web.model.entity.Bet;
 import com.epam.web.model.entity.Match;
 import com.epam.web.model.entity.dto.BetMatchDto;
@@ -70,7 +69,7 @@ public class MyBetsCommand implements Command {
             float moneyBet = bet.getMoneyBet();
             float moneyReceived = bet.getMoneyReceived();
             Long matchId = bet.getMatchId();
-            Match match = matchService.findById(matchId);
+            Match match = matchService.getMatchById(matchId);
             Date betDate = bet.getBetDate();
             String tournament = match.getTournament();
             float firstTeamBets = match.getFirstTeamBets();

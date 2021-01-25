@@ -45,8 +45,8 @@ public class BetDaoImpl extends AbstractDao<Bet> implements BetDao {
     }
 
     @Override
-    public List<Bet> getBetsByAccountIdRange(long id, int beginIndex, int amount) throws DaoException {
-        return executeQuery(GET_BETS_BY_ACCOUNT_QUERY_RANGE, id, beginIndex, amount);
+    public List<Bet> getBetsByAccountIdRange(long id, int offset, int amount) throws DaoException {
+        return executeQuery(GET_BETS_BY_ACCOUNT_QUERY_RANGE, id, offset, amount);
     }
 
     @Override

@@ -65,7 +65,7 @@ public class AccountServiceImpl implements AccountService {
     public void addMoneyById(float money, long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDao matchDao = daoHelper.createAccountDao();
-            matchDao.addMoneyToBalance(money, id);
+            matchDao.addMoneyById(money, id);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -75,7 +75,7 @@ public class AccountServiceImpl implements AccountService {
     public void unblockById(long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDao matchDao = daoHelper.createAccountDao();
-            matchDao.unblock(id);
+            matchDao.unblockById(id);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -85,7 +85,7 @@ public class AccountServiceImpl implements AccountService {
     public void block(long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDao matchDao = daoHelper.createAccountDao();
-            matchDao.block(id);
+            matchDao.blockById(id);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

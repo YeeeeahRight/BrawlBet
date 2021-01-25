@@ -52,17 +52,6 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
         updateSingle(ADD_QUERY, dateStr, tournament, firstTeam, secondTeam);
     }
 
-    @Override
-    public void edit(Match match, long id) throws DaoException {
-        String tournament = match.getTournament();
-        String firstTeam = match.getFirstTeam();
-        String secondTeam = match.getSecondTeam();
-        Date date = match.getDate();
-        String dateStr = formatDate(date);
-
-        updateSingle(EDIT_QUERY, dateStr, tournament, firstTeam, secondTeam, id);
-    }
-
     private String formatDate(Date date) {
         DateFormatter dateFormatter = new DateFormatter(date);
         return dateFormatter.format(DateFormatType.MYSQL);
@@ -107,8 +96,8 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
                 break;
             case FINISHED:
                 String dateStr = formatDate(new Date());
-                additionalCondition = Optional.of("WHERE date <= '" + dateStr + "' AND commission > 0" +
-                        " AND is_closed = 0");
+                additionalCondition = Optional.of("WHERE date <= '" + dateStr +
+                        "' AND commission > 0 AND is_closed = 0");
                 break;
             case CLOSED:
                 additionalCondition = Optional.of("WHERE is_closed = 1");
@@ -119,7 +108,7 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
         return getRowsAmount(additionalCondition);
     }
 
-    public void addCommission(float commission, long id) throws DaoException {
+    public void addCommissionById(float commission, long id) throws DaoException {
         updateSingle(ADD_COMMISSION_QUERY, commission, id);
     }
 

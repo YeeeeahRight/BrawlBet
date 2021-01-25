@@ -39,7 +39,7 @@ public class MatchPageCommand implements Command {
         } catch (NumberFormatException e) {
             throw new InvalidParametersException("Invalid id match parameter in request.");
         }
-        Match match = matchService.findById(id);
+        Match match = matchService.getMatchById(id);
         requestContext.addAttribute(Attribute.MATCH, match);
         addMatchStatusAttribute(requestContext, match);
         addMatchAttributes(requestContext, match);

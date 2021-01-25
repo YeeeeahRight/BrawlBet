@@ -54,7 +54,7 @@ public class BetCommand implements Command {
         }
         Date betDate = new Date();
         Bet bet = new Bet(accountId, matchId, money, team, betDate);
-        betService.createBet(bet);
+        betService.saveBet(bet);
 
         String prevPage = requestContext.getHeader();
         return CommandResult.redirect(prevPage);

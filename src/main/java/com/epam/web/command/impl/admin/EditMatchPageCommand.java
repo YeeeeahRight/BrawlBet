@@ -27,7 +27,7 @@ public class EditMatchPageCommand implements Command {
         } catch (NumberFormatException e) {
             throw new InvalidParametersException("Invalid match id parameter in request.");
         }
-        Match match = matchService.findById(id);
+        Match match = matchService.getMatchById(id);
         requestContext.addAttribute(Attribute.MATCH, match);
 
         return CommandResult.forward(Page.EDIT_MATCH);

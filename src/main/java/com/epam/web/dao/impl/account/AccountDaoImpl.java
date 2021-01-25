@@ -62,17 +62,17 @@ public class AccountDaoImpl extends AbstractDao<Account> implements AccountDao {
     }
 
     @Override
-    public void block(long id) throws DaoException {
+    public void blockById(long id) throws DaoException {
         executeUpdate(BLOCK_QUERY + id);
     }
 
     @Override
-    public void unblock(long id) throws DaoException {
+    public void unblockById(long id) throws DaoException {
         executeUpdate(UNBLOCK_QUERY + id);
     }
 
     @Override
-    public void addMoneyToBalance(float money, long id) throws DaoException {
+    public void addMoneyById(float money, long id) throws DaoException {
         updateSingle(ADD_MONEY_BALANCE_QUERY, money, id);
     }
 }

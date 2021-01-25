@@ -62,14 +62,14 @@ public class CloseMatchServiceImpl implements CloseMatchService {
                         moneyReceived = 0f;
                     }
                     betDao.close(moneyReceived, bet.getId());
-                    accountDao.addMoneyToBalance(moneyReceived, bet.getAccountId());
+                    accountDao.addMoneyById(moneyReceived, bet.getAccountId());
                 }
                 Optional<Account> bookmakerOptional = accountDao.findBookmaker();
                 if (bookmakerOptional.isPresent()) {
                     Account bookmaker = bookmakerOptional.get();
                     float matchGain = winner == Team.FIRST ? secondTeamBetsAmount : firstTeamBetsAmount;
                     float bookmakerGain = matchGain * commission / 100f;
-                    accountDao.addMoneyToBalance(bookmakerGain, bookmaker.getId());
+                    accountDao.addMoneyById(bookmakerGain, bookmaker.getId());
                 }
             } else {
                 winner = calculateWinner(SAME_WIN_CHANCE);
@@ -89,7 +89,7 @@ public class CloseMatchServiceImpl implements CloseMatchService {
 
     private float calculateCoefficient(float commission, float firstTeamBetsAmount,
                                        float secondTeamBetsAmount, List<Bet> matchBets, Team winner) {
-        float coefficient = 1.0f;
+        float coefficient = 0.0f;
         if (isBetsOnTwoTeams(matchBets)) {
             if (winner == Team.FIRST) {
                 coefficient = betCalculator.calculateCoefficient(Team.FIRST, firstTeamBetsAmount,
