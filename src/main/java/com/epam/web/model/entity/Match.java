@@ -57,6 +57,20 @@ public class Match implements Entity {
         this.secondTeamBets = 0.0f;
     }
 
+    public Match(Date date, String tournament, String firstTeam,
+                 String secondTeam) {
+        this.id = null;
+        this.date = date;
+        this.tournament = tournament;
+        this.firstTeam = firstTeam;
+        this.secondTeam = secondTeam;
+        this.winner = "NONE";
+        this.commission = 0.0f;
+        this.isClosed = false;
+        this.firstTeamBets = 0.0f;
+        this.secondTeamBets = 0.0f;
+    }
+
     public Date getDate() {
         return date;
     }

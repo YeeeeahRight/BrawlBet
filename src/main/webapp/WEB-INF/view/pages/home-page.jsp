@@ -11,8 +11,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="${pageContext.request.contextPath}/static/styles/general-styles.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/static/styles/pagination.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/static/styles/home.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/static/styles/pagination.css" rel="stylesheet" type="text/css">
     <title>Brawl bet!</title>
 </head>
 <body>
@@ -38,7 +38,10 @@
                         <div class="match-row">
                     </c:if>
                     <a href="${pageContext.request.contextPath}/controller?command=match-page&id=${matchBetsDto.getId()}">
-                        <div class="match" id="${matchBetsDto.isClosed()}">
+                        <c:if test="${matchBetsDto.isClosed()}">
+                            <c:set var="isClosedMatch" value="closed"/>
+                        </c:if>
+                        <div class="match ${isClosedMatch}">
                             <div class="match-header">
                                 <div class="match-date">
                                     <h1>
@@ -90,7 +93,11 @@
                     <c:if test="${counter.index % 2 != 0}">
                         </div>
                     </c:if>
+                    <c:set var="cycleCounter" value="${counter}"/>
                 </c:forEach>
+                <c:if test="${cycleCounter.index % 2 == 0}">
+                    </div>
+                </c:if>
                 <div class="pagination">
                     <a class="first-arrow" id="${currentPage > 1}"
                        href="${pageContext.request.contextPath}/controller?command=home-page&page=${currentPage - 1}"></a>
@@ -101,7 +108,7 @@
                     <h1>
                         <fmt:message key="pagination.of"/> ${maxPage}
                     </h1>
-                    <a class="second-arrow" id="${currentPage >= maxPage}"
+                    <a class="second-arrow" id="${currentPage < maxPage}"
                        href="${pageContext.request.contextPath}/controller?command=home-page&page=${currentPage + 1}"></a>
                 </div>
             </div>

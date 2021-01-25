@@ -49,7 +49,12 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
         String secondTeam = match.getSecondTeam();
         Date date = match.getDate();
         String dateStr = formatDate(date);
-        updateSingle(ADD_QUERY, dateStr, tournament, firstTeam, secondTeam);
+        Long id = match.getId();
+        if (id == null) {
+            updateSingle(ADD_QUERY, dateStr, tournament, firstTeam, secondTeam);
+        } else {
+            updateSingle(EDIT_QUERY, dateStr, tournament, firstTeam, secondTeam, id);
+        }
     }
 
     private String formatDate(Date date) {

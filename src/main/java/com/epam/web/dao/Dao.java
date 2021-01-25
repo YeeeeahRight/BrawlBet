@@ -35,7 +35,7 @@ public interface Dao<T extends Entity> {
     List<T> getAll() throws DaoException;
 
     /**
-     * Saves specific object to database or updates if object id is exist in database.
+     * Saves specific object to database.
      *
      * @param  item  <T> object to save or update.
      *
