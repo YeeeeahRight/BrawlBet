@@ -66,19 +66,21 @@
                         </div>
                     </div>
                 </c:forEach>
-                <div class="pagination">
-                    <a class="first-arrow" id="${currentPage > 1}"
-                       href="${pageContext.request.contextPath}/controller?command=matches&page=${currentPage - 1}"></a>
-                    <form method="POST" action="${pageContext.request.contextPath}/controller?command=pagination">
-                        <input type="number" id="page" value="${currentPage}"
-                               name="page" min="1" max="${maxPage}" required>
-                    </form>
-                    <h1>
-                        <fmt:message key="pagination.of"/> ${maxPage}
-                    </h1>
-                    <a class="second-arrow" id="${currentPage < maxPage}"
-                       href="${pageContext.request.contextPath}/controller?command=matches&page=${currentPage + 1}"></a>
-                </div>
+                <c:if test="${matches.size() != 0}">
+                    <div class="pagination">
+                        <a class="first-arrow" id="${currentPage > 1}"
+                           href="${pageContext.request.contextPath}/controller?command=matches&page=${currentPage - 1}"></a>
+                        <form method="POST" action="${pageContext.request.contextPath}/controller?command=pagination">
+                            <input type="number" id="page" value="${currentPage}"
+                                   name="page" min="1" max="${maxPage}" required>
+                        </form>
+                        <h1>
+                            <fmt:message key="pagination.of"/> ${maxPage}
+                        </h1>
+                        <a class="second-arrow" id="${currentPage < maxPage}"
+                           href="${pageContext.request.contextPath}/controller?command=matches&page=${currentPage + 1}"></a>
+                    </div>
+                </c:if>
             </div>
         </div>
     </div>

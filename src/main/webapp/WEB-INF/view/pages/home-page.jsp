@@ -11,8 +11,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="${pageContext.request.contextPath}/static/styles/general-styles.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/static/styles/home.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/static/styles/pagination.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/static/styles/home.css" rel="stylesheet" type="text/css">
     <title>Brawl bet!</title>
 </head>
 <body>
@@ -98,19 +98,21 @@
                 <c:if test="${cycleCounter.index % 2 == 0}">
                     </div>
                 </c:if>
-                <div class="pagination">
-                    <a class="first-arrow" id="${currentPage > 1}"
-                       href="${pageContext.request.contextPath}/controller?command=home-page&page=${currentPage - 1}"></a>
-                    <form method="POST" action="${pageContext.request.contextPath}/controller?command=pagination">
-                        <input type="number" id="page" value="${currentPage}"
-                               name="page" min="1" max="${maxPage}" required>
-                    </form>
-                    <h1>
-                        <fmt:message key="pagination.of"/> ${maxPage}
-                    </h1>
-                    <a class="second-arrow" id="${currentPage < maxPage}"
-                       href="${pageContext.request.contextPath}/controller?command=home-page&page=${currentPage + 1}"></a>
-                </div>
+                <c:if test="${matchBetsDtoList.size() != 0}" >
+                    <div class="pagination">
+                        <a class="first-arrow" id="${currentPage > 1}"
+                           href="${pageContext.request.contextPath}/controller?command=home-page&page=${currentPage - 1}"></a>
+                        <form method="POST" action="${pageContext.request.contextPath}/controller?command=pagination">
+                            <input type="number" id="page" value="${currentPage}"
+                                   name="page" min="1" max="${maxPage}" required>
+                        </form>
+                        <h1>
+                            <fmt:message key="pagination.of"/> ${maxPage}
+                        </h1>
+                        <a class="second-arrow" id="${currentPage < maxPage}"
+                           href="${pageContext.request.contextPath}/controller?command=home-page&page=${currentPage + 1}"></a>
+                    </div>
+                </c:if>
             </div>
         </div>
     </div>

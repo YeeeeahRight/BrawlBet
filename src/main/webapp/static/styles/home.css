@@ -150,14 +150,9 @@
     margin: auto 2px;
 }
 
-#false {
-    pointer-events: auto;
-    cursor: pointer;
-    opacity: 1;
-}
-
 .pagination {
     margin-right: 5.1%;
+    margin-top: 2.2%;
 }
 
 @media screen and (max-width: 800px) {
