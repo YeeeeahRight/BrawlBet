@@ -1,7 +1,7 @@
 .body {
     height: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
 }
 
 .main-header {
@@ -64,12 +64,23 @@
 
 
 .main-content {
+    background-color: rgba(221, 222, 224, 1.0);
+    height: 100%;
+    width: 82.06%;
+
     display: flex;
     justify-content: space-between;
-    flex-direction: column;
+    flex-direction: column
+}
 
-    background-color: rgba(221, 222, 224, 1.0);
-    width: 82.06%;
+@media screen and (max-width: 800px) {
+    .body {
+        flex-direction: column;
+    }
+
+    .main-content {
+        width: auto;
+    }
 }
 
 .main-body {
@@ -142,3 +153,17 @@ button {
 button:hover {
     opacity: 0.8;
 }
+
+@media screen and (max-width: 1000px) {
+    .form {
+        top: 300px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .form {
+        top: 300px;
+        left: 50%;
+    }
+}
+

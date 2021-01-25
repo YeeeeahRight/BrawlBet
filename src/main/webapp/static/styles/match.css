@@ -1,7 +1,7 @@
 .body {
     height: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
 }
 
 .main-header {
@@ -19,11 +19,22 @@
 
 .main-content {
     background-color: rgba(221, 222, 224, 1.0);
+    height: 100%;
     width: 82.06%;
 
     display: flex;
     justify-content: space-between;
-    flex-direction: column;
+    flex-direction: column
+}
+
+@media screen and (max-width: 800px) {
+    .body {
+        flex-direction: column;
+    }
+
+    .main-content {
+        width: auto;
+    }
 }
 
 .main-body {
@@ -36,9 +47,8 @@
 
 .match {
     height: 296px;
-    width: 720px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 20%;
+    margin-right: 20%;
     margin-top: 45px;
     display: flex;
     justify-content: space-between;
@@ -51,11 +61,11 @@
     border-bottom: hidden;
     background-color: rgba(241, 241, 241, 1);
     height: 41px;
+    display: flex;
 }
 
 .match-date {
-    margin-top: 2px;
-    text-align: center;
+    margin: auto;
 }
 
 .match-body {
@@ -86,7 +96,7 @@
 }
 
 .match-versus {
-    margin-top: 34px;
+    margin: auto;
     width: 260px;
     text-align: center;
 }
@@ -113,11 +123,11 @@
     border-top: hidden;
     background-color: rgba(241, 241, 241, 1);
     height: 41px;
+    display: flex;
 }
 
 .match-tournament {
-    text-align: center;
-    margin-top: 2px;
+    margin: auto;
 }
 
 .match-description {
@@ -131,8 +141,7 @@
 .commission-text {
     display: flex;
     justify-content: center;
-    text-align: center;
-    margin-top: 9px;
+    height: 100%;
 }
 
 #money {
@@ -216,24 +225,21 @@ button:hover {
 }
 
 .match-info-block {
-    width: 730px;
     margin-top: 50px;
-    margin-right: auto;
-    margin-left: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
 .match-info-text {
+    margin-right: auto;
+    margin-left: auto;
     font-size: 32px;
     text-align: center;
+    width: 65%;
 }
 
 .bets-amounts {
     margin-top: 10px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     height: 40px;
     font-size: 15px;
 }
@@ -241,11 +247,10 @@ button:hover {
 .first-bet-amount {
     background-color: rgba(241, 241, 241, 1);
     border: 1px Black dashed;
-    width: 310px;
+    width: 45%;
     text-align: center;
     display: flex;
     justify-content: center;
-    margin-right: 100px;
 }
 
 .bet-amount-text {
@@ -257,20 +262,125 @@ button:hover {
 .second-bet-amount {
     background-color: rgba(241, 241, 241, 1);
     border: 1px Black dashed;
-    width: 310px;
+    width: 45%;
     text-align: center;
     display: flex;
     justify-content: center;
 }
 
 #second-bets-amount {
-    margin-top: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 #first-bets-amount {
-    margin-top: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 #commission {
     margin-left: 6px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.commission-description {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+@media screen and (max-width: 1200px) and (min-width: 1000px){
+    .match {
+        margin-left: 16%;
+        margin-right: 16%;
+        font-size: 27px;
+    }
+
+    .button {
+        width: 290px;
+    }
+
+    .match-info-text {
+        font-size: 29px;
+    }
+
+    .match-description {
+        font-size: 18px;
+    }
+
+    .bets-amounts {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 1000px) and (min-width: 800px){
+    .match {
+        margin-left: 8%;
+        margin-right: 8%;
+        font-size: 24px;
+    }
+
+    .match-info-text {
+        font-size: 25px;
+    }
+
+    .match-description {
+        font-size: 16px;
+    }
+
+    .bets-amounts {
+        font-size: 10px;
+    }
+
+    .button {
+        width: 270px;
+    }
+
+    .bet-on {
+        font-size: 19px;
+    }
+
+    .coefficient-value {
+        font-size: 15px;
+    }
+
+    .potential-gain-value {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 800px){
+    .match {
+        margin-left: 4%;
+        margin-right: 4%;
+        font-size: 22px;
+    }
+
+    .match-info-text {
+        font-size: 22px;
+    }
+
+    .match-description {
+        font-size: 14px;
+    }
+
+    .bets-amounts {
+        font-size: 10px;
+    }
+
+    .button {
+        width: 230px;
+    }
+
+    .bet-on {
+        font-size: 16px;
+    }
+
+    .coefficient-value {
+        font-size: 13px;
+    }
+
+    .potential-gain-value {
+        font-size: 14px;
+    }
 }

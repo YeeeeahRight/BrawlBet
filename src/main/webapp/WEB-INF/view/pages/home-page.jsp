@@ -9,6 +9,7 @@
 <html lang="<fmt:message key="html.lang"/>">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="${pageContext.request.contextPath}/static/styles/general-styles.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/static/styles/pagination.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/static/styles/home.css" rel="stylesheet" type="text/css">
@@ -28,10 +29,16 @@
                     </h1>
                 </div>
             </div>
+            <c:if test="">
+
+            </c:if>
             <div class="main-body">
                 <c:forEach items="${matchBetsDtoList}" var="matchBetsDto" varStatus="counter">
+                    <c:if test="${counter.index % 2 == 0}">
+                        <div class="match-row">
+                    </c:if>
                     <a href="${pageContext.request.contextPath}/controller?command=match-page&id=${matchBetsDto.getId()}">
-                        <div class="match match-${counter.index + 1}" id="${matchBetsDto.isClosed()}">
+                        <div class="match" id="${matchBetsDto.isClosed()}">
                             <div class="match-header">
                                 <div class="match-date">
                                     <h1>
@@ -80,12 +87,12 @@
                             </div>
                         </div>
                     </a>
+                    <c:if test="${counter.index % 2 != 0}">
+                        </div>
+                    </c:if>
                 </c:forEach>
                 <div class="pagination">
-                    <c:if test="${currentPage < 2}">
-                        <c:set var="isFirstArrowValid" value="arrow-not-valid"></c:set>
-                    </c:if>
-                    <a class="first-arrow" id="${isFirstArrowValid}"
+                    <a class="first-arrow" id="${currentPage > 1}"
                        href="${pageContext.request.contextPath}/controller?command=home-page&page=${currentPage - 1}"></a>
                     <form method="POST" action="${pageContext.request.contextPath}/controller?command=pagination">
                         <input type="number" id="page" value="${currentPage}"
@@ -94,10 +101,7 @@
                     <h1>
                         <fmt:message key="pagination.of"/> ${maxPage}
                     </h1>
-                    <c:if test="${currentPage >= maxPage}">
-                        <c:set var="isSecondArrowValid" value="arrow-not-valid"></c:set>
-                    </c:if>
-                    <a class="second-arrow" id="${isSecondArrowValid}"
+                    <a class="second-arrow" id="${currentPage >= maxPage}"
                        href="${pageContext.request.contextPath}/controller?command=home-page&page=${currentPage + 1}"></a>
                 </div>
             </div>

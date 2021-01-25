@@ -1,16 +1,27 @@
 .body {
     height: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
 }
 
 .main-content {
     background-color: rgba(221, 222, 224, 1.0);
+    height: 100%;
     width: 82.06%;
 
     display: flex;
     justify-content: space-between;
     flex-direction: column
+}
+
+@media screen and (max-width: 800px) {
+    .body {
+        flex-direction: column;
+    }
+
+    .main-content {
+        width: auto;
+    }
 }
 
 .main-header {
@@ -47,7 +58,6 @@
 }
 
 .match {
-    width: 775px;
     height: 65px;
     margin-left: auto;
     margin-right: auto;
@@ -122,10 +132,14 @@
 
 .date-text {
     margin-left: 12px;
+    margin-bottom: auto;
+    margin-top: auto;
 }
 
 .tournament-text {
     margin-right: 12px;
+    margin-bottom: auto;
+    margin-top: auto;
 }
 
 .match-content {
@@ -175,4 +189,68 @@
 
 .true {
     color: rgb(148, 229, 18);
+}
+
+@media screen and (max-width: 1000px) {
+    .body {
+        flex-direction: column;
+    }
+
+    .match-description {
+        width: 270px;
+    }
+
+    .commission-info {
+        width: 90px;
+        margin-right: 15px;
+        justify-content: space-evenly;
+    }
+
+    .gain-info {
+        width: 90px;
+        margin-left: 15px;
+        justify-content: space-evenly;
+    }
+
+    .main-content {
+        width: auto;
+    }
+
+    .main-body {
+        font-size: 1.3vw;
+    }
+
+    .match-detailed-info {
+        font-size: 1vw;
+    }
+
+    .commission-text {
+        font-size: 1.3vw;
+    }
+
+    .commission-value {
+        font-size: 1.3vw;
+    }
+
+    .gain-text {
+        font-size: 1.3vw;
+    }
+
+    .gain-money{
+        font-size: 1.7vw;
+    }
+
+    .match-f-team {
+        font-size: 1.45vw;
+    }
+
+    .match-s-team {
+        font-size: 1.45vw;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .menu {
+        width: auto;
+    }
 }

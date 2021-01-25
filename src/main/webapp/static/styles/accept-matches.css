@@ -1,7 +1,7 @@
 .body {
     height: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
 }
 
 .main-header {
@@ -14,11 +14,22 @@
 
 .main-content {
     background-color: rgba(221, 222, 224, 1.0);
+    height: 100%;
     width: 82.06%;
 
     display: flex;
     justify-content: space-between;
     flex-direction: column
+}
+
+@media screen and (max-width: 800px) {
+    .body {
+        flex-direction: column;
+    }
+
+    .main-content {
+        width: auto;
+    }
 }
 
 .main-body {
@@ -44,6 +55,7 @@
     margin-top: 15px;
     color: #303030;
     font-size: 64px;
+    white-space: nowrap;
 }
 
 .matches-icon-second {
@@ -56,7 +68,6 @@
 }
 
 .match {
-    width: 628px;
     height: 100px;
     margin-left: auto;
     margin-right: auto;
@@ -128,23 +139,24 @@
 
 .f-team-name {
     margin-left: 15px;
-    margin-top: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
 
     font-size: 18px;
 }
 
 .s-team-name {
     margin-right: 15px;
-    margin-top: 9px;
+    margin-top: auto;
+    margin-bottom: auto;
 
     font-size: 18px;
 }
 
 .versus {
     font-size: 24px;
-    position: absolute;
-    left: 58%;
-    margin-top: 4px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .match-header {
@@ -156,11 +168,15 @@
 }
 
 .date {
+    margin-top: auto;
+    margin-bottom: auto;
     text-align: left;
     margin-left: 15px;
 }
 
 .tournament {
+    margin-top: auto;
+    margin-bottom: auto;
     text-align: right;
     margin-right: 15px;
 }
@@ -181,3 +197,26 @@
 .cancel-button:active {
     border: 2.8px solid #94E512;
 }
+
+@media screen and (max-width: 800px) {
+    .match-description {
+        width: 304px;
+    }
+
+    .match-header {
+        font-size: 2vw;
+    }
+
+    .f-team-name {
+        font-size: 2vw;
+    }
+
+    .s-team-name {
+        font-size: 2vw;
+    }
+
+    .versus {
+        font-size: 3vw;
+    }
+}
+

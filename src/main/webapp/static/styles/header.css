@@ -33,7 +33,6 @@
     color: rgba(48, 48, 48, 1.0);
 }
 
-
 .account-balance-block {
     width: 173px;
     height: 100%;
@@ -72,7 +71,7 @@ header {
 
 .logo {
     margin-left: 3.66%;
-    width: 405px;
+    height: 80px;
 }
 
 .brawl-bet-text {
@@ -153,4 +152,53 @@ header {
 
 .lang-menu:hover ul {
     display: block;
+}
+
+@media screen and (max-width: 1150px) and (min-width: 1000px) {
+    .brawl-bet-text {
+        font-size: 65px;
+        margin-left: 1%;
+    }
+
+    .header-content {
+        width: 600px;
+        margin-right: 1%;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    header {
+        height: 160px;
+        flex-direction: column;
+    }
+
+    .brawl-bet-text {
+        position: inherit;
+        font-size: 67px;
+    }
+
+    .logo {
+        text-align: center;
+        width: auto;
+    }
+
+    .header-content {
+        margin-right: auto;
+        margin-left: auto;
+        width: auto;
+    }
+
+    .lang-menu ul {
+        top: 160px;
+    }
+}
+
+@media screen and (max-width: 687px) {
+    .bookmaker-mode {
+        display: none;
+    }
+
+    .admin-mode {
+        display: none;
+    }
 }

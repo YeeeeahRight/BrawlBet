@@ -1,11 +1,12 @@
 .body {
     height: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
 }
 
 .main-content {
     background-color: rgba(221, 222, 224, 1.0);
+    height: 100%;
     width: 82.06%;
 
     display: flex;
@@ -47,7 +48,6 @@
 }
 
 .bet {
-    width: 775px;
     height: 65px;
     margin-left: auto;
     margin-right: auto;
@@ -104,10 +104,14 @@
 }
 
 .date-text {
+    margin-top: auto;
+    margin-bottom: auto;
     margin-left: 12px;
 }
 
 .tournament-text {
+    margin-top: auto;
+    margin-bottom: auto;
     margin-right: 12px;
 }
 
@@ -178,4 +182,68 @@
 
 .true {
     color: rgb(148, 229, 18);
+}
+
+@media screen and (max-width: 1000px) {
+    .body {
+        flex-direction: column;
+    }
+
+    .bet-description {
+        width: 270px;
+    }
+
+    .bet-info {
+        width: 90px;
+        margin-right: 15px;
+        justify-content: space-evenly;
+    }
+
+    .gain-info {
+        width: 90px;
+        margin-left: 15px;
+        justify-content: space-evenly;
+    }
+
+    .main-content {
+        width: auto;
+    }
+
+    .main-body {
+        font-size: 1.3vw;
+    }
+
+    .bet-on-text {
+        font-size: 1.3vw;
+    }
+
+    .bet-on-team {
+        font-size: 1.3vw;
+    }
+
+    .gain-text{
+        font-size: 1.3vw;
+    }
+
+    .bet-on-money{
+        font-size: 1.7vw;
+    }
+
+    .gain-money{
+        font-size: 1.7vw;
+    }
+
+    .match-f-team {
+        font-size: 1.45vw;
+    }
+
+    .match-s-team {
+        font-size: 1.45vw;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .menu {
+        width: auto;
+    }
 }

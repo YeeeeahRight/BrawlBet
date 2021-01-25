@@ -8,6 +8,7 @@
 <html lang="<fmt:message key="html.lang"/>">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="${pageContext.request.contextPath}/static/styles/general-styles.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/static/styles/users.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/static/styles/pagination.css" rel="stylesheet" type="text/css">

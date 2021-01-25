@@ -18,7 +18,7 @@
         <a href="${pageContext.request.contextPath}/controller?command=users&page=1">
             <div class="second-item">
                 <div class="users-image"></div>
-                <h1 class="item-text">
+                <h1 class="item-text users-text">
                     <fmt:message key="menu.users"/>
                 </h1>
             </div>

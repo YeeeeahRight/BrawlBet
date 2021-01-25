@@ -9,6 +9,7 @@
 <html lang="<fmt:message key="html.lang"/>" id="html">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="${pageContext.request.contextPath}/static/styles/general-styles.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/static/styles/match.css" rel="stylesheet" type="text/css">
     <title>Brawl bet!</title>
@@ -29,12 +30,10 @@
             <div class="main-body">
                 <div class="match">
                     <div class="match-header">
-                        <div class="match-date">
-                            <h1>
-                                <sc:date-formatter date="${match.getDate()}"
-                                                   formatType="${sessionScope.lang}"></sc:date-formatter>
-                            </h1>
-                        </div>
+                        <h1 class="match-date">
+                            <sc:date-formatter date="${match.getDate()}"
+                                               formatType="${sessionScope.lang}"></sc:date-formatter>
+                        </h1>
                     </div>
                     <div class="match-body">
                         <div class="f-team ${isMatchClosed && match.getFirstTeam().equals(match.getWinner())}">
@@ -76,7 +75,7 @@
                     </div>
                     <div class="match-description">
                         <div class="commission-text">
-                            <h1>
+                            <h1 class="commission-description">
                                 <fmt:message key="bet.commission"/>
                             </h1>
                             <h1 id="commission">

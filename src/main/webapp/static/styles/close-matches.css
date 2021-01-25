@@ -1,8 +1,7 @@
-
 .body {
     height: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
 }
 
 .main-header {
@@ -15,11 +14,22 @@
 
 .main-content {
     background-color: rgba(221, 222, 224, 1.0);
+    height: 100%;
     width: 82.06%;
 
     display: flex;
     justify-content: space-between;
     flex-direction: column
+}
+
+@media screen and (max-width: 800px) {
+    .body {
+        flex-direction: column;
+    }
+
+    .main-content {
+        width: auto;
+    }
 }
 
 .main-body {
@@ -42,6 +52,7 @@
 }
 
 .matches-logo-text {
+    white-space: nowrap;
     margin-top: 15px;
     color: #303030;
     font-size: 64px;
@@ -57,7 +68,7 @@
 }
 
 .match {
-    width: 628px;
+    width: 600px;
     height: 64px;
     margin-left: auto;
     margin-right: auto;
@@ -143,4 +154,10 @@
 
 .finish-button:active {
     border: 2.8px solid #94E512;
+}
+
+@media screen and (max-width: 800px){
+    .match {
+        width: auto;
+    }
 }

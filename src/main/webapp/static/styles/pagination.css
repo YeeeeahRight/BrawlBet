@@ -1,9 +1,10 @@
 .pagination {
     display: flex;
     justify-content: center;
-    margin-top: 15px;
+    margin-top: 2%;
     font-size: 20px;
     text-align: center;
+    margin-bottom: 5px;
 }
 
 .first-arrow {

@@ -1,16 +1,27 @@
 .body {
     height: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
 }
 
 .main-content {
     background-color: rgba(221, 222, 224, 1.0);
     width: 82.06%;
+    height: 100%;
 
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+}
+
+@media screen and (max-width: 800px) {
+    .body {
+        flex-direction: column;
+    }
+
+    .main-content {
+        width: auto;
+    }
 }
 
 .main-header {
@@ -39,56 +50,33 @@
 .main-body {
     height: 100%;
     width: 100%;
-    font-size: 20px;
+    font-size: 1.4vw;
+    padding-top: 15px;
 }
 
 .match {
-    position: absolute;
     color: rgba(48, 48, 48, 1.0);
     background-color: white;
-    height: 108px;
-    width: 31.9%;
+    height: 7vw;
+    width: 32vw;
     display: flex;
     flex-direction: column;
+}
+
+.match-row {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    margin-right: 5%;
 }
 
 .match:hover {
     border: 2px solid #303030;
 }
 
-.match-1 {
-    left: 21%;
-    top: 230px;
-}
-
-.match-2 {
-    right: 8.295%;
-    top: 230px;
-}
-
-.match-3 {
-    left: 21%;
-    top: 387px;
-}
-
-.match-4 {
-    right: 8.295%;
-    top: 387px;
-}
-
-.match-5 {
-    left: 21%;
-    top: 544px;
-}
-
-.match-6 {
-    right: 8.295%;
-    top: 544px;
-}
-
 .match-header {
     background-color: rgba(241, 241, 241, 1);
-    height: 41px;
+    height: 40%;
     display: flex;
     justify-content: space-between;
 }
@@ -106,7 +94,7 @@
 }
 
 .match-body {
-    height: 67px;
+    height: 60%;
     display: flex;
     justify-content: space-between;
 }
@@ -120,7 +108,7 @@
     margin-top: auto;
     margin-bottom: auto;
     margin-left: 20px;
-    font-size: 17px;
+    font-size: 1.25vw;
 }
 
 .match-f-percent {
@@ -143,7 +131,7 @@
     margin-top: auto;
     margin-bottom: auto;
     margin-right: 20px;
-    font-size: 17px;
+    font-size: 1.25vw;
 }
 
 #true {
@@ -162,19 +150,32 @@
     margin: auto 2px;
 }
 
-.pagination {
-    margin-top: 510px;
-    margin-right: 6%;
-}
-
-#arrow-not-valid {
-    pointer-events: none;
-    cursor: default;
-    opacity: 0.65;
-}
-
 #false {
     pointer-events: auto;
     cursor: pointer;
     opacity: 1;
+}
+
+.pagination {
+    margin-right: 5.1%;
+}
+
+@media screen and (max-width: 800px) {
+    .match-row {
+        margin-right: 0;
+        margin-top: 32px;
+    }
+
+    .match {
+        height: 12vw;
+        width: 42vw;
+    }
+
+    .match-body {
+        font-size: 2vw;
+    }
+
+    .pagination {
+        margin-right: 0;
+    }
 }

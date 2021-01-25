@@ -1,7 +1,7 @@
 .body {
     height: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
 }
 
 .main-content {
@@ -31,6 +31,16 @@
     flex-direction: column;
 }
 
+@media screen and (max-width: 800px) {
+    .body {
+        flex-direction: column;
+    }
+
+    .main-content {
+        width: auto;
+    }
+}
+
 .users-logo-text {
     margin-top: 21px;
     color: #303030;
@@ -38,7 +48,6 @@
 }
 
 .user {
-    width: 690px;
     height: 66px;
     margin-left: auto;
     margin-right: auto;
@@ -102,38 +111,41 @@
 
 .status-text {
     margin-left: 8px;
-    margin-top: 11px;
+    margin-top: auto;
+    margin-bottom: auto;
     font-size: 17px;
 }
 
 .status-data {
     margin-left: 5px;
-    margin-top: 13.5px;
+    margin-top: auto;
+    margin-bottom: auto;
     font-size: 14px;
 }
 
 .role-text {
     margin-left: 27px;
-    margin-top: 11px;
+    margin-top: auto;
+    margin-bottom: auto;
     font-size: 17px;
 }
 
 .role-data {
     margin-left: 5px;
-    margin-top: 13.5px;
+    margin-top: auto;
+    margin-bottom: auto;
     font-size: 14px;
 }
 
 .balance-text {
     margin-left: 27px;
-    margin-top: 11px;
+    margin-top: auto;
+    margin-bottom: auto;
     font-size: 17px;
 }
 
 .balance-data {
-    margin-left: 5px;
-    margin-right: 8px;
-    margin-top: 11.5px;
+    margin: auto 8px auto 5px;
     font-size: 17px;
 }
 
@@ -153,3 +165,44 @@
     border: 2.8px solid #94E512;
 }
 
+@media screen and (max-width: 800px){
+    .user-description {
+        width: 350px;
+    }
+
+    .user-header {
+        font-size: 2.8vw;
+    }
+
+    .status-text {
+        font-size: 1.65vw;
+    }
+
+    .role-text {
+        font-size: 1.65vw;
+    }
+
+    .balance-text {
+        font-size: 1.65vw;
+    }
+
+    .status-data {
+        font-size: 1.4vw;
+    }
+
+    .role-data {
+        font-size: 1.4vw;
+    }
+
+    .balance-data {
+        font-size: 1.4vw;
+    }
+
+    .unban-button {
+        margin-right: 10px;
+    }
+
+    .ban-button {
+        margin-left: 10px;
+    }
+}
