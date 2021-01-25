@@ -79,7 +79,7 @@ public interface AccountService {
      *
      * @throws  ServiceException  a wrapper for lower errors.
      */
-    void block(long id) throws ServiceException;
+    void blockById(long id) throws ServiceException;
 
     /**
      * Finds out if account is exist by login and password.

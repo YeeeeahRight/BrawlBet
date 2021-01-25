@@ -1,5 +1,7 @@
 package com.epam.web.command;
 
+import java.util.Objects;
+
 public class CommandResult {
     private final String page;
     private final boolean isRedirect;
@@ -25,4 +27,27 @@ public class CommandResult {
         return isRedirect;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        CommandResult that = (CommandResult) o;
+
+        if (isRedirect != that.isRedirect) {
+            return false;
+        }
+        return Objects.equals(page, that.page);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = page != null ? page.hashCode() : 0;
+        result = 31 * result + (isRedirect ? 1 : 0);
+        return result;
+    }
 }

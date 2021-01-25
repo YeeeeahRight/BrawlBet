@@ -54,7 +54,7 @@ public class EditMatchCommand implements Command {
         try {
             date = dateParser.parse(DateFormatType.HTML);
         } catch (ParseException e) {
-            throw new IllegalArgumentException("Invalid date format.");
+            throw new InvalidParametersException("Invalid date format.");
         }
         return new Match(id, date, tournament, firstTeam, secondTeam);
     }

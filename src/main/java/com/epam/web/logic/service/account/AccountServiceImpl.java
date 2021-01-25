@@ -82,7 +82,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void block(long id) throws ServiceException {
+    public void blockById(long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDao matchDao = daoHelper.createAccountDao();
             matchDao.blockById(id);

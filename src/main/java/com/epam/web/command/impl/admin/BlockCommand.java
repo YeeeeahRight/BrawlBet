@@ -24,7 +24,7 @@ public class BlockCommand implements Command {
         } catch (NumberFormatException e) {
             throw new InvalidParametersException("Invalid user id parameter in request.");
         }
-        accountService.block(id);
+        accountService.blockById(id);
 
         String prevPage = requestContext.getHeader();
         return CommandResult.redirect(prevPage);

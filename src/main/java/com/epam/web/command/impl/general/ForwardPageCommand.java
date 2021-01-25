@@ -15,6 +15,9 @@ public class ForwardPageCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) {
+        if (page == null) {
+            throw new IllegalArgumentException("Invalid page.");
+        }
         switch (page) {
             case CommandName.LOGIN_PAGE:
                 return CommandResult.forward(Page.LOGIN);
