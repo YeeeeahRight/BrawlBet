@@ -1,5 +1,7 @@
 package com.epam.web.model.entity.dto;
 
+import com.epam.web.model.entity.Bet;
+
 import java.util.Date;
 
 public class BetMatchDto {
@@ -11,12 +13,12 @@ public class BetMatchDto {
     private final String tournament;
     private final String firstTeam;
     private final String secondTeam;
-    private final int firstPercent;
-    private final int secondPercent;
     private final String winner;
+    private final Integer firstPercent;
+    private final Integer secondPercent;
 
-    public BetMatchDto(Long id, String teamOnBet, float moneyBet, float moneyReceived, Date date, String tournament,
-                       String firstTeam, String secondTeam, int firstPercent, int secondPercent, String winner) {
+    private BetMatchDto(Long id, String teamOnBet, float moneyBet, float moneyReceived, Date date, String tournament,
+                       String firstTeam, String secondTeam, Integer firstPercent, Integer secondPercent, String winner) {
         this.id = id;
         this.teamOnBet = teamOnBet;
         this.moneyBet = moneyBet;
@@ -62,16 +64,58 @@ public class BetMatchDto {
         return secondTeam;
     }
 
-    public int getFirstPercent() {
+    public Integer getFirstPercent() {
         return firstPercent;
     }
 
-    public int getSecondPercent() {
+    public Integer getSecondPercent() {
         return secondPercent;
     }
 
     public String getWinner() {
         return winner;
+    }
+
+    public static class BetMatchDtoBuilder {
+        private Long id;
+        private float moneyBet;
+        private float moneyReceived;
+        private Date date;
+        private String tournament;
+        private String firstTeam;
+        private String secondTeam;
+        private String teamOnBet;
+        private String winner;
+        private Integer firstPercent;
+        private Integer secondPercent;
+
+        public BetMatchDtoBuilder setGeneralAttributes(Bet bet, String tournament) {
+            this.id = bet.getMatchId();
+            this.moneyBet = bet.getMoneyBet();
+            this.moneyReceived = bet.getMoneyReceived();
+            this.date = bet.getBetDate();
+            this.tournament = tournament;
+            return this;
+        }
+
+        public BetMatchDtoBuilder setTeams(String firstTeam, String secondTeam, String teamOnBet, String winner) {
+            this.firstTeam = firstTeam;
+            this.secondTeam = secondTeam;
+            this.teamOnBet = teamOnBet;
+            this.winner = winner;
+            return this;
+        }
+
+        public BetMatchDtoBuilder setPercents(Integer firstPercent, Integer secondPercent) {
+            this.firstPercent = firstPercent;
+            this.secondPercent = secondPercent;
+            return this;
+        }
+
+        public BetMatchDto build() {
+            return new BetMatchDto(id, teamOnBet, moneyBet, moneyReceived, date, tournament, firstTeam, secondTeam,
+                    firstPercent, secondPercent, winner);
+        }
     }
 
     @Override

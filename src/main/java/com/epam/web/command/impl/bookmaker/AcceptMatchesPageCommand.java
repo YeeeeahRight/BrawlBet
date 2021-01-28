@@ -10,16 +10,22 @@ import com.epam.web.exception.InvalidParametersException;
 import com.epam.web.exception.ServiceException;
 import com.epam.web.logic.service.match.MatchService;
 import com.epam.web.logic.service.match.MatchType;
+import com.epam.web.logic.service.team.TeamService;
 import com.epam.web.model.entity.Match;
+import com.epam.web.model.entity.dto.MatchDto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AcceptMatchesPageCommand implements Command {
     private static final int MAX_MATCHES_PAGE = 4;
-    private final MatchService matchService;
 
-    public AcceptMatchesPageCommand(MatchService matchService) {
+    private final MatchService matchService;
+    private final TeamService teamService;
+
+    public AcceptMatchesPageCommand(MatchService matchService, TeamService teamService) {
         this.matchService = matchService;
+        this.teamService = teamService;
     }
 
     @Override
@@ -41,11 +47,27 @@ public class AcceptMatchesPageCommand implements Command {
         if (matches.size() == 0 && page > 1) {
             throw new InvalidParametersException("No matches on this page");
         }
-        requestContext.addAttribute(Attribute.MATCHES, matches);
+        List<MatchDto> matchDtoList = buildMatchDtoList(matches);
+        requestContext.addAttribute(Attribute.MATCH_DTO_LIST, matchDtoList);
         requestContext.addAttribute(Attribute.CURRENT_PAGE, page);
         int maxPage = ((matchService.getMatchesTypeAmount(MatchType.UNACCEPTED) - 1) / MAX_MATCHES_PAGE) + 1;
         requestContext.addAttribute(Attribute.MAX_PAGE, maxPage);
 
         return CommandResult.forward(Page.ACCEPT_MATCHES);
+    }
+
+    private List<MatchDto> buildMatchDtoList(List<Match> matches) throws ServiceException {
+        List<MatchDto> matchDtoList = new ArrayList<>();
+        MatchDto.MatchDtoBuilder matchDtoBuilder = new MatchDto.MatchDtoBuilder();
+        for (Match match : matches) {
+            long firstTeamId = match.getFirstTeamId();
+            long secondTeamId = match.getSecondTeamId();
+            String firstTeamName = teamService.getTeamNameById(firstTeamId);
+            String secondTeamName = teamService.getTeamNameById(secondTeamId);
+            MatchDto matchDto = matchDtoBuilder.setGeneralFields(match,
+                    firstTeamName, secondTeamName).build();
+            matchDtoList.add(matchDto);
+        }
+        return matchDtoList;
     }
 }

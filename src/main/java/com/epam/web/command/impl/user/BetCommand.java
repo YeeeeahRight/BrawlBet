@@ -9,19 +9,15 @@ import com.epam.web.exception.InvalidParametersException;
 import com.epam.web.exception.ServiceException;
 import com.epam.web.logic.service.account.AccountService;
 import com.epam.web.logic.service.bet.BetService;
-import com.epam.web.logic.service.match.MatchService;
 import com.epam.web.model.entity.Bet;
-import com.epam.web.model.enumeration.Team;
 
 import java.util.Date;
 
 public class BetCommand implements Command {
-    private final MatchService matchService;
     private final BetService betService;
     private final AccountService accountService;
 
-    public BetCommand(MatchService matchService, BetService betService, AccountService accountService) {
-        this.matchService = matchService;
+    public BetCommand(BetService betService, AccountService accountService) {
         this.betService = betService;
         this.accountService = accountService;
     }
@@ -29,22 +25,15 @@ public class BetCommand implements Command {
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
         String matchIdStr = requestContext.getRequestParameter(Parameter.ID);
+        String teamIdStr = requestContext.getRequestParameter(Parameter.BET_ON);
         String moneyStr = requestContext.getRequestParameter(Parameter.MONEY);
         long matchId;
+        long teamId;
         float money;
-        Team team;
         try {
             matchId = Long.parseLong(matchIdStr);
-            if (matchService.isFinishedMatch(matchId)) {
-                throw new ServiceException("This match is already finished.");
-            }
+            teamId = Long.parseLong(teamIdStr);
             money = Float.parseFloat(moneyStr);
-            String teamStr = requestContext.getRequestParameter(Parameter.BET_ON);
-            try {
-                team = Team.valueOf(teamStr);
-            } catch (IllegalArgumentException e) {
-                throw new InvalidParametersException("Invalid team on bet.");
-            }
         } catch (NumberFormatException e) {
             throw new InvalidParametersException("Invalid parameters in request.");
         }
@@ -53,7 +42,7 @@ public class BetCommand implements Command {
             throw new ServiceException("You have no money for your bet.");
         }
         Date betDate = new Date();
-        Bet bet = new Bet(accountId, matchId, money, team, betDate);
+        Bet bet = new Bet(accountId, matchId, money, teamId, betDate);
         betService.saveBet(bet);
 
         String prevPage = requestContext.getHeader();

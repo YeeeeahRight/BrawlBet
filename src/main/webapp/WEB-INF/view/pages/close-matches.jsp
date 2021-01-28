@@ -32,30 +32,30 @@
                 <div class="matches-icon-second"></div>
             </div>
             <div class="main-body">
-                <c:forEach items="${matches}" var="match" varStatus="counter">
+                <c:forEach items="${matchDtoList}" var="matchDto" varStatus="counter">
                     <div class="match match-${counter.index + 1}">
                         <div class="finish-button">
-                            <a href="${pageContext.request.contextPath}/controller?command=close-match&id=${match.getId()}">
+                            <a href="${pageContext.request.contextPath}/controller?command=close-match&id=${matchDto.getId()}">
                                 <div class="finish-image"></div>
                             </a>
                         </div>
                         <div class="match-description">
                             <div class="match-header">
                                 <h1 class="date">
-                                    <sc:date-formatter date="${match.getDate()}"
+                                    <sc:date-formatter date="${matchDto.getDate()}"
                                                        formatType="${sessionScope.lang}"></sc:date-formatter>
                                 </h1>
-                                <h1 class="tournament">${match.getTournament()}</h1>
+                                <h1 class="tournament">${matchDto.getTournament()}</h1>
                             </div>
                             <div class="match-content">
-                                <h1 class="f-team-name">${match.getFirstTeam()}</h1>
+                                <h1 class="f-team-name">${matchDto.getFirstTeam()}</h1>
                                 <h1 class="versus"><-></h1>
-                                <h1 class="s-team-name">${match.getSecondTeam()}</h1>
+                                <h1 class="s-team-name">${matchDto.getSecondTeam()}</h1>
                             </div>
                         </div>
                     </div>
                 </c:forEach>
-                <c:if test="${matches.size() != 0}">
+                <c:if test="${matchDtoList.size() != 0}">
                     <div class="pagination">
                         <a class="first-arrow" id="${currentPage > 1}"
                            href="${pageContext.request.contextPath}/controller?command=close-matches-page&page=${currentPage - 1}"></a>

@@ -11,21 +11,27 @@ import com.epam.web.controller.request.RequestContext;
 import com.epam.web.logic.calculator.BetCalculator;
 import com.epam.web.logic.service.account.AccountService;
 import com.epam.web.logic.service.match.MatchService;
+import com.epam.web.logic.service.team.TeamService;
 import com.epam.web.model.entity.Match;
+import com.epam.web.model.entity.dto.MatchDto;
 import com.epam.web.model.enumeration.AccountRole;
-import com.epam.web.model.enumeration.Team;
+import com.epam.web.model.enumeration.MatchTeamNumber;
 
 import java.util.Date;
 
 public class MatchPageCommand implements Command {
     private static final float MIN_BET = 0.1f;
+
     private final MatchService matchService;
     private final AccountService accountService;
+    private final TeamService teamService;
     private final BetCalculator betCalculator;
 
-    public MatchPageCommand(MatchService matchService, AccountService accountService, BetCalculator betCalculator) {
+    public MatchPageCommand(MatchService matchService, AccountService accountService,
+                            TeamService teamService, BetCalculator betCalculator) {
         this.matchService = matchService;
         this.accountService = accountService;
+        this.teamService = teamService;
         this.betCalculator = betCalculator;
     }
 
@@ -40,11 +46,50 @@ public class MatchPageCommand implements Command {
             throw new InvalidParametersException("Invalid id match parameter in request.");
         }
         Match match = matchService.getMatchById(id);
-        requestContext.addAttribute(Attribute.MATCH, match);
+        MatchDto matchDto = buildMatchDto(match);
+        requestContext.addAttribute(Attribute.MATCH_DTO, matchDto);
         addMatchStatusAttribute(requestContext, match);
-        addMatchAttributes(requestContext, match);
+        addAdditionalAttributes(requestContext, match);
 
         return CommandResult.forward(Page.BET);
+    }
+
+    private MatchDto buildMatchDto(Match match) throws ServiceException {
+        long firstTeamId = match.getFirstTeamId();
+        long secondTeamId = match.getSecondTeamId();
+        String firstTeamName = teamService.getTeamNameById(firstTeamId);
+        String secondTeamName = teamService.getTeamNameById(secondTeamId);
+        long winnerTeamId = match.getWinnerTeamId();
+        String winnerTeamName = findWinnerTeamName(winnerTeamId, firstTeamId, secondTeamId,
+                firstTeamName, secondTeamName);
+        MatchDto.MatchDtoBuilder matchDtoBuilder = new MatchDto.MatchDtoBuilder();
+        matchDtoBuilder = matchDtoBuilder.setGeneralFields(match,
+                firstTeamName, secondTeamName).setWinner(winnerTeamName);
+        matchDtoBuilder = setPercents(matchDtoBuilder,
+                match.getFirstTeamBets(), match.getSecondTeamBets());
+        return matchDtoBuilder.build();
+    }
+
+    private String findWinnerTeamName(long winnerTeamId, long firstTeamId, long secondTeamId,
+                                      String firstTeamName, String secondTeamName) {
+        if (winnerTeamId == firstTeamId) {
+            return firstTeamName;
+        } else if (winnerTeamId == secondTeamId) {
+            return secondTeamName;
+        }
+        return null;
+    }
+
+    private MatchDto.MatchDtoBuilder setPercents(MatchDto.MatchDtoBuilder matchDtoBuilder,
+                                                       float firstTeamBets, float secondTeamBets) {
+        int firstPercent = 0;
+        int secondPercent = 0;
+        if (firstTeamBets + secondTeamBets != 0) {
+            firstPercent = betCalculator.calculatePercent(MatchTeamNumber.FIRST,
+                    firstTeamBets, secondTeamBets);
+            secondPercent = 100 - firstPercent;
+        }
+        return matchDtoBuilder.setPercents(firstPercent, secondPercent);
     }
 
     private void addMatchStatusAttribute(RequestContext requestContext, Match match) {
@@ -68,21 +113,8 @@ public class MatchPageCommand implements Command {
         return currentTime >= matchTime;
     }
 
-    private void addMatchAttributes(RequestContext requestContext, Match match) throws ServiceException {
+    private void addAdditionalAttributes(RequestContext requestContext, Match match) throws ServiceException {
         Long accountId = (Long) requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
-        float firstTeamBetsAmount = match.getFirstTeamBets();
-        float secondTeamBetsAmount = match.getSecondTeamBets();
-        requestContext.addAttribute(Attribute.FIRST_BETS_AMOUNT, firstTeamBetsAmount);
-        requestContext.addAttribute(Attribute.SECOND_BETS_AMOUNT, secondTeamBetsAmount);
-        int firstPercent = 0;
-        int secondPercent = 0;
-        if (firstTeamBetsAmount + secondTeamBetsAmount != 0) {
-            firstPercent = betCalculator.calculatePercent(Team.FIRST,
-                    firstTeamBetsAmount, secondTeamBetsAmount);
-            secondPercent = 100 - firstPercent;
-        }
-        requestContext.addAttribute(Attribute.FIRST_PERCENT, firstPercent);
-        requestContext.addAttribute(Attribute.SECOND_PERCENT, secondPercent);
         if (accountId != null) {
             AccountRole role = (AccountRole) requestContext.getSessionAttribute(Attribute.ROLE);
             if (role == AccountRole.USER) {
@@ -99,9 +131,9 @@ public class MatchPageCommand implements Command {
         }
         requestContext.addAttribute(Attribute.MAX_BET, maxBet);
         requestContext.addAttribute(Attribute.MIN_BET, MIN_BET);
-        float firstCoefficient = betCalculator.calculateCoefficient(Team.FIRST,
+        float firstCoefficient = betCalculator.calculateCoefficient(MatchTeamNumber.FIRST,
                 match.getFirstTeamBets(), match.getSecondTeamBets());
-        float secondCoefficient = betCalculator.calculateCoefficient(Team.SECOND,
+        float secondCoefficient = betCalculator.calculateCoefficient(MatchTeamNumber.SECOND,
                 match.getFirstTeamBets(), match.getSecondTeamBets());
         float commission = match.getCommission();
         firstCoefficient -= firstCoefficient * commission / 100;

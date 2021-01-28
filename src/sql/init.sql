@@ -1,20 +1,15 @@
-INSERT INTO matches(date, tournament, first_team, second_team)
-VALUES ('2021-01-25 18:09:22', 'Dreamhack Open', 'Sharks', 'Heroic');
-INSERT INTO matches(date, tournament, first_team, second_team)
-VALUES ('2021-01-26 14:09:22', 'CMD368', 'NaVi', 'GamerLegion');
-INSERT INTO matches(date, tournament, first_team, second_team)
-VALUES ('2021-01-27 14:09:22', 'Dreamhack Open', 'VP', 'Cloud9');
-INSERT INTO matches(date, tournament, first_team, second_team)
-VALUES ('2021-01-30 14:09:22', 'WINNERS League', 'SwolePatrol', 'INTZ');
-INSERT INTO matches(date, tournament, first_team, second_team)
-VALUES ('2021-02-01 14:09:22', 'Dreamhack Open', 'North', 'MAD Lions');
-INSERT INTO matches(date, tournament, first_team, second_team)
-VALUES ('2021-01-30 14:09:22', 'Master League', 'forZe', 'Flames');
-INSERT INTO matches(date, tournament, first_team, second_team)
-VALUES ('2021-02-10 14:09:22', 'ESEA', 'MC', 'Airborne');
+INSERT INTO teams(name) VALUES ('Sharks');
+INSERT INTO teams(name) VALUES ('Heroic');
+INSERT INTO teams(name) VALUES ('Navi');
+INSERT INTO teams(name) VALUES ('GamerLegion');
+
+INSERT INTO matches(date, tournament, first_team_id, second_team_id)
+VALUES ('2021-01-27 18:09:22', 'Dreamhack Open', 1, 2);
+INSERT INTO matches(date, tournament, first_team_id, second_team_id)
+VALUES ('2021-01-27 14:09:22', 'CMD368', 3, 4);
 
 INSERT INTO accounts(name, password, role)
-VALUES('admin', 'admin', 'ADMIN');
+VALUES('admin', 'admin123', 'ADMIN');
 INSERT INTO accounts(name, password, role)
 VALUES('bookmaker', 'bookmaker', 'BOOKMAKER');
 INSERT INTO accounts(name, password, role, balance)

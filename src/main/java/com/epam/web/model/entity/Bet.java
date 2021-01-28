@@ -1,7 +1,6 @@
 package com.epam.web.model.entity;
 
 import com.epam.web.model.Entity;
-import com.epam.web.model.enumeration.Team;
 
 import java.util.Date;
 import java.util.Objects;
@@ -12,35 +11,35 @@ public class Bet implements Entity {
     public static final String ACCOUNT_ID = "account_id";
     public static final String MATCH_ID = "match_id";
     public static final String MONEY_BET = "money_bet";
-    public static final String TEAM = "team";
+    public static final String TEAM_ID = "team_id";
     public static final String MONEY_RECEIVED = "money_received";
     public static final String BET_DATE = "bet_date";
 
     private final Long accountId;
     private final Long matchId;
-    private final Team team;
+    private final Long teamId;
     private final Float moneyReceived;
     private final Float moneyBet;
     private final Date betDate;
     private final Long id;
 
-    public Bet(Long id, Long accountId, Long matchId, Float moneyBet, Team team, Float moneyReceived,
+    public Bet(Long id, Long accountId, Long matchId, Float moneyBet, Long teamId, Float moneyReceived,
                Date betDate) {
         this.id = id;
         this.accountId = accountId;
         this.matchId = matchId;
         this.moneyBet = moneyBet;
-        this.team = team;
+        this.teamId = teamId;
         this.moneyReceived = moneyReceived;
         this.betDate = betDate;
     }
 
-    public Bet(Long accountId, Long matchId, Float moneyBet, Team team, Date betDate) {
+    public Bet(Long accountId, Long matchId, Float moneyBet, Long teamId, Date betDate) {
         this.id = null;
         this.accountId = accountId;
         this.matchId = matchId;
         this.moneyBet = moneyBet;
-        this.team = team;
+        this.teamId = teamId;
         this.betDate = betDate;
         this.moneyReceived = 0.0f;
     }
@@ -61,8 +60,8 @@ public class Bet implements Entity {
         return moneyBet;
     }
 
-    public Team getTeam() {
-        return team;
+    public Long getTeamId() {
+        return teamId;
     }
 
     public Float getMoneyReceived() {
@@ -90,7 +89,7 @@ public class Bet implements Entity {
         if (!matchId.equals(bet.matchId)) {
             return false;
         }
-        if (team != bet.team) {
+        if (!teamId.equals(bet.teamId)) {
             return false;
         }
         if (!moneyReceived.equals(bet.moneyReceived)) {
@@ -109,7 +108,7 @@ public class Bet implements Entity {
     public int hashCode() {
         int result = accountId.hashCode();
         result = 31 * result + matchId.hashCode();
-        result = 31 * result + team.hashCode();
+        result = 31 * result + teamId.hashCode();
         result = 31 * result + moneyReceived.hashCode();
         result = 31 * result + moneyBet.hashCode();
         result = 31 * result + betDate.hashCode();
@@ -122,7 +121,7 @@ public class Bet implements Entity {
         return "Bet{" +
                 "accountId=" + accountId +
                 ", matchId=" + matchId +
-                ", team=" + team +
+                ", teamId=" + teamId +
                 ", moneyReceived=" + moneyReceived +
                 ", moneyBet=" + moneyBet +
                 ", betDate=" + betDate +

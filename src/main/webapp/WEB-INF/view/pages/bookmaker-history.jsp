@@ -31,34 +31,34 @@
                 </div>
             </div>
             <div class="main-body">
-                <c:forEach items="${matches}" var="match" varStatus="counter">
+                <c:forEach items="${matchDtoList}" var="matchDto" varStatus="counter">
                     <div class="match">
                         <div class="commission-info">
                             <h1 class="commission-text">
                                 <fmt:message key="match.commission"/>
                             </h1>
                             <h1 class="commission-value">
-                                    ${match.getCommission()}%
+                                    ${matchDto.getCommission()}%
                             </h1>
                         </div>
-                        <a href="${pageContext.request.contextPath}/controller?command=match-page&id=${match.getId()}">
+                        <a href="${pageContext.request.contextPath}/controller?command=match-page&id=${matchDto.getId()}">
                             <div class="match-description">
                                 <div class="match-header">
                                     <h1 class="date-text">
-                                        <sc:date-formatter date="${match.getDate()}"
+                                        <sc:date-formatter date="${matchDto.getDate()}"
                                                            formatType="${sessionScope.lang}"></sc:date-formatter>
                                     </h1>
                                     <h1 class="tournament-text">
-                                            ${match.getTournament()}
+                                            ${matchDto.getTournament()}
                                     </h1>
                                 </div>
                                 <div class="match-content">
-                                    <div class="match-f-team ${match.getFirstTeam().equals(match.getWinner())}">
+                                    <div class="match-f-team ${matchDto.getFirstTeam().equals(matchDto.getWinner())}">
                                         <h1>
-                                                ${match.getFirstTeam()}
+                                                ${matchDto.getFirstTeam()}
                                         </h1>
                                     </div>
-                                    <c:if test="${match.getFirstTeam().equals(match.getWinner())}">
+                                    <c:if test="${matchDto.getFirstTeam().equals(matchDto.getWinner())}">
                                         <div class="winner-image"></div>
                                     </c:if>
                                     <div class="match-detailed-info">
@@ -66,12 +66,12 @@
                                             -><fmt:message key="match.detailed.info"/><-
                                         </h1>
                                     </div>
-                                    <c:if test="${match.getSecondTeam().equals(match.getWinner())}">
+                                    <c:if test="${matchDto.getSecondTeam().equals(matchDto.getWinner())}">
                                         <div class="winner-image"></div>
                                     </c:if>
-                                    <div class="match-s-team ${match.getSecondTeam().equals(match.getWinner())}">
+                                    <div class="match-s-team ${matchDto.getSecondTeam().equals(matchDto.getWinner())}">
                                         <h1>
-                                                ${match.getSecondTeam()}
+                                                ${matchDto.getSecondTeam()}
                                         </h1>
                                     </div>
                                 </div>
@@ -82,15 +82,15 @@
                                 <fmt:message key="bet.money.received"/>
                             </h1>
                             <h1 class="gain-money">
-                                <c:set var="betsAmount" value="${match.getWinner().equals(match.getFirstTeam()) ?
-                                                    match.getSecondTeamBets() : match.getFirstTeamBets()}"/>
+                                <c:set var="betsAmount" value="${matchDto.getWinner().equals(matchDto.getFirstTeam()) ?
+                                                    matchDto.getSecondTeamBets() : matchDto.getFirstTeamBets()}"/>
                                 <fmt:formatNumber type="number" maxFractionDigits="2" pattern="0.0"
-                                                  value="${betsAmount * match.getCommission() / 100}"/>
+                                                  value="${betsAmount * matchDto.getCommission() / 100}"/>
                             </h1>
                         </div>
                     </div>
                 </c:forEach>
-                <c:if test="${matches.size() != 0}">
+                <c:if test="${matchDtoList.size() != 0}">
                     <div class="pagination">
                         <a class="first-arrow" id="${currentPage > 1}"
                            href="${pageContext.request.contextPath}/controller?command=bookmaker-history&page=${currentPage - 1}"></a>

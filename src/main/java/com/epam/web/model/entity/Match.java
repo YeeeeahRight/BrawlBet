@@ -10,61 +10,60 @@ public class Match implements Entity {
     public static final String ID = "id";
     public static final String DATE = "date";
     public static final String TOURNAMENT = "tournament";
-    public static final String FIRST_TEAM = "first_team";
-    public static final String SECOND_TEAM = "second_team";
+    public static final String FIRST_TEAM_ID = "first_team_id";
+    public static final String SECOND_TEAM_ID = "second_team_id";
+    public static final String WINNER_TEAM_ID = "winner_team_id";
     public static final String COMMISSION = "commission";
     public static final String IS_CLOSED = "is_closed";
     public static final String FIRST_TEAM_BETS = "first_team_bets";
     public static final String SECOND_TEAM_BETS = "second_team_bets";
-    public static final String WINNER = "winner";
 
+    private final Long id;
+    private final Long firstTeamId;
+    private final Long secondTeamId;
+    private final Long winnerTeamId;
     private final Date date;
     private final String tournament;
-    private final String firstTeam;
-    private final String secondTeam;
-    private final String winner;
     private final Float commission;
     private final Boolean isClosed;
     private final Float firstTeamBets;
     private final Float secondTeamBets;
-    private final Long id;
 
-    public Match(Long id, Date date, String tournament, String firstTeam, String secondTeam,
-                 String winner, Float commission, Boolean isClosed, Float firstTeamBets, Float secondTeamBets) {
+    public Match(Long id, Date date, String tournament, Long firstTeamId, Long secondTeamId,
+                 Long winnerTeamId, Float commission, Boolean isClosed, Float firstTeamBets,
+                 Float secondTeamBets) {
         this.id = id;
         this.date = date;
         this.tournament = tournament;
-        this.firstTeam = firstTeam;
-        this.secondTeam = secondTeam;
-        this.winner = winner;
+        this.firstTeamId = firstTeamId;
+        this.secondTeamId = secondTeamId;
+        this.winnerTeamId = winnerTeamId;
         this.commission = commission;
         this.isClosed = isClosed;
         this.firstTeamBets = firstTeamBets;
         this.secondTeamBets = secondTeamBets;
     }
 
-    public Match(Long id, Date date, String tournament, String firstTeam,
-                 String secondTeam) {
+    public Match(Long id, Date date, String tournament, Long firstTeamId, Long secondTeamId) {
         this.id = id;
         this.date = date;
         this.tournament = tournament;
-        this.firstTeam = firstTeam;
-        this.secondTeam = secondTeam;
-        this.winner = "NONE";
+        this.firstTeamId = firstTeamId;
+        this.secondTeamId = secondTeamId;
+        this.winnerTeamId = -1L;
         this.commission = 0.0f;
         this.isClosed = false;
         this.firstTeamBets = 0.0f;
         this.secondTeamBets = 0.0f;
     }
 
-    public Match(Date date, String tournament, String firstTeam,
-                 String secondTeam) {
+    public Match(Date date, String tournament, Long firstTeamId, Long secondTeamId) {
         this.id = null;
         this.date = date;
         this.tournament = tournament;
-        this.firstTeam = firstTeam;
-        this.secondTeam = secondTeam;
-        this.winner = "NONE";
+        this.firstTeamId = firstTeamId;
+        this.secondTeamId = secondTeamId;
+        this.winnerTeamId = -1L;
         this.commission = 0.0f;
         this.isClosed = false;
         this.firstTeamBets = 0.0f;
@@ -79,12 +78,12 @@ public class Match implements Entity {
         return tournament;
     }
 
-    public String getFirstTeam() {
-        return firstTeam;
+    public Long getFirstTeamId() {
+        return firstTeamId;
     }
 
-    public String getSecondTeam() {
-        return secondTeam;
+    public Long getSecondTeamId() {
+        return secondTeamId;
     }
 
     public Float getCommission() {
@@ -95,8 +94,8 @@ public class Match implements Entity {
         return isClosed;
     }
 
-    public String getWinner() {
-        return winner;
+    public Long getWinnerTeamId() {
+        return winnerTeamId;
     }
 
     public Float getFirstTeamBets() {
@@ -122,19 +121,22 @@ public class Match implements Entity {
 
         Match match = (Match) o;
 
+        if (!Objects.equals(id, match.id)) {
+            return false;
+        }
+        if (!firstTeamId.equals(match.firstTeamId)) {
+            return false;
+        }
+        if (!secondTeamId.equals(match.secondTeamId)) {
+            return false;
+        }
+        if (!winnerTeamId.equals(match.winnerTeamId)) {
+            return false;
+        }
         if (!date.equals(match.date)) {
             return false;
         }
         if (!tournament.equals(match.tournament)) {
-            return false;
-        }
-        if (!firstTeam.equals(match.firstTeam)) {
-            return false;
-        }
-        if (!secondTeam.equals(match.secondTeam)) {
-            return false;
-        }
-        if (!winner.equals(match.winner)) {
             return false;
         }
         if (!commission.equals(match.commission)) {
@@ -146,24 +148,21 @@ public class Match implements Entity {
         if (!firstTeamBets.equals(match.firstTeamBets)) {
             return false;
         }
-        if (!secondTeamBets.equals(match.secondTeamBets)) {
-            return false;
-        }
-        return Objects.equals(id, match.id);
+        return secondTeamBets.equals(match.secondTeamBets);
     }
 
     @Override
     public int hashCode() {
-        int result = date.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + firstTeamId.hashCode();
+        result = 31 * result + secondTeamId.hashCode();
+        result = 31 * result + winnerTeamId.hashCode();
+        result = 31 * result + date.hashCode();
         result = 31 * result + tournament.hashCode();
-        result = 31 * result + firstTeam.hashCode();
-        result = 31 * result + secondTeam.hashCode();
-        result = 31 * result + winner.hashCode();
         result = 31 * result + commission.hashCode();
         result = 31 * result + isClosed.hashCode();
         result = 31 * result + firstTeamBets.hashCode();
         result = 31 * result + secondTeamBets.hashCode();
-        result = 31 * result + (id != null ? id.hashCode() : 0);
         return result;
     }
 
@@ -172,9 +171,9 @@ public class Match implements Entity {
         return "Match{" +
                 "date=" + date +
                 ", tournament='" + tournament + '\'' +
-                ", firstTeam='" + firstTeam + '\'' +
-                ", secondTeam='" + secondTeam + '\'' +
-                ", winner='" + winner + '\'' +
+                ", firstTeamId='" + firstTeamId + '\'' +
+                ", secondTeamId='" + secondTeamId + '\'' +
+                ", winnerTeamId='" + winnerTeamId + '\'' +
                 ", commission=" + commission +
                 ", isClosed=" + isClosed +
                 ", firstTeamBets=" + firstTeamBets +

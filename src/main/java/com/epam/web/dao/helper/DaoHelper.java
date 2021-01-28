@@ -6,6 +6,8 @@ import com.epam.web.dao.impl.bet.BetDao;
 import com.epam.web.dao.impl.bet.BetDaoImpl;
 import com.epam.web.dao.impl.match.MatchDao;
 import com.epam.web.dao.impl.match.MatchDaoImpl;
+import com.epam.web.dao.impl.team.TeamDao;
+import com.epam.web.dao.impl.team.TeamDaoImpl;
 import com.epam.web.exception.DaoException;
 import com.epam.web.dao.impl.account.AccountDao;
 import com.epam.web.dao.impl.account.AccountDaoImpl;
@@ -29,6 +31,10 @@ public class DaoHelper implements AutoCloseable {
 
     public BetDao createBetDao() {
         return new BetDaoImpl(connection);
+    }
+
+    public TeamDao createTeamDao() {
+        return new TeamDaoImpl(connection);
     }
 
     public void startTransaction() throws DaoException {

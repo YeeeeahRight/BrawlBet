@@ -7,7 +7,7 @@ import com.epam.web.logic.service.match.MatchType;
 import com.epam.web.model.entity.Match;
 import com.epam.web.exception.DaoException;
 import com.epam.web.dao.mapper.impl.MatchRowMapper;
-import com.epam.web.model.enumeration.Team;
+import com.epam.web.model.enumeration.MatchTeamNumber;
 
 import java.sql.Connection;
 import java.util.Date;
@@ -15,13 +15,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
-    private static final String EDIT_QUERY =
-            "UPDATE matches SET date=?, tournament=?, first_team=?, second_team=? WHERE id=?";
-    private static final String ADD_QUERY =
-            "INSERT matches (date, tournament, first_team, second_team) VALUES" +
-                    "(?, ?, ?, ?)";
+    private static final String EDIT_QUERY = "UPDATE matches SET date=?, tournament=?, " +
+            "first_team_id=?, second_team_id=? WHERE id=?";
+    private static final String ADD_QUERY = "INSERT matches (date, tournament, first_team_id, " +
+            "second_team_id) VALUES(?, ?, ?, ?)";
     private static final String GET_ACCEPTED_MATCHES_QUERY_RANGE =
-            "SELECT * FROM matches WHERE commission > 0 ORDER BY winner='NONE' DESC, date LIMIT ?,?";
+            "SELECT * FROM matches WHERE commission > 0 ORDER BY is_closed DESC, date LIMIT ?,?";
     private static final String GET_UNACCEPTED_MATCHES_QUERY_RANGE =
             "SELECT * FROM matches WHERE commission = 0 ORDER BY date LIMIT ?,?";
     private static final String GET_UNCLOSED_MATCHES_QUERY_RANGE =
@@ -36,7 +35,7 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
             "first_team_bets + ? WHERE id=?";
     private static final String ADD_SECOND_TEAM_BETS_QUERY = "UPDATE matches SET second_team_bets= " +
             "second_team_bets + ? WHERE id=?";
-    private static final String CLOSE_QUERY = "UPDATE matches SET is_closed=1, winner=? WHERE id=?";
+    private static final String CLOSE_QUERY = "UPDATE matches SET is_closed=1, winner_team=? WHERE id=?";
 
     public MatchDaoImpl(Connection connection) {
         super(connection, new MatchRowMapper(), Match.TABLE);
@@ -45,15 +44,15 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     @Override
     public void save(Match match) throws DaoException {
         String tournament = match.getTournament();
-        String firstTeam = match.getFirstTeam();
-        String secondTeam = match.getSecondTeam();
+        Long firstTeamId = match.getFirstTeamId();
+        Long secondTeamId = match.getSecondTeamId();
         Date date = match.getDate();
         String dateStr = formatDate(date);
         Long id = match.getId();
         if (id == null) {
-            updateSingle(ADD_QUERY, dateStr, tournament, firstTeam, secondTeam);
+            updateSingle(ADD_QUERY, dateStr, tournament, firstTeamId, secondTeamId);
         } else {
-            updateSingle(EDIT_QUERY, dateStr, tournament, firstTeam, secondTeam, id);
+            updateSingle(EDIT_QUERY, dateStr, tournament, firstTeamId, secondTeamId, id);
         }
     }
 
@@ -63,8 +62,8 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     }
 
     @Override
-    public void close(long id, String winner) throws DaoException {
-        updateSingle(CLOSE_QUERY, winner, id);
+    public void close(long id, MatchTeamNumber matchTeamNumber) throws DaoException {
+        updateSingle(CLOSE_QUERY, matchTeamNumber.toString(), id);
     }
 
     @Override
@@ -118,9 +117,9 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     }
 
     @Override
-    public void addTeamBetAmount(Team team, float betAmount, long id) throws DaoException {
+    public void addTeamBetAmount(MatchTeamNumber teamType, float betAmount, long id) throws DaoException {
         String query;
-        switch (team) {
+        switch (teamType) {
             case FIRST:
                 query = ADD_FIRST_TEAM_BETS_QUERY;
                 break;

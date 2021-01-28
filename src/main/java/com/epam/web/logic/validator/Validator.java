@@ -8,6 +8,7 @@ import com.epam.web.model.Entity;
  * @param  <T>  type of entities to validate.
  */
 public interface Validator<T extends Entity> {
+
     /**
      * Validates given <T> object and returns boolean result.
      *

@@ -53,29 +53,29 @@
                         </div>
                     </div>
                     <form method="POST"
-                          action="${pageContext.request.contextPath}/controller?command=edit-match&id=${match.getId()}">
+                          action="${pageContext.request.contextPath}/controller?command=edit-match&id=${matchDto.getId()}">
                         <div class="input-form">
                             <input class="date"
                                    type="datetime-local"
                                    min="2021-01-05T00:00" max="2021-12-31T23:59"
                                    placeholder="<fmt:message key="match.date.advice"/>"
-                                   name="date" value="<sc:date-formatter date="${match.getDate()}"
+                                   name="date" value="<sc:date-formatter date="${matchDto.getDate()}"
                                formatType="HTML"></sc:date-formatter>"
                                    required>
                             <input class="tournament" type="text"
                                    placeholder="<fmt:message key="match.tournament.advice"/>"
                                    name="tournament" maxlength="15"
-                                   value="${match.getTournament()}"
+                                   value="${matchDto.getTournament()}"
                                    required>
                             <input class="first-team" type="text"
                                    placeholder="<fmt:message key="match.team.first.advice"/>"
                                    name="firstTeam" id="firstTeam"
-                                   value="${match.getFirstTeam()}"
+                                   value="${matchDto.getFirstTeam()}"
                                    maxlength="15" required>
                             <input class="second-team" type="text"
                                    placeholder="<fmt:message key="match.team.second.advice"/>"
                                    name="secondTeam" id="secondTeam"
-                                   value="${match.getSecondTeam()}"
+                                   value="${matchDto.getSecondTeam()}"
                                    maxlength="15" required>
                             <button type="submit">
                                 <fmt:message key="match.edit.button"/>

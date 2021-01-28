@@ -5,11 +5,14 @@ import com.epam.web.model.entity.Bet;
 
 import java.util.List;
 
+/**
+ * Interface with description of operations with the Bet.
+ */
 public interface BetService {
     /**
      * Creates bet in database or updates if bet id is exist in database.
      *
-     * @param  bet  a bet object to save or update.
+     * @param  bet  a Bet object to save or update.
      *
      * @throws  ServiceException  if bet is not passed validation and
      *                            also it's a wrapper for lower errors.

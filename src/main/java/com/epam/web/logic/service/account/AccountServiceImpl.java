@@ -53,7 +53,7 @@ public class AccountServiceImpl implements AccountService {
             AccountDao matchDao = daoHelper.createAccountDao();
             Optional<Account> user = matchDao.findById(id);
             if (!user.isPresent()) {
-                throw new ServiceException("There is no user with this id.");
+                throw new ServiceException("Account with id = " + id + " is not found.");
             }
             return user.get().getBalance();
         } catch (DaoException e) {
@@ -108,7 +108,7 @@ public class AccountServiceImpl implements AccountService {
             AccountDao accountDao = daoHelper.createAccountDao();
             Optional<Account> user = accountDao.findAccountByLogin(login);
             if (!user.isPresent()) {
-                throw new ServiceException("Account is not found.");
+                throw new ServiceException("Account with login = " + login + " is not found.");
             }
             return user.get();
         } catch (DaoException e) {

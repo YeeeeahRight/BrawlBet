@@ -11,26 +11,28 @@ import com.epam.web.exception.ServiceException;
 import com.epam.web.logic.calculator.BetCalculator;
 import com.epam.web.logic.service.bet.BetService;
 import com.epam.web.logic.service.match.MatchService;
+import com.epam.web.logic.service.team.TeamService;
 import com.epam.web.model.entity.Bet;
 import com.epam.web.model.entity.Match;
 import com.epam.web.model.entity.dto.BetMatchDto;
-import com.epam.web.model.enumeration.Team;
+import com.epam.web.model.enumeration.MatchTeamNumber;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class MyBetsCommand implements Command {
     private static final int MAX_BETS_PAGE = 6;
-    private static final String NO_WINNER = "NONE";
+
     private final BetService betService;
     private final MatchService matchService;
+    private final TeamService teamService;
     private final BetCalculator betCalculator;
 
-    public MyBetsCommand(BetService betService, MatchService matchService, BetCalculator betCalculator) {
+    public MyBetsCommand(BetService betService, MatchService matchService,
+                         TeamService teamService, BetCalculator betCalculator) {
         this.betService = betService;
         this.matchService = matchService;
+        this.teamService = teamService;
         this.betCalculator = betCalculator;
     }
 
@@ -65,43 +67,62 @@ public class MyBetsCommand implements Command {
 
     private List<BetMatchDto> buildBetMatchDtoList(List<Bet> accountBets) throws ServiceException {
         List<BetMatchDto> betMatchDtoList = new ArrayList<>();
+        BetMatchDto.BetMatchDtoBuilder betMatchDtoBuilder = new BetMatchDto.BetMatchDtoBuilder();
         for (Bet bet : accountBets) {
-            float moneyBet = bet.getMoneyBet();
-            float moneyReceived = bet.getMoneyReceived();
             Long matchId = bet.getMatchId();
             Match match = matchService.getMatchById(matchId);
-            Date betDate = bet.getBetDate();
             String tournament = match.getTournament();
-            float firstTeamBets = match.getFirstTeamBets();
-            float secondTeamBets = match.getSecondTeamBets();
-            int firstPercent = 0;
-            int secondPercent = 0;
-            if (firstTeamBets + secondTeamBets != 0) {
-                firstPercent = betCalculator.calculatePercent(Team.FIRST,
-                        firstTeamBets, secondTeamBets);
-                secondPercent = 100 - firstPercent;
-            }
-            String winner = match.getWinner();
-            String firstTeam = match.getFirstTeam();
-            String secondTeam = match.getSecondTeam();
-            String winnerTeam = bet.getTeam() == Team.FIRST ? firstTeam : secondTeam;
-            BetMatchDto betMatchDto = new BetMatchDto(matchId, winnerTeam, moneyBet, moneyReceived, betDate,
-                    tournament, firstTeam, secondTeam, firstPercent, secondPercent, winner);
+            betMatchDtoBuilder = betMatchDtoBuilder.setGeneralAttributes(bet, tournament);
+            betMatchDtoBuilder = setTeams(betMatchDtoBuilder, match, bet.getTeamId());
+            betMatchDtoBuilder = setPercents(betMatchDtoBuilder,
+                    match.getFirstTeamBets(), match.getSecondTeamBets());
+            BetMatchDto betMatchDto = betMatchDtoBuilder.build();
             betMatchDtoList.add(betMatchDto);
         }
         return betMatchDtoList;
     }
 
-    private void sortBetMatchDtoList(List<BetMatchDto> betMatchDtoList) {
-        List<BetMatchDto> closedBetMatchDtoList = new ArrayList<>();
-        Iterator<BetMatchDto> betMatchDtoIterator = betMatchDtoList.iterator();
-        while (betMatchDtoIterator.hasNext()) {
-            BetMatchDto betMatchDto = betMatchDtoIterator.next();
-            if (!betMatchDto.getWinner().equalsIgnoreCase(NO_WINNER)) {
-                closedBetMatchDtoList.add(betMatchDto);
-                betMatchDtoIterator.remove();
-            }
+    private BetMatchDto.BetMatchDtoBuilder setTeams(BetMatchDto.BetMatchDtoBuilder betMatchDtoBuilder,
+                                         Match match, long teamOnBetId) throws ServiceException {
+        long firstTeamId = match.getFirstTeamId();
+        long secondTeamId = match.getSecondTeamId();
+        String firstTeamName = teamService.getTeamNameById(firstTeamId);
+        String secondTeamName = teamService.getTeamNameById(secondTeamId);
+        long winnerTeamId = match.getWinnerTeamId();
+        String winnerTeamName = findWinnerTeamName(winnerTeamId, firstTeamId, secondTeamId,
+                firstTeamName, secondTeamName);
+        String teamOnBet = teamService.getTeamNameById(teamOnBetId);
+
+        return betMatchDtoBuilder.setTeams(firstTeamName, secondTeamName, teamOnBet, winnerTeamName);
+    }
+
+    private String findWinnerTeamName(long winnerTeamId, long firstTeamId, long secondTeamId,
+                                      String firstTeamName, String secondTeamName) {
+        if (winnerTeamId == firstTeamId) {
+            return firstTeamName;
+        } else if (winnerTeamId == secondTeamId) {
+            return secondTeamName;
         }
-        betMatchDtoList.addAll(closedBetMatchDtoList);
+        return null;
+    }
+
+    private BetMatchDto.BetMatchDtoBuilder setPercents(BetMatchDto.BetMatchDtoBuilder betMatchDtoBuilder,
+                                                       float firstTeamBets, float secondTeamBets) {
+        int firstPercent = 0;
+        int secondPercent = 0;
+        if (firstTeamBets + secondTeamBets != 0) {
+            firstPercent = betCalculator.calculatePercent(MatchTeamNumber.FIRST,
+                    firstTeamBets, secondTeamBets);
+            secondPercent = 100 - firstPercent;
+        }
+        return betMatchDtoBuilder.setPercents(firstPercent, secondPercent);
+    }
+
+    private void sortBetMatchDtoList(List<BetMatchDto> betMatchDtoList) {
+        betMatchDtoList.sort((o1, o2) -> {
+            boolean isFirstClosed = o1.getWinner() == null;
+            boolean isSecondClosed = o2.getWinner() == null;
+            return isFirstClosed == isSecondClosed ? 0 : (isFirstClosed ? -1 : 1);
+        });
     }
 }

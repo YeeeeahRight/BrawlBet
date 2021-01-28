@@ -1,56 +1,27 @@
 package com.epam.web.dao.impl.match;
 
+import com.epam.web.dao.Dao;
 import com.epam.web.logic.service.match.MatchType;
 import com.epam.web.model.entity.Match;
 import com.epam.web.exception.DaoException;
-import com.epam.web.model.enumeration.Team;
+import com.epam.web.model.enumeration.MatchTeamNumber;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
- * Interface with description of operations with the Match data.
+ * Extending DAO interface for processing Matches
  */
-public interface MatchDao {
-    /**
-     * Removes match in database by match id.
-     *
-     * @param  id  an id value of match to remove.
-     *
-     * @throws  DaoException  if database errors occurs.
-     */
-    void removeById(long id) throws DaoException;
-
-    /**
-     * Saves match to database or updates if match id is exist in database.
-     *
-     * @param  match  a match object to save or update.
-     *
-     * @throws  DaoException  if database errors occurs.
-     */
-    void save(Match match) throws DaoException;
+public interface MatchDao extends Dao<Match> {
 
     /**
      * Closes match by match id using match winner.
      *
-     * @param  id      an id value of match to close.
-     * @param  winner  a winner of match.
+     * @param  id               an id value of match to close.
+     * @param  matchTeamNumber  a serial number of team in match(first, second).
      *
      * @throws  DaoException  if database errors occurs.
      */
-    void close(long id, String winner) throws DaoException;
-
-    /**
-     * Finds match by id and returns container of match if exist
-     * or empty container if not.
-     *
-     * @param  id  an id value of match to search.
-     *
-     * @return  an optional container of Match object.
-     *
-     * @throws  DaoException  if database errors occurs.
-     */
-    Optional<Match> findById(long id) throws DaoException;
+    void close(long id, MatchTeamNumber matchTeamNumber) throws DaoException;
 
     /**
      * Adds commission value to match by match id.
@@ -65,13 +36,13 @@ public interface MatchDao {
     /**
      * Adds bet amount to team by match id and team type.
      *
-     * @param  team       a type(left, right) of team.
+     * @param  teamType   a type(left, right) of team.
      * @param  betAmount  a bet amount to add.
      * @param  id         an id value of match.
      *
      * @throws  DaoException  if database errors occurs.
      */
-    void addTeamBetAmount(Team team, float betAmount, long id) throws DaoException;
+    void addTeamBetAmount(MatchTeamNumber teamType, float betAmount, long id) throws DaoException;
 
     /**
      * Gets list of matches by match type

@@ -1,7 +1,6 @@
 package com.epam.web.command.impl.user;
 
 import com.epam.web.command.CommandResult;
-import com.epam.web.command.impl.user.BetCommand;
 import com.epam.web.constant.Attribute;
 import com.epam.web.constant.Parameter;
 import com.epam.web.controller.request.RequestContext;
@@ -28,13 +27,12 @@ public class BetCommandTest {
     private static final Map<String, Object> REQUEST_ATTRIBUTES = new HashMap<>();
     private static final Long VALID_ACCOUNT_ID = 2L;
     private static final String VALID_MATCH_ID = "2";
-    private static final String VALID_TEAM = "FIRST";
+    private static final String VALID_TEAM_ID = "3";
     private static final String INVALID_TEAM = "FIRST_FIRST";
     private static final String VALID_MONEY = "50.0";
     private static final String MONEY_NOT_NUMBER = "in.valid";
 
     private Map<String, String[]> requestParameters;
-    private MatchService matchService;
     private BetService betService;
     private AccountService accountService;
 
@@ -46,11 +44,10 @@ public class BetCommandTest {
     @Before
     public void initMethod() {
         requestParameters = new HashMap<>();
-        requestParameters.put(Parameter.BET_ON, new String[]{VALID_TEAM});
+        requestParameters.put(Parameter.BET_ON, new String[]{VALID_TEAM_ID});
         requestParameters.put(Parameter.ID, new String[]{VALID_MATCH_ID});
         requestParameters.put(Parameter.MONEY, new String[]{VALID_MONEY});
 
-        matchService = Mockito.mock(MatchService.class);
         betService = Mockito.mock(BetService.class);
         accountService = Mockito.mock(AccountService.class);
     }
@@ -59,7 +56,7 @@ public class BetCommandTest {
     public void testExecuteShouldReturnRedirectWhenParametersAreValid() throws ServiceException,
             InvalidParametersException {
         //given
-        BetCommand betCommand = new BetCommand(matchService, betService, accountService);
+        BetCommand betCommand = new BetCommand(betService, accountService);
         RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
                 requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
         //when
@@ -74,7 +71,7 @@ public class BetCommandTest {
     public void testExecuteShouldBetWhenMatchParametersAreValid() throws ServiceException,
             InvalidParametersException {
         //given
-        BetCommand betCommand = new BetCommand(matchService, betService, accountService);
+        BetCommand betCommand = new BetCommand(betService, accountService);
         RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
                 requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
         //when
@@ -85,25 +82,12 @@ public class BetCommandTest {
     }
 
     //then
-    @Test(expected = ServiceException.class)
-    public void testExecuteShouldThrowServiceExceptionRedirectWhenMatchIsFinished()
-            throws ServiceException, InvalidParametersException {
-        //given
-        BetCommand betCommand = new BetCommand(matchService, betService, accountService);
-        RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
-                requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
-        //when
-        when(matchService.isFinishedMatch(VALID_ACCOUNT_ID)).thenReturn(true);
-        betCommand.execute(requestContext);
-    }
-
-    //then
     @Test(expected = InvalidParametersException.class)
-    public void testExecuteShouldThrowInvalidParametersExceptionRedirectWhenMoneyIsNotNumber()
+    public void testExecuteShouldThrowInvalidParametersExceptionWhenMoneyIsNotNumber()
             throws ServiceException, InvalidParametersException {
         //given
         requestParameters.put(Parameter.MONEY, new String[]{MONEY_NOT_NUMBER});
-        BetCommand betCommand = new BetCommand(matchService, betService, accountService);
+        BetCommand betCommand = new BetCommand(betService, accountService);
         RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
                 requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
         //when
@@ -117,7 +101,7 @@ public class BetCommandTest {
         //given
         requestParameters.put(Parameter.MONEY, new String[]{VALID_MONEY});
         requestParameters.put(Parameter.BET_ON, new String[]{INVALID_TEAM});
-        BetCommand betCommand = new BetCommand(matchService, betService, accountService);
+        BetCommand betCommand = new BetCommand(betService, accountService);
         RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
                 requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
         //when

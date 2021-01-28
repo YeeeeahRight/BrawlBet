@@ -7,9 +7,10 @@ import com.epam.web.model.entity.Bet;
 import java.util.List;
 
 /**
- * Interface with description of operations with the Bet data.
+ * Extending DAO interface for processing Bets
  */
 public interface BetDao extends Dao<Bet> {
+
     /**
      * Gets list of bets of match by match id.
      *

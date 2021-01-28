@@ -3,7 +3,7 @@ package com.epam.web.logic.service.match;
 import com.epam.web.exception.ServiceException;
 
 /**
- * Interface with description of operations on close match command.
+ * Interface with description of operation on close match command.
  */
 public interface CloseMatchService {
     /**

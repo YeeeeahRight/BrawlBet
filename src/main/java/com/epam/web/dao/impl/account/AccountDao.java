@@ -8,9 +8,10 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Interface with description of operations with the Account data.
+ * Extending DAO interface for processing Accounts
  */
 public interface AccountDao extends Dao<Account> {
+
     /**
      * Gets list of users in range described as offset and amount of users.
      *

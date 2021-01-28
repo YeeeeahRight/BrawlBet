@@ -53,7 +53,7 @@ public class MatchServiceImpl implements MatchService {
             MatchDao matchDao = daoHelper.createMatchDao();
             Optional<Match> match = matchDao.findById(id);
             if (!match.isPresent()) {
-                throw new ServiceException("There is no such match with this id.");
+                throw new ServiceException("Match with id = " + id + " is not found.");
             }
             return match.get();
         } catch (DaoException e) {
@@ -120,7 +120,7 @@ public class MatchServiceImpl implements MatchService {
             MatchDao matchDao = daoHelper.createMatchDao();
             Optional<Match> matchOptional = matchDao.findById(id);
             if (!matchOptional.isPresent()) {
-                throw new ServiceException("There is no match with this id.");
+                throw new ServiceException("Match with id = " + id + " is not found.");
             }
             Match match = matchOptional.get();
             long matchTime = match.getDate().getTime();

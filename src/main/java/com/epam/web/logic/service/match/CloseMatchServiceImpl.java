@@ -5,13 +5,14 @@ import com.epam.web.dao.helper.DaoHelperFactory;
 import com.epam.web.dao.impl.account.AccountDao;
 import com.epam.web.dao.impl.bet.BetDao;
 import com.epam.web.dao.impl.match.MatchDao;
+import com.epam.web.dao.impl.team.TeamDao;
 import com.epam.web.exception.DaoException;
 import com.epam.web.exception.ServiceException;
 import com.epam.web.logic.calculator.BetCalculator;
 import com.epam.web.model.entity.Account;
 import com.epam.web.model.entity.Bet;
 import com.epam.web.model.entity.Match;
-import com.epam.web.model.enumeration.Team;
+import com.epam.web.model.enumeration.MatchTeamNumber;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,28 +36,31 @@ public class CloseMatchServiceImpl implements CloseMatchService {
             AccountDao accountDao = daoHelper.createAccountDao();
             Optional<Match> matchOptional = matchDao.findById(matchId);
             if (!matchOptional.isPresent()) {
-                throw new ServiceException("There is no such match with this id anymore.");
+                throw new ServiceException("Match with id = " + matchId + " is not found.");
             }
             Match match = matchOptional.get();
             if (match.isClosed()) {
                 throw new ServiceException("This match already closed.");
             }
             List<Bet> matchBets = betDao.getBetsByMatchId(matchId);
-            Team winner;
+            MatchTeamNumber winnerTeam;
             daoHelper.startTransaction();
             if (matchBets.size() > 0) {
                 float firstTeamBetsAmount = match.getFirstTeamBets();
                 float secondTeamBetsAmount = match.getSecondTeamBets();
-                int firstPercent = betCalculator.calculatePercent(Team.FIRST, firstTeamBetsAmount,
+                int firstPercent = betCalculator.calculatePercent(MatchTeamNumber.FIRST, firstTeamBetsAmount,
                         secondTeamBetsAmount);
-                winner = calculateWinner(firstPercent);
+                winnerTeam = calculateWinner(firstPercent);
                 float commission = match.getCommission();
                 float winCoefficient = calculateCoefficient(commission,
-                        firstTeamBetsAmount, secondTeamBetsAmount, matchBets, winner);
+                        firstTeamBetsAmount, secondTeamBetsAmount, matchBets, winnerTeam);
+                long firstTeamId = match.getFirstTeamId();
+                long secondTeamId = match.getSecondTeamId();
                 for (Bet bet : matchBets) {
-                    Team team = bet.getTeam();
+                    long teamId = bet.getTeamId();
+                    MatchTeamNumber teamBetNumber = findTeamNumber(teamId, firstTeamId, secondTeamId);
                     float moneyReceived;
-                    if (team == winner) {
+                    if (teamBetNumber == winnerTeam) {
                         moneyReceived = bet.getMoneyBet() * winCoefficient;
                     } else {
                         moneyReceived = 0f;
@@ -64,17 +68,18 @@ public class CloseMatchServiceImpl implements CloseMatchService {
                     betDao.close(moneyReceived, bet.getId());
                     accountDao.addMoneyById(moneyReceived, bet.getAccountId());
                 }
+                TeamDao teamDao = daoHelper.createTeamDao();
+                incrementTeamsStatistic(teamDao, winnerTeam, firstTeamId, secondTeamId);
                 Optional<Account> bookmakerOptional = accountDao.findBookmaker();
                 if (bookmakerOptional.isPresent()) {
                     Account bookmaker = bookmakerOptional.get();
-                    float matchGain = winner == Team.FIRST ? secondTeamBetsAmount : firstTeamBetsAmount;
+                    float matchGain = winnerTeam == MatchTeamNumber.FIRST ? secondTeamBetsAmount : firstTeamBetsAmount;
                     float bookmakerGain = matchGain * commission / 100f;
                     accountDao.addMoneyById(bookmakerGain, bookmaker.getId());
                 }
             } else {
-                winner = calculateWinner(SAME_WIN_CHANCE);
+                winnerTeam = calculateWinner(SAME_WIN_CHANCE);
             }
-            String winnerTeam = winner == Team.FIRST ? match.getFirstTeam() : match.getSecondTeam();
             matchDao.close(matchId, winnerTeam);
             daoHelper.commit();
         } catch (DaoException e) {
@@ -82,20 +87,20 @@ public class CloseMatchServiceImpl implements CloseMatchService {
         }
     }
 
-    private Team calculateWinner(int firstTeamPercent) {
+    private MatchTeamNumber calculateWinner(int firstTeamPercent) {
         long percent = Math.round((Math.random() * 100) + 1);
-        return percent > firstTeamPercent ? Team.SECOND : Team.FIRST;
+        return percent > firstTeamPercent ? MatchTeamNumber.SECOND : MatchTeamNumber.FIRST;
     }
 
     private float calculateCoefficient(float commission, float firstTeamBetsAmount,
-                                       float secondTeamBetsAmount, List<Bet> matchBets, Team winner) {
+                                       float secondTeamBetsAmount, List<Bet> matchBets, MatchTeamNumber winner) {
         float coefficient = 0.0f;
         if (isBetsOnTwoTeams(matchBets)) {
-            if (winner == Team.FIRST) {
-                coefficient = betCalculator.calculateCoefficient(Team.FIRST, firstTeamBetsAmount,
+            if (winner == MatchTeamNumber.FIRST) {
+                coefficient = betCalculator.calculateCoefficient(MatchTeamNumber.FIRST, firstTeamBetsAmount,
                         secondTeamBetsAmount);
             } else {
-                coefficient = betCalculator.calculateCoefficient(Team.SECOND, firstTeamBetsAmount,
+                coefficient = betCalculator.calculateCoefficient(MatchTeamNumber.SECOND, firstTeamBetsAmount,
                         secondTeamBetsAmount);
             }
             if (!isOneUserBets(matchBets)) {
@@ -116,13 +121,33 @@ public class CloseMatchServiceImpl implements CloseMatchService {
     }
 
     private boolean isBetsOnTwoTeams(List<Bet> bets) {
-        Team firstBetTeam = bets.get(0).getTeam();
+        long firstBetTeamId = bets.get(0).getTeamId();
         for (int i = 1; i < bets.size(); i++) {
-            Team currentBetTeam = bets.get(i).getTeam();
-            if (firstBetTeam != currentBetTeam) {
+            long currentBetTeamId = bets.get(i).getTeamId();
+            if (firstBetTeamId != currentBetTeamId) {
                 return true;
             }
         }
         return false;
+    }
+
+    private MatchTeamNumber findTeamNumber(long teamId, long firstTeamId, long secondTeamId) throws ServiceException {
+        if (teamId == firstTeamId) {
+            return MatchTeamNumber.FIRST;
+        } else if (teamId == secondTeamId) {
+            return MatchTeamNumber.SECOND;
+        }
+        throw new ServiceException("Team with id = " + teamId + " is not found.");
+    }
+
+    private void incrementTeamsStatistic(TeamDao teamDao, MatchTeamNumber matchTeamNumber,
+                                         long firstTeamId, long secondTeamId) throws DaoException {
+        if (matchTeamNumber == MatchTeamNumber.SECOND) {
+            long tempId = firstTeamId;
+            firstTeamId = secondTeamId;
+            secondTeamId = tempId;
+        }
+        teamDao.incrementMatchesWonById(firstTeamId);
+        teamDao.incrementMatchesLostById(secondTeamId);
     }
 }

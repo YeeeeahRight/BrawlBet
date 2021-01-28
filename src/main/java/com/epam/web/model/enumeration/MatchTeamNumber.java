@@ -1,6 +1,6 @@
 package com.epam.web.model.enumeration;
 
-public enum Team {
+public enum MatchTeamNumber {
     FIRST,
     SECOND
 }

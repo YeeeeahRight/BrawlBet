@@ -33,39 +33,39 @@
 
             </c:if>
             <div class="main-body">
-                <c:forEach items="${matchBetsDtoList}" var="matchBetsDto" varStatus="counter">
+                <c:forEach items="${matchDtoList}" var="matchDto" varStatus="counter">
                     <c:if test="${counter.index % 2 == 0}">
                         <div class="match-row">
                     </c:if>
-                    <a href="${pageContext.request.contextPath}/controller?command=match-page&id=${matchBetsDto.getId()}">
-                        <c:if test="${matchBetsDto.isClosed()}">
+                    <a href="${pageContext.request.contextPath}/controller?command=match-page&id=${matchDto.getId()}">
+                        <c:if test="${matchDto.isClosed()}">
                             <c:set var="isClosedMatch" value="closed"/>
                         </c:if>
                         <div class="match ${isClosedMatch}">
                             <div class="match-header">
                                 <div class="match-date">
                                     <h1>
-                                        <sc:date-formatter date="${matchBetsDto.getDate()}"
+                                        <sc:date-formatter date="${matchDto.getDate()}"
                                                            formatType="${sessionScope.lang}"></sc:date-formatter>
                                     </h1>
                                 </div>
                                 <div class="match-tournament">
-                                    <h1>${matchBetsDto.getTournament()}</h1>
+                                    <h1>${matchDto.getTournament()}</h1>
                                 </div>
                             </div>
                             <div class="match-body">
-                                <div class="match-f-team ${matchBetsDto.getFirstTeam().equals(matchBetsDto.getWinner())}">
+                                <div class="match-f-team ${matchDto.getFirstTeam().equals(matchDto.getWinner())}">
                                     <h1>
-                                            ${matchBetsDto.getFirstTeam()}
+                                            ${matchDto.getFirstTeam()}
                                     </h1>
                                 </div>
                                 <div class="match-body-center">
                                     <div class="match-f-percent">
                                         <h1>
-                                                ${matchBetsDto.getFirstPercent()}%
+                                                ${matchDto.getFirstPercent()}%
                                         </h1>
                                     </div>
-                                    <c:if test="${matchBetsDto.getFirstTeam().equals(matchBetsDto.getWinner())}">
+                                    <c:if test="${matchDto.getFirstTeam().equals(matchDto.getWinner())}">
                                         <div class="winner-image"></div>
                                     </c:if>
                                     <div class="match-versus-icon">
@@ -73,18 +73,18 @@
                                             -
                                         </h1>
                                     </div>
-                                    <c:if test="${matchBetsDto.getSecondTeam().equals(matchBetsDto.getWinner())}">
+                                    <c:if test="${matchDto.getSecondTeam().equals(matchDto.getWinner())}">
                                         <div class="winner-image"></div>
                                     </c:if>
                                     <div class="match-s-percent">
                                         <h1>
-                                                ${matchBetsDto.getSecondPercent()}%
+                                                ${matchDto.getSecondPercent()}%
                                         </h1>
                                     </div>
                                 </div>
-                                <div class="match-s-team ${matchBetsDto.getSecondTeam().equals(matchBetsDto.getWinner())}">
+                                <div class="match-s-team ${matchDto.getSecondTeam().equals(matchDto.getWinner())}">
                                     <h1>
-                                            ${matchBetsDto.getSecondTeam()}
+                                            ${matchDto.getSecondTeam()}
                                     </h1>
                                 </div>
                             </div>
@@ -98,7 +98,7 @@
                 <c:if test="${cycleCounter.index % 2 == 0}">
                     </div>
                 </c:if>
-                <c:if test="${matchBetsDtoList.size() != 0}" >
+                <c:if test="${matchDtoList.size() != 0}" >
                     <div class="pagination">
                         <a class="first-arrow" id="${currentPage > 1}"
                            href="${pageContext.request.contextPath}/controller?command=home-page&page=${currentPage - 1}"></a>

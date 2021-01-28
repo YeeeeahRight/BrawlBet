@@ -9,26 +9,25 @@ import com.epam.web.exception.InvalidParametersException;
 import com.epam.web.logic.calculator.BetCalculator;
 import com.epam.web.logic.service.match.MatchService;
 import com.epam.web.logic.service.match.MatchType;
+import com.epam.web.logic.service.team.TeamService;
 import com.epam.web.model.entity.Match;
 import com.epam.web.exception.ServiceException;
 import com.epam.web.controller.request.RequestContext;
-import com.epam.web.model.entity.dto.MatchBetsDto;
-import com.epam.web.model.enumeration.Team;
+import com.epam.web.model.entity.dto.MatchDto;
+import com.epam.web.model.enumeration.MatchTeamNumber;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class HomePageCommand implements Command {
     private static final int MAX_MATCHES_PAGE = 6;
-    private static final String NO_WINNER = "NONE";
     private final MatchService matchService;
     private final BetCalculator betCalculator;
+    private final TeamService teamService;
 
-    public HomePageCommand(MatchService matchService, BetCalculator betCalculator) {
+    public HomePageCommand(MatchService matchService, TeamService teamService, BetCalculator betCalculator) {
         this.matchService = matchService;
         this.betCalculator = betCalculator;
+        this.teamService = teamService;
     }
 
     @Override
@@ -51,8 +50,8 @@ public class HomePageCommand implements Command {
             throw new InvalidParametersException("No matches on this page");
         }
         sortMatchesByClosing(activeMatches);
-        List<MatchBetsDto> matchBetsDtoList = buildMatchBetDtoList(activeMatches);
-        requestContext.addAttribute(Attribute.MATCH_BETS_DTO_LIST, matchBetsDtoList);
+        List<MatchDto> matchDtoList = buildMatchDtoList(activeMatches);
+        requestContext.addAttribute(Attribute.MATCH_DTO_LIST, matchDtoList);
         requestContext.addAttribute(Attribute.CURRENT_PAGE, page);
         int maxPage = ((matchService.getMatchesTypeAmount(MatchType.ACCEPTED) - 1) / MAX_MATCHES_PAGE) + 1;
         requestContext.addAttribute(Attribute.MAX_PAGE, maxPage);
@@ -60,42 +59,54 @@ public class HomePageCommand implements Command {
         return CommandResult.forward(Page.HOME);
     }
 
-    private List<MatchBetsDto> buildMatchBetDtoList(List<Match> activeMatches) {
-        List<MatchBetsDto> matchBetsDtoList = new ArrayList<>();
-        for (Match match : activeMatches) {
-            long id = match.getId();
-            Date date = match.getDate();
-            String tournament = match.getTournament();
-            String firstTeam = match.getFirstTeam();
-            String secondTeam = match.getSecondTeam();
-            String winner = match.getWinner();
-            boolean isClosed = match.isClosed();
-            float firstTeamBetsAmount = match.getFirstTeamBets();
-            float secondTeamBetsAmount = match.getSecondTeamBets();
-            int firstPercent = 0;
-            int secondPercent = 0;
-            if (firstTeamBetsAmount + secondTeamBetsAmount != 0) {
-                firstPercent = betCalculator.calculatePercent(Team.FIRST,
-                        firstTeamBetsAmount, secondTeamBetsAmount);
-                secondPercent = 100 - firstPercent;
-            }
-            MatchBetsDto matchBetsDto = new MatchBetsDto(id, date, tournament,
-                    firstTeam, secondTeam, firstPercent, secondPercent, winner, isClosed);
-            matchBetsDtoList.add(matchBetsDto);
-        }
-        return matchBetsDtoList;
+    private void sortMatchesByClosing(List<Match> matches) {
+        matches.sort((o1, o2) -> {
+            boolean isFirstClosed = o1.isClosed();
+            boolean isSecondClosed = o2.isClosed();
+            return isFirstClosed == isSecondClosed ? 0 : (isFirstClosed ? -1 : 1);
+        });
     }
 
-    private void sortMatchesByClosing(List<Match> matches) {
-        List<Match> closedMatches = new ArrayList<>();
-        Iterator<Match> matchIterator = matches.iterator();
-        while (matchIterator.hasNext()) {
-            Match currentMatch = matchIterator.next();
-            if (!currentMatch.getWinner().equalsIgnoreCase(NO_WINNER)) {
-                closedMatches.add(currentMatch);
-                matchIterator.remove();
-            }
+    private List<MatchDto> buildMatchDtoList(List<Match> activeMatches) throws ServiceException {
+        List<MatchDto> matchDtoList = new ArrayList<>();
+        MatchDto.MatchDtoBuilder matchDtoBuilder = new MatchDto.MatchDtoBuilder();
+        for (Match match : activeMatches) {
+            long firstTeamId = match.getFirstTeamId();
+            long secondTeamId = match.getSecondTeamId();
+            String firstTeamName = teamService.getTeamNameById(firstTeamId);
+            String secondTeamName = teamService.getTeamNameById(secondTeamId);
+            long winnerTeamId = match.getWinnerTeamId();
+            String winnerTeamName = findWinnerTeamName(winnerTeamId, firstTeamId, secondTeamId,
+                    firstTeamName, secondTeamName);
+            matchDtoBuilder = matchDtoBuilder.setGeneralFields(match,
+                    firstTeamName, secondTeamName).setWinner(winnerTeamName);
+            matchDtoBuilder = setPercents(matchDtoBuilder,
+                    match.getFirstTeamBets(), match.getSecondTeamBets());
+            MatchDto matchDto = matchDtoBuilder.build();
+            matchDtoList.add(matchDto);
         }
-        matches.addAll(closedMatches);
+        return matchDtoList;
+    }
+
+    private String findWinnerTeamName(long winnerTeamId, long firstTeamId, long secondTeamId,
+                                      String firstTeamName, String secondTeamName) {
+        if (winnerTeamId == firstTeamId) {
+            return firstTeamName;
+        } else if (winnerTeamId == secondTeamId) {
+            return secondTeamName;
+        }
+        return null;
+    }
+
+    private MatchDto.MatchDtoBuilder setPercents(MatchDto.MatchDtoBuilder matchDtoBuilder, float firstTeamBets,
+                               float secondTeamBets) {
+        int firstPercent = 0;
+        int secondPercent = 0;
+        if (firstTeamBets + secondTeamBets != 0) {
+            firstPercent = betCalculator.calculatePercent(MatchTeamNumber.FIRST,
+                    firstTeamBets, secondTeamBets);
+            secondPercent = 100 - firstPercent;
+        }
+        return matchDtoBuilder.setPercents(firstPercent, secondPercent);
     }
 }

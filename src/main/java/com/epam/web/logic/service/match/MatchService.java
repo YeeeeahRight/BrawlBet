@@ -1,16 +1,18 @@
 package com.epam.web.logic.service.match;
 
-import com.epam.web.exception.DaoException;
 import com.epam.web.exception.ServiceException;
 import com.epam.web.model.entity.Match;
 
 import java.util.List;
 
+/**
+ * Interface with description of operations with the Match.
+ */
 public interface MatchService {
     /**
      * Saves match or updates if match id is exist.
      *
-     * @param  match  a match object to save or update.
+     * @param  match  a Match object to save or update.
      *
      * @throws  ServiceException  if match is not passed validation
      *                            and also it's a wrapper for lower errors.
@@ -31,7 +33,7 @@ public interface MatchService {
      *
      * @param  id  an id value of match to get.
      *
-     * @return  received match object.
+     * @return  received Match object.
      *
      * @throws  ServiceException  if match is not found and
      *                            also it's a wrapper for lower errors.
@@ -51,7 +53,7 @@ public interface MatchService {
     /**
      * Cancel match by match id.
      *
-     * @param  id          an id value of match to cancel.
+     * @param  id  an id value of match to cancel.
      *
      * @throws  ServiceException  a wrapper for lower errors.
      */

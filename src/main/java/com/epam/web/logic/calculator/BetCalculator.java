@@ -1,6 +1,6 @@
 package com.epam.web.logic.calculator;
 
-import com.epam.web.model.enumeration.Team;
+import com.epam.web.model.enumeration.MatchTeamNumber;
 
 /**
  * Interface with description of math operations with bets.
@@ -15,7 +15,7 @@ public interface BetCalculator {
      *
      * @return  coefficient value of given team.
      */
-    float calculateCoefficient(Team team, float firstTeamBetsAmount, float secondTeamBetsAmount);
+    float calculateCoefficient(MatchTeamNumber team, float firstTeamBetsAmount, float secondTeamBetsAmount);
 
     /**
      * Calculates bets amount percent of given team by first and second team bets amount.
@@ -26,5 +26,5 @@ public interface BetCalculator {
      *
      * @return  bets amount percent of given team.
      */
-    int calculatePercent(Team team, float firstTeamBetsAmount, float secondTeamBetsAmount);
+    int calculatePercent(MatchTeamNumber team, float firstTeamBetsAmount, float secondTeamBetsAmount);
 }

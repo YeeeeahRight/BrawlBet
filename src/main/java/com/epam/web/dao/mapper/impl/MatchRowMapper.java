@@ -15,17 +15,18 @@ public class MatchRowMapper implements RowMapper<Match> {
     @Override
     public Match map(ResultSet resultSet) throws SQLException {
         String tournament = resultSet.getString(Match.TOURNAMENT);
-        String firstTeam = resultSet.getString(Match.FIRST_TEAM);
-        String secondTeam = resultSet.getString(Match.SECOND_TEAM);
-        long id = resultSet.getLong(Match.ID);
-        float commission = resultSet.getFloat(Match.COMMISSION);
-        String winner = resultSet.getString(Match.WINNER);
-        boolean isClosed = resultSet.getBoolean(Match.IS_CLOSED);
-        float firstTeamBets = resultSet.getFloat(Match.FIRST_TEAM_BETS);
-        float secondTeamBets = resultSet.getFloat(Match.SECOND_TEAM_BETS);
+        Long firstTeamId = resultSet.getLong(Match.FIRST_TEAM_ID);
+        Long secondTeamId = resultSet.getLong(Match.SECOND_TEAM_ID);
+        Long winnerTeamId = resultSet.getLong(Match.WINNER_TEAM_ID);
+        Long id = resultSet.getLong(Match.ID);
+        Float commission = resultSet.getFloat(Match.COMMISSION);
+        Boolean isClosed = resultSet.getBoolean(Match.IS_CLOSED);
+        Float firstTeamBets = resultSet.getFloat(Match.FIRST_TEAM_BETS);
+        Float secondTeamBets = resultSet.getFloat(Match.SECOND_TEAM_BETS);
         String dateString = resultSet.getString(Match.DATE);
         Date date = parseDate(dateString);
-        return new Match(id, date, tournament, firstTeam, secondTeam, winner, commission,
+
+        return new Match(id, date, tournament, firstTeamId, secondTeamId, winnerTeamId, commission,
                 isClosed, firstTeamBets, secondTeamBets);
     }
 

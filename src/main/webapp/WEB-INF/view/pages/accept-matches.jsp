@@ -32,9 +32,9 @@
                 <div class="matches-icon-second"></div>
             </div>
             <div class="main-body">
-                <c:forEach items="${matches}" var="match" varStatus="counter">
+                <c:forEach items="${matchDtoList}" var="matchDto" varStatus="counter">
                     <form method="POST"
-                          action="${pageContext.request.contextPath}/controller?command=accept-match&id=${match.getId()}">
+                          action="${pageContext.request.contextPath}/controller?command=accept-match&id=${matchDto.getId()}">
                         <div class="match">
                             <div class="accept-button">
                                 <button type="submit">
@@ -44,15 +44,15 @@
                             <div class="match-description">
                                 <div class="match-header">
                                     <h1 class="date">
-                                        <sc:date-formatter date="${match.getDate()}"
+                                        <sc:date-formatter date="${matchDto.getDate()}"
                                                            formatType="${sessionScope.lang}"></sc:date-formatter>
                                     </h1>
-                                    <h1 class="tournament">${match.getTournament()}</h1>
+                                    <h1 class="tournament">${matchDto.getTournament()}</h1>
                                 </div>
                                 <div class="match-content">
-                                    <h1 class="f-team-name">${match.getFirstTeam()}</h1>
+                                    <h1 class="f-team-name">${matchDto.getFirstTeam()}</h1>
                                     <h1 class="versus"><-></h1>
-                                    <h1 class="s-team-name">${match.getSecondTeam()}</h1>
+                                    <h1 class="s-team-name">${matchDto.getSecondTeam()}</h1>
                                 </div>
                                 <div class="match-commission">
                                     <input class="commission-input" type="number" required step="0.01"
@@ -61,14 +61,14 @@
                                 </div>
                             </div>
                             <div class="cancel-button">
-                                <a href="${pageContext.request.contextPath}/controller?command=remove-match&id=${match.getId()}">
+                                <a href="${pageContext.request.contextPath}/controller?command=remove-match&id=${matchDto.getId()}">
                                     <div class="cancel-image"></div>
                                 </a>
                             </div>
                         </div>
                     </form>
                 </c:forEach>
-                <c:if test="${matches.size() != 0}">
+                <c:if test="${matchDtoList.size() != 0}">
                     <div class="pagination">
                         <a class="first-arrow" id="${currentPage > 1}"
                            href="${pageContext.request.contextPath}/controller?command=accept-matches-page&page=${currentPage - 1}"></a>

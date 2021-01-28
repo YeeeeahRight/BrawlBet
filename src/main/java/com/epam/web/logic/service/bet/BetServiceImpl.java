@@ -9,9 +9,11 @@ import com.epam.web.exception.DaoException;
 import com.epam.web.exception.ServiceException;
 import com.epam.web.logic.validator.Validator;
 import com.epam.web.model.entity.Bet;
-import com.epam.web.model.enumeration.Team;
+import com.epam.web.model.entity.Match;
+import com.epam.web.model.enumeration.MatchTeamNumber;
 
 import java.util.List;
+import java.util.Optional;
 
 public class BetServiceImpl implements BetService {
     private final DaoHelperFactory daoHelperFactory;
@@ -31,17 +33,33 @@ public class BetServiceImpl implements BetService {
             BetDao betDao = daoHelper.createBetDao();
             AccountDao accountDao = daoHelper.createAccountDao();
             MatchDao matchDao = daoHelper.createMatchDao();
+            long matchId = bet.getMatchId();
+            Optional<Match> matchOptional = matchDao.findById(matchId);
+            if (!matchOptional.isPresent()) {
+                throw new ServiceException("Match with id = " + matchId + " is not found.");
+            }
+            Match match = matchOptional.get();
+            long teamId = bet.getTeamId();
+            MatchTeamNumber teamType = findTeamType(teamId, match);
             float money = bet.getMoneyBet();
             long accountId = bet.getAccountId();
-            Team team = bet.getTeam();
             daoHelper.startTransaction();
             accountDao.addMoneyById(money * -1, accountId);
             betDao.save(bet);
-            matchDao.addTeamBetAmount(team, money, bet.getMatchId());
+            matchDao.addTeamBetAmount(teamType, money, matchId);
             daoHelper.commit();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
+    }
+
+    private MatchTeamNumber findTeamType(long teamId, Match match) throws ServiceException {
+        if (teamId == match.getFirstTeamId()) {
+            return MatchTeamNumber.FIRST;
+        } else if (teamId == match.getSecondTeamId()) {
+            return MatchTeamNumber.SECOND;
+        }
+        throw new ServiceException("No such team id in this match.");
     }
 
     @Override

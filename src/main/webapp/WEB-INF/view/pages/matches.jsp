@@ -38,35 +38,35 @@
                         </h1>
                     </a>
                 </div>
-                <c:forEach items="${matches}" var="match" varStatus="counter">
+                <c:forEach items="${matchDtoList}" var="matchDto" varStatus="counter">
                     <div class="match">
                         <div class="edit-button">
-                            <a href="${pageContext.request.contextPath}/controller?command=edit-match-page&id=${match.getId()}">
+                            <a href="${pageContext.request.contextPath}/controller?command=edit-match-page&id=${matchDto.getId()}">
                                 <div class="edit-image"></div>
                             </a>
                         </div>
                         <div class="match-description">
                             <div class="match-header">
                                 <h1 class="date">
-                                    <sc:date-formatter date="${match.getDate()}"
+                                    <sc:date-formatter date="${matchDto.getDate()}"
                                                        formatType="${sessionScope.lang}"></sc:date-formatter>
                                 </h1>
-                                <h1 class="tournament">${match.getTournament()}</h1>
+                                <h1 class="tournament">${matchDto.getTournament()}</h1>
                             </div>
                             <div class="match-content">
-                                <h1 class="f-team-name">${match.getFirstTeam()}</h1>
+                                <h1 class="f-team-name">${matchDto.getFirstTeam()}</h1>
                                 <h1 class="versus"><-></h1>
-                                <h1 class="s-team-name">${match.getSecondTeam()}</h1>
+                                <h1 class="s-team-name">${matchDto.getSecondTeam()}</h1>
                             </div>
                         </div>
                         <div class="remove-button">
-                            <a href="${pageContext.request.contextPath}/controller?command=cancel-match&id=${match.getId()}">
+                            <a href="${pageContext.request.contextPath}/controller?command=cancel-match&id=${matchDto.getId()}">
                                 <div class="remove-image"></div>
                             </a>
                         </div>
                     </div>
                 </c:forEach>
-                <c:if test="${matches.size() != 0}">
+                <c:if test="${matchDtoList.size() != 0}">
                     <div class="pagination">
                         <a class="first-arrow" id="${currentPage > 1}"
                            href="${pageContext.request.contextPath}/controller?command=matches&page=${currentPage - 1}"></a>

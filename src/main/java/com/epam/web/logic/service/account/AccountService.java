@@ -99,7 +99,7 @@ public interface AccountService {
      *
      * @param  login  a login(username) of account.
      *
-     * @return  an object of account.
+     * @return  received Account object.
      *
      * @throws  ServiceException  if account is not exist
      *                            also it's a wrapper for lower errors.

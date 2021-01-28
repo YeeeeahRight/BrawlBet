@@ -8,6 +8,7 @@ import com.epam.web.date.DateFormatType;
 import com.epam.web.date.DateParser;
 import com.epam.web.exception.InvalidParametersException;
 import com.epam.web.logic.service.match.MatchService;
+import com.epam.web.logic.service.team.TeamService;
 import com.epam.web.model.entity.Match;
 import com.epam.web.exception.ServiceException;
 import com.epam.web.controller.request.RequestContext;
@@ -20,18 +21,20 @@ public class AddMatchCommand implements Command {
             "&" + Parameter.PAGE + "=1";
 
     private final MatchService matchService;
+    private final TeamService teamService;
 
-    public AddMatchCommand(MatchService matchService) {
+    public AddMatchCommand(MatchService matchService, TeamService teamService) {
         this.matchService = matchService;
+        this.teamService = teamService;
     }
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
         Match match = buildMatch(requestContext);
-        String firstTeam = match.getFirstTeam();
-        String secondTeam = match.getSecondTeam();
-        if (firstTeam.equalsIgnoreCase(secondTeam)) {
-            throw new InvalidParametersException("Team names should be different.");
+        Long firstTeamId = match.getFirstTeamId();
+        Long secondTeamId = match.getSecondTeamId();
+        if (firstTeamId.equals(secondTeamId)) {
+            throw new InvalidParametersException("Teams should be different.");
         }
         matchService.saveMatch(match);
 
@@ -42,6 +45,14 @@ public class AddMatchCommand implements Command {
         String tournament = requestContext.getRequestParameter(Parameter.TOURNAMENT);
         String firstTeam = requestContext.getRequestParameter(Parameter.FIRST_TEAM);
         String secondTeam = requestContext.getRequestParameter(Parameter.SECOND_TEAM);
+        long firstTeamId;
+        long secondTeamId;
+        try {
+            firstTeamId = teamService.getTeamIdByName(firstTeam);
+            secondTeamId = teamService.getTeamIdByName(secondTeam);
+        } catch (ServiceException e) {
+            throw new InvalidParametersException(e.getMessage());
+        }
         String dateStr = requestContext.getRequestParameter(Parameter.DATE);
         DateParser dateParser = new DateParser(dateStr);
         Date date;
@@ -50,6 +61,6 @@ public class AddMatchCommand implements Command {
         } catch (ParseException e) {
             throw new InvalidParametersException("Invalid date format.");
         }
-        return new Match(date, tournament, firstTeam, secondTeam);
+        return new Match(date, tournament, firstTeamId, secondTeamId);
     }
 }
