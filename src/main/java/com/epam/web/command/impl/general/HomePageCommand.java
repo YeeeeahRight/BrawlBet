@@ -49,7 +49,6 @@ public class HomePageCommand implements Command {
         if (activeMatches.size() == 0 && page > 1) {
             throw new InvalidParametersException("No matches on this page");
         }
-        sortMatchesByClosing(activeMatches);
         List<MatchDto> matchDtoList = buildMatchDtoList(activeMatches);
         requestContext.addAttribute(Attribute.MATCH_DTO_LIST, matchDtoList);
         requestContext.addAttribute(Attribute.CURRENT_PAGE, page);
@@ -57,14 +56,6 @@ public class HomePageCommand implements Command {
         requestContext.addAttribute(Attribute.MAX_PAGE, maxPage);
 
         return CommandResult.forward(Page.HOME);
-    }
-
-    private void sortMatchesByClosing(List<Match> matches) {
-        matches.sort((o1, o2) -> {
-            boolean isFirstClosed = o1.isClosed();
-            boolean isSecondClosed = o2.isClosed();
-            return isFirstClosed == isSecondClosed ? 0 : (isFirstClosed ? -1 : 1);
-        });
     }
 
     private List<MatchDto> buildMatchDtoList(List<Match> activeMatches) throws ServiceException {
@@ -75,9 +66,8 @@ public class HomePageCommand implements Command {
             long secondTeamId = match.getSecondTeamId();
             String firstTeamName = teamService.getTeamNameById(firstTeamId);
             String secondTeamName = teamService.getTeamNameById(secondTeamId);
-            long winnerTeamId = match.getWinnerTeamId();
-            String winnerTeamName = findWinnerTeamName(winnerTeamId, firstTeamId, secondTeamId,
-                    firstTeamName, secondTeamName);
+            MatchTeamNumber winnerTeam = match.getWinnerTeam();
+            String winnerTeamName = findWinnerTeamName(winnerTeam, firstTeamName, secondTeamName);
             matchDtoBuilder = matchDtoBuilder.setGeneralFields(match,
                     firstTeamName, secondTeamName).setWinner(winnerTeamName);
             matchDtoBuilder = setPercents(matchDtoBuilder,
@@ -88,14 +78,15 @@ public class HomePageCommand implements Command {
         return matchDtoList;
     }
 
-    private String findWinnerTeamName(long winnerTeamId, long firstTeamId, long secondTeamId,
-                                      String firstTeamName, String secondTeamName) {
-        if (winnerTeamId == firstTeamId) {
-            return firstTeamName;
-        } else if (winnerTeamId == secondTeamId) {
-            return secondTeamName;
+    private String findWinnerTeamName(MatchTeamNumber winnerTeam, String firstTeamName, String secondTeamName) {
+        switch (winnerTeam) {
+            case FIRST:
+                return firstTeamName;
+            case SECOND:
+                return secondTeamName;
+            default:
+                return winnerTeam.toString();
         }
-        return null;
     }
 
     private MatchDto.MatchDtoBuilder setPercents(MatchDto.MatchDtoBuilder matchDtoBuilder, float firstTeamBets,

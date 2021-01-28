@@ -90,7 +90,7 @@
                             </h1>
                             <h1 id="first-bets-amount">
                                 <fmt:formatNumber type="number" maxFractionDigits="2"
-                                                  pattern="0.0" value="${matchDto.getFirstBetsAmount()}"/>
+                                                  pattern="0.0" value="${matchDto.getFirstTeamBets()}"/>
                             </h1>
                         </div>
                         <div class="second-bet-amount">
@@ -99,7 +99,7 @@
                             </h1>
                             <h1 id="second-bets-amount">
                                 <fmt:formatNumber type="number" maxFractionDigits="2"
-                                                  pattern="0.0" value="${matchDto.getSecondBetsAmount()}"/>
+                                                  pattern="0.0" value="${matchDto.getSecondTeamBets()}"/>
                             </h1>
                         </div>
                     </div>

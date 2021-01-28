@@ -88,22 +88,22 @@ public class MyBetsCommand implements Command {
         long secondTeamId = match.getSecondTeamId();
         String firstTeamName = teamService.getTeamNameById(firstTeamId);
         String secondTeamName = teamService.getTeamNameById(secondTeamId);
-        long winnerTeamId = match.getWinnerTeamId();
-        String winnerTeamName = findWinnerTeamName(winnerTeamId, firstTeamId, secondTeamId,
-                firstTeamName, secondTeamName);
+        MatchTeamNumber winnerTeam = match.getWinnerTeam();
+        String winnerTeamName = findWinnerTeamName(winnerTeam, firstTeamName, secondTeamName);
         String teamOnBet = teamService.getTeamNameById(teamOnBetId);
 
         return betMatchDtoBuilder.setTeams(firstTeamName, secondTeamName, teamOnBet, winnerTeamName);
     }
 
-    private String findWinnerTeamName(long winnerTeamId, long firstTeamId, long secondTeamId,
-                                      String firstTeamName, String secondTeamName) {
-        if (winnerTeamId == firstTeamId) {
-            return firstTeamName;
-        } else if (winnerTeamId == secondTeamId) {
-            return secondTeamName;
+    private String findWinnerTeamName(MatchTeamNumber winnerTeam, String firstTeamName, String secondTeamName) {
+        switch (winnerTeam) {
+            case FIRST:
+                return firstTeamName;
+            case SECOND:
+                return secondTeamName;
+            default:
+                return winnerTeam.toString();
         }
-        return null;
     }
 
     private BetMatchDto.BetMatchDtoBuilder setPercents(BetMatchDto.BetMatchDtoBuilder betMatchDtoBuilder,
@@ -120,9 +120,9 @@ public class MyBetsCommand implements Command {
 
     private void sortBetMatchDtoList(List<BetMatchDto> betMatchDtoList) {
         betMatchDtoList.sort((o1, o2) -> {
-            boolean isFirstClosed = o1.getWinner() == null;
-            boolean isSecondClosed = o2.getWinner() == null;
-            return isFirstClosed == isSecondClosed ? 0 : (isFirstClosed ? -1 : 1);
+            boolean isFirstClosed = !o1.getWinner().equals("NONE");
+            boolean isSecondClosed = !o2.getWinner().equals("NONE");
+            return isFirstClosed == isSecondClosed ? 0 : (isFirstClosed ? 1 : -1);
         });
     }
 }

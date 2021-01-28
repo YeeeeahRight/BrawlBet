@@ -56,7 +56,8 @@ public class CommandFactory {
                         new TeamValidator()), new BetCalculatorImpl());
             case CommandName.BET:
                 return new BetCommand(new BetServiceImpl(new DaoHelperFactory(),
-                        new BetValidator()), new AccountServiceImpl(new DaoHelperFactory()));
+                        new BetValidator()), new AccountServiceImpl(new DaoHelperFactory()),
+                        new MatchServiceImpl(new DaoHelperFactory(), new MatchValidator()));
             case CommandName.MATCHES:
                 return new MatchesCommand(new MatchServiceImpl(new DaoHelperFactory(),
                         new MatchValidator()), new TeamServiceImpl(new DaoHelperFactory(),

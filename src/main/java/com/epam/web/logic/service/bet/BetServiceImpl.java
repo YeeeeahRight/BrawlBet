@@ -36,7 +36,7 @@ public class BetServiceImpl implements BetService {
             long matchId = bet.getMatchId();
             Optional<Match> matchOptional = matchDao.findById(matchId);
             if (!matchOptional.isPresent()) {
-                throw new ServiceException("Match with id = " + matchId + " is not found.");
+                throw new ServiceException("Match with id='" + matchId + "' is not found.");
             }
             Match match = matchOptional.get();
             long teamId = bet.getTeamId();

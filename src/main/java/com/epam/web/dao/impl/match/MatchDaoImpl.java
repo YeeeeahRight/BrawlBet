@@ -20,7 +20,7 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     private static final String ADD_QUERY = "INSERT matches (date, tournament, first_team_id, " +
             "second_team_id) VALUES(?, ?, ?, ?)";
     private static final String GET_ACCEPTED_MATCHES_QUERY_RANGE =
-            "SELECT * FROM matches WHERE commission > 0 ORDER BY is_closed DESC, date LIMIT ?,?";
+            "SELECT * FROM matches WHERE commission > 0 ORDER BY is_closed, date LIMIT ?,?";
     private static final String GET_UNACCEPTED_MATCHES_QUERY_RANGE =
             "SELECT * FROM matches WHERE commission = 0 ORDER BY date LIMIT ?,?";
     private static final String GET_UNCLOSED_MATCHES_QUERY_RANGE =

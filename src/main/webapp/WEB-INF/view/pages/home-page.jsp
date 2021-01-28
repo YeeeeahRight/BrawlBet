@@ -38,9 +38,14 @@
                         <div class="match-row">
                     </c:if>
                     <a href="${pageContext.request.contextPath}/controller?command=match-page&id=${matchDto.getId()}">
-                        <c:if test="${matchDto.isClosed()}">
-                            <c:set var="isClosedMatch" value="closed"/>
-                        </c:if>
+                        <c:choose>
+                            <c:when test="${matchDto.isClosed()}">
+                                <c:set var="isClosedMatch" value="closed"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="isClosedMatch" value="notClosed"/>
+                            </c:otherwise>
+                        </c:choose>
                         <div class="match ${isClosedMatch}">
                             <div class="match-header">
                                 <div class="match-date">

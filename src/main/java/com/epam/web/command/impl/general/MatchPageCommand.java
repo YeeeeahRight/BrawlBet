@@ -59,25 +59,26 @@ public class MatchPageCommand implements Command {
         long secondTeamId = match.getSecondTeamId();
         String firstTeamName = teamService.getTeamNameById(firstTeamId);
         String secondTeamName = teamService.getTeamNameById(secondTeamId);
-        long winnerTeamId = match.getWinnerTeamId();
-        String winnerTeamName = findWinnerTeamName(winnerTeamId, firstTeamId, secondTeamId,
-                firstTeamName, secondTeamName);
+        MatchTeamNumber winnerTeam = match.getWinnerTeam();
+        String winnerTeamName = findWinnerTeamName(winnerTeam, firstTeamName, secondTeamName);
         MatchDto.MatchDtoBuilder matchDtoBuilder = new MatchDto.MatchDtoBuilder();
         matchDtoBuilder = matchDtoBuilder.setGeneralFields(match,
                 firstTeamName, secondTeamName).setWinner(winnerTeamName);
         matchDtoBuilder = setPercents(matchDtoBuilder,
-                match.getFirstTeamBets(), match.getSecondTeamBets());
+                match.getFirstTeamBets(), match.getSecondTeamBets())
+                .setCommission(match.getCommission());
         return matchDtoBuilder.build();
     }
 
-    private String findWinnerTeamName(long winnerTeamId, long firstTeamId, long secondTeamId,
-                                      String firstTeamName, String secondTeamName) {
-        if (winnerTeamId == firstTeamId) {
-            return firstTeamName;
-        } else if (winnerTeamId == secondTeamId) {
-            return secondTeamName;
+    private String findWinnerTeamName(MatchTeamNumber winnerTeam, String firstTeamName, String secondTeamName) {
+        switch (winnerTeam) {
+            case FIRST:
+                return firstTeamName;
+            case SECOND:
+                return secondTeamName;
+            default:
+                return winnerTeam.toString();
         }
-        return null;
     }
 
     private MatchDto.MatchDtoBuilder setPercents(MatchDto.MatchDtoBuilder matchDtoBuilder,

@@ -1,6 +1,7 @@
 package com.epam.web.model.entity;
 
 import com.epam.web.model.Entity;
+import com.epam.web.model.enumeration.MatchTeamNumber;
 
 import java.util.Date;
 import java.util.Objects;
@@ -12,7 +13,7 @@ public class Match implements Entity {
     public static final String TOURNAMENT = "tournament";
     public static final String FIRST_TEAM_ID = "first_team_id";
     public static final String SECOND_TEAM_ID = "second_team_id";
-    public static final String WINNER_TEAM_ID = "winner_team_id";
+    public static final String WINNER_TEAM = "winner_team";
     public static final String COMMISSION = "commission";
     public static final String IS_CLOSED = "is_closed";
     public static final String FIRST_TEAM_BETS = "first_team_bets";
@@ -21,7 +22,7 @@ public class Match implements Entity {
     private final Long id;
     private final Long firstTeamId;
     private final Long secondTeamId;
-    private final Long winnerTeamId;
+    private final MatchTeamNumber winnerTeam;
     private final Date date;
     private final String tournament;
     private final Float commission;
@@ -30,14 +31,14 @@ public class Match implements Entity {
     private final Float secondTeamBets;
 
     public Match(Long id, Date date, String tournament, Long firstTeamId, Long secondTeamId,
-                 Long winnerTeamId, Float commission, Boolean isClosed, Float firstTeamBets,
+                 MatchTeamNumber winnerTeam, Float commission, Boolean isClosed, Float firstTeamBets,
                  Float secondTeamBets) {
         this.id = id;
         this.date = date;
         this.tournament = tournament;
         this.firstTeamId = firstTeamId;
         this.secondTeamId = secondTeamId;
-        this.winnerTeamId = winnerTeamId;
+        this.winnerTeam = winnerTeam;
         this.commission = commission;
         this.isClosed = isClosed;
         this.firstTeamBets = firstTeamBets;
@@ -50,7 +51,7 @@ public class Match implements Entity {
         this.tournament = tournament;
         this.firstTeamId = firstTeamId;
         this.secondTeamId = secondTeamId;
-        this.winnerTeamId = -1L;
+        this.winnerTeam = MatchTeamNumber.NONE;
         this.commission = 0.0f;
         this.isClosed = false;
         this.firstTeamBets = 0.0f;
@@ -63,7 +64,7 @@ public class Match implements Entity {
         this.tournament = tournament;
         this.firstTeamId = firstTeamId;
         this.secondTeamId = secondTeamId;
-        this.winnerTeamId = -1L;
+        this.winnerTeam = MatchTeamNumber.NONE;
         this.commission = 0.0f;
         this.isClosed = false;
         this.firstTeamBets = 0.0f;
@@ -94,8 +95,8 @@ public class Match implements Entity {
         return isClosed;
     }
 
-    public Long getWinnerTeamId() {
-        return winnerTeamId;
+    public MatchTeamNumber getWinnerTeam() {
+        return winnerTeam;
     }
 
     public Float getFirstTeamBets() {
@@ -130,7 +131,7 @@ public class Match implements Entity {
         if (!secondTeamId.equals(match.secondTeamId)) {
             return false;
         }
-        if (!winnerTeamId.equals(match.winnerTeamId)) {
+        if (winnerTeam != match.winnerTeam) {
             return false;
         }
         if (!date.equals(match.date)) {
@@ -142,7 +143,7 @@ public class Match implements Entity {
         if (!commission.equals(match.commission)) {
             return false;
         }
-        if (!isClosed.equals(match.isClosed)) {
+        if (!Objects.equals(isClosed, match.isClosed)) {
             return false;
         }
         if (!firstTeamBets.equals(match.firstTeamBets)) {
@@ -156,11 +157,11 @@ public class Match implements Entity {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + firstTeamId.hashCode();
         result = 31 * result + secondTeamId.hashCode();
-        result = 31 * result + winnerTeamId.hashCode();
+        result = 31 * result + winnerTeam.hashCode();
         result = 31 * result + date.hashCode();
         result = 31 * result + tournament.hashCode();
         result = 31 * result + commission.hashCode();
-        result = 31 * result + isClosed.hashCode();
+        result = 31 * result + (isClosed != null ? isClosed.hashCode() : 0);
         result = 31 * result + firstTeamBets.hashCode();
         result = 31 * result + secondTeamBets.hashCode();
         return result;
@@ -173,7 +174,7 @@ public class Match implements Entity {
                 ", tournament='" + tournament + '\'' +
                 ", firstTeamId='" + firstTeamId + '\'' +
                 ", secondTeamId='" + secondTeamId + '\'' +
-                ", winnerTeamId='" + winnerTeamId + '\'' +
+                ", winnerTeam='" + winnerTeam + '\'' +
                 ", commission=" + commission +
                 ", isClosed=" + isClosed +
                 ", firstTeamBets=" + firstTeamBets +

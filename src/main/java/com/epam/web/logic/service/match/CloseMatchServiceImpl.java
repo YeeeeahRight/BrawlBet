@@ -36,7 +36,7 @@ public class CloseMatchServiceImpl implements CloseMatchService {
             AccountDao accountDao = daoHelper.createAccountDao();
             Optional<Match> matchOptional = matchDao.findById(matchId);
             if (!matchOptional.isPresent()) {
-                throw new ServiceException("Match with id = " + matchId + " is not found.");
+                throw new ServiceException("Match with id='" + matchId + "' is not found.");
             }
             Match match = matchOptional.get();
             if (match.isClosed()) {
@@ -68,8 +68,6 @@ public class CloseMatchServiceImpl implements CloseMatchService {
                     betDao.close(moneyReceived, bet.getId());
                     accountDao.addMoneyById(moneyReceived, bet.getAccountId());
                 }
-                TeamDao teamDao = daoHelper.createTeamDao();
-                incrementTeamsStatistic(teamDao, winnerTeam, firstTeamId, secondTeamId);
                 Optional<Account> bookmakerOptional = accountDao.findBookmaker();
                 if (bookmakerOptional.isPresent()) {
                     Account bookmaker = bookmakerOptional.get();
@@ -80,6 +78,8 @@ public class CloseMatchServiceImpl implements CloseMatchService {
             } else {
                 winnerTeam = calculateWinner(SAME_WIN_CHANCE);
             }
+            TeamDao teamDao = daoHelper.createTeamDao();
+            incrementTeamsStatistic(teamDao, winnerTeam, match.getFirstTeamId(), match.getSecondTeamId());
             matchDao.close(matchId, winnerTeam);
             daoHelper.commit();
         } catch (DaoException e) {
@@ -137,7 +137,7 @@ public class CloseMatchServiceImpl implements CloseMatchService {
         } else if (teamId == secondTeamId) {
             return MatchTeamNumber.SECOND;
         }
-        throw new ServiceException("Team with id = " + teamId + " is not found.");
+        throw new ServiceException("Team with id='" + teamId + "' is not found.");
     }
 
     private void incrementTeamsStatistic(TeamDao teamDao, MatchTeamNumber matchTeamNumber,
