@@ -71,6 +71,7 @@ public class AccessFilter implements Filter {
             case CommandName.CANCEL_MATCH:
             case CommandName.CLOSE_MATCHES_PAGE:
             case CommandName.CLOSE_MATCH:
+            case CommandName.TEAMS:
             case CommandName.USERS:
                 return role.equalsIgnoreCase(ADMIN_ROLE);
             case CommandName.REMOVE_MATCH:

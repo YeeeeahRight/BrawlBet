@@ -21,4 +21,5 @@ public final class Attribute {
     public static final String INVALIDATE_ATTRIBUTE = "invalidate";
     public static final String CURRENT_PAGE = "currentPage";
     public static final String MAX_PAGE = "maxPage";
+    public static final String TEAMS = "teams";
 }

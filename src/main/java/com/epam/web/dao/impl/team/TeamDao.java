@@ -4,6 +4,7 @@ import com.epam.web.dao.Dao;
 import com.epam.web.exception.DaoException;
 import com.epam.web.model.entity.Team;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -40,4 +41,16 @@ public interface TeamDao extends Dao<Team> {
      * @throws  DaoException  if database errors occurs.
      */
     void incrementMatchesLostById(long id) throws DaoException;
+
+    /**
+     * Gets list of teams in range described as offset and amount of teams.
+     *
+     * @param  offset  an offset from first row of teams table.
+     * @param  amount  an amount of teams to get.
+     *
+     * @return  a received list of teams.
+     *
+     * @throws  DaoException  if database errors occurs.
+     */
+    List<Team> getTeamsRange(int offset, int amount) throws DaoException;
 }

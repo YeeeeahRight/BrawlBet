@@ -15,6 +15,7 @@
     font-size: 64px;
     text-align: center;
     margin-top: 20px;
+    line-height: 0.90;
 }
 
 .main-content {
@@ -151,7 +152,7 @@ button:hover {
 
 @media screen and (max-width: 800px) {
     .add-form {
-        top: 800px;
+        top: 970px;
         left: 50%;
     }
 

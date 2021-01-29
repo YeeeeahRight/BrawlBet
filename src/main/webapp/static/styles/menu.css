@@ -34,6 +34,15 @@
     flex-direction: column;
 }
 
+.fourth-item {
+    width: 100%;
+    border-bottom: 2px solid #303030;
+    height: 166px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
 .matches-image {
     width: 65px;
     height: 65px;
@@ -83,6 +92,15 @@
     width: 60px;
     height: 72px;
     background: url(../images/betsMenu.png) no-repeat center center;
+    background-size: cover;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.teams-image {
+    width: 85px;
+    height: 62px;
+    background: url(../images/teams.png) no-repeat center center;
     background-size: cover;
     margin-left: auto;
     margin-right: auto;

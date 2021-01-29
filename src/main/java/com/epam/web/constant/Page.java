@@ -7,6 +7,7 @@ public final class Page {
     public static final String SIGN_UP = "WEB-INF/view/pages/sign-up.jsp";
     public static final String DEPOSIT = "WEB-INF/view/pages/deposit.jsp";
     public static final String ADD_MATCH = "WEB-INF/view/pages/add-match.jsp";
+    public static final String ADD_TEAM = "WEB-INF/view/pages/add-team.jsp";
     public static final String HOME = "WEB-INF/view/pages/home-page.jsp";
     public static final String MATCHES = "WEB-INF/view/pages/matches.jsp";
     public static final String USERS = "WEB-INF/view/pages/users.jsp";
@@ -15,4 +16,5 @@ public final class Page {
     public static final String FINISH_MATCHES = "WEB-INF/view/pages/close-matches.jsp";
     public static final String MY_BETS = "WEB-INF/view/pages/my-bets.jsp";
     public static final String BOOKMAKER_HISTORY = "WEB-INF/view/pages/bookmaker-history.jsp";
+    public static final String TEAMS = "WEB-INF/view/pages/teams.jsp";
 }

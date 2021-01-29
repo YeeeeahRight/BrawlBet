@@ -29,4 +29,7 @@ public final class CommandName {
     public static final String MY_BETS = "my-bets";
     public static final String BOOKMAKER_HISTORY = "bookmaker-history";
     public static final String PAGINATION = "pagination";
+    public static final String TEAMS = "teams";
+    public static final String ADD_TEAM_PAGE = "add-team-page";
+    public static final String ADD_TEAM = "add-team";
 }

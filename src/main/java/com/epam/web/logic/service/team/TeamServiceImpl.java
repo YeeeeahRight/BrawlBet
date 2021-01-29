@@ -8,6 +8,7 @@ import com.epam.web.exception.ServiceException;
 import com.epam.web.logic.validator.Validator;
 import com.epam.web.model.entity.Team;
 
+import java.util.List;
 import java.util.Optional;
 
 public class TeamServiceImpl implements TeamService {
@@ -71,6 +72,26 @@ public class TeamServiceImpl implements TeamService {
             }
             Team team = teamOptional.get();
             return team.getName();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Team> getTeamsRange(int offset, int amount) throws ServiceException {
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
+            TeamDao teamDao = daoHelper.createTeamDao();
+            return teamDao.getTeamsRange(offset, amount);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int getTeamsAmount() throws ServiceException {
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
+            TeamDao teamDao = daoHelper.createTeamDao();
+            return teamDao.getRowsAmount(Optional.empty());
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

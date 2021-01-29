@@ -64,6 +64,8 @@ public class CommandFactory {
                         new TeamValidator()));
             case CommandName.USERS:
                 return new UsersCommand(new AccountServiceImpl(new DaoHelperFactory()));
+            case CommandName.TEAMS:
+                return new TeamsCommand(new TeamServiceImpl(new DaoHelperFactory(), new TeamValidator()));
             case CommandName.DEPOSIT:
                 return new DepositCommand(new AccountServiceImpl(new DaoHelperFactory()));
             case CommandName.MY_BETS:
@@ -92,6 +94,9 @@ public class CommandFactory {
                 return new EditMatchPageCommand(new MatchServiceImpl(new DaoHelperFactory(),
                         new MatchValidator()), new TeamServiceImpl(new DaoHelperFactory(),
                         new TeamValidator()));
+            case CommandName.ADD_TEAM:
+                return new AddTeamCommand(new TeamServiceImpl(new DaoHelperFactory(),
+                        new TeamValidator()));
             case CommandName.BLOCK_USER:
                 return new BlockCommand(new AccountServiceImpl(new DaoHelperFactory()));
             case CommandName.UNBLOCK_USER:
@@ -109,6 +114,7 @@ public class CommandFactory {
             case CommandName.LOGIN_PAGE:
             case CommandName.DEPOSIT_PAGE:
             case CommandName.SIGN_UP_PAGE:
+            case CommandName.ADD_TEAM_PAGE:
                 return new ForwardPageCommand(commandParam);
             default:
                 throw new IllegalArgumentException("Unknown command: " + commandParam);

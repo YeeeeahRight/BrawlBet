@@ -8,9 +8,8 @@ public class TeamValidator implements Validator<Team> {
 
     @Override
     public boolean isValid(Team team) {
-        Long id = team.getId();
         String name = team.getName();
-        if (id == null || name == null) {
+        if (name == null) {
             return false;
         }
         if (name.isEmpty() || name.length() > MAX_NAME_LENGTH) {

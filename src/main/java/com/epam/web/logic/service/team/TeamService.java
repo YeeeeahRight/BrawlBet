@@ -3,6 +3,8 @@ package com.epam.web.logic.service.team;
 import com.epam.web.exception.ServiceException;
 import com.epam.web.model.entity.Team;
 
+import java.util.List;
+
 /**
  * Interface with description of operations with the Team.
  */
@@ -52,4 +54,25 @@ public interface TeamService {
      *                            also it's a wrapper for lower errors.
      */
     String getTeamNameById(long id) throws ServiceException;
+
+    /**
+     * Gets list of teams in range described as offset and amount of teams.
+     *
+     * @param  offset  an offset from first row of teams table.
+     * @param  amount  an amount of teams to get.
+     *
+     * @return  a received list of teams.
+     *
+     * @throws  ServiceException  a wrapper for lower errors.
+     */
+    List<Team> getTeamsRange(int offset, int amount) throws ServiceException;
+
+    /**
+     * Gets teams amount.
+     *
+     * @return  an amount of all teams.
+     *
+     * @throws  ServiceException  a wrapper for lower errors.
+     */
+    int getTeamsAmount() throws ServiceException;
 }

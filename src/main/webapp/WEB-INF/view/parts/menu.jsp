@@ -31,6 +31,14 @@
                 </h1>
             </div>
         </a>
+        <a href="${pageContext.request.contextPath}/controller?command=teams&page=1">
+            <div class="fourth-item">
+                <div class="teams-image"></div>
+                <h1 class="item-text">
+                    <fmt:message key="menu.teams"/>
+                </h1>
+            </div>
+        </a>
     </sc:access>
     <sc:access role="BOOKMAKER">
         <a href="${pageContext.request.contextPath}/controller?command=accept-matches-page&page=1">
