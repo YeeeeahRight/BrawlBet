@@ -135,6 +135,10 @@
     border: 3.5px solid #303030;
 }
 
+.team:active {
+    border: 3px solid #303030;
+}
+
 button:hover {
     opacity: 0.8;
 }

@@ -45,20 +45,22 @@
                                 <div class="edit-image"></div>
                             </a>
                         </div>
-                        <div class="match-description">
-                            <div class="match-header">
-                                <h1 class="date">
-                                    <sc:date-formatter date="${matchDto.getDate()}"
-                                                       formatType="${sessionScope.lang}"></sc:date-formatter>
-                                </h1>
-                                <h1 class="tournament">${matchDto.getTournament()}</h1>
+                        <a href="${pageContext.request.contextPath}/controller?command=match-page&id=${matchDto.getId()}">
+                            <div class="match-description">
+                                <div class="match-header">
+                                    <h1 class="date">
+                                        <sc:date-formatter date="${matchDto.getDate()}"
+                                                           formatType="${sessionScope.lang}"></sc:date-formatter>
+                                    </h1>
+                                    <h1 class="tournament">${matchDto.getTournament()}</h1>
+                                </div>
+                                <div class="match-content">
+                                    <h1 class="f-team-name">${matchDto.getFirstTeam()}</h1>
+                                    <h1 class="versus"><-></h1>
+                                    <h1 class="s-team-name">${matchDto.getSecondTeam()}</h1>
+                                </div>
                             </div>
-                            <div class="match-content">
-                                <h1 class="f-team-name">${matchDto.getFirstTeam()}</h1>
-                                <h1 class="versus"><-></h1>
-                                <h1 class="s-team-name">${matchDto.getSecondTeam()}</h1>
-                            </div>
-                        </div>
+                        </a>
                         <div class="remove-button">
                             <a href="${pageContext.request.contextPath}/controller?command=cancel-match&id=${matchDto.getId()}">
                                 <div class="remove-image"></div>

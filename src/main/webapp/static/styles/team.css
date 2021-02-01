@@ -1,0 +1,108 @@
+.body {
+    height: 100%;
+    display: flex;
+    justify-content: start;
+}
+
+.main-content {
+    background-color: rgba(221, 222, 224, 1.0);
+    height: 100%;
+    width: 82.06%;
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.main-header {
+    background-color: transparent;
+    height: 89px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    color: #303030;
+    font-size: 58px;
+    text-align: center;
+}
+
+.team-text {
+    margin-top: 28px;
+    margin-right: 15px;
+}
+
+.team-name-text {
+    margin-left: 17px;
+    margin-top: 28px;
+}
+
+.main-body {
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+    width: 100%;
+    font-size: 42px;
+    color: rgba(48, 48, 48, 1.0);
+}
+
+.statistics-block {
+    display: flex;
+    justify-content: center;
+    margin-top: 110px;
+    height: 90px;
+}
+
+.statistics-text {
+    margin-right: 20px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.matches-won {
+    margin-top: 22px;
+    color: #94E512;
+}
+
+.statistics-separator {
+    margin-top: 22px;
+    margin-right: 6px;
+    margin-left: 6px;
+}
+
+.matches-lost {
+    margin-top: 22px;
+    color: red;
+}
+
+.win-rate-block {
+    display: flex;
+    justify-content: center;
+    height: 90px;
+}
+
+.win-rate-text {
+    margin-right: 20px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.win-rate {
+    margin-top: 22px;
+    color: #94E512;
+}
+
+.no-win-rate {
+    font-size: 32px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+@media screen and (max-width: 800px) {
+    .body {
+        flex-direction: column;
+    }
+
+    .main-content {
+        width: auto;
+    }
+}

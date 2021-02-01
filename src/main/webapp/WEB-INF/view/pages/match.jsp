@@ -37,11 +37,13 @@
                     </div>
                     <div class="match-body">
                         <div class="f-team ${matchDto.getFirstTeam().equals(matchDto.getWinner())}">
-                            <div class="f-team-name">
-                                <h1>
-                                    ${matchDto.getFirstTeam()}
-                                </h1>
-                            </div>
+                            <a href="${pageContext.request.contextPath}/controller?command=team&name=${matchDto.getFirstTeam()}">
+                                <div class="f-team-name">
+                                    <h1>
+                                        ${matchDto.getFirstTeam()}
+                                    </h1>
+                                </div>
+                            </a>
                             <div class="f-percent">
                                 <h1>
                                     ${matchDto.getFirstPercent()}%
@@ -54,11 +56,13 @@
                             </h1>
                         </div>
                         <div class="s-team ${matchDto.getSecondTeam().equals(matchDto.getWinner())}">
-                            <div class="s-team-name">
-                                <h1>
-                                    ${matchDto.getSecondTeam()}
-                                </h1>
-                            </div>
+                            <a href="${pageContext.request.contextPath}/controller?command=team&name=${matchDto.getSecondTeam()}">
+                                <div class="s-team-name">
+                                    <h1>
+                                        ${matchDto.getSecondTeam()}
+                                    </h1>
+                                </div>
+                            </a>
                             <div class="s-percent">
                                 <h1>
                                     ${matchDto.getSecondPercent()}%

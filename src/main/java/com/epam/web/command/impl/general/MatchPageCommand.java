@@ -51,7 +51,7 @@ public class MatchPageCommand implements Command {
         addMatchStatusAttribute(requestContext, match);
         addAdditionalAttributes(requestContext, match);
 
-        return CommandResult.forward(Page.BET);
+        return CommandResult.forward(Page.MATCH);
     }
 
     private MatchDto buildMatchDto(Match match) throws ServiceException {

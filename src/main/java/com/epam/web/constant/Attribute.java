@@ -22,4 +22,6 @@ public final class Attribute {
     public static final String CURRENT_PAGE = "currentPage";
     public static final String MAX_PAGE = "maxPage";
     public static final String TEAMS = "teams";
+    public static final String TEAM = "team";
+    public static final String WIN_RATE = "winRate";
 }

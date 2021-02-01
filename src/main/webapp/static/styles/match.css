@@ -87,6 +87,7 @@
 }
 
 .f-team-name {
+    color: #303030;
     text-align: center;
 }
 
@@ -110,6 +111,7 @@
 }
 
 .s-team-name {
+    color: #303030;
     text-align: center;
 }
 
@@ -261,7 +263,7 @@ button:hover {
 
 .second-bet-amount {
     background-color: rgba(241, 241, 241, 1);
-    border: 1px Black dashed;
+    border: 1px #000000 dashed;
     width: 45%;
     text-align: center;
     display: flex;

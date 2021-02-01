@@ -66,6 +66,8 @@ public class CommandFactory {
                 return new UsersCommand(new AccountServiceImpl(new DaoHelperFactory()));
             case CommandName.TEAMS:
                 return new TeamsCommand(new TeamServiceImpl(new DaoHelperFactory(), new TeamValidator()));
+            case CommandName.TEAM:
+                return new TeamPageCommand(new TeamServiceImpl(new DaoHelperFactory(), new TeamValidator()));
             case CommandName.DEPOSIT:
                 return new DepositCommand(new AccountServiceImpl(new DaoHelperFactory()));
             case CommandName.MY_BETS:

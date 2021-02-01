@@ -118,11 +118,20 @@
 }
 
 .match-description {
+    color: #303030;
     width: 448px;
     height: 64px;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+}
+
+.match-description:hover {
+    border: 2px Black solid;
+}
+
+.match-description:active {
+    border: 3px Black solid;
 }
 
 .match-content {
