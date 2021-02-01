@@ -82,6 +82,18 @@ public interface AccountService {
     void blockById(long id) throws ServiceException;
 
     /**
+     * Finds out if account is blocked by account id.
+     *
+     * @param  id  an id value of account to check.
+     *
+     * @return  boolean result of finding.
+     *
+     * @throws  ServiceException  if account is not found and
+     *                            also it's a wrapper for lower errors.
+     */
+    boolean isBlockedById(long id) throws ServiceException;
+
+    /**
      * Finds out if account is exist by login and password.
      * Returns boolean result.
      *

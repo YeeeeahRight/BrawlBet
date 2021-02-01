@@ -92,6 +92,20 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public boolean isBlockedById(long id) throws ServiceException {
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
+            AccountDao accountDao = daoHelper.createAccountDao();
+            Optional<Account> user = accountDao.findById(id);
+            if (!user.isPresent()) {
+                throw new ServiceException("Account with id='" + id + "' is not found.");
+            }
+            return user.get().isBlocked();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public boolean isAccountExistByLoginPassword(String login, String password) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDao accountDao = daoHelper.createAccountDao();
