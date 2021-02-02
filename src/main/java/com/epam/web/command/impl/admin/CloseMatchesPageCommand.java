@@ -13,7 +13,6 @@ import com.epam.web.logic.service.match.MatchType;
 import com.epam.web.logic.service.team.TeamService;
 import com.epam.web.model.entity.Match;
 import com.epam.web.model.entity.dto.MatchDto;
-import com.epam.web.model.enumeration.MatchTeamNumber;
 
 import java.util.ArrayList;
 import java.util.List;

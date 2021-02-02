@@ -167,6 +167,22 @@
     }
 
     .match-body {
+        font-size: 2.1vw;
+    }
+
+    .match-f-team {
+        font-size:2vw;
+    }
+
+    .match-s-team {
+        font-size:2vw;
+    }
+
+    .match-date {
+        font-size: 2vw;
+    }
+
+    .match-tournament {
         font-size: 2vw;
     }
 

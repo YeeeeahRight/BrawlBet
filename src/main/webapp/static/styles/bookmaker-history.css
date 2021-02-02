@@ -249,6 +249,40 @@
     }
 }
 
+@media screen and (max-width: 800px){
+    .main-body {
+        font-size: 2vw;
+    }
+
+    .match-detailed-info {
+        font-size: 1.2vw;
+    }
+
+    .commission-text {
+        font-size: 1.9vw;
+    }
+
+    .commission-value {
+        font-size: 1.9vw;
+    }
+
+    .gain-text{
+        font-size: 1.92vw;
+    }
+
+    .gain-money{
+        font-size: 2vw;
+    }
+
+    .match-f-team {
+        font-size: 2vw;
+    }
+
+    .match-s-team {
+        font-size: 2vw;
+    }
+}
+
 @media screen and (max-width: 1000px) {
     .menu {
         width: auto;

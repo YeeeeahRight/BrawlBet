@@ -7,7 +7,6 @@ import com.epam.web.constant.Page;
 import com.epam.web.constant.Parameter;
 import com.epam.web.exception.InvalidParametersException;
 import com.epam.web.logic.service.account.AccountService;
-import com.epam.web.logic.service.match.MatchType;
 import com.epam.web.model.entity.Account;
 import com.epam.web.exception.ServiceException;
 import com.epam.web.controller.request.RequestContext;

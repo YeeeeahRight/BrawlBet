@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="${pageContext.request.contextPath}/static/styles/general-styles.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/static/styles/deposit.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/static/styles/add-team.css" rel="stylesheet" type="text/css">
     <title>Brawl bet!</title>
 </head>
 <body>

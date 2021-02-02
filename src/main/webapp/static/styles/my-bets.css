@@ -242,6 +242,40 @@
     }
 }
 
+@media screen and (max-width: 800px){
+    .main-body {
+        font-size: 2vw;
+    }
+
+    .bet-on-text {
+        font-size: 2vw;
+    }
+
+    .bet-on-team {
+        font-size: 2.22vw;
+    }
+
+    .gain-text{
+        font-size: 1.92vw;
+    }
+
+    .bet-on-money{
+        font-size: 2vw;
+    }
+
+    .gain-money{
+        font-size: 2vw;
+    }
+
+    .match-f-team {
+        font-size: 2vw;
+    }
+
+    .match-s-team {
+        font-size: 2vw;
+    }
+}
+
 @media screen and (max-width: 1000px) {
     .menu {
         width: auto;
