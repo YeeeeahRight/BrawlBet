@@ -58,8 +58,7 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     }
 
     private String formatDate(Date date) {
-        DateFormatter dateFormatter = new DateFormatter(date);
-        return dateFormatter.format(DateFormatType.MYSQL);
+        return DateFormatter.format(date, DateFormatType.MYSQL);
     }
 
     @Override

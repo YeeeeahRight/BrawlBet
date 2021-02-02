@@ -3,13 +3,8 @@ package com.epam.web.date;
 import java.util.Date;
 
 public class DateFormatter {
-    private final Date date;
 
-    public DateFormatter(Date date) {
-        this.date = date;
-    }
-
-    public String format(DateFormatType dateFormatType) {
+    public static String format(Date date, DateFormatType dateFormatType) {
         switch (dateFormatType) {
             case MYSQL:
                 return DateFormatters.MYSQL_FORMATTER.format(date);

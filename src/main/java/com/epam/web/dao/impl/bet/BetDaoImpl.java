@@ -36,8 +36,7 @@ public class BetDaoImpl extends AbstractDao<Bet> implements BetDao {
     }
 
     private String formatDate(Date date) {
-        DateFormatter dateFormatter = new DateFormatter(date);
-        return dateFormatter.format(DateFormatType.MYSQL);
+        return DateFormatter.format(date, DateFormatType.MYSQL);
     }
 
     @Override

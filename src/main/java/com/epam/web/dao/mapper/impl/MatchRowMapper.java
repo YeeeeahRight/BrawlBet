@@ -34,9 +34,8 @@ public class MatchRowMapper implements RowMapper<Match> {
     }
 
     private Date parseDate(String dateString) throws SQLException {
-        DateParser dateParser = new DateParser(dateString);
         try {
-            return dateParser.parse(DateFormatType.MYSQL);
+            return DateParser.parse(dateString, DateFormatType.MYSQL);
         } catch (ParseException e) {
             throw new SQLException("Invalid date format.");
         }
