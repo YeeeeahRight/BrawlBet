@@ -17,8 +17,7 @@ import org.mockito.Mockito;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.mockito.Matchers.anyFloat;
-import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -71,7 +70,7 @@ public class DepositCommandTest {
         //when
         depositCommand.execute(requestContext);
         //then
-        verify(accountService, times(1)).addMoneyById(anyFloat(), anyInt());
+        verify(accountService, times(1)).addMoneyById(anyObject(), anyInt());
     }
 
     //then

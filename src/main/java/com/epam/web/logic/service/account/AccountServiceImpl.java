@@ -7,6 +7,7 @@ import com.epam.web.model.entity.Account;
 import com.epam.web.exception.DaoException;
 import com.epam.web.exception.ServiceException;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,7 +49,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public float getBalance(long id) throws ServiceException {
+    public BigDecimal getBalance(long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDao matchDao = daoHelper.createAccountDao();
             Optional<Account> user = matchDao.findById(id);
@@ -62,7 +63,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void addMoneyById(float money, long id) throws ServiceException {
+    public void addMoneyById(BigDecimal money, long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDao matchDao = daoHelper.createAccountDao();
             matchDao.addMoneyById(money, id);

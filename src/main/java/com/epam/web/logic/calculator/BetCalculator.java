@@ -2,6 +2,8 @@ package com.epam.web.logic.calculator;
 
 import com.epam.web.model.enumeration.MatchTeamNumber;
 
+import java.math.BigDecimal;
+
 /**
  * Interface with description of math operations with bets.
  */
@@ -15,7 +17,8 @@ public interface BetCalculator {
      *
      * @return  coefficient value of given team.
      */
-    float calculateCoefficient(MatchTeamNumber team, float firstTeamBetsAmount, float secondTeamBetsAmount);
+    BigDecimal calculateCoefficient(MatchTeamNumber team, BigDecimal firstTeamBetsAmount,
+                                    BigDecimal secondTeamBetsAmount);
 
     /**
      * Calculates bets amount percent of given team by first and second team bets amount.

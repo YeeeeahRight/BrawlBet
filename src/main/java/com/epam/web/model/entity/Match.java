@@ -3,6 +3,7 @@ package com.epam.web.model.entity;
 import com.epam.web.model.Entity;
 import com.epam.web.model.enumeration.MatchTeamNumber;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
@@ -27,12 +28,12 @@ public class Match implements Entity {
     private final String tournament;
     private final Float commission;
     private final Boolean isClosed;
-    private final Float firstTeamBets;
-    private final Float secondTeamBets;
+    private final BigDecimal firstTeamBets;
+    private final BigDecimal secondTeamBets;
 
     public Match(Long id, Date date, String tournament, Long firstTeamId, Long secondTeamId,
-                 MatchTeamNumber winnerTeam, Float commission, Boolean isClosed, Float firstTeamBets,
-                 Float secondTeamBets) {
+                 MatchTeamNumber winnerTeam, Float commission, Boolean isClosed, BigDecimal firstTeamBets,
+                 BigDecimal secondTeamBets) {
         this.id = id;
         this.date = date;
         this.tournament = tournament;
@@ -54,8 +55,8 @@ public class Match implements Entity {
         this.winnerTeam = MatchTeamNumber.NONE;
         this.commission = 0.0f;
         this.isClosed = false;
-        this.firstTeamBets = 0.0f;
-        this.secondTeamBets = 0.0f;
+        this.firstTeamBets = BigDecimal.ZERO;
+        this.secondTeamBets = BigDecimal.ZERO;
     }
 
     public Match(Date date, String tournament, Long firstTeamId, Long secondTeamId) {
@@ -67,8 +68,8 @@ public class Match implements Entity {
         this.winnerTeam = MatchTeamNumber.NONE;
         this.commission = 0.0f;
         this.isClosed = false;
-        this.firstTeamBets = 0.0f;
-        this.secondTeamBets = 0.0f;
+        this.firstTeamBets = BigDecimal.ZERO;
+        this.secondTeamBets = BigDecimal.ZERO;
     }
 
     public Date getDate() {
@@ -99,11 +100,11 @@ public class Match implements Entity {
         return winnerTeam;
     }
 
-    public Float getFirstTeamBets() {
+    public BigDecimal getFirstTeamBets() {
         return firstTeamBets;
     }
 
-    public Float getSecondTeamBets() {
+    public BigDecimal getSecondTeamBets() {
         return secondTeamBets;
     }
 

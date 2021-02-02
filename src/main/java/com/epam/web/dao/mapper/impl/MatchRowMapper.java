@@ -6,6 +6,7 @@ import com.epam.web.model.entity.Match;
 import com.epam.web.dao.mapper.RowMapper;
 import com.epam.web.model.enumeration.MatchTeamNumber;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -21,8 +22,8 @@ public class MatchRowMapper implements RowMapper<Match> {
         Long id = resultSet.getLong(Match.ID);
         Float commission = resultSet.getFloat(Match.COMMISSION);
         Boolean isClosed = resultSet.getBoolean(Match.IS_CLOSED);
-        Float firstTeamBets = resultSet.getFloat(Match.FIRST_TEAM_BETS);
-        Float secondTeamBets = resultSet.getFloat(Match.SECOND_TEAM_BETS);
+        BigDecimal firstTeamBets = resultSet.getBigDecimal(Match.FIRST_TEAM_BETS);
+        BigDecimal secondTeamBets = resultSet.getBigDecimal(Match.SECOND_TEAM_BETS);
         String dateString = resultSet.getString(Match.DATE);
         Date date = parseDate(dateString);
         String winnerTeamStr = resultSet.getString(Match.WINNER_TEAM);

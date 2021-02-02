@@ -34,7 +34,7 @@ public class BalanceFilter implements Filter {
     private void setBalanceSession(HttpSession session, Long userId) throws ServletException {
         float balance;
         try {
-            balance = USER_SERVICE.getBalance(userId);
+            balance = USER_SERVICE.getBalance(userId).floatValue();
         } catch (ServiceException e) {
             throw new ServletException(e);
         }

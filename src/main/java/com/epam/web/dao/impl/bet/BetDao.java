@@ -4,6 +4,7 @@ import com.epam.web.dao.Dao;
 import com.epam.web.exception.DaoException;
 import com.epam.web.model.entity.Bet;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -44,7 +45,7 @@ public interface BetDao extends Dao<Bet> {
      *
      * @throws  DaoException  if database errors occurs.
      */
-    void close(float moneyReceived, long id) throws DaoException;
+    void close(BigDecimal moneyReceived, long id) throws DaoException;
 
     /**
      * Gets bets amount by account id.

@@ -14,6 +14,7 @@ import com.epam.web.model.entity.Bet;
 import com.epam.web.model.entity.Match;
 import com.epam.web.model.enumeration.MatchTeamNumber;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class BetCommand implements Command {
@@ -34,17 +35,17 @@ public class BetCommand implements Command {
         String teamBetName = requestContext.getRequestParameter(Parameter.BET_ON);
         String moneyStr = requestContext.getRequestParameter(Parameter.MONEY);
         long matchId;
-        float money;
+        BigDecimal money;
         MatchTeamNumber teamBet;
         try {
             matchId = Long.parseLong(matchIdStr);
             teamBet = MatchTeamNumber.valueOf(teamBetName);
-            money = Float.parseFloat(moneyStr);
+            money = new BigDecimal(moneyStr);
         } catch (IllegalArgumentException e) {
             throw new InvalidParametersException("Invalid parameters in request.");
         }
         Long accountId = (Long) requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
-        if (accountService.getBalance(accountId) < money) {
+        if (accountService.getBalance(accountId).compareTo(money) < 0) {
             throw new InvalidParametersException("You have no money for your bet.");
         }
         long teamId = getTeamIdByMatchId(teamBet, matchId);

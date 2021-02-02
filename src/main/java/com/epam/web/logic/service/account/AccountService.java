@@ -3,6 +3,7 @@ package com.epam.web.logic.service.account;
 import com.epam.web.exception.ServiceException;
 import com.epam.web.model.entity.Account;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +52,7 @@ public interface AccountService {
      * @throws  ServiceException  if account is not found
      *                            also it's a wrapper for lower errors.
      */
-    float getBalance(long id) throws ServiceException;
+    BigDecimal getBalance(long id) throws ServiceException;
 
     /**
      * Adds money value to balance of account by account id.
@@ -61,7 +62,7 @@ public interface AccountService {
      *
      * @throws  ServiceException  a wrapper for lower errors.
      */
-    void addMoneyById(float money, long id) throws ServiceException;
+    void addMoneyById(BigDecimal money, long id) throws ServiceException;
 
     /**
      * Unblock account by id.

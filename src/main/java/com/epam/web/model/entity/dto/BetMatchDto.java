@@ -91,8 +91,8 @@ public class BetMatchDto {
 
         public BetMatchDtoBuilder setGeneralAttributes(Bet bet, String tournament) {
             this.id = bet.getMatchId();
-            this.moneyBet = bet.getMoneyBet();
-            this.moneyReceived = bet.getMoneyReceived();
+            this.moneyBet = bet.getMoneyBet().floatValue();
+            this.moneyReceived = bet.getMoneyReceived().floatValue();
             this.date = bet.getBetDate();
             this.tournament = tournament;
             return this;
@@ -135,10 +135,10 @@ public class BetMatchDto {
         if (Float.compare(that.moneyReceived, moneyReceived) != 0) {
             return false;
         }
-        if (firstPercent != that.firstPercent) {
+        if (!firstPercent.equals(that.firstPercent)) {
             return false;
         }
-        if (secondPercent != that.secondPercent) {
+        if (!secondPercent.equals(that.secondPercent)) {
             return false;
         }
         if (!id.equals(that.id)) {

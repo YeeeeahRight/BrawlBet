@@ -5,6 +5,7 @@ import com.epam.web.date.DateFormatType;
 import com.epam.web.date.DateParser;
 import com.epam.web.model.entity.Bet;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -18,8 +19,8 @@ public class BetRowMapper implements RowMapper<Bet> {
         Long accountId = resultSet.getLong(Bet.ACCOUNT_ID);
         Long matchId = resultSet.getLong(Bet.MATCH_ID);
         Long teamId = resultSet.getLong(Bet.TEAM_ID);
-        Float moneyBet = resultSet.getFloat(Bet.MONEY_BET);
-        Float moneyReceived = resultSet.getFloat(Bet.MONEY_RECEIVED);
+        BigDecimal moneyBet = resultSet.getBigDecimal(Bet.MONEY_BET);
+        BigDecimal moneyReceived = resultSet.getBigDecimal(Bet.MONEY_RECEIVED);
         String dateString = resultSet.getString(Bet.BET_DATE);
         Date betDate = parseDate(dateString);
 

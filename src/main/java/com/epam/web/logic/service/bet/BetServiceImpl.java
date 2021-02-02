@@ -12,10 +12,13 @@ import com.epam.web.model.entity.Bet;
 import com.epam.web.model.entity.Match;
 import com.epam.web.model.enumeration.MatchTeamNumber;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 public class BetServiceImpl implements BetService {
+    private static final BigDecimal MINUS_ONE = new BigDecimal("-1");
+
     private final DaoHelperFactory daoHelperFactory;
     private final Validator<Bet> betValidator;
 
@@ -41,10 +44,10 @@ public class BetServiceImpl implements BetService {
             Match match = matchOptional.get();
             long teamId = bet.getTeamId();
             MatchTeamNumber teamType = findTeamType(teamId, match);
-            float money = bet.getMoneyBet();
+            BigDecimal money = bet.getMoneyBet();
             long accountId = bet.getAccountId();
             daoHelper.startTransaction();
-            accountDao.addMoneyById(money * -1, accountId);
+            accountDao.addMoneyById(money.multiply(MINUS_ONE), accountId);
             betDao.save(bet);
             matchDao.addTeamBetAmount(teamType, money, matchId);
             daoHelper.commit();

@@ -71,7 +71,7 @@ public class HomePageCommand implements Command {
             matchDtoBuilder = matchDtoBuilder.setGeneralFields(match,
                     firstTeamName, secondTeamName).setWinner(winnerTeamName);
             matchDtoBuilder = setPercents(matchDtoBuilder,
-                    match.getFirstTeamBets(), match.getSecondTeamBets());
+                    match.getFirstTeamBets().floatValue(), match.getSecondTeamBets().floatValue());
             MatchDto matchDto = matchDtoBuilder.build();
             matchDtoList.add(matchDto);
         }

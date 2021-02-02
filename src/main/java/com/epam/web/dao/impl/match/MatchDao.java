@@ -6,6 +6,7 @@ import com.epam.web.model.entity.Match;
 import com.epam.web.exception.DaoException;
 import com.epam.web.model.enumeration.MatchTeamNumber;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -24,14 +25,14 @@ public interface MatchDao extends Dao<Match> {
     void close(long id, MatchTeamNumber matchTeamNumber) throws DaoException;
 
     /**
-     * Adds commission value to match by match id.
+     * Sets commission value to match by match id.
      *
-     * @param  commission  a commission value to add.
+     * @param  commission  a commission value to set.
      * @param  id          an id value of match.
      *
      * @throws  DaoException  if database errors occurs.
      */
-    void addCommissionById(float commission, long id) throws DaoException;
+    void setCommissionById(float commission, long id) throws DaoException;
 
     /**
      * Adds bet amount to team by match id and team type.
@@ -42,7 +43,7 @@ public interface MatchDao extends Dao<Match> {
      *
      * @throws  DaoException  if database errors occurs.
      */
-    void addTeamBetAmount(MatchTeamNumber teamType, float betAmount, long id) throws DaoException;
+    void addTeamBetAmount(MatchTeamNumber teamType, BigDecimal betAmount, long id) throws DaoException;
 
     /**
      * Gets list of matches by match type

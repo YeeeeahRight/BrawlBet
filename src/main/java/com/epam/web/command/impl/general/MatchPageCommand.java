@@ -65,7 +65,7 @@ public class MatchPageCommand implements Command {
         matchDtoBuilder = matchDtoBuilder.setGeneralFields(match,
                 firstTeamName, secondTeamName).setWinner(winnerTeamName);
         matchDtoBuilder = setPercents(matchDtoBuilder,
-                match.getFirstTeamBets(), match.getSecondTeamBets())
+                match.getFirstTeamBets().floatValue(), match.getSecondTeamBets().floatValue())
                 .setCommission(match.getCommission());
         return matchDtoBuilder.build();
     }
@@ -126,16 +126,16 @@ public class MatchPageCommand implements Command {
 
     private void addBetAttributes(RequestContext requestContext, long accountId,
                                   Match match) throws ServiceException {
-        float maxBet = accountService.getBalance(accountId);
+        float maxBet = accountService.getBalance(accountId).floatValue();
         if (maxBet < MIN_BET) {
-            maxBet = 0f;
+            maxBet = 0.0f;
         }
         requestContext.addAttribute(Attribute.MAX_BET, maxBet);
         requestContext.addAttribute(Attribute.MIN_BET, MIN_BET);
         float firstCoefficient = betCalculator.calculateCoefficient(MatchTeamNumber.FIRST,
-                match.getFirstTeamBets(), match.getSecondTeamBets());
+                match.getFirstTeamBets(), match.getSecondTeamBets()).floatValue();
         float secondCoefficient = betCalculator.calculateCoefficient(MatchTeamNumber.SECOND,
-                match.getFirstTeamBets(), match.getSecondTeamBets());
+                match.getFirstTeamBets(), match.getSecondTeamBets()).floatValue();
         float commission = match.getCommission();
         firstCoefficient -= firstCoefficient * commission / 100;
         secondCoefficient -= secondCoefficient * commission / 100;

@@ -16,6 +16,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,7 +68,7 @@ public class BetCommandTest {
         RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
                 requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
         //when
-        when(accountService.getBalance(VALID_ACCOUNT_ID)).thenReturn(Float.MAX_VALUE);
+        when(accountService.getBalance(VALID_ACCOUNT_ID)).thenReturn(BigDecimal.valueOf(Double.MAX_VALUE));
         when(matchService.getMatchById(VALID_MATCH_ID)).thenReturn(MATCH_WITH_TEAMS_IDS);
         CommandResult actual = betCommand.execute(requestContext);
         //then
@@ -83,7 +84,7 @@ public class BetCommandTest {
         RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
                 requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
         //when
-        when(accountService.getBalance(VALID_ACCOUNT_ID)).thenReturn(Float.MAX_VALUE);
+        when(accountService.getBalance(VALID_ACCOUNT_ID)).thenReturn(BigDecimal.valueOf(Double.MAX_VALUE));
         when(matchService.getMatchById(VALID_MATCH_ID)).thenReturn(MATCH_WITH_TEAMS_IDS);
         betCommand.execute(requestContext);
         //then

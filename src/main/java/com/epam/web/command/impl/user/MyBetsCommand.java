@@ -75,7 +75,7 @@ public class MyBetsCommand implements Command {
             betMatchDtoBuilder = betMatchDtoBuilder.setGeneralAttributes(bet, tournament);
             betMatchDtoBuilder = setTeams(betMatchDtoBuilder, match, bet.getTeamId());
             betMatchDtoBuilder = setPercents(betMatchDtoBuilder,
-                    match.getFirstTeamBets(), match.getSecondTeamBets());
+                    match.getFirstTeamBets().floatValue(), match.getSecondTeamBets().floatValue());
             BetMatchDto betMatchDto = betMatchDtoBuilder.build();
             betMatchDtoList.add(betMatchDto);
         }

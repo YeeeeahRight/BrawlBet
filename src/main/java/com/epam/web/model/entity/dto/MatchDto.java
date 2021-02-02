@@ -107,8 +107,8 @@ public class MatchDto {
             this.isClosed = match.isClosed();
             this.firstTeam = firstTeam;
             this.secondTeam = secondTeam;
-            this.firstTeamBets = match.getFirstTeamBets();
-            this.secondTeamBets = match.getSecondTeamBets();
+            this.firstTeamBets = match.getFirstTeamBets().floatValue();
+            this.secondTeamBets = match.getSecondTeamBets().floatValue();
             return this;
         }
 

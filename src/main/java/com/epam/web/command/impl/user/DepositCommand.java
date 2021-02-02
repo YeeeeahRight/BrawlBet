@@ -9,9 +9,11 @@ import com.epam.web.exception.InvalidParametersException;
 import com.epam.web.exception.ServiceException;
 import com.epam.web.logic.service.account.AccountService;
 
+import java.math.BigDecimal;
+
 public class DepositCommand implements Command {
-    private static final float MAX_DEPOSIT = 100.0f;
-    private static final float MIN_DEPOSIT = 0.1f;
+    private static final BigDecimal MAX_DEPOSIT = new BigDecimal("100.0");
+    private static final BigDecimal MIN_DEPOSIT = new BigDecimal("0.1");
     private final AccountService accountService;
 
     public DepositCommand(AccountService accountService) {
@@ -21,13 +23,13 @@ public class DepositCommand implements Command {
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
         String moneyStr = requestContext.getRequestParameter(Parameter.MONEY);
-        float money;
+        BigDecimal money;
         try {
-            money = Float.parseFloat(moneyStr);
+            money = new BigDecimal(moneyStr);
         } catch (NumberFormatException e) {
             throw new InvalidParametersException("Invalid money parameter in request.");
         }
-        if (money > MAX_DEPOSIT || money < MIN_DEPOSIT) {
+        if (money.compareTo(MAX_DEPOSIT) > 0 || money.compareTo(MIN_DEPOSIT) < 0) {
             throw new InvalidParametersException(
                     String.format("Deposit value is not in range[%f-%f]", MIN_DEPOSIT, MAX_DEPOSIT));
         }

@@ -7,6 +7,7 @@ import com.epam.web.date.DateFormatter;
 import com.epam.web.exception.DaoException;
 import com.epam.web.model.entity.Bet;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
@@ -29,9 +30,9 @@ public class BetDaoImpl extends AbstractDao<Bet> implements BetDao {
         long accountId = item.getAccountId();
         long matchId = item.getMatchId();
         long teamId = item.getTeamId();
-        float money = item.getMoneyBet();
+        BigDecimal money = item.getMoneyBet();
         String betDate = formatDate(item.getBetDate());
-        updateSingle(INSERT_QUERY, accountId, matchId, money, teamId, betDate);
+        updateSingle(INSERT_QUERY, accountId, matchId, money.toString(), teamId, betDate);
     }
 
     private String formatDate(Date date) {
@@ -50,8 +51,8 @@ public class BetDaoImpl extends AbstractDao<Bet> implements BetDao {
     }
 
     @Override
-    public void close(float moneyReceived, long id) throws DaoException {
-        updateSingle(CLOSE_QUERY, moneyReceived, id);
+    public void close(BigDecimal moneyReceived, long id) throws DaoException {
+        updateSingle(CLOSE_QUERY, moneyReceived.toString(), id);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.epam.web.model.entity;
 
 import com.epam.web.model.Entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
@@ -18,12 +19,12 @@ public class Bet implements Entity {
     private final Long accountId;
     private final Long matchId;
     private final Long teamId;
-    private final Float moneyReceived;
-    private final Float moneyBet;
+    private final BigDecimal moneyReceived;
+    private final BigDecimal moneyBet;
     private final Date betDate;
     private final Long id;
 
-    public Bet(Long id, Long accountId, Long matchId, Float moneyBet, Long teamId, Float moneyReceived,
+    public Bet(Long id, Long accountId, Long matchId, BigDecimal moneyBet, Long teamId, BigDecimal moneyReceived,
                Date betDate) {
         this.id = id;
         this.accountId = accountId;
@@ -34,14 +35,14 @@ public class Bet implements Entity {
         this.betDate = betDate;
     }
 
-    public Bet(Long accountId, Long matchId, Float moneyBet, Long teamId, Date betDate) {
+    public Bet(Long accountId, Long matchId, BigDecimal moneyBet, Long teamId, Date betDate) {
         this.id = null;
         this.accountId = accountId;
         this.matchId = matchId;
         this.moneyBet = moneyBet;
         this.teamId = teamId;
         this.betDate = betDate;
-        this.moneyReceived = 0.0f;
+        this.moneyReceived = BigDecimal.ZERO;
     }
 
     public Long getId() {
@@ -56,7 +57,7 @@ public class Bet implements Entity {
         return matchId;
     }
 
-    public Float getMoneyBet() {
+    public BigDecimal getMoneyBet() {
         return moneyBet;
     }
 
@@ -64,7 +65,7 @@ public class Bet implements Entity {
         return teamId;
     }
 
-    public Float getMoneyReceived() {
+    public BigDecimal getMoneyReceived() {
         return moneyReceived;
     }
 

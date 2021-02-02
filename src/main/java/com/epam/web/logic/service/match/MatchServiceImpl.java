@@ -11,6 +11,7 @@ import com.epam.web.model.entity.Match;
 import com.epam.web.exception.DaoException;
 import com.epam.web.exception.ServiceException;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -85,7 +86,7 @@ public class MatchServiceImpl implements MatchService {
     public void addCommissionById(float commission, long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             MatchDao matchDao = daoHelper.createMatchDao();
-            matchDao.addCommissionById(commission, id);
+            matchDao.setCommissionById(commission, id);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -101,9 +102,9 @@ public class MatchServiceImpl implements MatchService {
             daoHelper.startTransaction();
             for (Bet bet : bets) {
                 long accountId = bet.getAccountId();
-                float money = bet.getMoneyBet();
-                float received = bet.getMoneyReceived();
-                accountDao.addMoneyById(money - received, accountId);
+                BigDecimal money = bet.getMoneyBet();
+                BigDecimal received = bet.getMoneyReceived();
+                accountDao.addMoneyById(money.subtract(received), accountId);
                 long matchId = bet.getMatchId();
                 betDao.removeById(matchId);
             }

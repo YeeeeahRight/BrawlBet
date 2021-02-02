@@ -3,6 +3,9 @@ package com.epam.web.model.entity;
 import com.epam.web.model.Entity;
 import com.epam.web.model.enumeration.AccountRole;
 
+import java.math.BigDecimal;
+import java.util.Objects;
+
 public class Account implements Entity {
     public static final String ID = "id";
     public static final String ROLE = "role";
@@ -15,11 +18,11 @@ public class Account implements Entity {
     private final String name;
     private final String password;
     private final AccountRole role;
-    private final Float balance;
+    private final BigDecimal balance;
     private final Boolean isBlocked;
     private final Long id;
 
-    public Account(Long id, String name, String password, AccountRole role, Float balance, Boolean isBlocked) {
+    public Account(Long id, String name, String password, AccountRole role, BigDecimal balance, Boolean isBlocked) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -33,11 +36,11 @@ public class Account implements Entity {
         this.name = name;
         this.password = password;
         this.role = role;
-        this.balance = 0.0f;
+        this.balance = BigDecimal.ZERO;
         this.isBlocked = false;
     }
 
-    public Float getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
@@ -87,7 +90,7 @@ public class Account implements Entity {
         if (!isBlocked.equals(account.isBlocked)) {
             return false;
         }
-        return id != null ? id.equals(account.id) : account.id == null;
+        return Objects.equals(id, account.id);
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.epam.web.exception.DaoException;
 import com.epam.web.dao.mapper.impl.MatchRowMapper;
 import com.epam.web.model.enumeration.MatchTeamNumber;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
@@ -30,7 +31,7 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     private static final String GET_FINISHED_MATCHES_QUERY_RANGE =
             "SELECT * FROM matches WHERE date <= ? AND commission > 0 AND is_closed = 0 " +
             "ORDER BY date LIMIT ?,?";
-    private static final String ADD_COMMISSION_QUERY = "UPDATE matches SET commission=? WHERE id=?";
+    private static final String SET_COMMISSION_QUERY = "UPDATE matches SET commission=? WHERE id=?";
     private static final String ADD_FIRST_TEAM_BETS_QUERY = "UPDATE matches SET first_team_bets= " +
             "first_team_bets + ? WHERE id=?";
     private static final String ADD_SECOND_TEAM_BETS_QUERY = "UPDATE matches SET second_team_bets= " +
@@ -112,12 +113,12 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
         return getRowsAmount(additionalCondition);
     }
 
-    public void addCommissionById(float commission, long id) throws DaoException {
-        updateSingle(ADD_COMMISSION_QUERY, commission, id);
+    public void setCommissionById(float commission, long id) throws DaoException {
+        updateSingle(SET_COMMISSION_QUERY, commission, id);
     }
 
     @Override
-    public void addTeamBetAmount(MatchTeamNumber teamType, float betAmount, long id) throws DaoException {
+    public void addTeamBetAmount(MatchTeamNumber teamType, BigDecimal betAmount, long id) throws DaoException {
         String query;
         switch (teamType) {
             case FIRST:
@@ -129,6 +130,6 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
             default:
                 throw new DaoException("Unknown team.");
         }
-        updateSingle(query, betAmount, id);
+        updateSingle(query, betAmount.toString(), id);
     }
 }
