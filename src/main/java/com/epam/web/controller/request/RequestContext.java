@@ -43,10 +43,6 @@ public class RequestContext {
         sessionAttributes.put(attributeName, attributeContent);
     }
 
-    public void removeSessionAttribute(String attributeName) {
-        sessionAttributes.remove(attributeName);
-    }
-
     public Set<String> getSessionAttributeNames() {
         return sessionAttributes.keySet();
     }

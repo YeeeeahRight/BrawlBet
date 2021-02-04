@@ -2,6 +2,7 @@ package com.epam.web.command.impl.general;
 
 import com.epam.web.command.Command;
 import com.epam.web.command.CommandResult;
+import com.epam.web.command.util.ParameterExtractor;
 import com.epam.web.constant.Attribute;
 import com.epam.web.constant.CommandName;
 import com.epam.web.constant.Page;
@@ -23,10 +24,7 @@ public class LocalizationCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws InvalidParametersException {
-        String language = requestContext.getRequestParameter(Parameter.LANGUAGE);
-        if (language == null) {
-            throw new InvalidParametersException("No language parameter in request.");
-        }
+        String language = ParameterExtractor.extractString(Parameter.LANGUAGE, requestContext);
         String locale = getLocaleByLanguage(language);
         requestContext.addSession(Attribute.LANGUAGE, locale);
         String page = requestContext.getHeader();

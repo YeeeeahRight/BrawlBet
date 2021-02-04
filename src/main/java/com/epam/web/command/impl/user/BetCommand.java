@@ -2,6 +2,7 @@ package com.epam.web.command.impl.user;
 
 import com.epam.web.command.Command;
 import com.epam.web.command.CommandResult;
+import com.epam.web.command.util.ParameterExtractor;
 import com.epam.web.constant.Attribute;
 import com.epam.web.constant.Parameter;
 import com.epam.web.controller.request.RequestContext;
@@ -31,19 +32,9 @@ public class BetCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
-        String matchIdStr = requestContext.getRequestParameter(Parameter.ID);
-        String teamBetName = requestContext.getRequestParameter(Parameter.BET_ON);
-        String moneyStr = requestContext.getRequestParameter(Parameter.MONEY);
-        long matchId;
-        BigDecimal money;
-        MatchTeamNumber teamBet;
-        try {
-            matchId = Long.parseLong(matchIdStr);
-            teamBet = MatchTeamNumber.valueOf(teamBetName);
-            money = new BigDecimal(moneyStr);
-        } catch (IllegalArgumentException e) {
-            throw new InvalidParametersException("Invalid parameters in request.");
-        }
+        MatchTeamNumber teamBet = ParameterExtractor.extractTeamBet(requestContext);
+        BigDecimal money = ParameterExtractor.extractNumber(Parameter.MONEY, requestContext);
+        long matchId = ParameterExtractor.extractId(requestContext);
         Long accountId = (Long) requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
         if (accountService.getBalance(accountId).compareTo(money) < 0) {
             throw new InvalidParametersException("You have no money for your bet.");

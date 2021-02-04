@@ -100,7 +100,7 @@ public class MatchDto {
         private Integer secondPercent;
         private Float commission;
 
-        public MatchDtoBuilder setGeneralFields(Match match, String firstTeam, String secondTeam) {
+        public void setGeneralFields(Match match, String firstTeam, String secondTeam) {
             this.id = match.getId();
             this.date = match.getDate();
             this.tournament = match.getTournament();
@@ -109,23 +109,19 @@ public class MatchDto {
             this.secondTeam = secondTeam;
             this.firstTeamBets = match.getFirstTeamBets().floatValue();
             this.secondTeamBets = match.getSecondTeamBets().floatValue();
-            return this;
         }
 
-        public MatchDtoBuilder setWinner(String winner) {
+        public void setWinner(String winner) {
             this.winner = winner;
-            return this;
         }
 
-        public MatchDtoBuilder setPercents(Integer firstPercent, Integer secondPercent) {
+        public void setPercents(Integer firstPercent, Integer secondPercent) {
             this.firstPercent = firstPercent;
             this.secondPercent = secondPercent;
-            return this;
         }
 
-        public MatchDtoBuilder setCommission(Float commission) {
+        public void setCommission(Float commission) {
             this.commission = commission;
-            return this;
         }
 
         public MatchDto build() {

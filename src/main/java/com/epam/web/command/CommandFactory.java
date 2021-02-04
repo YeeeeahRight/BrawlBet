@@ -9,6 +9,7 @@ import com.epam.web.command.impl.general.*;
 import com.epam.web.command.impl.user.BetCommand;
 import com.epam.web.command.impl.user.DepositCommand;
 import com.epam.web.command.impl.user.MyBetsCommand;
+import com.epam.web.command.util.MatchRequestCreator;
 import com.epam.web.constant.CommandName;
 import com.epam.web.dao.helper.DaoHelperFactory;
 import com.epam.web.logic.calculator.BetCalculatorImpl;
@@ -42,7 +43,7 @@ public class CommandFactory {
             case CommandName.HOME_PAGE:
                 return new HomePageCommand(new MatchServiceImpl(new DaoHelperFactory(),
                         new MatchValidator()), new TeamServiceImpl(new DaoHelperFactory(),
-                        new TeamValidator()), new BetCalculatorImpl());
+                        new TeamValidator()));
             case CommandName.CLOSE_MATCHES_PAGE:
                 return new CloseMatchesPageCommand(new MatchServiceImpl(new DaoHelperFactory(),
                         new MatchValidator()), new TeamServiceImpl(new DaoHelperFactory(),
@@ -87,11 +88,11 @@ public class CommandFactory {
             case CommandName.ADD_MATCH:
                 return new AddMatchCommand(new MatchServiceImpl(new DaoHelperFactory(),
                         new MatchValidator()), new TeamServiceImpl(new DaoHelperFactory(),
-                        new TeamValidator()));
+                        new TeamValidator()), new MatchRequestCreator());
             case CommandName.EDIT_MATCH:
                 return new EditMatchCommand(new MatchServiceImpl(new DaoHelperFactory(),
                         new MatchValidator()), new TeamServiceImpl(new DaoHelperFactory(),
-                        new TeamValidator()));
+                        new TeamValidator()), new MatchRequestCreator());
             case CommandName.EDIT_MATCH_PAGE:
                 return new EditMatchPageCommand(new MatchServiceImpl(new DaoHelperFactory(),
                         new MatchValidator()), new TeamServiceImpl(new DaoHelperFactory(),

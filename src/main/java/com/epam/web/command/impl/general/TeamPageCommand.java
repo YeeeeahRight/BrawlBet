@@ -2,6 +2,7 @@ package com.epam.web.command.impl.general;
 
 import com.epam.web.command.Command;
 import com.epam.web.command.CommandResult;
+import com.epam.web.command.util.ParameterExtractor;
 import com.epam.web.constant.Attribute;
 import com.epam.web.constant.Page;
 import com.epam.web.constant.Parameter;
@@ -20,22 +21,12 @@ public class TeamPageCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
-        String idStr = requestContext.getRequestParameter(Parameter.ID);
-        String teamName;
         long id;
-        if (idStr != null) {
-            try {
-                id = Long.parseLong(idStr);
-            } catch (NumberFormatException e) {
-                throw new InvalidParametersException("Invalid id parameter in request.");
-            }
-        } else {
-            teamName = requestContext.getRequestParameter(Parameter.NAME);
-            if (teamName != null) {
-                id = teamService.getTeamIdByName(teamName);
-            } else {
-                throw new InvalidParametersException("Invalid team name parameter in request.");
-            }
+        try {
+            id = ParameterExtractor.extractId(requestContext);
+        } catch (InvalidParametersException e) {
+            String teamName = ParameterExtractor.extractString(Parameter.TEAM_NAME, requestContext);
+            id = teamService.getTeamIdByName(teamName);
         }
         Team team = teamService.getTeamById(id);
         float winRate = calculateWinRate(team);

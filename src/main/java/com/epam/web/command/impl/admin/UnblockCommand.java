@@ -2,7 +2,7 @@ package com.epam.web.command.impl.admin;
 
 import com.epam.web.command.Command;
 import com.epam.web.command.CommandResult;
-import com.epam.web.constant.Parameter;
+import com.epam.web.command.util.ParameterExtractor;
 import com.epam.web.exception.InvalidParametersException;
 import com.epam.web.exception.ServiceException;
 import com.epam.web.controller.request.RequestContext;
@@ -17,13 +17,7 @@ public class UnblockCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
-        String idStr = requestContext.getRequestParameter(Parameter.ID);
-        long id;
-        try {
-            id = Long.parseLong(idStr);
-        } catch (NumberFormatException e) {
-            throw new InvalidParametersException("Invalid user id parameter in request.");
-        }
+        long id = ParameterExtractor.extractId(requestContext);
         accountService.unblockById(id);
 
         String prevPage = requestContext.getHeader();

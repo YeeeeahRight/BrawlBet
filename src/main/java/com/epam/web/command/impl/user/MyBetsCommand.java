@@ -2,9 +2,9 @@ package com.epam.web.command.impl.user;
 
 import com.epam.web.command.Command;
 import com.epam.web.command.CommandResult;
+import com.epam.web.command.util.ParameterExtractor;
 import com.epam.web.constant.Attribute;
 import com.epam.web.constant.Page;
-import com.epam.web.constant.Parameter;
 import com.epam.web.controller.request.RequestContext;
 import com.epam.web.exception.InvalidParametersException;
 import com.epam.web.exception.ServiceException;
@@ -39,16 +39,7 @@ public class MyBetsCommand implements Command {
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException,
             InvalidParametersException {
-        String pageStr = requestContext.getRequestParameter(Parameter.PAGE);
-        int page;
-        try {
-            page = Integer.parseInt(pageStr);
-        } catch (NumberFormatException e) {
-            throw new InvalidParametersException("Invalid page number in request.");
-        }
-        if (page < 1) {
-            throw new InvalidParametersException("Not positive page number in request.");
-        }
+        int page = ParameterExtractor.extractPageNumber(requestContext);
         int firstMatchIndex = MAX_BETS_PAGE * (page - 1);
         long accountId = (Long) requestContext.getSessionAttribute(Attribute.ACCOUNT_ID);
         List<Bet> accountBets = betService.getBetsByAccountIdRange(accountId, firstMatchIndex, MAX_BETS_PAGE);

@@ -2,6 +2,7 @@ package com.epam.web.command.impl.bookmaker;
 
 import com.epam.web.command.Command;
 import com.epam.web.command.CommandResult;
+import com.epam.web.command.util.ParameterExtractor;
 import com.epam.web.constant.Parameter;
 import com.epam.web.controller.request.RequestContext;
 import com.epam.web.exception.InvalidParametersException;
@@ -18,17 +19,11 @@ public class AcceptMatchCommand implements Command {
     }
 
     @Override
-    public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
-        String idStr = requestContext.getRequestParameter(Parameter.ID);
-        String commissionStr = requestContext.getRequestParameter(Parameter.COMMISSION);
-        long id;
-        float commission;
-        try {
-            id = Long.parseLong(idStr);
-            commission = Float.parseFloat(commissionStr);
-        } catch (NumberFormatException e) {
-            throw new InvalidParametersException("Invalid parameters in request.");
-        }
+    public CommandResult execute(RequestContext requestContext)
+            throws ServiceException, InvalidParametersException {
+        long id = ParameterExtractor.extractId(requestContext);
+        float commission = ParameterExtractor.extractNumber(Parameter.COMMISSION, requestContext)
+                .floatValue();
         if (commission < MIN_COMMISSION || commission > MAX_COMMISSION) {
             throw new InvalidParametersException(
                     String.format("Commission parameter is not in range[%f-%f]", MIN_COMMISSION, MAX_COMMISSION));

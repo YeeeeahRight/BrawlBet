@@ -37,7 +37,7 @@
                         <form method="POST" action="${pageContext.request.contextPath}/controller?command=add-team">
                             <input type="text" maxlength="15"
                                    placeholder="<fmt:message key="team.add.input"/>"
-                                   name="name" required>
+                                   name="teamName" required>
                             <button type="submit">
                                 <fmt:message key="match.add.button"/>
                             </button>

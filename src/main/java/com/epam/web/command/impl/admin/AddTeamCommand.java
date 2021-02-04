@@ -2,6 +2,7 @@ package com.epam.web.command.impl.admin;
 
 import com.epam.web.command.Command;
 import com.epam.web.command.CommandResult;
+import com.epam.web.command.util.ParameterExtractor;
 import com.epam.web.constant.CommandName;
 import com.epam.web.constant.Parameter;
 import com.epam.web.controller.request.RequestContext;
@@ -21,10 +22,7 @@ public class AddTeamCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
-        String teamName = requestContext.getRequestParameter(Parameter.NAME);
-        if (teamName == null) {
-            throw new InvalidParametersException("No team parameter.");
-        }
+        String teamName = ParameterExtractor.extractString(Parameter.TEAM_NAME, requestContext);
         Team newTeam = new Team(teamName, 0, 0);
         teamService.saveTeam(newTeam);
 

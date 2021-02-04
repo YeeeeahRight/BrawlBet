@@ -37,7 +37,7 @@
                     </div>
                     <div class="match-body">
                         <div class="f-team ${matchDto.getFirstTeam().equals(matchDto.getWinner())}">
-                            <a href="${pageContext.request.contextPath}/controller?command=team&name=${matchDto.getFirstTeam()}">
+                            <a href="${pageContext.request.contextPath}/controller?command=team&teamName=${matchDto.getFirstTeam()}">
                                 <div class="f-team-name">
                                     <h1>
                                         ${matchDto.getFirstTeam()}

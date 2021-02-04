@@ -2,9 +2,9 @@ package com.epam.web.command.impl.admin;
 
 import com.epam.web.command.Command;
 import com.epam.web.command.CommandResult;
+import com.epam.web.command.util.ParameterExtractor;
 import com.epam.web.constant.Attribute;
 import com.epam.web.constant.Page;
-import com.epam.web.constant.Parameter;
 import com.epam.web.exception.InvalidParametersException;
 import com.epam.web.logic.service.account.AccountService;
 import com.epam.web.model.entity.Account;
@@ -26,16 +26,7 @@ public class UsersCommand implements Command {
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException,
             InvalidParametersException {
-        String pageStr = requestContext.getRequestParameter(Parameter.PAGE);
-        int page;
-        try {
-            page = Integer.parseInt(pageStr);
-        } catch (NumberFormatException e) {
-            throw new InvalidParametersException("Invalid page number in request.");
-        }
-        if (page < 1) {
-            throw new InvalidParametersException("Not positive page number in request.");
-        }
+        int page = ParameterExtractor.extractPageNumber(requestContext);
         List<Account> users;
         Optional<Account> bookmakerOptional = accountService.findBookmaker();
         boolean isBookmakerExist = bookmakerOptional.isPresent();

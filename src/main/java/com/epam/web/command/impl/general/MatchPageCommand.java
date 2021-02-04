@@ -2,25 +2,30 @@ package com.epam.web.command.impl.general;
 
 import com.epam.web.command.Command;
 import com.epam.web.command.CommandResult;
+import com.epam.web.command.util.MatchDtoCommandHelper;
+import com.epam.web.command.util.ParameterExtractor;
 import com.epam.web.constant.Attribute;
 import com.epam.web.constant.Page;
-import com.epam.web.constant.Parameter;
 import com.epam.web.exception.InvalidParametersException;
 import com.epam.web.exception.ServiceException;
 import com.epam.web.controller.request.RequestContext;
 import com.epam.web.logic.calculator.BetCalculator;
 import com.epam.web.logic.service.account.AccountService;
 import com.epam.web.logic.service.match.MatchService;
+import com.epam.web.logic.service.match.MatchType;
 import com.epam.web.logic.service.team.TeamService;
 import com.epam.web.model.entity.Match;
 import com.epam.web.model.entity.dto.MatchDto;
 import com.epam.web.model.enumeration.AccountRole;
 import com.epam.web.model.enumeration.MatchTeamNumber;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 public class MatchPageCommand implements Command {
     private static final float MIN_BET = 0.1f;
+    private static final int FIRST_ELEMENT_INDEX = 0;
 
     private final MatchService matchService;
     private final AccountService accountService;
@@ -38,59 +43,18 @@ public class MatchPageCommand implements Command {
     @Override
     public CommandResult execute(RequestContext requestContext)
             throws ServiceException, InvalidParametersException {
-        String idStr = requestContext.getRequestParameter(Parameter.ID);
-        long id;
-        try {
-            id = Long.parseLong(idStr);
-        } catch (NumberFormatException e) {
-            throw new InvalidParametersException("Invalid id match parameter in request.");
-        }
+        long id = ParameterExtractor.extractId(requestContext);
         Match match = matchService.getMatchById(id);
-        MatchDto matchDto = buildMatchDto(match);
+        MatchDtoCommandHelper matchDtoCommandHelper = new MatchDtoCommandHelper(requestContext,
+                matchService, teamService);
+        List<Match> matches = Collections.singletonList(match);
+        List<MatchDto> matchDtoList = matchDtoCommandHelper.buildMatchDtoList(matches, MatchType.ANY);
+        MatchDto matchDto = matchDtoList.get(FIRST_ELEMENT_INDEX);
         requestContext.addAttribute(Attribute.MATCH_DTO, matchDto);
         addMatchStatusAttribute(requestContext, match);
         addAdditionalAttributes(requestContext, match);
 
         return CommandResult.forward(Page.MATCH);
-    }
-
-    private MatchDto buildMatchDto(Match match) throws ServiceException {
-        long firstTeamId = match.getFirstTeamId();
-        long secondTeamId = match.getSecondTeamId();
-        String firstTeamName = teamService.getTeamNameById(firstTeamId);
-        String secondTeamName = teamService.getTeamNameById(secondTeamId);
-        MatchTeamNumber winnerTeam = match.getWinnerTeam();
-        String winnerTeamName = findWinnerTeamName(winnerTeam, firstTeamName, secondTeamName);
-        MatchDto.MatchDtoBuilder matchDtoBuilder = new MatchDto.MatchDtoBuilder();
-        matchDtoBuilder = matchDtoBuilder.setGeneralFields(match,
-                firstTeamName, secondTeamName).setWinner(winnerTeamName);
-        matchDtoBuilder = setPercents(matchDtoBuilder,
-                match.getFirstTeamBets().floatValue(), match.getSecondTeamBets().floatValue())
-                .setCommission(match.getCommission());
-        return matchDtoBuilder.build();
-    }
-
-    private String findWinnerTeamName(MatchTeamNumber winnerTeam, String firstTeamName, String secondTeamName) {
-        switch (winnerTeam) {
-            case FIRST:
-                return firstTeamName;
-            case SECOND:
-                return secondTeamName;
-            default:
-                return winnerTeam.toString();
-        }
-    }
-
-    private MatchDto.MatchDtoBuilder setPercents(MatchDto.MatchDtoBuilder matchDtoBuilder,
-                                                       float firstTeamBets, float secondTeamBets) {
-        int firstPercent = 0;
-        int secondPercent = 0;
-        if (firstTeamBets + secondTeamBets != 0) {
-            firstPercent = betCalculator.calculatePercent(MatchTeamNumber.FIRST,
-                    firstTeamBets, secondTeamBets);
-            secondPercent = 100 - firstPercent;
-        }
-        return matchDtoBuilder.setPercents(firstPercent, secondPercent);
     }
 
     private void addMatchStatusAttribute(RequestContext requestContext, Match match) {

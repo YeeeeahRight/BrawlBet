@@ -10,7 +10,6 @@ import com.epam.web.constant.Parameter;
 import com.epam.web.controller.request.RequestContext;
 import com.epam.web.controller.request.RequestContextCreator;
 import com.epam.web.controller.request.RequestFiller;
-import com.epam.web.exception.InvalidParametersException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

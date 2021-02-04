@@ -2,7 +2,7 @@ package com.epam.web.command.impl.bookmaker;
 
 import com.epam.web.command.Command;
 import com.epam.web.command.CommandResult;
-import com.epam.web.constant.Parameter;
+import com.epam.web.command.util.ParameterExtractor;
 import com.epam.web.exception.InvalidParametersException;
 import com.epam.web.exception.ServiceException;
 import com.epam.web.controller.request.RequestContext;
@@ -17,15 +17,10 @@ public class RemoveMatchCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
-        String idStr = requestContext.getRequestParameter(Parameter.ID);
-        long id;
-        try {
-            id = Long.parseLong(idStr);
-        } catch (NumberFormatException e ){
-            throw new InvalidParametersException("Invalid match id parameter in request.");
-        }
+        long id = ParameterExtractor.extractId(requestContext);
         matchService.removeById(id);
         String prevPage = requestContext.getHeader();
+
         return CommandResult.redirect(prevPage);
     }
 }

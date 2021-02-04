@@ -15,5 +15,5 @@ public class Parameter {
     public static final String MONEY = "money";
     public static final String BET_ON = "on";
     public static final String PAGE = "page";
-    public static final String NAME = "name";
+    public static final String TEAM_NAME = "teamName";
 }

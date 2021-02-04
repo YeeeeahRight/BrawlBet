@@ -2,9 +2,9 @@ package com.epam.web.command.impl.admin;
 
 import com.epam.web.command.Command;
 import com.epam.web.command.CommandResult;
+import com.epam.web.command.util.ParameterExtractor;
 import com.epam.web.constant.Attribute;
 import com.epam.web.constant.Page;
-import com.epam.web.constant.Parameter;
 import com.epam.web.exception.InvalidParametersException;
 import com.epam.web.logic.service.match.MatchService;
 import com.epam.web.logic.service.team.TeamService;
@@ -24,13 +24,7 @@ public class EditMatchPageCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
-        String idStr = requestContext.getRequestParameter(Parameter.ID);
-        long id;
-        try {
-            id = Long.parseLong(idStr);
-        } catch (NumberFormatException e) {
-            throw new InvalidParametersException("Invalid match id parameter in request.");
-        }
+        long id = ParameterExtractor.extractId(requestContext);
         Match match = matchService.getMatchById(id);
         MatchDto matchDto = buildMatchDto(match);
         requestContext.addAttribute(Attribute.MATCH_DTO, matchDto);
@@ -43,7 +37,9 @@ public class EditMatchPageCommand implements Command {
         long secondTeamId = match.getSecondTeamId();
         String firstTeamName = teamService.getTeamNameById(firstTeamId);
         String secondTeamName = teamService.getTeamNameById(secondTeamId);
-        return new MatchDto.MatchDtoBuilder().setGeneralFields(match,
-                firstTeamName, secondTeamName).build();
+        MatchDto.MatchDtoBuilder matchDtoBuilder = new MatchDto.MatchDtoBuilder();
+        matchDtoBuilder.setGeneralFields(match,
+                firstTeamName, secondTeamName);
+        return matchDtoBuilder.build();
     }
 }

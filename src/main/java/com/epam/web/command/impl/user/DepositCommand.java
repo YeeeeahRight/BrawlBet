@@ -2,6 +2,7 @@ package com.epam.web.command.impl.user;
 
 import com.epam.web.command.Command;
 import com.epam.web.command.CommandResult;
+import com.epam.web.command.util.ParameterExtractor;
 import com.epam.web.constant.Attribute;
 import com.epam.web.constant.Parameter;
 import com.epam.web.controller.request.RequestContext;
@@ -22,13 +23,7 @@ public class DepositCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
-        String moneyStr = requestContext.getRequestParameter(Parameter.MONEY);
-        BigDecimal money;
-        try {
-            money = new BigDecimal(moneyStr);
-        } catch (NumberFormatException e) {
-            throw new InvalidParametersException("Invalid money parameter in request.");
-        }
+        BigDecimal money = ParameterExtractor.extractNumber(Parameter.MONEY, requestContext);
         if (money.compareTo(MAX_DEPOSIT) > 0 || money.compareTo(MIN_DEPOSIT) < 0) {
             throw new InvalidParametersException(
                     String.format("Deposit value is not in range[%f-%f]", MIN_DEPOSIT, MAX_DEPOSIT));

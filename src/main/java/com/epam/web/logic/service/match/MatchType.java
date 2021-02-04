@@ -5,5 +5,6 @@ public enum MatchType {
     UNCLOSED,
     ACCEPTED,
     UNACCEPTED,
-    FINISHED
+    FINISHED,
+    ANY
 }

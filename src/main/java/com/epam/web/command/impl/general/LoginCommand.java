@@ -2,6 +2,7 @@ package com.epam.web.command.impl.general;
 
 import com.epam.web.command.Command;
 import com.epam.web.command.CommandResult;
+import com.epam.web.command.util.ParameterExtractor;
 import com.epam.web.constant.Attribute;
 import com.epam.web.constant.CommandName;
 import com.epam.web.constant.Page;
@@ -27,14 +28,8 @@ public class LoginCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
-        String login = requestContext.getRequestParameter(Parameter.LOGIN);
-        if (login == null) {
-            throw new InvalidParametersException("No login parameter in request in request.");
-        }
-        String password = requestContext.getRequestParameter(Parameter.PASSWORD);
-        if (password == null) {
-            throw new InvalidParametersException("No password parameter in request in request.");
-        }
+        String login = ParameterExtractor.extractString(Parameter.LOGIN, requestContext);
+        String password = ParameterExtractor.extractString(Parameter.PASSWORD, requestContext);
         boolean isUserExist = service.isAccountExistByLoginPassword(login, password);
         if (isUserExist) {
             Account account = service.getAccountByLogin(login);

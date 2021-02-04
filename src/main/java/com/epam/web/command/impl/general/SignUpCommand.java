@@ -2,6 +2,7 @@ package com.epam.web.command.impl.general;
 
 import com.epam.web.command.Command;
 import com.epam.web.command.CommandResult;
+import com.epam.web.command.util.ParameterExtractor;
 import com.epam.web.constant.Attribute;
 import com.epam.web.constant.CommandName;
 import com.epam.web.constant.Page;
@@ -13,7 +14,7 @@ import com.epam.web.logic.service.account.SignUpService;
 
 public class SignUpCommand implements Command {
     private static final String LOGIN_PAGE_COMMAND = "controller?command=" + CommandName.LOGIN_PAGE;
-    private static final String LOGIN_REGEX = "^(?=.*[A-Za-z])[A-Za-z\\d]+$";
+    private static final String LOGIN_REGEX = "^(?=.*[A-Za-z])[A-Za-z\\d]+";
     private static final String PASSWORD_REGEX = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{5,}$";
     private static final String DIFFERENT_PASSWORDS_KEY = "different.passwords";
     private static final String USERNAME_EXIST_KEY = "username.exist";
@@ -28,19 +29,13 @@ public class SignUpCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
-        String login = requestContext.getRequestParameter(Parameter.LOGIN);
-        if (login == null) {
-            throw new InvalidParametersException("No login parameter in request.");
-        }
+        String login = ParameterExtractor.extractString(Parameter.LOGIN, requestContext);
         boolean isCorrectLogin = login.matches(LOGIN_REGEX);
         if (isCorrectLogin) {
             boolean isUsernameExist = signUpService.isUsernameExist(login);
             if (!isUsernameExist) {
                 requestContext.addAttribute(Attribute.SAVED_LOGIN, login);
-                String password = requestContext.getRequestParameter(Parameter.PASSWORD);
-                if (password == null) {
-                    throw new InvalidParametersException("No password parameter in request.");
-                }
+                String password = ParameterExtractor.extractString(Parameter.PASSWORD, requestContext);
                 String repeatedPassword = requestContext.getRequestParameter(Parameter.REPEATED_PASSWORD);
                 boolean isPasswordCorrect = password.matches(PASSWORD_REGEX);
                 if (isPasswordCorrect) {
