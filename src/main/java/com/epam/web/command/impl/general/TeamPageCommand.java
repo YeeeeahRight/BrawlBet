@@ -20,7 +20,8 @@ public class TeamPageCommand implements Command {
     }
 
     @Override
-    public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
+    public CommandResult execute(RequestContext requestContext)
+            throws ServiceException, InvalidParametersException {
         long id;
         try {
             id = ParameterExtractor.extractId(requestContext);

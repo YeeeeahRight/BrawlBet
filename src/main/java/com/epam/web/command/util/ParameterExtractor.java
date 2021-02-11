@@ -25,6 +25,9 @@ public class ParameterExtractor {
     public static BigDecimal extractNumber(String parameterName, RequestContext requestContext)
             throws InvalidParametersException {
         String numberStr = requestContext.getRequestParameter(parameterName);
+        if (numberStr == null) {
+            throw new InvalidParametersException("Invalid " + parameterName + " parameter in request.");
+        }
         try {
             return new BigDecimal(numberStr);
         } catch (NumberFormatException e) {
@@ -60,6 +63,9 @@ public class ParameterExtractor {
     public static MatchTeamNumber extractTeamBet(RequestContext requestContext)
             throws InvalidParametersException {
         String teamBetName = requestContext.getRequestParameter(Parameter.BET_ON);
+        if (teamBetName == null) {
+            throw new InvalidParametersException("Invalid team bet parameter in request.");
+        }
         try {
             return MatchTeamNumber.valueOf(teamBetName);
         } catch (IllegalArgumentException e) {

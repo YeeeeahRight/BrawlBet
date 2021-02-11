@@ -132,12 +132,8 @@ public class MatchDto {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
         MatchDto matchDto = (MatchDto) o;
 
@@ -153,19 +149,16 @@ public class MatchDto {
         if (Float.compare(matchDto.secondTeamBets, secondTeamBets) != 0) {
             return false;
         }
-        if (Float.compare(matchDto.commission, commission) != 0) {
+        if (!Objects.equals(date, matchDto.date)) {
             return false;
         }
-        if (!date.equals(matchDto.date)) {
+        if (!Objects.equals(tournament, matchDto.tournament)) {
             return false;
         }
-        if (!tournament.equals(matchDto.tournament)) {
+        if (!Objects.equals(firstTeam, matchDto.firstTeam)) {
             return false;
         }
-        if (!firstTeam.equals(matchDto.firstTeam)) {
-            return false;
-        }
-        if (!secondTeam.equals(matchDto.secondTeam)) {
+        if (!Objects.equals(secondTeam, matchDto.secondTeam)) {
             return false;
         }
         if (!Objects.equals(winner, matchDto.winner)) {
@@ -174,23 +167,26 @@ public class MatchDto {
         if (!Objects.equals(firstPercent, matchDto.firstPercent)) {
             return false;
         }
-        return Objects.equals(secondPercent, matchDto.secondPercent);
+        if (!Objects.equals(secondPercent, matchDto.secondPercent)) {
+            return false;
+        }
+        return Objects.equals(commission, matchDto.commission);
     }
 
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + date.hashCode();
-        result = 31 * result + tournament.hashCode();
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (tournament != null ? tournament.hashCode() : 0);
         result = 31 * result + (isClosed ? 1 : 0);
-        result = 31 * result + firstTeam.hashCode();
-        result = 31 * result + secondTeam.hashCode();
+        result = 31 * result + (firstTeam != null ? firstTeam.hashCode() : 0);
+        result = 31 * result + (secondTeam != null ? secondTeam.hashCode() : 0);
         result = 31 * result + (winner != null ? winner.hashCode() : 0);
         result = 31 * result + (firstTeamBets != +0.0f ? Float.floatToIntBits(firstTeamBets) : 0);
         result = 31 * result + (secondTeamBets != +0.0f ? Float.floatToIntBits(secondTeamBets) : 0);
-        result = 31 * result + (commission != +0.0f ? Float.floatToIntBits(commission) : 0);
         result = 31 * result + (firstPercent != null ? firstPercent.hashCode() : 0);
         result = 31 * result + (secondPercent != null ? secondPercent.hashCode() : 0);
+        result = 31 * result + (commission != null ? commission.hashCode() : 0);
         return result;
     }
 

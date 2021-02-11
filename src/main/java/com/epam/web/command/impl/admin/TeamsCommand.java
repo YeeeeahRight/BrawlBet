@@ -15,6 +15,7 @@ import java.util.List;
 
 public class TeamsCommand implements Command {
     private static final int MAX_TEAMS_PAGE = 10;
+
     private final TeamService teamService;
 
     public TeamsCommand(TeamService teamService) {
@@ -26,6 +27,9 @@ public class TeamsCommand implements Command {
         int page = ParameterExtractor.extractPageNumber(requestContext);
         int firstMatchIndex = MAX_TEAMS_PAGE * (page - 1);
         List<Team> teams = teamService.getTeamsRange(firstMatchIndex, MAX_TEAMS_PAGE);
+        if (teams.size() == 0 && page > 1) {
+            throw new InvalidParametersException("No teams on this page");
+        }
         requestContext.addAttribute(Attribute.TEAMS, teams);
         requestContext.addAttribute(Attribute.CURRENT_PAGE, page);
         int maxPage = ((teamService.getTeamsAmount() - 1) / MAX_TEAMS_PAGE) + 1;

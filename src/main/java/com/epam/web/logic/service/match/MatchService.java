@@ -41,14 +41,14 @@ public interface MatchService {
     Match getMatchById(long id) throws ServiceException;
 
     /**
-     * Adds commission value to match by match id.
+     * Sets commission value to match by match id.
      *
-     * @param  commission  a commission value to add.
+     * @param  commission  a commission value to set.
      * @param  id          an id value of match.
      *
      * @throws  ServiceException  a wrapper for lower errors.
      */
-    void addCommissionById(float commission, long id) throws ServiceException;
+    void setCommissionById(float commission, long id) throws ServiceException;
 
     /**
      * Cancel match by match id.

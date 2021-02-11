@@ -17,6 +17,7 @@ import java.util.Optional;
 
 public class UsersCommand implements Command {
     private static final int MAX_USERS_PAGE = 6;
+
     private final AccountService accountService;
 
     public UsersCommand(AccountService accountService) {

@@ -83,7 +83,7 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public void addCommissionById(float commission, long id) throws ServiceException {
+    public void setCommissionById(float commission, long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             MatchDao matchDao = daoHelper.createMatchDao();
             matchDao.setCommissionById(commission, id);

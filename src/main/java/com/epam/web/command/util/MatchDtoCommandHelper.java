@@ -15,18 +15,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MatchDtoCommandHelper {
-    private final RequestContext requestContext;
     private final MatchService matchService;
     private final TeamService teamService;
 
-    public MatchDtoCommandHelper(RequestContext requestContext, MatchService matchService,
-                                 TeamService teamService) {
-        this.requestContext = requestContext;
+    public MatchDtoCommandHelper(MatchService matchService, TeamService teamService) {
         this.matchService = matchService;
         this.teamService = teamService;
     }
 
-    public void processCommandPagination(MatchType matchType, int maxMatchesPage)
+    public void processCommandWithPagination(RequestContext requestContext,
+                                             MatchType matchType, int maxMatchesPage)
             throws InvalidParametersException, ServiceException {
         int page = ParameterExtractor.extractPageNumber(requestContext);
         int firstMatchIndex = maxMatchesPage * (page - 1);
@@ -41,7 +39,8 @@ public class MatchDtoCommandHelper {
         requestContext.addAttribute(Attribute.MAX_PAGE, maxPage);
     }
 
-    public List<MatchDto> buildMatchDtoList(List<Match> matches, MatchType matchType) throws ServiceException {
+    public List<MatchDto> buildMatchDtoList(List<Match> matches, MatchType matchType)
+            throws ServiceException {
         List<MatchDto> matchDtoList = new ArrayList<>();
         MatchDto.MatchDtoBuilder matchDtoBuilder = new MatchDto.MatchDtoBuilder();
         for (Match match : matches) {

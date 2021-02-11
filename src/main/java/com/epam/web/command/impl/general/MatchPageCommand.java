@@ -13,7 +13,6 @@ import com.epam.web.logic.calculator.BetCalculator;
 import com.epam.web.logic.service.account.AccountService;
 import com.epam.web.logic.service.match.MatchService;
 import com.epam.web.logic.service.match.MatchType;
-import com.epam.web.logic.service.team.TeamService;
 import com.epam.web.model.entity.Match;
 import com.epam.web.model.entity.dto.MatchDto;
 import com.epam.web.model.enumeration.AccountRole;
@@ -29,15 +28,15 @@ public class MatchPageCommand implements Command {
 
     private final MatchService matchService;
     private final AccountService accountService;
-    private final TeamService teamService;
     private final BetCalculator betCalculator;
+    private final MatchDtoCommandHelper matchDtoCommandHelper;
 
     public MatchPageCommand(MatchService matchService, AccountService accountService,
-                            TeamService teamService, BetCalculator betCalculator) {
+                            BetCalculator betCalculator, MatchDtoCommandHelper matchDtoCommandHelper) {
         this.matchService = matchService;
         this.accountService = accountService;
-        this.teamService = teamService;
         this.betCalculator = betCalculator;
+        this.matchDtoCommandHelper = matchDtoCommandHelper;
     }
 
     @Override
@@ -45,8 +44,6 @@ public class MatchPageCommand implements Command {
             throws ServiceException, InvalidParametersException {
         long id = ParameterExtractor.extractId(requestContext);
         Match match = matchService.getMatchById(id);
-        MatchDtoCommandHelper matchDtoCommandHelper = new MatchDtoCommandHelper(requestContext,
-                matchService, teamService);
         List<Match> matches = Collections.singletonList(match);
         List<MatchDto> matchDtoList = matchDtoCommandHelper.buildMatchDtoList(matches, MatchType.ANY);
         MatchDto matchDto = matchDtoList.get(FIRST_ELEMENT_INDEX);

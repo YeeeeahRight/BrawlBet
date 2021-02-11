@@ -3,12 +3,13 @@ package com.epam.web.command;
 import com.epam.web.command.impl.admin.*;
 import com.epam.web.command.impl.bookmaker.AcceptMatchCommand;
 import com.epam.web.command.impl.bookmaker.AcceptMatchesPageCommand;
-import com.epam.web.command.impl.bookmaker.BookmakerHistory;
+import com.epam.web.command.impl.bookmaker.BookmakerHistoryCommand;
 import com.epam.web.command.impl.bookmaker.RemoveMatchCommand;
 import com.epam.web.command.impl.general.*;
 import com.epam.web.command.impl.user.BetCommand;
 import com.epam.web.command.impl.user.DepositCommand;
 import com.epam.web.command.impl.user.MyBetsCommand;
+import com.epam.web.command.util.MatchDtoCommandHelper;
 import com.epam.web.command.util.MatchRequestCreator;
 import com.epam.web.constant.CommandName;
 import com.epam.web.dao.helper.DaoHelperFactory;
@@ -41,28 +42,30 @@ public class CommandFactory {
             case CommandName.LOCALIZATION:
                 return new LocalizationCommand();
             case CommandName.HOME_PAGE:
-                return new HomePageCommand(new MatchServiceImpl(new DaoHelperFactory(),
+                return new HomePageCommand(new MatchDtoCommandHelper(new MatchServiceImpl(new DaoHelperFactory(),
                         new MatchValidator()), new TeamServiceImpl(new DaoHelperFactory(),
-                        new TeamValidator()));
+                        new TeamValidator())));
             case CommandName.CLOSE_MATCHES_PAGE:
-                return new CloseMatchesPageCommand(new MatchServiceImpl(new DaoHelperFactory(),
+                return new CloseMatchesPageCommand(new MatchDtoCommandHelper(new MatchServiceImpl(new DaoHelperFactory(),
                         new MatchValidator()), new TeamServiceImpl(new DaoHelperFactory(),
-                        new TeamValidator()));
+                        new TeamValidator())));
             case CommandName.CLOSE_MATCH:
                 return new CloseMatchCommand(new CloseMatchServiceImpl(new DaoHelperFactory(),
                         new BetCalculatorImpl()));
             case CommandName.MATCH_PAGE:
                 return new MatchPageCommand(new MatchServiceImpl(new DaoHelperFactory(), new MatchValidator()),
-                        new AccountServiceImpl(new DaoHelperFactory()), new TeamServiceImpl(new DaoHelperFactory(),
-                        new TeamValidator()), new BetCalculatorImpl());
+                        new AccountServiceImpl(new DaoHelperFactory()), new BetCalculatorImpl(),
+                        new MatchDtoCommandHelper(new MatchServiceImpl(new DaoHelperFactory(),
+                        new MatchValidator()), new TeamServiceImpl(new DaoHelperFactory(),
+                        new TeamValidator())));
             case CommandName.BET:
                 return new BetCommand(new BetServiceImpl(new DaoHelperFactory(),
                         new BetValidator()), new AccountServiceImpl(new DaoHelperFactory()),
                         new MatchServiceImpl(new DaoHelperFactory(), new MatchValidator()));
             case CommandName.MATCHES:
-                return new MatchesCommand(new MatchServiceImpl(new DaoHelperFactory(),
+                return new MatchesCommand(new MatchDtoCommandHelper(new MatchServiceImpl(new DaoHelperFactory(),
                         new MatchValidator()), new TeamServiceImpl(new DaoHelperFactory(),
-                        new TeamValidator()));
+                        new TeamValidator())));
             case CommandName.USERS:
                 return new UsersCommand(new AccountServiceImpl(new DaoHelperFactory()));
             case CommandName.TEAMS:
@@ -76,9 +79,9 @@ public class CommandFactory {
                         new MatchServiceImpl(new DaoHelperFactory(), new MatchValidator()),
                         new TeamServiceImpl(new DaoHelperFactory(), new TeamValidator()), new BetCalculatorImpl());
             case CommandName.BOOKMAKER_HISTORY:
-                return new BookmakerHistory(new MatchServiceImpl(new DaoHelperFactory(),
+                return new BookmakerHistoryCommand(new MatchDtoCommandHelper(new MatchServiceImpl(new DaoHelperFactory(),
                         new MatchValidator()), new TeamServiceImpl(new DaoHelperFactory(),
-                        new TeamValidator()));
+                        new TeamValidator())));
             case CommandName.REMOVE_MATCH:
                 return new RemoveMatchCommand(new MatchServiceImpl(new DaoHelperFactory(),
                         new MatchValidator()));
@@ -95,8 +98,9 @@ public class CommandFactory {
                         new TeamValidator()), new MatchRequestCreator());
             case CommandName.EDIT_MATCH_PAGE:
                 return new EditMatchPageCommand(new MatchServiceImpl(new DaoHelperFactory(),
+                        new MatchValidator()), new MatchDtoCommandHelper(new MatchServiceImpl(new DaoHelperFactory(),
                         new MatchValidator()), new TeamServiceImpl(new DaoHelperFactory(),
-                        new TeamValidator()));
+                        new TeamValidator())));
             case CommandName.ADD_TEAM:
                 return new AddTeamCommand(new TeamServiceImpl(new DaoHelperFactory(),
                         new TeamValidator()));
@@ -105,9 +109,9 @@ public class CommandFactory {
             case CommandName.UNBLOCK_USER:
                 return new UnblockCommand(new AccountServiceImpl(new DaoHelperFactory()));
             case CommandName.ACCEPT_MATCHES_PAGE:
-                return new AcceptMatchesPageCommand(new MatchServiceImpl(new DaoHelperFactory(),
+                return new AcceptMatchesPageCommand(new MatchDtoCommandHelper(new MatchServiceImpl(new DaoHelperFactory(),
                         new MatchValidator()), new TeamServiceImpl(new DaoHelperFactory(),
-                        new TeamValidator()));
+                        new TeamValidator())));
             case CommandName.PAGINATION:
                 return new PaginationCommand();
             case CommandName.ACCEPT_MATCH:

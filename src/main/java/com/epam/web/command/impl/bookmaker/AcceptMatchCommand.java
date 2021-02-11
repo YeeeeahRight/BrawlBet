@@ -28,7 +28,7 @@ public class AcceptMatchCommand implements Command {
             throw new InvalidParametersException(
                     String.format("Commission parameter is not in range[%f-%f]", MIN_COMMISSION, MAX_COMMISSION));
         }
-        matchService.addCommissionById(commission, id);
+        matchService.setCommissionById(commission, id);
 
         String prevPage = requestContext.getHeader();
         return CommandResult.redirect(prevPage);
