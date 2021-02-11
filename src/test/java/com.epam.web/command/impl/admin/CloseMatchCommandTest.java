@@ -1,7 +1,6 @@
 package com.epam.web.command.impl.admin;
 
 import com.epam.web.command.CommandResult;
-import com.epam.web.command.impl.admin.CloseMatchCommand;
 import com.epam.web.constant.Parameter;
 import com.epam.web.controller.request.RequestContext;
 import com.epam.web.exception.InvalidParametersException;
@@ -15,64 +14,51 @@ import org.mockito.Mockito;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 public class CloseMatchCommandTest {
-    private static final String VALID_REQUEST_HEADER = "controller?command=matches&page=1";
+    private static final String VALID_REQUEST_HEADER = "controller?command=close-matches-page&page=1";
     private static final Map<String, Object> SESSION_ATTRIBUTES = new HashMap<>();
     private static final Map<String, Object> REQUEST_ATTRIBUTES = new HashMap<>();
-    private static final String VALID_ID = "2";
-    private static final String INVALID_ID = "invalid";
+    private static final Map<String, String[]> REQUEST_PARAMETERS = new HashMap<>();
+    private static final String ID_PARAM = "2";
 
-    private Map<String, String[]> requestParameters;
+    static {
+        REQUEST_PARAMETERS.put(Parameter.ID, new String[]{ID_PARAM});
+    }
+
     private CloseMatchService closeMatchService;
+    private RequestContext requestContext;
+    private CloseMatchCommand closeMatchCommand;
 
     @Before
     public void initMethod() {
         closeMatchService = Mockito.mock(CloseMatchService.class);
-        requestParameters = new HashMap<>();
-        requestParameters.put(Parameter.ID, new String[]{VALID_ID});
+        requestContext = new RequestContext(REQUEST_ATTRIBUTES,
+                REQUEST_PARAMETERS, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
+        closeMatchCommand = new CloseMatchCommand(closeMatchService);
     }
 
     @Test
-    public void testExecuteShouldReturnRedirectWhenIdIsValid() throws ServiceException,
+    public void testExecuteShouldReturnRedirect() throws ServiceException,
             InvalidParametersException {
         //given
-        CloseMatchCommand cancelMatchCommand  = new CloseMatchCommand(closeMatchService);
-        RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
-                requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
         //when
-        CommandResult actual = cancelMatchCommand.execute(requestContext);
+        CommandResult actual = closeMatchCommand.execute(requestContext);
         //then
         CommandResult expected = CommandResult.redirect(VALID_REQUEST_HEADER);
         Assert.assertEquals(expected, actual);
     }
 
     @Test
-    public void testExecuteShouldCloseWhenIdIsValid() throws ServiceException,
+    public void testExecuteShouldClose() throws ServiceException,
             InvalidParametersException {
         //given
-        CloseMatchCommand cancelMatchCommand = new CloseMatchCommand(closeMatchService);
-        RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
-                requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
         //when
-        cancelMatchCommand.execute(requestContext);
+        closeMatchCommand.execute(requestContext);
         //then
-        verify(closeMatchService, times(1)).closeMatchById(anyInt());
-    }
-
-    //then
-    @Test(expected = InvalidParametersException.class)
-    public void testExecuteShouldThrowInvalidParametersExceptionRedirectWhenIdIsInvalid()
-            throws ServiceException, InvalidParametersException {
-        //given
-        requestParameters.put(Parameter.ID, new String[]{INVALID_ID});
-        CloseMatchCommand cancelMatchCommand = new CloseMatchCommand(closeMatchService);
-        RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
-                requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
-        //when
-        cancelMatchCommand.execute(requestContext);
+        verify(closeMatchService, times(1)).closeMatchById(anyLong());
     }
 }

@@ -14,7 +14,7 @@ import org.mockito.Mockito;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -22,26 +22,29 @@ public class BlockCommandTest {
     private static final String VALID_REQUEST_HEADER = "controller?command=users&page=1";
     private static final Map<String, Object> SESSION_ATTRIBUTES = new HashMap<>();
     private static final Map<String, Object> REQUEST_ATTRIBUTES = new HashMap<>();
-    private static final String VALID_ID = "2";
-    private static final String INVALID_ID = "invalid";
+    private static final Map<String, String[]> REQUEST_PARAMETERS = new HashMap<>();
+    private static final String ID_PARAM = "2";
 
-    private Map<String, String[]> requestParameters;
+    static {
+        REQUEST_PARAMETERS.put(Parameter.ID, new String[]{ID_PARAM});
+    }
+
     private AccountService accountService;
+    private RequestContext requestContext;
+    private BlockCommand blockCommand;
 
     @Before
     public void initMethod() {
         accountService = Mockito.mock(AccountService.class);
-        requestParameters = new HashMap<>();
-        requestParameters.put(Parameter.ID, new String[]{VALID_ID});
+        requestContext = new RequestContext(REQUEST_ATTRIBUTES,
+                REQUEST_PARAMETERS, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
+        blockCommand = new BlockCommand(accountService);
     }
 
     @Test
-    public void testExecuteShouldReturnRedirectWhenIdIsValid() throws ServiceException,
+    public void testExecuteShouldReturnRedirect() throws ServiceException,
             InvalidParametersException {
         //given
-        BlockCommand blockCommand = new BlockCommand(accountService);
-        RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
-                requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
         //when
         CommandResult actual = blockCommand.execute(requestContext);
         //then
@@ -50,28 +53,12 @@ public class BlockCommandTest {
     }
 
     @Test
-    public void testExecuteShouldBlockWhenIdIsValid() throws ServiceException,
+    public void testExecuteShouldBlock() throws ServiceException,
             InvalidParametersException {
         //given
-        BlockCommand blockCommand = new BlockCommand(accountService);
-        RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
-                requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
         //when
         blockCommand.execute(requestContext);
         //then
-        verify(accountService, times(1)).blockById(anyInt());
-    }
-
-    //then
-    @Test(expected = InvalidParametersException.class)
-    public void testExecuteShouldThrowInvalidParametersExceptionRedirectWhenIdIsInvalid()
-            throws ServiceException, InvalidParametersException {
-        //given
-        requestParameters.put(Parameter.ID, new String[]{INVALID_ID});
-        BlockCommand blockCommand = new BlockCommand(accountService);
-        RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
-                requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
-        //when
-        blockCommand.execute(requestContext);
+        verify(accountService, times(1)).blockById(anyLong());
     }
 }

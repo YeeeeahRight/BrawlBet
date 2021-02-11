@@ -1,7 +1,6 @@
 package com.epam.web.command.impl.bookmaker;
 
 import com.epam.web.command.CommandResult;
-import com.epam.web.command.impl.bookmaker.AcceptMatchCommand;
 import com.epam.web.constant.Parameter;
 import com.epam.web.controller.request.RequestContext;
 import com.epam.web.exception.InvalidParametersException;
@@ -15,82 +14,67 @@ import org.mockito.Mockito;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.mockito.Matchers.anyFloat;
-import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 public class AcceptMatchCommandTest {
-    private static final String VALID_REQUEST_HEADER = "controller?command=matches&page=1";
+    private static final String REQUEST_HEADER = "controller?command=accept-matches-page&page=1";
     private static final Map<String, Object> SESSION_ATTRIBUTES = new HashMap<>();
     private static final Map<String, Object> REQUEST_ATTRIBUTES = new HashMap<>();
-    private static final String VALID_COMMISSION = "5.0";
-    private static final String VALID_ID = "1";
-    private static final String INVALID_ID = "1invalidddddd";
-    private static final String INVALID_COMMISSION = "invalid";
+    private static final Map<String, String[]> REQUEST_PARAMETERS = new HashMap<>();
+    private static final String ID_PARAM = "2";
+    private static final String COMMISSION = "2";
+    private static final String INVALID_COMMISSION = "-1";
 
-    private Map<String, String[]> requestParameters;
+    static {
+        REQUEST_PARAMETERS.put(Parameter.ID, new String[]{ID_PARAM});
+    }
+
     private MatchService matchService;
+    private RequestContext requestContext;
+    private AcceptMatchCommand acceptMatchCommand;
 
     @Before
     public void initMethod() {
-        requestParameters = new HashMap<>();
-        requestParameters.put(Parameter.ID, new String[]{VALID_ID});
-        requestParameters.put(Parameter.COMMISSION, new String[]{VALID_COMMISSION});
-
         matchService = Mockito.mock(MatchService.class);
+
+        requestContext = new RequestContext(REQUEST_ATTRIBUTES,
+                REQUEST_PARAMETERS, SESSION_ATTRIBUTES, REQUEST_HEADER);
+        acceptMatchCommand = new AcceptMatchCommand(matchService);
     }
 
     @Test
-    public void testExecuteShouldReturnRedirectWhenParametersAreValid() throws ServiceException,
+    public void testExecuteShouldReturnRedirect() throws ServiceException,
             InvalidParametersException {
         //given
-        AcceptMatchCommand acceptMatchCommand  = new AcceptMatchCommand(matchService);
-        RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
-                requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
+        REQUEST_PARAMETERS.put(Parameter.COMMISSION, new String[]{COMMISSION});
         //when
         CommandResult actual = acceptMatchCommand.execute(requestContext);
         //then
-        CommandResult expected = CommandResult.redirect(VALID_REQUEST_HEADER);
+        CommandResult expected = CommandResult.redirect(REQUEST_HEADER);
         Assert.assertEquals(expected, actual);
     }
 
     @Test
-    public void testExecuteShouldAcceptWhenMatchParametersAreValid() throws ServiceException,
+    public void testExecuteShouldSetCommission() throws ServiceException,
             InvalidParametersException {
         //given
-        AcceptMatchCommand acceptMatchCommand = new AcceptMatchCommand(matchService);
-        RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
-                requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
+        REQUEST_PARAMETERS.put(Parameter.COMMISSION, new String[]{COMMISSION});
         //when
         acceptMatchCommand.execute(requestContext);
         //then
-        verify(matchService, times(1)).addCommissionById(anyFloat(), anyInt());
+        verify(matchService, times(1)).setCommissionById(anyFloat(), anyLong());
     }
 
-    //then
     @Test(expected = InvalidParametersException.class)
-    public void testExecuteShouldThrowInvalidParametersExceptionRedirectWhenCommissionIsInvalid()
+    public void testExecuteShouldThrowInvalidParametersExceptionWhenCommissionIsOutOfRange()
             throws ServiceException, InvalidParametersException {
         //given
-        requestParameters.put(Parameter.COMMISSION, new String[]{INVALID_COMMISSION});
-        AcceptMatchCommand acceptMatchCommand = new AcceptMatchCommand(matchService);
-        RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
-                requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
         //when
+        REQUEST_PARAMETERS.put(Parameter.COMMISSION, new String[]{INVALID_COMMISSION});
         acceptMatchCommand.execute(requestContext);
-    }
-
-    //then
-    @Test(expected = InvalidParametersException.class)
-    public void testExecuteShouldThrowInvalidParametersExceptionRedirectWhenIdIsInvalid()
-            throws ServiceException, InvalidParametersException {
-        //given
-        requestParameters.put(Parameter.ID, new String[]{INVALID_ID});
-        AcceptMatchCommand acceptMatchCommand = new AcceptMatchCommand(matchService);
-        RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
-                requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
-        //when
-        acceptMatchCommand.execute(requestContext);
+        //then
+        verify(matchService, times(1)).setCommissionById(anyFloat(), anyLong());
     }
 }

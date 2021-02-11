@@ -1,7 +1,6 @@
 package com.epam.web.command.impl.general;
 
 import com.epam.web.command.CommandResult;
-import com.epam.web.command.impl.general.SignUpCommand;
 import com.epam.web.constant.CommandName;
 import com.epam.web.constant.Page;
 import com.epam.web.constant.Parameter;
@@ -25,31 +24,34 @@ public class SignUpCommandTest {
     private static final String LOGIN_PAGE_COMMAND = "controller?command=" + CommandName.LOGIN_PAGE;
     private static final Map<String, Object> SESSION_ATTRIBUTES = new HashMap<>();
     private static final Map<String, Object> REQUEST_ATTRIBUTES = new HashMap<>();
+    private static final Map<String, String[]> REQUEST_PARAMETERS = new HashMap<>();
     private static final String VALID_LOGIN = "loginValid";
     private static final String INVALID_LOGIN = "l*oginValid";
     private static final String VALID_PASSWORD = "password1234";
     private static final String INVALID_PASSWORD = "pas";
 
-    private Map<String, String[]> requestParameters;
+    static {
+        REQUEST_PARAMETERS.put(Parameter.REPEATED_PASSWORD, new String[]{VALID_PASSWORD});
+    }
+
     private SignUpService signUpService;
+    private SignUpCommand signUpCommand;
+    private RequestContext requestContext;
 
     @Before
     public void initMethod() {
-        requestParameters = new HashMap<>();
-        requestParameters.put(Parameter.LOGIN, new String[]{VALID_LOGIN});
-        requestParameters.put(Parameter.PASSWORD, new String[]{VALID_PASSWORD});
-        requestParameters.put(Parameter.REPEATED_PASSWORD, new String[]{VALID_PASSWORD});
-
+        requestContext = new RequestContext(REQUEST_ATTRIBUTES,
+                REQUEST_PARAMETERS, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
+        REQUEST_PARAMETERS.put(Parameter.LOGIN, new String[]{VALID_LOGIN});
+        REQUEST_PARAMETERS.put(Parameter.PASSWORD, new String[]{VALID_PASSWORD});
         signUpService = Mockito.mock(SignUpService.class);
+        signUpCommand = new SignUpCommand(signUpService);
     }
 
     @Test
     public void testExecuteShouldReturnRedirectWhenParametersAreValid() throws ServiceException,
             InvalidParametersException {
         //given
-        SignUpCommand signUpCommand = new SignUpCommand(signUpService);
-        RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
-                requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
         //when
         CommandResult actual = signUpCommand.execute(requestContext);
         //then
@@ -61,9 +63,6 @@ public class SignUpCommandTest {
     public void testExecuteShouldSignUpWhenParametersAreValid() throws ServiceException,
             InvalidParametersException {
         //given
-        SignUpCommand signUpCommand = new SignUpCommand(signUpService);
-        RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
-                requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
         //when
         signUpCommand.execute(requestContext);
         //then
@@ -74,9 +73,6 @@ public class SignUpCommandTest {
     public void testExecuteShouldForwardWhenAccountExist()
             throws ServiceException, InvalidParametersException {
         //given
-        SignUpCommand signUpCommand = new SignUpCommand(signUpService);
-        RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
-                requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
         //when
         when(signUpService.isUsernameExist(VALID_LOGIN)).thenReturn(true);
         CommandResult actual = signUpCommand.execute(requestContext);
@@ -89,12 +85,8 @@ public class SignUpCommandTest {
     public void testExecuteShouldForwardWhenLoginIsInvalid()
             throws ServiceException, InvalidParametersException {
         //given
-        requestParameters.put(Parameter.LOGIN, new String[]{INVALID_LOGIN});
-        SignUpCommand signUpCommand = new SignUpCommand(signUpService);
-        RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
-                requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
+        REQUEST_PARAMETERS.put(Parameter.LOGIN, new String[]{INVALID_LOGIN});
         //when
-        when(signUpService.isUsernameExist(VALID_LOGIN)).thenReturn(true);
         CommandResult actual = signUpCommand.execute(requestContext);
         //then
         CommandResult expected = CommandResult.forward(Page.SIGN_UP);
@@ -105,12 +97,8 @@ public class SignUpCommandTest {
     public void testExecuteShouldForwardWhenPasswordIsInvalid()
             throws ServiceException, InvalidParametersException {
         //given
-        requestParameters.put(Parameter.PASSWORD, new String[]{INVALID_PASSWORD});
-        SignUpCommand signUpCommand = new SignUpCommand(signUpService);
-        RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
-                requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
+        REQUEST_PARAMETERS.put(Parameter.PASSWORD, new String[]{INVALID_PASSWORD});
         //when
-        when(signUpService.isUsernameExist(VALID_LOGIN)).thenReturn(true);
         CommandResult actual = signUpCommand.execute(requestContext);
         //then
         CommandResult expected = CommandResult.forward(Page.SIGN_UP);
@@ -121,10 +109,8 @@ public class SignUpCommandTest {
     public void testExecuteShouldForwardWhenLoginIsNull()
             throws ServiceException, InvalidParametersException {
         //given
-        requestParameters.put(Parameter.LOGIN, null);
-        SignUpCommand signUpCommand = new SignUpCommand(signUpService);
-        RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
-                requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
+        REQUEST_PARAMETERS.put(Parameter.LOGIN, null);
+
         //when
         signUpCommand.execute(requestContext);
     }

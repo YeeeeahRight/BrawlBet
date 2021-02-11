@@ -12,109 +12,87 @@ import com.epam.web.logic.service.match.MatchService;
 import com.epam.web.model.entity.Match;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 public class BetCommandTest {
-    private static final String VALID_REQUEST_HEADER = "controller?command=match-page";
+    private static final String REQUEST_HEADER = "controller?command=match&id=1";
     private static final Map<String, Object> SESSION_ATTRIBUTES = new HashMap<>();
     private static final Map<String, Object> REQUEST_ATTRIBUTES = new HashMap<>();
-    private static final Long MATCH_TEAM_ID = 2L;
-    private static final Match MATCH_WITH_TEAMS_IDS =
-            new Match(null, null, MATCH_TEAM_ID, MATCH_TEAM_ID);
-    private static final Long VALID_ACCOUNT_ID = 3L;
-    private static final String VALID_MATCH_ID_STR = "4";
-    private static final Long VALID_MATCH_ID = 4L;
-    private static final String VALID_TEAM = "FIRST";
-    private static final String INVALID_TEAM = "INVALIDDDDD";
-    private static final String VALID_MONEY = "50.0";
-    private static final String MONEY_NOT_NUMBER = "in.valid";
+    private static final Map<String, String[]> REQUEST_PARAMETERS = new HashMap<>();
+    private static final BigDecimal BALANCE = new BigDecimal("200");
+    private static final BigDecimal ZERO_BALANCE = new BigDecimal("0");
+    private static final Match MATCH
+            = new Match(new Date(), "cup", 0L, 1L);
+    private static final String BET_ON_PARAM_VALUE = "FIRST";
+    private static final String MONEY_PARAM_VALUE = "20";
+    private static final String MATCH_ID = "2";
+    private static final Long ACCOUNT_ID = 2L;
 
-    private Map<String, String[]> requestParameters;
+    static {
+        REQUEST_PARAMETERS.put(Parameter.BET_ON, new String[]{BET_ON_PARAM_VALUE});
+        REQUEST_PARAMETERS.put(Parameter.MONEY, new String[]{MONEY_PARAM_VALUE});
+        REQUEST_PARAMETERS.put(Parameter.ID, new String[]{MATCH_ID});
+        SESSION_ATTRIBUTES.put(Attribute.ACCOUNT_ID, ACCOUNT_ID);
+    }
+
+    private MatchService matchService;
     private BetService betService;
     private AccountService accountService;
-    private MatchService matchService;
-
-    @BeforeClass
-    public static void init() {
-        SESSION_ATTRIBUTES.put(Attribute.ACCOUNT_ID, VALID_ACCOUNT_ID);
-    }
+    private RequestContext requestContext;
+    private BetCommand betCommand;
 
     @Before
     public void initMethod() {
-        requestParameters = new HashMap<>();
-        requestParameters.put(Parameter.BET_ON, new String[]{VALID_TEAM});
-        requestParameters.put(Parameter.ID, new String[]{VALID_MATCH_ID_STR});
-        requestParameters.put(Parameter.MONEY, new String[]{VALID_MONEY});
-
+        matchService = Mockito.mock(MatchService.class);
         betService = Mockito.mock(BetService.class);
         accountService = Mockito.mock(AccountService.class);
-        matchService = Mockito.mock(MatchService.class);
+
+        requestContext = new RequestContext(REQUEST_ATTRIBUTES,
+                REQUEST_PARAMETERS, SESSION_ATTRIBUTES, REQUEST_HEADER);
+        betCommand = new BetCommand(betService, accountService, matchService);
     }
 
     @Test
-    public void testExecuteShouldReturnRedirectWhenParametersAreValid() throws ServiceException,
+    public void testExecuteShouldReturnRedirectWhenBalanceIsMoreThanBet() throws ServiceException,
             InvalidParametersException {
         //given
-        BetCommand betCommand = new BetCommand(betService, accountService, matchService);
-        RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
-                requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
         //when
-        when(accountService.getBalance(VALID_ACCOUNT_ID)).thenReturn(BigDecimal.valueOf(Double.MAX_VALUE));
-        when(matchService.getMatchById(VALID_MATCH_ID)).thenReturn(MATCH_WITH_TEAMS_IDS);
+        when(accountService.getBalance(anyLong())).thenReturn(BALANCE);
+        when(matchService.getMatchById(anyLong())).thenReturn(MATCH);
         CommandResult actual = betCommand.execute(requestContext);
         //then
-        CommandResult expected = CommandResult.redirect(VALID_REQUEST_HEADER);
+        CommandResult expected = CommandResult.redirect(REQUEST_HEADER);
         Assert.assertEquals(expected, actual);
     }
 
     @Test
-    public void testExecuteShouldBetWhenMatchParametersAreValid() throws ServiceException,
+    public void testExecuteShouldSaveBetWhenBalanceIsMoreThanBet() throws ServiceException,
             InvalidParametersException {
         //given
-        BetCommand betCommand = new BetCommand(betService, accountService, matchService);
-        RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
-                requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
         //when
-        when(accountService.getBalance(VALID_ACCOUNT_ID)).thenReturn(BigDecimal.valueOf(Double.MAX_VALUE));
-        when(matchService.getMatchById(VALID_MATCH_ID)).thenReturn(MATCH_WITH_TEAMS_IDS);
+        when(accountService.getBalance(anyLong())).thenReturn(BALANCE);
+        when(matchService.getMatchById(anyLong())).thenReturn(MATCH);
         betCommand.execute(requestContext);
         //then
-        verify(betService, times(1)).saveBet(anyObject());
+        verify(betService, times(1)).saveBet(Matchers.any());
     }
 
-    //then
     @Test(expected = InvalidParametersException.class)
-    public void testExecuteShouldThrowInvalidParametersExceptionWhenMoneyIsNotNumber()
+    public void testExecuteShouldThrowInvalidParametersExceptionWhenZeroBalance()
             throws ServiceException, InvalidParametersException {
         //given
-        requestParameters.put(Parameter.MONEY, new String[]{MONEY_NOT_NUMBER});
-        BetCommand betCommand = new BetCommand(betService, accountService, matchService);
-        RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
-                requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
         //when
-        betCommand.execute(requestContext);
-    }
-
-    //then
-    @Test(expected = InvalidParametersException.class)
-    public void testExecuteShouldThrowInvalidParametersExceptionWhenTeamIsInvalid()
-            throws ServiceException, InvalidParametersException {
-        //given
-        requestParameters.put(Parameter.MONEY, new String[]{VALID_MONEY});
-        requestParameters.put(Parameter.BET_ON, new String[]{INVALID_TEAM});
-        BetCommand betCommand = new BetCommand(betService, accountService, matchService);
-        RequestContext requestContext = new RequestContext(REQUEST_ATTRIBUTES,
-                requestParameters, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
-        //when
+        when(accountService.getBalance(anyLong())).thenReturn(ZERO_BALANCE);
+        when(matchService.getMatchById(anyLong())).thenReturn(MATCH);
         betCommand.execute(requestContext);
     }
 }
