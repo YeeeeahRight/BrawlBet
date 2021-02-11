@@ -14,8 +14,8 @@ import com.epam.web.logic.service.account.SignUpService;
 
 public class SignUpCommand implements Command {
     private static final String LOGIN_PAGE_COMMAND = "controller?command=" + CommandName.LOGIN_PAGE;
-    private static final String LOGIN_REGEX = "^(?=.*[A-Za-z])[A-Za-z\\d]+";
-    private static final String PASSWORD_REGEX = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{5,}$";
+    private static final String LOGIN_REGEX = "[A-Za-z0-9]{2,}";
+    private static final String PASSWORD_REGEX = "\\w{5,}";
     private static final String DIFFERENT_PASSWORDS_KEY = "different.passwords";
     private static final String USERNAME_EXIST_KEY = "username.exist";
     private static final String INVALID_LOGIN_KEY = "invalid.login";
