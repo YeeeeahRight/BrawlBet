@@ -48,7 +48,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public long getTeamIdByName(String name) throws ServiceException {
+    public Long getTeamIdByName(String name) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             TeamDao teamDao = daoHelper.createTeamDao();
             Optional<Team> teamOptional = teamDao.findTeamByName(name);

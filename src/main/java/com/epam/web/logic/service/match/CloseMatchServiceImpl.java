@@ -73,13 +73,16 @@ public class CloseMatchServiceImpl implements CloseMatchService {
                     betDao.close(moneyReceived, bet.getId());
                     accountDao.addMoneyById(moneyReceived, bet.getAccountId());
                 }
-                if (!isOneUserBets(matchBets)) {
+                if (isNotOneUserBets(matchBets)) {
                     Optional<Account> bookmakerOptional = accountDao.findBookmaker();
                     if (bookmakerOptional.isPresent()) {
                         Account bookmaker = bookmakerOptional.get();
-                        BigDecimal matchGain = winnerTeam == MatchTeamNumber.FIRST ? secondTeamBetsAmount : firstTeamBetsAmount;
+                        BigDecimal matchGain = winnerTeam == MatchTeamNumber.FIRST ?
+                                secondTeamBetsAmount : firstTeamBetsAmount;
                         BigDecimal commissionDecimal = BigDecimal.valueOf(commission);
-                        BigDecimal bookmakerGain = matchGain.multiply(commissionDecimal).divide(HUNDRED, 12, RoundingMode.HALF_UP);
+                        BigDecimal bookmakerGain = matchGain
+                                .multiply(commissionDecimal)
+                                .divide(HUNDRED, 12, RoundingMode.HALF_UP);
                         accountDao.addMoneyById(bookmakerGain, bookmaker.getId());
                     }
                 } else {
@@ -113,24 +116,25 @@ public class CloseMatchServiceImpl implements CloseMatchService {
                 coefficient = betCalculator.calculateCoefficient(MatchTeamNumber.SECOND, firstTeamBetsAmount,
                         secondTeamBetsAmount);
             }
-            if (!isOneUserBets(matchBets)) {
+            if (isNotOneUserBets(matchBets)) {
                 BigDecimal commissionDecimal = BigDecimal.valueOf(commission);
-                BigDecimal commissionPart = coefficient.multiply(commissionDecimal).divide(HUNDRED, 10, RoundingMode.HALF_UP);
+                BigDecimal commissionPart = coefficient
+                        .multiply(commissionDecimal)
+                        .divide(HUNDRED, 10, RoundingMode.HALF_UP);
                 coefficient = coefficient.subtract(commissionPart);
             }
         }
-        System.out.println(coefficient);
         return coefficient.add(BigDecimal.ONE);
     }
 
-    private boolean isOneUserBets(List<Bet> bets) {
+    private boolean isNotOneUserBets(List<Bet> bets) {
         for (int i = bets.size() - 1; i >= 0; i--) {
             long currentAccountId = bets.get(i).getAccountId();
             if (i > 0 && bets.get(i - 1).getAccountId() != currentAccountId) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     private boolean isBetsOnTwoTeams(List<Bet> bets) {

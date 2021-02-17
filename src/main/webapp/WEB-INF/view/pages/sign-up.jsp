@@ -5,7 +5,7 @@
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="locale"/>
 
-<html lang="<fmt:message key="html.lang"/>">
+<html lang="<fmt:message key="html.lang"/>" id="html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -50,13 +50,13 @@
                             <input type="text"
                                    placeholder="<fmt:message key="login.username.advice"/>"
                                    name="login" value="${login}" maxlength="20" required>
-                            <input class="password" type="password"
+                            <input id="password" type="password"
                                    placeholder="<fmt:message key="login.password.advice"/>"
                                    name="password" maxlength="25" required>
-                            <input class="repeated-password" type="password"
+                            <input id="repeated-password" type="password"
                                    placeholder="<fmt:message key="login.password.repeat"/>"
                                    name="repeatedPassword" maxlength="25" required>
-                            <button type="submit">
+                            <button id="sign-up-submit" type="submit">
                                 <fmt:message key="login.submit"/>
                             </button>
                         </div>
@@ -72,3 +72,4 @@
 </body>
 </html>
 
+<script src="<c:url value="/static/js/same-password-validator.js"/>"></script>

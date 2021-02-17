@@ -44,7 +44,7 @@ public class LoginCommand implements Command {
         } else {
             requestContext.addAttribute(Attribute.ERROR_MESSAGE, INCORRECT_DATA_KEY);
         }
-
+        requestContext.addAttribute(Attribute.SAVED_LOGIN, login);
         return CommandResult.forward(Page.LOGIN);
     }
 }

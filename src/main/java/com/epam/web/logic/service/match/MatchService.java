@@ -60,19 +60,6 @@ public interface MatchService {
     void cancelMatchById(long id) throws ServiceException;
 
     /**
-     * Finds out if match is finished by match id.
-     * Returns boolean result.
-     *
-     * @param  id  id value of match id.
-     *
-     * @return  a boolean result of finding out.
-     *
-     * @throws  ServiceException  if match is not found and
-     *                            also it's a wrapper for lower errors.
-     */
-    boolean isFinishedMatch(long id) throws ServiceException;
-
-    /**
      * Gets list of matches by match type
      * in range described as offset and amount of matches.
      *

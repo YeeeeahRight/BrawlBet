@@ -52,11 +52,11 @@ public class AccountServiceImpl implements AccountService {
     public BigDecimal getBalance(long id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDao matchDao = daoHelper.createAccountDao();
-            Optional<Account> user = matchDao.findById(id);
-            if (!user.isPresent()) {
+            Optional<Account> account = matchDao.findById(id);
+            if (!account.isPresent()) {
                 throw new ServiceException("Account with id='" + id + "' is not found.");
             }
-            return user.get().getBalance();
+            return account.get().getBalance();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

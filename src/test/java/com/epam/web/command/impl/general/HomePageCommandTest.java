@@ -1,7 +1,6 @@
 package com.epam.web.command.impl.general;
 
 import com.epam.web.command.CommandResult;
-import com.epam.web.command.impl.bookmaker.BookmakerHistoryCommand;
 import com.epam.web.command.util.MatchDtoCommandHelper;
 import com.epam.web.constant.Page;
 import com.epam.web.controller.request.RequestContext;

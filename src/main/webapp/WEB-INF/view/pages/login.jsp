@@ -53,7 +53,7 @@
                             <div class="input-form">
                                 <input type="text"
                                        placeholder="<fmt:message key="login.username.advice"/>"
-                                       name="login" maxlength="20" required>
+                                       name="login" maxlength="20" value="${login}" required>
                                 <input type="password"
                                        placeholder="<fmt:message key="login.password.advice"/>"
                                        name="password" maxlength="25" required>

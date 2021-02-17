@@ -114,22 +114,4 @@ public class MatchServiceImpl implements MatchService {
             throw new ServiceException(e);
         }
     }
-
-    @Override
-    public boolean isFinishedMatch(long id) throws ServiceException {
-        try (DaoHelper daoHelper = daoHelperFactory.create()) {
-            MatchDao matchDao = daoHelper.createMatchDao();
-            Optional<Match> matchOptional = matchDao.findById(id);
-            if (!matchOptional.isPresent()) {
-                throw new ServiceException("Match with id='" + id + "' is not found.");
-            }
-            Match match = matchOptional.get();
-            long matchTime = match.getDate().getTime();
-            long currentTime = new Date().getTime();
-            return currentTime >= matchTime;
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
 }

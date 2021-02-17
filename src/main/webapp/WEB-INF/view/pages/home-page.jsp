@@ -29,9 +29,6 @@
                     </h1>
                 </div>
             </div>
-            <c:if test="">
-
-            </c:if>
             <div class="main-body">
                 <c:forEach items="${matchDtoList}" var="matchDto" varStatus="counter">
                     <c:if test="${counter.index % 2 == 0}">

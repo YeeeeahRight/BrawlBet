@@ -72,6 +72,20 @@ public class Match implements Entity {
         this.secondTeamBets = BigDecimal.ZERO;
     }
 
+    //for tests
+    public Match(Date date, String tournament, Long firstTeamId, Long secondTeamId, Boolean isClosed) {
+        this.id = null;
+        this.date = date;
+        this.tournament = tournament;
+        this.firstTeamId = firstTeamId;
+        this.secondTeamId = secondTeamId;
+        this.winnerTeam = MatchTeamNumber.NONE;
+        this.commission = 0.0f;
+        this.isClosed = isClosed;
+        this.firstTeamBets = BigDecimal.ZERO;
+        this.secondTeamBets = BigDecimal.ZERO;
+    }
+
     public Date getDate() {
         return date;
     }

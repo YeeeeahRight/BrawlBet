@@ -7,6 +7,7 @@ import java.util.Date;
 
 public class MatchValidator implements Validator<Match> {
     private static final int MAX_TOURNAMENT_SIZE = 15;
+    private static final String NOT_TAG_REGEX = "[^<>]+";
 
     @Override
     public boolean isValid(Match match) {
@@ -17,7 +18,11 @@ public class MatchValidator implements Validator<Match> {
         if (date == null || tournament == null || firstTeamId == null || secondTeamId == null) {
             return false;
         }
-        if (tournament.isEmpty() || tournament.length() > MAX_TOURNAMENT_SIZE) {
+        if (firstTeamId.equals(secondTeamId)) {
+            return false;
+        }
+        if (tournament.isEmpty() || tournament.length() > MAX_TOURNAMENT_SIZE
+                || !tournament.matches(NOT_TAG_REGEX)) {
             return false;
         }
         return true;

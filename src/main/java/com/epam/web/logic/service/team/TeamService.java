@@ -41,7 +41,7 @@ public interface TeamService {
      * @throws  ServiceException  if team is not found and
      *                            also it's a wrapper for lower errors.
      */
-    long getTeamIdByName(String name) throws ServiceException;
+    Long getTeamIdByName(String name) throws ServiceException;
 
     /**
      * Gets team name by team id.

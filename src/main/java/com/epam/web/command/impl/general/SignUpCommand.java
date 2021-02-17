@@ -54,7 +54,6 @@ public class SignUpCommand implements Command {
         } else {
             requestContext.addAttribute(Attribute.ERROR_MESSAGE, INVALID_LOGIN_KEY);
         }
-
         return CommandResult.forward(Page.SIGN_UP);
     }
 }
