@@ -4,6 +4,7 @@ import com.epam.web.command.Command;
 import com.epam.web.command.CommandResult;
 import com.epam.web.command.util.MatchRequestCreator;
 import com.epam.web.constant.CommandName;
+import com.epam.web.constant.Page;
 import com.epam.web.constant.Parameter;
 import com.epam.web.exception.InvalidParametersException;
 import com.epam.web.logic.service.match.MatchService;
@@ -30,6 +31,9 @@ public class EditMatchCommand implements Command {
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
         Match match = matchRequestCreator.createMatch(requestContext, teamService, true);
+        if (match == null) {
+            return CommandResult.forward(Page.EDIT_MATCH);
+        }
         matchService.saveMatch(match);
 
         return CommandResult.redirect(MATCHES_COMMAND);

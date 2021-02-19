@@ -39,6 +39,7 @@ public class Controller extends HttpServlet {
         RequestContextCreator requestContextCreator = new RequestContextCreator();
         CommandResult commandResult;
         String commandParam = req.getParameter(Parameter.COMMAND);
+        System.out.println(commandParam);
         Command command;
         try {
             command = CommandFactory.createCommand(commandParam);

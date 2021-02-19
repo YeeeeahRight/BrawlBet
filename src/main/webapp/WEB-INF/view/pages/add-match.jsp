@@ -56,22 +56,27 @@
                                    type="datetime-local"
                                    min="2021-01-05T00:00" max="2021-12-31T23:59"
                                    placeholder="<fmt:message key="match.date.advice"/>"
-                                   name="date" required>
+                                   name="date" value="${date}" required>
                             <input class="tournament" type="text"
                                    placeholder="<fmt:message key="match.tournament.advice"/>"
-                                   name="tournament" maxlength="15" required>
+                                   name="tournament" value="${tournament}" maxlength="15" required>
                             <input class="first-team" type="text" id="firstTeam"
                                    placeholder="<fmt:message key="match.team.first.advice"/>"
-                                   name="firstTeam" maxlength="15" required>
+                                   name="firstTeam" value="${firstTeam}" maxlength="15" required>
                             <input class="second-team" type="text" id="secondTeam"
                                    placeholder="<fmt:message key="match.team.second.advice"/>"
-                                   name="secondTeam" maxlength="15" required>
+                                   name="secondTeam" value="${secondTeam}" maxlength="15" required>
                             <button type="submit">
                                 <fmt:message key="match.add.button"/>
                             </button>
                         </div>
                     </form>
                 </div>
+                <c:if test="${noTeam != null}">
+                    <h1 class="error-message">
+                        <fmt:message key="match.no.team"/>: ${noTeam}
+                    </h1>
+                </c:if>
             </div>
         </div>
     </div>

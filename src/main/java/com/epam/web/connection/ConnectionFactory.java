@@ -15,7 +15,8 @@ public class ConnectionFactory {
     private static final String URL_PROPERTY_KEY = "url";
 
     public Connection create() {
-        try(InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(DB_PROPERTIES_LOCATION)) {
+        try(InputStream inputStream =
+                    this.getClass().getClassLoader().getResourceAsStream(DB_PROPERTIES_LOCATION)) {
             Properties properties = new Properties();
             properties.load(inputStream);
             String url = properties.getProperty(URL_PROPERTY_KEY);

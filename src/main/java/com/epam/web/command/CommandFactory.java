@@ -98,9 +98,8 @@ public class CommandFactory {
                         new TeamValidator()), new MatchRequestCreator());
             case CommandName.EDIT_MATCH_PAGE:
                 return new EditMatchPageCommand(new MatchServiceImpl(new DaoHelperFactory(),
-                        new MatchValidator()), new MatchDtoCommandHelper(new MatchServiceImpl(new DaoHelperFactory(),
                         new MatchValidator()), new TeamServiceImpl(new DaoHelperFactory(),
-                        new TeamValidator())));
+                        new TeamValidator()));
             case CommandName.ADD_TEAM:
                 return new AddTeamCommand(new TeamServiceImpl(new DaoHelperFactory(),
                         new TeamValidator()));

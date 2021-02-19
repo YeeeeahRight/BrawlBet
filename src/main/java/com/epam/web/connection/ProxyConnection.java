@@ -1,7 +1,5 @@
 package com.epam.web.connection;
 
-import com.epam.web.exception.ConnectionPoolException;
-
 import java.sql.*;
 import java.util.Map;
 import java.util.Properties;

@@ -1,5 +1,6 @@
 package com.epam.web.command.util;
 
+import com.epam.web.constant.Attribute;
 import com.epam.web.constant.Parameter;
 import com.epam.web.controller.request.RequestContext;
 import com.epam.web.exception.InvalidParametersException;
@@ -22,7 +23,14 @@ public class MatchRequestCreator {
             firstTeamId = teamService.getTeamIdByName(firstTeam);
             secondTeamId = teamService.getTeamIdByName(secondTeam);
         } catch (ServiceException e) {
-            throw new InvalidParametersException(e.getMessage());
+            String teamName = e.getMessage().contains(firstTeam) ? firstTeam : secondTeam;
+            requestContext.addAttribute(Attribute.NO_TEAM, teamName);
+            requestContext.addAttribute(Attribute.TOURNAMENT, tournament);
+            requestContext.addAttribute(Attribute.FIRST_TEAM, firstTeam);
+            requestContext.addAttribute(Attribute.SECOND_TEAM, secondTeam);
+            String dateStr = requestContext.getRequestParameter(Parameter.DATE);
+            requestContext.addAttribute(Attribute.DATE, dateStr);
+            return null;
         }
         Date date = ParameterExtractor.extractDate(requestContext);
         if (isIdExist) {

@@ -58,23 +58,22 @@
                                    type="datetime-local"
                                    min="2021-01-05T00:00" max="2021-12-31T23:59"
                                    placeholder="<fmt:message key="match.date.advice"/>"
-                                   name="date" value="<sc:date-formatter date="${matchDto.getDate()}"
-                               formatType="HTML"></sc:date-formatter>"
+                                   name="date" value="${date}"
                                    required>
                             <input class="tournament" type="text"
                                    placeholder="<fmt:message key="match.tournament.advice"/>"
                                    name="tournament" maxlength="15"
-                                   value="${matchDto.getTournament()}"
+                                   value="${tournament}"
                                    required>
                             <input class="first-team" type="text"
                                    placeholder="<fmt:message key="match.team.first.advice"/>"
                                    name="firstTeam" id="firstTeam"
-                                   value="${matchDto.getFirstTeam()}"
+                                   value="${firstTeam}"
                                    maxlength="15" required>
                             <input class="second-team" type="text"
                                    placeholder="<fmt:message key="match.team.second.advice"/>"
                                    name="secondTeam" id="secondTeam"
-                                   value="${matchDto.getSecondTeam()}"
+                                   value="${secondTeam}"
                                    maxlength="15" required>
                             <button type="submit">
                                 <fmt:message key="match.edit.button"/>
@@ -82,6 +81,11 @@
                         </div>
                     </form>
                 </div>
+                <c:if test="${noTeam != null}">
+                    <h1 class="error-message">
+                        <fmt:message key="match.no.team"/>: ${noTeam}
+                    </h1>
+                </c:if>
             </div>
         </div>
     </div>

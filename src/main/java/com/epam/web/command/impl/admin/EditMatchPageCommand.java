@@ -2,41 +2,38 @@ package com.epam.web.command.impl.admin;
 
 import com.epam.web.command.Command;
 import com.epam.web.command.CommandResult;
-import com.epam.web.command.util.MatchDtoCommandHelper;
 import com.epam.web.command.util.ParameterExtractor;
 import com.epam.web.constant.Attribute;
 import com.epam.web.constant.Page;
+import com.epam.web.date.DateFormatType;
+import com.epam.web.date.DateFormatter;
 import com.epam.web.exception.InvalidParametersException;
 import com.epam.web.logic.service.match.MatchService;
-import com.epam.web.logic.service.match.MatchType;
 import com.epam.web.logic.service.team.TeamService;
 import com.epam.web.model.entity.Match;
 import com.epam.web.exception.ServiceException;
 import com.epam.web.controller.request.RequestContext;
-import com.epam.web.model.entity.dto.MatchDto;
-
-import java.util.Collections;
-import java.util.List;
 
 public class EditMatchPageCommand implements Command {
-    private static final int FIRST_ELEMENT_INDEX = 0;
-
     private final MatchService matchService;
-    private final MatchDtoCommandHelper matchDtoCommandHelper;
+    private final TeamService teamService;
 
-    public EditMatchPageCommand(MatchService matchService, MatchDtoCommandHelper matchDtoCommandHelper) {
+    public EditMatchPageCommand(MatchService matchService, TeamService teamService) {
         this.matchService = matchService;
-        this.matchDtoCommandHelper = matchDtoCommandHelper;
+        this.teamService = teamService;
     }
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
         long id = ParameterExtractor.extractId(requestContext);
         Match match = matchService.getMatchById(id);
-        List<Match> matches = Collections.singletonList(match);
-        List<MatchDto> matchDtoList = matchDtoCommandHelper.buildMatchDtoList(matches, MatchType.UNCLOSED);
-        MatchDto matchDto = matchDtoList.get(FIRST_ELEMENT_INDEX);
-        requestContext.addAttribute(Attribute.MATCH_DTO, matchDto);
+        String firstTeam = teamService.getTeamNameById(match.getFirstTeamId());
+        String secondTeam = teamService.getTeamNameById(match.getSecondTeamId());
+        String formattedDate = DateFormatter.format(match.getDate(), DateFormatType.HTML);
+        requestContext.addAttribute(Attribute.DATE, formattedDate);
+        requestContext.addAttribute(Attribute.TOURNAMENT, match.getTournament());
+        requestContext.addAttribute(Attribute.FIRST_TEAM, firstTeam);
+        requestContext.addAttribute(Attribute.SECOND_TEAM, secondTeam);
 
         return CommandResult.forward(Page.EDIT_MATCH);
     }

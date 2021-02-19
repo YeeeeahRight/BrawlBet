@@ -144,6 +144,11 @@ button:hover {
     opacity: 0.8;
 }
 
+.error-message {
+    margin: 515px auto auto;
+    color: red;
+}
+
 @media screen and (max-width: 1000px) {
     .add-form {
         top: 300px;

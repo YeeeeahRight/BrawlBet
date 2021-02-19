@@ -24,4 +24,9 @@ public final class Attribute {
     public static final String TEAMS = "teams";
     public static final String TEAM = "team";
     public static final String WIN_RATE = "winRate";
+    public static final String NO_TEAM = "noTeam";
+    public static final String TOURNAMENT = "tournament";
+    public static final String FIRST_TEAM = "firstTeam";
+    public static final String SECOND_TEAM = "secondTeam";
+    public static final String DATE = "date";
 }
