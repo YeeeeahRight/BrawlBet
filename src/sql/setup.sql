@@ -5,7 +5,7 @@ USE totalizator;
 CREATE TABLE accounts
 (
 	id BIGINT AUTO_INCREMENT,
-    name VARCHAR(20) NOT NULL,
+    name     VARCHAR(20) NOT NULL UNIQUE,
     password VARCHAR(25) NOT NULL,
     role ENUM('USER','BOOKMAKER', 'ADMIN') NOT NULL,
     balance DECIMAL(12,4) DEFAULT 0.0 NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE accounts
 CREATE TABLE teams
 (
 	id BIGINT AUTO_INCREMENT,
-    name VARCHAR(15) NOT NULL,
+    name VARCHAR(15) NOT NULL UNIQUE,
     matches_won  INT DEFAULT 0 NOT NULL,
     matches_lost INT DEFAULT 0 NOT NULL,
     PRIMARY KEY(id)
@@ -32,7 +32,7 @@ CREATE TABLE matches
     tournament VARCHAR(15) NOT NULL,
     commission FLOAT DEFAULT 0.0 NOT NULL,
     is_closed BOOLEAN DEFAULT 0 NOT NULL,
-    first_team_bets DECIMAL(12,4) DEFAULT 0.0 NOT NULL,
+    first_team_bets  DECIMAL(12,4) DEFAULT 0.0 NOT NULL,
     second_team_bets DECIMAL(12,4) DEFAULT 0.0 NOT NULL,
     FOREIGN KEY (first_team_id)  REFERENCES teams (id) ON DELETE CASCADE,
 	FOREIGN KEY (second_team_id) REFERENCES teams (id) ON DELETE CASCADE,

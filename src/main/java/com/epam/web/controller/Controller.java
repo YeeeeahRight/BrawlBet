@@ -5,6 +5,7 @@ import com.epam.web.command.CommandFactory;
 import com.epam.web.command.CommandResult;
 import com.epam.web.connection.ConnectionPool;
 import com.epam.web.constant.Attribute;
+import com.epam.web.constant.CommandName;
 import com.epam.web.constant.Page;
 import com.epam.web.constant.Parameter;
 import com.epam.web.controller.request.RequestContext;
@@ -23,6 +24,8 @@ import java.io.IOException;
 
 
 public class Controller extends HttpServlet {
+    private static final String HOME_PAGE_COMMAND = "controller?command=" + CommandName.HOME_PAGE +
+            "&" + Parameter.PAGE + "=1";
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
@@ -39,7 +42,6 @@ public class Controller extends HttpServlet {
         RequestContextCreator requestContextCreator = new RequestContextCreator();
         CommandResult commandResult;
         String commandParam = req.getParameter(Parameter.COMMAND);
-        System.out.println(commandParam);
         Command command;
         try {
             command = CommandFactory.createCommand(commandParam);
@@ -54,17 +56,19 @@ public class Controller extends HttpServlet {
         }
     }
 
-    private void dispatch(CommandResult commandResult, HttpServletRequest request, HttpServletResponse response)
+    private void dispatch(CommandResult commandResult,
+                          HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String page = commandResult.getPage();
         if (page == null) {
-            response.sendRedirect(Page.HOME);
-        }
-        if (commandResult.isRedirect()) {
-            response.sendRedirect(page);
+            response.sendRedirect(HOME_PAGE_COMMAND);
         } else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher(page);
-            dispatcher.forward(request, response);
+            if (commandResult.isRedirect()) {
+                response.sendRedirect(page);
+            } else {
+                RequestDispatcher dispatcher = request.getRequestDispatcher(page);
+                dispatcher.forward(request, response);
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package com.epam.web.command.impl.bookmaker;
 
 import com.epam.web.command.CommandResult;
+import com.epam.web.constant.CommandName;
 import com.epam.web.constant.Parameter;
 import com.epam.web.controller.request.RequestContext;
 import com.epam.web.exception.InvalidParametersException;
@@ -19,7 +20,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 public class RemoveMatchCommandTest {
-    private static final String VALID_REQUEST_HEADER = "controller?command=matches&page=1";
+    private static final String MATCHES_PAGE_COMMAND = "controller?command=" + CommandName.ACCEPT_MATCHES_PAGE +
+            "&" + Parameter.PAGE + "=1";
     private static final Map<String, Object> SESSION_ATTRIBUTES = new HashMap<>();
     private static final Map<String, Object> REQUEST_ATTRIBUTES = new HashMap<>();
     private static final Map<String, String[]> REQUEST_PARAMETERS = new HashMap<>();
@@ -37,7 +39,7 @@ public class RemoveMatchCommandTest {
     public void initMethod() {
         matchService = Mockito.mock(MatchService.class);
         requestContext = new RequestContext(REQUEST_ATTRIBUTES,
-                REQUEST_PARAMETERS, SESSION_ATTRIBUTES, VALID_REQUEST_HEADER);
+                REQUEST_PARAMETERS, SESSION_ATTRIBUTES, MATCHES_PAGE_COMMAND);
         removeMatchCommand = new RemoveMatchCommand(matchService);
     }
 
@@ -48,7 +50,7 @@ public class RemoveMatchCommandTest {
         //when
         CommandResult actual = removeMatchCommand.execute(requestContext);
         //then
-        CommandResult expected = CommandResult.redirect(VALID_REQUEST_HEADER);
+        CommandResult expected = CommandResult.redirect(MATCHES_PAGE_COMMAND);
         Assert.assertEquals(expected, actual);
     }
 

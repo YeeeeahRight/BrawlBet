@@ -52,7 +52,7 @@
                         </div>
                     </div>
                     <form method="POST"
-                          action="${pageContext.request.contextPath}/controller?command=edit-match&id=${matchDto.getId()}">
+                          action="${pageContext.request.contextPath}/controller?command=edit-match&id=${matchId}">
                         <div class="input-form">
                             <input class="date"
                                    type="datetime-local"

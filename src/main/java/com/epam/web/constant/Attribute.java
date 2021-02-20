@@ -9,6 +9,7 @@ public final class Attribute {
     public static final String SAVED_LOGIN = "login";
     public static final String ROLE = "role";
     public static final String ACCOUNT_ID = "accountId";
+    public static final String MATCH_ID = "matchId";
     public static final String USERS = "users";
     public static final String BALANCE = "balance";
     public static final String MAX_BET = "maxBet";

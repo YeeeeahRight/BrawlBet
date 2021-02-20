@@ -3,6 +3,7 @@ package com.epam.web.command.impl.bookmaker;
 import com.epam.web.command.Command;
 import com.epam.web.command.CommandResult;
 import com.epam.web.command.util.ParameterExtractor;
+import com.epam.web.constant.CommandName;
 import com.epam.web.constant.Parameter;
 import com.epam.web.controller.request.RequestContext;
 import com.epam.web.exception.InvalidParametersException;
@@ -10,6 +11,8 @@ import com.epam.web.exception.ServiceException;
 import com.epam.web.logic.service.match.MatchService;
 
 public class AcceptMatchCommand implements Command {
+    private static final String MATCHES_PAGE_COMMAND = "controller?command=" + CommandName.ACCEPT_MATCHES_PAGE +
+            "&" + Parameter.PAGE + "=1";
     private static final float MIN_COMMISSION = 1.0f;
     private static final float MAX_COMMISSION = 8.0f;
     private final MatchService matchService;
@@ -30,7 +33,6 @@ public class AcceptMatchCommand implements Command {
         }
         matchService.setCommissionById(commission, id);
 
-        String prevPage = requestContext.getHeader();
-        return CommandResult.redirect(prevPage);
+        return CommandResult.redirect(MATCHES_PAGE_COMMAND);
     }
 }

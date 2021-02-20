@@ -34,6 +34,7 @@ public class EditMatchPageCommand implements Command {
         requestContext.addAttribute(Attribute.TOURNAMENT, match.getTournament());
         requestContext.addAttribute(Attribute.FIRST_TEAM, firstTeam);
         requestContext.addAttribute(Attribute.SECOND_TEAM, secondTeam);
+        requestContext.addAttribute(Attribute.MATCH_ID, id);
 
         return CommandResult.forward(Page.EDIT_MATCH);
     }

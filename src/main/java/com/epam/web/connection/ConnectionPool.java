@@ -43,6 +43,7 @@ public class ConnectionPool {
             } finally {
                 INSTANCE_LOCKER.unlock();
             }
+
         }
         return instance;
     }

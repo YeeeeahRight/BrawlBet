@@ -1,4 +1,5 @@
 const secondTeamField = document.getElementById("secondTeam");
+const firstTeamField = document.getElementById("firstTeam");
 
 secondTeamField.addEventListener("input", function (event) {
     let secondTeam = document.getElementById("secondTeam").value;
@@ -20,5 +21,28 @@ secondTeamField.addEventListener("input", function (event) {
         secondTeamField.setCustomValidity(message);
     } else {
         secondTeamField.setCustomValidity("");
+    }
+});
+
+firstTeamField.addEventListener("input", function (event) {
+    let secondTeam = document.getElementById("secondTeam").value;
+    let firstTeam = document.getElementById("firstTeam").value;
+    if (firstTeam.toUpperCase() === secondTeam.toUpperCase()) {
+        let lang = document.getElementById("html").getAttribute("lang");
+        let message;
+        switch (lang) {
+            case "ru":
+                message = "Команды не могут иметь одинаковое имя";
+                break;
+            case "be":
+                message = "Каманды ня могуць мець аднолькавае імя.";
+                break;
+            case "en":
+                message = "Teams cannot have the same name.";
+                break;
+        }
+        firstTeamField.setCustomValidity(message);
+    } else {
+        firstTeamField.setCustomValidity("");
     }
 });

@@ -3,12 +3,16 @@ package com.epam.web.command.impl.admin;
 import com.epam.web.command.Command;
 import com.epam.web.command.CommandResult;
 import com.epam.web.command.util.ParameterExtractor;
+import com.epam.web.constant.CommandName;
+import com.epam.web.constant.Parameter;
 import com.epam.web.controller.request.RequestContext;
 import com.epam.web.exception.InvalidParametersException;
 import com.epam.web.exception.ServiceException;
 import com.epam.web.logic.service.match.MatchService;
 
 public class CancelMatchCommand implements Command {
+    private static final String MATCHES_PAGE_COMMAND = "controller?command=" + CommandName.MATCHES +
+            "&" + Parameter.PAGE + "=1";
     private final MatchService matchService;
 
     public CancelMatchCommand(MatchService matchService) {
@@ -20,7 +24,6 @@ public class CancelMatchCommand implements Command {
         long id = ParameterExtractor.extractId(requestContext);
         matchService.cancelMatchById(id);
 
-        String prevPage = requestContext.getHeader();
-        return CommandResult.redirect(prevPage);
+        return CommandResult.redirect(MATCHES_PAGE_COMMAND);
     }
 }
