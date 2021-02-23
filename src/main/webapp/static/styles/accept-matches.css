@@ -1,0 +1,222 @@
+.body {
+    height: 100%;
+    display: flex;
+    justify-content: start;
+}
+
+.main-header {
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.main-content {
+    background-color: rgba(221, 222, 224, 1.0);
+    height: 100%;
+    width: 82.06%;
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column
+}
+
+@media screen and (max-width: 800px) {
+    .body {
+        flex-direction: column;
+    }
+
+    .main-content {
+        width: auto;
+    }
+}
+
+.main-body {
+    height: 100%;
+    width: 100%;
+    font-size: 20px;
+
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.matches-icon-first {
+    width: 65px;
+    height: 65px;
+    margin-top: 20px;
+
+    background: url(../images/matches.png) no-repeat center center;
+    background-size: cover;
+}
+
+.matches-logo-text {
+    margin-top: 15px;
+    color: #303030;
+    font-size: 64px;
+    white-space: nowrap;
+}
+
+.matches-icon-second {
+    width: 65px;
+    height: 65px;
+    margin-top: 20px;
+
+    background: url(../images/matches.png) no-repeat center center;
+    background-size: cover;
+}
+
+.match {
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+}
+
+.cancel-button {
+    width: 72px;
+    height: 72px;
+    margin-left: 23px;
+    background: #F1F1F1;
+    border: 2px solid #94E512;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.accept-button {
+    width: 72px;
+    height: 72px;
+    margin-right: 23px;
+    background: #F1F1F1;
+    border: 2px solid #94E512;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.accept-image {
+    width: 65px;
+    height: 65px;
+    margin-top: 2px;
+    background: url(../images/accept.png) no-repeat center center;
+    background-size: cover;
+    margin-left: 1px;
+    cursor: pointer;
+}
+
+.match-description {
+    width: 448px;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.match-content {
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    background: #FFFFFF;
+}
+
+.match-commission {
+    height: 36px;
+    font-size: 24px;
+    background: #F1F1F1;
+    display: flex;
+    justify-content: center;
+}
+
+.commission-input {
+    height: 22px;
+    width: 175px;
+    font-size: 20px;
+    margin-top: 7px;
+    text-align: center;
+}
+
+.f-team-name {
+    margin-left: 15px;
+    margin-top: auto;
+    margin-bottom: auto;
+
+    font-size: 18px;
+}
+
+.s-team-name {
+    margin-right: 15px;
+    margin-top: auto;
+    margin-bottom: auto;
+
+    font-size: 18px;
+}
+
+.versus {
+    font-size: 24px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.match-header {
+    height: 24px;
+    font-size: 20px;
+    background: #F1F1F1;
+    display: flex;
+    justify-content: space-between;
+}
+
+.date {
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: left;
+    margin-left: 15px;
+}
+
+.tournament {
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: right;
+    margin-right: 15px;
+}
+
+.cancel-image {
+    width: 70px;
+    height: 70px;
+    margin-left: -1px;
+    margin-top: -1px;
+    background: url(../images/cancel.png) no-repeat center center;
+    background-size: cover;
+}
+
+.accept-button:active {
+    border: 2.8px solid #94E512;
+}
+
+.cancel-button:active {
+    border: 2.8px solid #94E512;
+}
+
+@media screen and (max-width: 800px) {
+    .match-description {
+        width: 304px;
+    }
+
+    .match-header {
+        font-size: 2vw;
+    }
+
+    .f-team-name {
+        font-size: 2vw;
+    }
+
+    .s-team-name {
+        font-size: 2vw;
+    }
+
+    .versus {
+        font-size: 3vw;
+    }
+}
+

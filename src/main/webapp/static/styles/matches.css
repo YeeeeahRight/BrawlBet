@@ -1,0 +1,243 @@
+.body {
+    height: 100%;
+    display: flex;
+    justify-content: start;
+}
+
+.main-header {
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.main-content {
+    background-color: rgba(221, 222, 224, 1.0);
+    height: 100%;
+    width: 82.06%;
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column
+}
+
+@media screen and (max-width: 800px) {
+    .body {
+        flex-direction: column;
+    }
+
+    .main-content {
+        width: auto;
+    }
+}
+
+.main-body {
+    height: 100%;
+    width: 100%;
+    font-size: 20px;
+
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.matches-icon-first {
+    width: 65px;
+    height: 65px;
+    margin-top: 20px;
+
+    background: url(../images/matches.png) no-repeat center center;
+    background-size: cover;
+}
+
+.matches-logo-text {
+    margin-top: 15px;
+    color: #303030;
+    font-size: 64px;
+}
+
+.matches-icon-second {
+    width: 65px;
+    height: 65px;
+    margin-top: 20px;
+
+    background: url(../images/matches.png) no-repeat center center;
+    background-size: cover;
+}
+
+.button-add-match {
+    width: 448px;
+    height: 65px;
+    background: #94E512;
+    margin-top: 17px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid #303030;
+}
+
+.add-match-text {
+    text-align: center;
+    font-size: 36px;
+    color: #303030;
+    line-height: 1.65;
+}
+
+.match {
+    height: 64px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+}
+
+.remove-button {
+    width: 66px;
+    height: 64px;
+    margin-left: 23px;
+    background: #F1F1F1;
+    border: 2px solid #94E512;
+}
+
+.edit-button {
+    width: 68px;
+    height: 64px;
+    margin-right: 23px;
+    background: #F1F1F1;
+    border: 2px solid #94E512;
+}
+
+.edit-image {
+    width: 61px;
+    height: 57px;
+    margin-top: 2px;
+
+    background: url(../images/edit.png) no-repeat center center;
+    background-size: cover;
+}
+
+.match-description {
+    color: #303030;
+    width: 448px;
+    height: 64px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.match-description:hover {
+    border: 2px Black solid;
+}
+
+.match-description:active {
+    border: 3px Black solid;
+}
+
+.match-content {
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    background: #FFFFFF;
+}
+
+.f-team-name {
+    margin-left: 15px;
+    margin-top: auto;
+    margin-bottom: auto;
+
+    font-size: 18px;
+}
+
+.s-team-name {
+    margin-right: 15px;
+    margin-top: auto;
+    margin-bottom: auto;
+
+    font-size: 18px;
+}
+
+.versus {
+    font-size: 24px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.match-header {
+    height: 24px;
+    font-size: 20px;
+    background: #F1F1F1;
+    display: flex;
+    justify-content: space-between;
+}
+
+.date {
+    text-align: left;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 15px;
+}
+
+.tournament {
+    text-align: right;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 15px;
+}
+
+.remove-image {
+    width: 63px;
+    height: 62px;
+    margin-left: 2px;
+    margin-top: 1px;
+
+    background: url(../images/delete.png) no-repeat center center;
+    background-size: cover;
+}
+
+
+.add-match-text:active {
+    font-size: 38px;
+}
+
+.button-add-match:active {
+    border: 3.5px solid #303030;
+}
+
+.edit-button:active {
+    border: 2.8px solid #94E512;
+}
+
+.remove-button:active {
+    border: 2.8px solid #94E512;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+button {
+    cursor: pointer;
+}
+
+@media screen and (max-width: 800px) {
+    .match-description {
+        width: 304px;
+    }
+
+    .match-header {
+        font-size: 2vw;
+    }
+
+    .f-team-name {
+        font-size: 2vw;
+    }
+
+    .s-team-name {
+        font-size: 2vw;
+    }
+
+    .versus {
+        font-size: 3vw;
+    }
+}

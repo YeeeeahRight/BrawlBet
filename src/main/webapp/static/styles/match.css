@@ -1,0 +1,388 @@
+.body {
+    height: 100%;
+    display: flex;
+    justify-content: start;
+}
+
+.main-header {
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+}
+
+.teams-text {
+    text-align: center;
+    color: rgba(48, 48, 48, 1.0);
+    font-size: 48px;
+    margin-top: 20px;
+}
+
+.main-content {
+    background-color: rgba(221, 222, 224, 1.0);
+    height: 100%;
+    width: 82.06%;
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column
+}
+
+@media screen and (max-width: 800px) {
+    .body {
+        flex-direction: column;
+    }
+
+    .main-content {
+        width: auto;
+    }
+}
+
+.main-body {
+    height: 100%;
+    width: 100%;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.match {
+    height: 296px;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 45px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    font-size: 30px;
+}
+
+.match-header {
+    border: 1px Black solid;
+    border-bottom: hidden;
+    background-color: rgba(241, 241, 241, 1);
+    height: 41px;
+    display: flex;
+}
+
+.match-date {
+    margin: auto;
+}
+
+.match-body {
+    border: 1px Black solid;
+    border-bottom: hidden;
+    border-top: hidden;
+    background-color: White;
+    height: 112px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.f-team {
+    width: 250px;
+    margin-left: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.f-team-name {
+    color: #303030;
+    text-align: center;
+}
+
+.f-percent {
+    margin-top: 5px;
+    text-align: center;
+}
+
+.match-versus {
+    margin: auto;
+    width: 260px;
+    text-align: center;
+}
+
+.s-team {
+    width: 250px;
+    margin-right: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.s-team-name {
+    color: #303030;
+    text-align: center;
+}
+
+.s-percent {
+    margin-top: 5px;
+    text-align: center;
+}
+
+.match-footer {
+    border: 1px Black solid;
+    border-top: hidden;
+    background-color: rgba(241, 241, 241, 1);
+    height: 41px;
+    display: flex;
+}
+
+.match-tournament {
+    margin: auto;
+}
+
+.match-description {
+    background-color: rgba(241, 241, 241, 1);
+    margin-top: 10px;
+    height: 41px;
+    font-size: 20px;
+    border: 1px Black dashed;
+}
+
+.commission-text {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+
+#money {
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 210px;
+    height: 38px;
+    border: 1px Black groove;
+    font-size: 30px;
+    text-align: center;
+}
+
+.bet-buttons {
+    margin-top: 10px;
+    height: 100px;
+    display: flex;
+
+    justify-content: center;
+}
+
+.button {
+    height: 100px;
+    width: 310px;
+    background-color: rgba(148, 229, 18, 1.0);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    color: White;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.bet-on {
+    font-size: 21px;
+    text-align: center;
+}
+
+.coefficient-value {
+    margin-top: 6px;
+    font-size: 16px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.coefficient-text {
+    margin-right: 3px;
+}
+
+.potential-gain-value {
+    margin-top: 5px;
+    font-size: 17px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.potential-gain-text {
+    margin-right: 3px;
+}
+
+.second-button {
+    margin-left: 80px;
+}
+
+#money-input-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#on {
+    visibility: hidden;
+}
+
+.true {
+    color: rgba(148, 229, 18, 1.0);
+}
+
+.match-info-block {
+    margin-top: 50px;
+}
+
+.match-info-text {
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 32px;
+    text-align: center;
+    width: 65%;
+}
+
+.bets-amounts {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+    font-size: 15px;
+}
+
+.first-bet-amount {
+    background-color: rgba(241, 241, 241, 1);
+    border: 1px Black dashed;
+    width: 45%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.bet-amount-text {
+    margin-right: 3px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.second-bet-amount {
+    background-color: rgba(241, 241, 241, 1);
+    border: 1px #000000 dashed;
+    width: 45%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+#second-bets-amount {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+#first-bets-amount {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+#commission {
+    margin-left: 6px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.commission-description {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+@media screen and (max-width: 1200px) and (min-width: 1000px){
+    .match {
+        margin-left: 16%;
+        margin-right: 16%;
+        font-size: 27px;
+    }
+
+    .button {
+        width: 290px;
+    }
+
+    .match-info-text {
+        font-size: 29px;
+    }
+
+    .match-description {
+        font-size: 18px;
+    }
+
+    .bets-amounts {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 1000px) and (min-width: 800px){
+    .match {
+        margin-left: 8%;
+        margin-right: 8%;
+        font-size: 24px;
+    }
+
+    .match-info-text {
+        font-size: 25px;
+    }
+
+    .match-description {
+        font-size: 16px;
+    }
+
+    .bets-amounts {
+        font-size: 10px;
+    }
+
+    .button {
+        width: 270px;
+    }
+
+    .bet-on {
+        font-size: 19px;
+    }
+
+    .coefficient-value {
+        font-size: 15px;
+    }
+
+    .potential-gain-value {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 800px){
+    .match {
+        margin-left: 4%;
+        margin-right: 4%;
+        font-size: 22px;
+    }
+
+    .match-info-text {
+        font-size: 22px;
+    }
+
+    .match-description {
+        font-size: 14px;
+    }
+
+    .bets-amounts {
+        font-size: 10px;
+    }
+
+    .button {
+        width: 230px;
+    }
+
+    .bet-on {
+        font-size: 16px;
+    }
+
+    .coefficient-value {
+        font-size: 13px;
+    }
+
+    .potential-gain-value {
+        font-size: 14px;
+    }
+}

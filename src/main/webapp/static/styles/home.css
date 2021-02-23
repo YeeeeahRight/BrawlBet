@@ -1,0 +1,192 @@
+.body {
+    height: 100%;
+    display: flex;
+    justify-content: start;
+}
+
+.main-content {
+    background-color: rgba(221, 222, 224, 1.0);
+    width: 82.06%;
+    height: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+@media screen and (max-width: 800px) {
+    .body {
+        flex-direction: column;
+    }
+
+    .main-content {
+        width: auto;
+    }
+}
+
+.main-header {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+}
+
+.bets-text {
+    margin-left: 20px;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: rgba(48, 48, 48, 1.0);
+    font-size: 64px;
+}
+
+.bets-icon {
+    width: 57px;
+    height: 69px;
+    background: url(../images/bets.png) no-repeat center center;
+    background-size: cover;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.main-body {
+    height: 100%;
+    width: 100%;
+    font-size: 1.4vw;
+    padding-top: 15px;
+}
+
+.match {
+    color: rgba(48, 48, 48, 1.0);
+    background-color: white;
+    height: 7vw;
+    width: 32vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.match-row {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    margin-right: 5%;
+}
+
+.match:hover {
+    border: 2px solid #303030;
+}
+
+.match-header {
+    background-color: rgba(241, 241, 241, 1);
+    height: 40%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.match-date {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 20px;
+}
+
+.match-tournament {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 20px;
+}
+
+.match-body {
+    height: 60%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.match-body-center {
+    display: flex;
+    justify-content: center;
+}
+
+.match-f-team {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 20px;
+    font-size: 1.25vw;
+}
+
+.match-f-percent {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 5px;
+}
+
+.match-versus-icon {
+    margin: auto 10px;
+}
+
+.match-s-percent {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 5px;
+}
+
+.match-s-team {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 20px;
+    font-size: 1.25vw;
+}
+
+.closed {
+    opacity: 0.7;
+}
+
+.true {
+    color: rgb(148, 229, 18);
+}
+
+.winner-image {
+    width: 16px;
+    height: 16px;
+    background: url(../images/win.png) no-repeat center center;
+    background-size: cover;
+    margin: auto 2px;
+}
+
+.pagination {
+    margin-right: 5.1%;
+    margin-top: 2.2%;
+}
+
+@media screen and (max-width: 800px) {
+    .match-row {
+        margin-right: 0;
+        margin-top: 32px;
+    }
+
+    .match {
+        height: 12vw;
+        width: 42vw;
+    }
+
+    .match-body {
+        font-size: 2.1vw;
+    }
+
+    .match-f-team {
+        font-size:2vw;
+    }
+
+    .match-s-team {
+        font-size:2vw;
+    }
+
+    .match-date {
+        font-size: 2vw;
+    }
+
+    .match-tournament {
+        font-size: 2vw;
+    }
+
+    .pagination {
+        margin-right: 0;
+    }
+}

@@ -1,0 +1,208 @@
+.body {
+    height: 100%;
+    display: flex;
+    justify-content: start;
+}
+
+.main-content {
+    background-color: rgba(221, 222, 224, 1.0);
+    width: 82.06%;
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column
+}
+
+.main-header {
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.main-body {
+    height: 100%;
+    width: 100%;
+    font-size: 20px;
+
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+@media screen and (max-width: 800px) {
+    .body {
+        flex-direction: column;
+    }
+
+    .main-content {
+        width: auto;
+    }
+}
+
+.users-logo-text {
+    margin-top: 21px;
+    color: #303030;
+    font-size: 64px;
+}
+
+.user {
+    height: 66px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 21px;
+
+    display: flex;
+    justify-content: center;
+}
+
+.unban-button {
+    width: 68px;
+    height: 64px;
+    margin-right: 23px;
+
+    background: #F1F1F1;
+    border: 2px solid #94E512;
+}
+
+.ban-button {
+    width: 68px;
+    height: 64px;
+    margin-left: 23px;
+
+    background: #F1F1F1;
+    border: 2px solid #94E512;
+}
+
+.unban-image {
+    width: 61px;
+    height: 57px;
+    margin-top: 1px;
+    margin-left: 1px;
+    background: url(../images/unban.png) no-repeat center center;
+    background-size: cover;
+}
+
+.ban-image {
+    width: 57px;
+    height: 57px;
+    margin-left: 3px;
+    margin-top: 2px;
+
+    background: url(../images/ban.png) no-repeat center center;
+    background-size: cover;
+}
+
+.user-description {
+    width: 510px;
+    height: 66px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.user-content {
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    background: #FFFFFF;
+}
+
+.status-text {
+    margin-left: 8px;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 17px;
+}
+
+.status-data {
+    margin-left: 5px;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 14px;
+}
+
+.role-text {
+    margin-left: 27px;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 17px;
+}
+
+.role-data {
+    margin-left: 5px;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 14px;
+}
+
+.balance-text {
+    margin-left: 27px;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 17px;
+}
+
+.balance-data {
+    margin: auto 8px auto 5px;
+    font-size: 17px;
+}
+
+.user-header {
+    height: 24px;
+    font-size: 20px;
+    background: #F1F1F1;
+    display: flex;
+    justify-content: center;
+}
+
+.unban-button:active {
+    border: 2.8px solid #94E512;
+}
+
+.ban-button:active {
+    border: 2.8px solid #94E512;
+}
+
+@media screen and (max-width: 800px){
+    .user-description {
+        width: 350px;
+    }
+
+    .user-header {
+        font-size: 2.8vw;
+    }
+
+    .status-text {
+        font-size: 1.65vw;
+    }
+
+    .role-text {
+        font-size: 1.65vw;
+    }
+
+    .balance-text {
+        font-size: 1.65vw;
+    }
+
+    .status-data {
+        font-size: 1.4vw;
+    }
+
+    .role-data {
+        font-size: 1.4vw;
+    }
+
+    .balance-data {
+        font-size: 1.4vw;
+    }
+
+    .unban-button {
+        margin-right: 10px;
+    }
+
+    .ban-button {
+        margin-left: 10px;
+    }
+}

@@ -1,0 +1,148 @@
+.body {
+    height: 100%;
+    display: flex;
+    justify-content: start;
+}
+
+.main-header {
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.main-content {
+    background-color: rgba(221, 222, 224, 1.0);
+    height: 100%;
+    width: 82.06%;
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column
+}
+
+@media screen and (max-width: 800px) {
+    .body {
+        flex-direction: column;
+    }
+
+    .main-content {
+        width: auto;
+    }
+}
+
+.main-body {
+    height: 100%;
+    width: 100%;
+    font-size: 20px;
+
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.teams-logo-text {
+    margin-top: 15px;
+    color: #303030;
+    font-size: 62px;
+    line-height: 0.90;
+}
+
+.button-add-team {
+    width: 448px;
+    height: 65px;
+    background: #94E512;
+    margin-top: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid #303030;
+}
+
+.add-team-text {
+    text-align: center;
+    font-size: 36px;
+    color: #303030;
+    line-height: 1.65;
+}
+
+.team-row {
+    height: 71px;
+    margin-top: 21px;
+    display: flex;
+    justify-content: center;
+}
+
+.team {
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.team:hover {
+    border: 2px solid #303030;
+}
+
+.team-1 {
+    margin-left: 48px;
+}
+
+.team-header {
+    font-size: 2vw;
+    background: #F1F1F1;
+    display: flex;
+    justify-content: center;
+}
+
+.team-content {
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    background: #FFFFFF;
+    font-size: 22px;
+}
+
+.matches-won {
+    color: #94E512;
+    margin-bottom: auto;
+    margin-top: auto;
+}
+
+.versus {
+    margin: auto 5px;
+    color: #303030;
+}
+
+.matches-lost {
+    color: red;
+    margin-bottom: auto;
+    margin-top: auto;
+}
+
+.team-name {
+    color: #303030;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 23px;
+}
+
+.add-team-text:active {
+    font-size: 38px;
+}
+
+.button-add-team:active {
+    border: 3.5px solid #303030;
+}
+
+.team:active {
+    border: 3px solid #303030;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+button {
+    cursor: pointer;
+}

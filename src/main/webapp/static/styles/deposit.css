@@ -1,0 +1,118 @@
+.body {
+    height: 100%;
+    display: flex;
+    justify-content: start;
+}
+
+.main-content {
+    background-color: rgba(221, 222, 224, 1.0);
+    height: 100%;
+    width: 82.06%;
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column
+}
+
+@media screen and (max-width: 800px) {
+    .body {
+        flex-direction: column;
+    }
+
+    .main-content {
+        width: auto;
+    }
+}
+
+.main-header {
+    background-color: transparent;
+    height: 89px;
+    width: 100%;
+}
+
+.deposit-text-head {
+    color: rgba(48, 48, 48, 1.0);
+    font-size: 64px;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.main-body {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+    height: 100%;
+    width: 100%;
+    font-size: 36px;
+    color: rgba(48, 48, 48, 1.0);
+}
+
+.form {
+    position: absolute;
+    width: 531px;
+    top: 225px;
+    left: 59%;
+    margin-left: -265.5px;
+}
+
+.deposit-text {
+    position: absolute;
+    width: 187px;
+    left: 25px;
+    top: 48px;
+}
+
+.deposit-form {
+    position: absolute;
+    width: 531px;
+    height: 221px;
+    top: 45px;
+    border: 2px solid rgba(48, 48, 48, 1.0);
+}
+
+button {
+    position: absolute;
+    width: 199px;
+    height: 65px;
+    left: 165px;
+    top: 130px;
+    font-size: 36px;
+    background-color: #94E512;
+    color: White;
+    border: none;
+    cursor: pointer;
+}
+
+input {
+    top: 50px;
+    position: absolute;
+    right: 14px;
+    left: 168px;
+    width: 340px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+::placeholder {
+    font-size: 35px;
+}
+
+@media screen and (max-width: 1000px) {
+    .form {
+        top: 265px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .form {
+        top: 605px;
+        left: 50%;
+    }
+}
+
